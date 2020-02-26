@@ -20,7 +20,7 @@
       "order": 3,
       "type": "com.tencent.mm.plugin.fts.ui.FTSMainUI",
       "text": "搜索",
-      "icon": "ic_scan.png"
+      "icon": "ic_search.png"
     },
     {
       "order": 4,
