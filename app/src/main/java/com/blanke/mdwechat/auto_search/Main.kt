@@ -38,6 +38,20 @@ class Main {
 
         wxClasses = wechatApkFile.dexClasses.toList()
         Logs.i("class 总数= ${wxClasses.size}")
+        // todo debugging
+//        var classes = ""
+//        var i = 0
+//        for (index in 0..wxClasses.size - 1) {
+//
+//            classes = classes + wxClasses[index].toString() + "\n"
+//            i++
+//            if (i == 10000) {
+//                Logs.i(classes)
+//                classes = ""
+//                i = 0
+//            }
+//        }
+        // todo debug end
 
         val optimizedDirectoryFile = context.getDir("dex", 0)
         val classLoader = DexClassLoader(path, optimizedDirectoryFile.absolutePath, null, ClassLoader.getSystemClassLoader())

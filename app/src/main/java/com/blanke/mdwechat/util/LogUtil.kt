@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import de.robv.android.xposed.XposedBridge
 
 /**
  * Created by blanke on 2017/10/3.
@@ -18,6 +19,13 @@ object LogUtil {
 
     fun log(t: Throwable) {
         Log.e("MDWechatModule", "MDWechat " + Log.getStackTraceString(t))
+    }
+
+    fun logXp(msg:String){
+        XposedBridge.log("MDWechatModule: "+msg)
+    }
+    fun logXp(t: Throwable) {
+        XposedBridge.log("MDWechatModule: "+Log.getStackTraceString(t))
     }
 
     fun bundleToString(bundle: Bundle?): String? {
