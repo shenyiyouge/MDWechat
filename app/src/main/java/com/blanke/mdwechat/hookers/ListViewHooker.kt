@@ -56,13 +56,32 @@ object ListViewHooker : HookerProvider {
                     return
                 }
                 view.background = defaultImageRippleDrawable
-//                log("--------------------")
-//                log("context=" + view.context)
-//                LogUtil.logViewStackTraces(view)
-//                log("--------------------")
+//                logXp("--------------------")
+//                logXp("context=" + view.context)
+//                LogUtil.logViewStackTracesXp(view)
+//                logXp("--------------------")
 
                 // ConversationFragment 聊天列表 item
                 if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem, view)) {
+                    val chatNameView = ViewUtils.getChildView(view, 1, 0, 0, 0)
+                    val chatTimeView = ViewUtils.getChildView(view, 1, 0, 1)
+                    val recentMsgView = ViewUtils.getChildView(view, 1, 1, 0, 1)
+                    val unreadCountView = ViewUtils.getChildView(view, 0, 1) as TextView
+                    val unreadView = ViewUtils.getChildView(view, 0, 2) as ImageView
+
+//                    LogUtil.log("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
+                    if (isHookTextColor) {
+                        XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
+                        XposedHelpers.callMethod(chatTimeView, "setTextColor", headTextColor)
+                        XposedHelpers.callMethod(recentMsgView, "setTextColor", headTextColor)
+                    }
+                    unreadCountView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_primary)
+                    unreadView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_primary)
+                    val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
+                    contentView.background = transparentDrawable
+                }
+                // ConversationFragment 聊天列表 item 7.0.11
+                else if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem_7_0_11, view)) {
                     val chatNameView = ViewUtils.getChildView(view, 1, 0, 0, 0)
                     val chatTimeView = ViewUtils.getChildView(view, 1, 0, 1)
                     val recentMsgView = ViewUtils.getChildView(view, 1, 1, 0, 1)
@@ -139,6 +158,20 @@ object ListViewHooker : HookerProvider {
                     unreadPointView?.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_primary)
                     unreadCountView?.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_primary)
                 }
+                // 发现 设置 item 7.0.11
+                else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem_7_0_11, view)) {
+                    val iconImageView = ViewUtils.getChildView(view, 1, 0, 0, 0, 0) as View
+                    if (iconImageView.visibility == View.VISIBLE) {
+                        val titleView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 0, 0, 0) as TextView
+                        if (isHookTextColor) {
+                            titleView.setTextColor(titleTextColor)
+                        }
+                    }
+                    val unreadPointView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 2, 1)
+                    val unreadCountView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 0, 0, 1)
+                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_primary)
+                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_primary)
+                }
 
                 // 设置 头像
                 else if (ViewTreeUtils.equals(ViewTreeRepo.SettingAvatarView, view)) {
@@ -164,7 +197,12 @@ object ListViewHooker : HookerProvider {
                 // 聊天消息 item
                 else if (ViewTreeUtils.equals(ViewTreeRepo.ChatRightMessageItem, view)) {
                     val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
-                    val msgView = ViewUtils.getChildView(view, 3, 1, 1, 3) as View
+                    val msgView: View?
+                    if (WechatGlobal.wxVersion!! >= Version("7.0.7")) {
+                        msgView = ViewUtils.getChildView(view, 3, 1, 1, 3, 0) as View
+                    } else {
+                        msgView = ViewUtils.getChildView(view, 3, 1, 1, 3) as View
+                    }
 //                    log("msgView=$msgView")
                     XposedHelpers.callMethod(msgView, "setTextColor", chatMsgRightTextColor)
                     XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgRightTextColor)
@@ -181,12 +219,12 @@ object ListViewHooker : HookerProvider {
                 } else if (ViewTreeUtils.equals(ViewTreeRepo.ChatLeftMessageItem, view)) {
                     val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                     val msgView = ViewUtils.getChildView(view, 3, 1, 1) as View
-//                    log("msgView=$msgView")
+//                    logXp("msgView=$msgView")
+//                    val mText = XposedHelpers.getObjectField(msgView, "mText")
+//                    logXp("msg left text=$mText")
                     XposedHelpers.callMethod(msgView, "setTextColor", chatMsgLeftTextColor)
                     XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgLeftTextColor)
                     XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgLeftTextColor)
-//                    val mText = XposedHelpers.getObjectField(msgView, "mText")
-//                    log("msg left text=$mText")
                     if (HookConfig.is_hook_bubble) {
                         val bubble = WeChatHelper.getLeftBubble(msgView.resources)
                         msgView.background = bubble
