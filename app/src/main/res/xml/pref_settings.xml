@@ -74,12 +74,19 @@
             android:title="@string/text_color_primary"
             app:cpv_colorPresets="@array/colors"
             app:cpv_showAlphaSlider="true" />
+
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/colorTip"
+            android:key="@string/key_color_tip"
+            android:title="@string/text_color_tip"
+            app:cpv_colorPresets="@array/colors"
+            app:cpv_showAlphaSlider="true" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/key_hook_avatar"
             android:title="@string/text_hook_avatar" />
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="@string/key_hook_statusbar_transparent"
             android:title="@string/text_hook_statusbar_transparent" />
 
@@ -99,8 +106,9 @@
             android:summary="@string/text_hook_float_button_move_info"
             android:title="@string/text_hook_float_button_move" />
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="@string/key_hook_hide_actionbar"
+            android:summary="如果微信版本高于7.0.6，建议勾选此项"
             android:title="@string/text_hook_hide_actionbar" />
         <SwitchPreference
             android:defaultValue="true"
@@ -142,6 +150,28 @@
 
     <PreferenceCategory
         android:dependency="@string/key_hook_switch"
+        android:key="@string/key_hook_mini_program"
+        android:title="@string/text_hook_mini_program">
+        <com.jaredrummler.android.colorpicker.ColorPreference
+            android:defaultValue="@color/colorSecondary"
+            android:key="@string/key_color_secondary"
+            android:title="@string/text_color_secondary"
+            app:cpv_colorPresets="@array/colors"
+            app:cpv_showAlphaSlider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/value_mini_program_title"
+            android:summary="@string/summary_mini_program_title"
+            android:key="@string/key_mini_program_title"
+            android:title="@string/text_mini_program_title"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:dependency="@string/key_hook_switch"
+        android:key="@string/key_conversation_settings"
         android:title="@string/text_conversation_settings">
         <SwitchPreference
             android:defaultValue="false"

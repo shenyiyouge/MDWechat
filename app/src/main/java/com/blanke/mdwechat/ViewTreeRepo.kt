@@ -332,6 +332,31 @@ object ViewTreeRepo {
                 )
         )
     }
+    val SettingAvatarView_7_0_12: ViewTreeItem by lazy {
+        ViewTreeItem(
+                CC.RelativeLayout.name,
+                arrayOf(
+                        ViewTreeItem(CC.ImageView.name),
+                        ViewTreeItem(CC.FrameLayout.name),
+                        ViewTreeItem(
+                                CC.LinearLayout.name,
+                                arrayOf(
+                                        ViewTreeItem(CC.RelativeLayout.name,
+                                                arrayOf(
+                                                        ViewTreeItem(CC.ImageView.name),
+                                                        ViewTreeItem(CC.LinearLayout.name,
+                                                                arrayOf(
+                                                                        ViewTreeItem(CC.LinearLayout.name,
+                                                                                arrayOf(
+                                                                                        ViewTreeItem(Classes.NoMeasuredTextView.name)
+                                                                                ))
+                                                                )
+                                                        ))
+                                        )
+                                )
+                        )
+                ))
+    }
 
     val ChatRightMessageItem: ViewTreeItem by lazy {
         ViewTreeItem(
@@ -528,6 +553,46 @@ object ViewTreeRepo {
                                 )
                         ),
                         ViewTreeItem(CC.View.name)
+                )
+        )
+    }
+
+    // todo
+
+    val ActionBarItem: ViewTreeItem by lazy {
+        ViewTreeItem(
+                "com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopContainer",
+                arrayOf(
+                        ViewTreeItem(
+                                CC.RelativeLayout.name,
+                                arrayOf(
+                                        ViewTreeItem(
+                                                CC.LinearLayout.name,
+                                                arrayOf(
+                                                        ViewTreeItem(
+                                                                CC.LinearLayout.name,
+                                                                arrayOf(
+                                                                        // 小程序
+                                                                        ViewTreeItem(CC.TextView.name),
+                                                                        ViewTreeItem(CC.View.name),
+                                                                        ViewTreeItem(
+                                                                                CC.LinearLayout.name,
+                                                                                arrayOf(
+                                                                                        ViewTreeItem(
+                                                                                                "com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopView",
+                                                                                                arrayOf(null))
+                                                                                )))))),
+                                        ViewTreeItem(
+                                                CC.FrameLayout.name,
+                                                arrayOf(
+                                                        ViewTreeItem("com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopBottomView"),
+                                                        ViewTreeItem(
+                                                                CC.LinearLayout.name,
+                                                                arrayOf(null))
+                                                )
+                                        )
+                                )
+                        )
                 )
         )
     }

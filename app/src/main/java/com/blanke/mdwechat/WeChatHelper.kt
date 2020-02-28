@@ -21,6 +21,12 @@ object WeChatHelper {
     val colorPrimary: Int by lazy {
         HookConfig.get_color_primary
     }
+    val colorSecondary: Int by lazy {
+        HookConfig.get_color_secondary
+    }
+    val colorTip: Int by lazy {
+        HookConfig.get_color_tip
+    }
 
     val transparentDrawable: ColorDrawable
         get() = ColorDrawable(Color.TRANSPARENT)

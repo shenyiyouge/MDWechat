@@ -6,7 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.preference.EditTextPreference
 import android.preference.Preference
+import android.preference.PreferenceCategory
 import android.preference.PreferenceFragment
 import android.view.View
 import android.widget.ScrollView
@@ -39,10 +41,17 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         super.onCreate(savedInstanceState)
         EventBus.getDefault().register(this)
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
-        preferenceManager.setSharedPreferencesName(Common.MOD_PREFS)
+        preferenceManager.sharedPreferencesName = Common.MOD_PREFS
         addPreferencesFromResource(R.xml.pref_settings)
+        //去除 移除小程序 选项
+        val displayOptions = findPreference(getString(R.string.key_conversation_settings)) as PreferenceCategory
+        preferenceScreen.removePreference(displayOptions)
+
+        val a = preferenceScreen.findPreference( getString(R.string.key_mini_program_title)) as EditTextPreference
+        a.summary = a.text
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_wechat_config))?.onPreferenceClickListener = this
@@ -74,9 +83,15 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     override fun onPreferenceChange(preference: Preference, o: Any): Boolean {
         when (preference.key) {
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
+            getString(R.string.key_mini_program_title) -> setSummary(o as String)
         }
         return true
     }
+    private fun setSummary(s:String){
+      val a = preferenceScreen.findPreference( getString(R.string.key_mini_program_title)) as EditTextPreference
+        a.summary = "当前文字：$s"
+    }
+
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference.key) {

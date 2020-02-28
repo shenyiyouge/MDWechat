@@ -12,6 +12,8 @@ import com.blanke.mdwechat.WeChatHelper
 object HookConfig {
     private val key_hook_switch = "hookSwitch"
     private val key_color_primary = "colorPrimary"
+    private val key_color_secondary = "colorSecondary"
+    private val key_color_tip = "colorTip"
     private val key_hook_actionbar = "key_hook_actionbar"
     private val key_hook_avatar = "key_hook_avatar"
     private val key_hook_ripple = "key_hook_ripple"
@@ -47,6 +49,8 @@ object HookConfig {
     private val key_hook_main_textcolor = "key_hook_main_textcolor"
     private val key_main_textcolor_title = "key_main_textcolor_title"
     private val key_main_textcolor_content = "key_main_textcolor_content"
+    private val key_hook_mini_program = "key_hook_mini_program"
+    private val key_mini_program_title = "key_mini_program_title"
     private val key_hook_night_mode = "key_hook_night_mode"
 
     val is_hook_switch: Boolean
@@ -57,6 +61,14 @@ object HookConfig {
     val get_color_primary: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_color_primary, Color.BLACK)
+        }
+    val get_color_secondary: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_secondary, Color.BLACK)
+        }
+    val get_color_tip: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_tip, Color.BLACK)
         }
 
     val is_hook_actionbar: Boolean
@@ -203,8 +215,16 @@ object HookConfig {
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_main_textcolor_content, Color.BLACK)
         }
+    val is_hook_mini_program: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_mini_program, false)
+        }
     val is_hook_night_mode: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, false)
+        }
+    val value_mini_program_title: String
+        get() {
+            return WeChatHelper.XMOD_PREFS.getString(key_mini_program_title, "点击收起")
         }
 }

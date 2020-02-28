@@ -2,6 +2,9 @@ package com.blanke.mdwechat.util
 
 import android.view.View
 import android.view.ViewGroup
+import com.blanke.mdwechat.util.LogUtil.logViewStackTracesXp
+import com.blanke.mdwechat.util.LogUtil.logViewXp
+import com.blanke.mdwechat.util.LogUtil.logXp
 
 object ViewUtils {
     fun getChildView(view: View, vararg indexs: Int): View? {
@@ -42,6 +45,18 @@ object ViewUtils {
                 return v
             } else if (v is ViewGroup) {
                 return findFirstChildView(v, viewClassName)
+            }
+        }
+        return null
+    }
+    fun findLastChildView(rootView: ViewGroup, viewClassName: String): View? {
+        val childCount = rootView.childCount
+        for (i in childCount-1 downTo 0) {
+            val v = rootView.getChildAt(i)
+            if (v.javaClass.name == viewClassName) {
+                return v
+            } else if (v is ViewGroup) {
+                return findLastChildView(v, viewClassName)
             }
         }
         return null

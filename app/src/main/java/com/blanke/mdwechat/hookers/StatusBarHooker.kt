@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.PhoneWindow
@@ -15,11 +14,14 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.ColorUtils
+import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.mainThread
 import com.blankj.utilcode.util.BarUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.XposedHelpers.findAndHookMethod
+import com.blanke.mdwechat.util.LogUtil.logXp
+import java.lang.Exception
 
 
 object StatusBarHooker : HookerProvider {
@@ -56,32 +58,65 @@ object StatusBarHooker : HookerProvider {
                     val statusView = View(activity)
                     statusView.background = ColorDrawable(getStatusBarColor())
                     statusView.elevation = 1F
-                    val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    statusParam.topMargin = 0
-                    statusParam.height = BarUtils.getStatusBarHeight()
+//                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//                        statusParam.topMargin = 0
+//                        statusParam.height = BarUtils.getStatusBarHeight()
 
                     statusView.layoutParams = LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT, BarUtils.getStatusBarHeight())
-                    val rootView = activity.window.decorView as ViewGroup
+                    val window = activity.window
+                    val rootView = window.decorView as ViewGroup
+                    val clazz = activity::class.java.name
                     mainThread(100) {
-                        rootView.addView(statusView)
-                        val window = activity.window
-                        window.statusBarColor = color
-                        window.navigationBarColor = color
+                        if ((!clazz.equals("com.tencent.mm.ui.chatting.gallery.ImageGalleryUI"))
+                                && (!clazz.equals("com.tencent.mm.plugin.recordvideo.activity.MMRecordUI"))
+                                && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsBrowseUI"))
+                                && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity"))
+                        ) {
+                            rootView.addView(statusView)
+                        }
+                        setColor(window, color)
                     }
                     if (activity::class.java == Classes.LauncherUI) {
                         mainThread(1000) {
-                            val window = activity.window
-                            window.statusBarColor = color
-                            window.navigationBarColor = color
+                            setColor(window, color)
                         }
+//                        val mThread = CustomThread()
+//                        mThread.init(activity.window, color)
+//                        mThread.start()
                     }
                 }
             })
         }
     }
 
+    fun setColor(window: Window, color: Int) {
+        window?.statusBarColor = color
+        window?.navigationBarColor = color
+    }
+
     fun getStatusBarColor(): Int {
         return if (HookConfig.is_hook_statusbar_transparent) colorPrimary else ColorUtils.getDarkerColor(colorPrimary, 0.85f)
     }
+    //    class CustomThread : Thread() {
+//        lateinit var window: Window
+//        var color: Int = 0
+//        fun init(window: Window, color: Int) {
+//            this.window = window
+//            this.color = color
+//        }
+//
+//        override fun run() {
+//            super.run()
+//            sleep(1000)
+////            try {
+//            setColor(window, color)
+////                window?.setStatusBarColor(color)
+////            } catch (e: Exception) {
+////                logXp(e)
+////                log(e)
+////            }
+//        }
+//    }
+
 }

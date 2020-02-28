@@ -129,4 +129,16 @@ object Classes {
     val Toolbar: Class<*> by WechatGlobal.wxLazy("Toolbar") {
         findClass("android.support.v7.widget.Toolbar")
     }
+    val ImageGalleryUI: Class<*> by WechatGlobal.wxLazy("ImageGalleryUI") {
+        findClass("com.tencent.mm.ui.chatting.gallery.ImageGalleryUI")
+    }
+    val MMRecordUI: Class<*> by WechatGlobal.wxLazy("MMRecordUI") {
+        findClass("com.tencent.mm.plugin.recordvideo.activity.MMRecordUI")
+    }
+    val SnsBrowseUI: Class<*> by WechatGlobal.wxLazy("SnsBrowseUI") {
+        findClass("com.tencent.mm.plugin.sns.ui.SnsBrowseUI")
+    }
+    val SnsOnlineVideoActivity: Class<*> by WechatGlobal.wxLazy("SnsOnlineVideoActivity") {
+        findClass("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity")
+    }
 }

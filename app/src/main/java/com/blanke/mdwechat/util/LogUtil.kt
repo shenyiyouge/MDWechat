@@ -42,6 +42,22 @@ object LogUtil {
             }
         }
     }
+    fun logParentViewXp(view: View, level: Int = 5) {
+        logXp("---------logParentView start----------")
+        var currentView = view
+        for (i in 0 until level) {
+            val v = currentView.parent
+            if (v != null && v is View) {
+                logViewXp(v)
+                currentView = v
+            }
+        }
+        logXp("---------logParentView end----------")
+    }
+    fun logViewXp(view: View) {
+        logXp(getViewLogInfo(view))
+    }
+
     // endregion
 
     fun bundleToString(bundle: Bundle?): String? {
