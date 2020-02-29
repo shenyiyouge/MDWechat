@@ -220,8 +220,8 @@ object ListViewHooker : HookerProvider {
                     }
                     val unreadPointView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 2, 1)
                     val unreadCountView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 0, 0, 1)
-                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorPrimary)
-                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorPrimary)
+                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorTip)
+                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorTip)
                 }
                 // 发现 设置 item 7.0.0
                 else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem_7_0_0, view)) {

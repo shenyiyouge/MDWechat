@@ -105,11 +105,7 @@
             android:key="@string/key_hook_float_button_move"
             android:summary="@string/text_hook_float_button_move_info"
             android:title="@string/text_hook_float_button_move" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/key_hook_hide_actionbar"
-            android:summary="如果微信版本高于7.0.6，建议勾选此项"
-            android:title="@string/text_hook_hide_actionbar" />
+
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/key_hook_tab"
@@ -119,6 +115,11 @@
             android:dependency="@string/key_hook_tab"
             android:key="@string/key_hook_tab_elevation"
             android:title="@string/text_hook_tab_elevation" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/key_hook_hide_actionbar"
+            android:summary="如果勾选TabLayout且微信版本高于7.0.6，建议勾选此项"
+            android:title="@string/text_hook_hide_actionbar" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/key_hook_hide_wx_tab"
@@ -161,11 +162,11 @@
 
         <EditTextPreference
             android:defaultValue="@string/value_mini_program_title"
-            android:summary="@string/summary_mini_program_title"
             android:key="@string/key_mini_program_title"
-            android:title="@string/text_mini_program_title"
             android:selectAllOnFocus="true"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:summary="@string/summary_mini_program_title"
+            android:title="@string/text_mini_program_title" />
     </PreferenceCategory>
 
 
