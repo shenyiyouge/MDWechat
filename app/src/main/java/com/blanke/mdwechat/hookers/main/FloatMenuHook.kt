@@ -31,6 +31,7 @@ object FloatMenuHook {
             return
         }
         val primaryColor = HookConfig.get_color_primary
+        val floatButtonColor = HookConfig.get_color_float_button
         val actionMenu = FloatingActionMenu(context)
         actionMenu.menuButtonColorNormal = primaryColor
         actionMenu.menuButtonColorPressed = primaryColor
@@ -53,7 +54,7 @@ object FloatMenuHook {
                     floatItems.add(it)
                     getFloatButton(actionMenu, context, it.text,
                             BitmapDrawable(context.resources,
-                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor)
+                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor,floatButtonColor)
                 }
 
         actionMenu.setFloatButtonClickListener { fab, index ->
@@ -113,13 +114,14 @@ object FloatMenuHook {
     }
 
     private fun getFloatButton(actionMenu: FloatingActionMenu, context: Context,
-                               label: String, drawable: Drawable, primaryColor: Int): FloatingActionButton {
+                               label: String, drawable: Drawable, primaryColor: Int,floatButtonColor: Int): FloatingActionButton {
         val fab = FloatingActionButton(context)
         fab.setImageDrawable(drawable)
         fab.colorNormal = primaryColor
         fab.colorPressed = primaryColor
         fab.buttonSize = SIZE_MINI
         fab.labelText = label
+//        fab.setLabelTextColor(floatButtonColor)
         actionMenu.addMenuButton(fab)
         fab.setLabelColors(primaryColor, primaryColor, primaryColor)
         return fab

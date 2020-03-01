@@ -4,15 +4,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ListView
-import com.blanke.mdwechat.CC
-import com.blanke.mdwechat.Classes
+import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.ConversationListView
 import com.blanke.mdwechat.Classes.ConversationWithAppBrandListView
 import com.blanke.mdwechat.Fields.ConversationFragment_mListView
 import com.blanke.mdwechat.Methods.ConversationWithAppBrandListView_isAppBrandHeaderEnable
-import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
-import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
@@ -60,8 +57,10 @@ object ConversationHooker : HookerProvider {
             XposedBridge.hookAllMethods(CC.View, "setBackgroundColor", object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val view = param.thisObject as View
-                    if (view::class.java.name == ConversationListView.name) {
-                        param.result = null
+                    val clazz = view::class.java.name
+                    when (clazz) {
+                        Classes.ActionBarContainer.name -> param.result = WeChatHelper.colorPrimary
+                        ConversationListView.name -> param.result = 0
                     }
                 }
             })
@@ -70,8 +69,8 @@ object ConversationHooker : HookerProvider {
             XposedBridge.hookAllMethods(CC.View, "setBackground", object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val view = param.thisObject as View
-                    val pView = view.parent as View
-                    if (pView::class.java.name == ConversationListView.name) {
+                    val pView = view.parent
+                    if ((pView is View) && (pView::class.java.name == ConversationListView.name)) {
                         param.result = null
                     }
                 }

@@ -11,9 +11,10 @@ import com.blanke.mdwechat.WeChatHelper
 
 object HookConfig {
     private val key_hook_switch = "hookSwitch"
-    private val key_color_primary = "colorPrimary"
-    private val key_color_secondary = "colorSecondary"
-    private val key_color_tip = "colorTip"
+    private val key_color_primary = "key_color_primary"
+    private val key_color_secondary = "key_color_secondary"
+    private val key_color_tip = "key_color_tip"
+    private val key_color_float_button = "key_color_float_button"
     private val key_hook_actionbar = "key_hook_actionbar"
     private val key_hook_avatar = "key_hook_avatar"
     private val key_hook_ripple = "key_hook_ripple"
@@ -69,6 +70,10 @@ object HookConfig {
     val get_color_tip: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_color_tip, Color.BLACK)
+        }
+    val get_color_float_button: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_float_button, Color.WHITE)
         }
 
     val is_hook_actionbar: Boolean

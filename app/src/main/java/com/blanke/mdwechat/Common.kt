@@ -39,8 +39,9 @@ object Common {
     }
 
     val APP_DIR_PATH: String by lazy {
-        // debug VXP 环境下，区分目录
-        val appDir = if (isVXPEnv && BuildConfig.DEBUG) APP_VXP_DIR else APP_DIR
+        //         debug VXP 环境下，区分目录
+//        val appDir = if (isVXPEnv && BuildConfig.DEBUG) APP_VXP_DIR else APP_DIR
+        val appDir = APP_DIR
 //        LogUtil.log("isVXPEnv = $isVXPEnv")
         LogUtil.log("app dir = $appDir")
         Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator

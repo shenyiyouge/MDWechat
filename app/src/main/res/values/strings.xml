@@ -2,9 +2,10 @@
     <string name="app_name">MDWechat</string>
     <string name="text_category_switch">开关</string>
     <string name="key_hook_switch">hookSwitch</string>
-    <string name="key_color_primary">colorPrimary</string>
-    <string name="key_color_secondary">colorSecondary</string>
-    <string name="key_color_tip">colorTip</string>
+    <string name="key_color_primary">key_color_primary</string>
+    <string name="key_color_secondary">key_color_secondary</string>
+    <string name="key_color_float_button">key_color_float_button</string>
+    <string name="key_color_tip">key_color_tip</string>
     <string name="text_hook_switch">总开关</string>
     <string name="text_settings">设置</string>
     <string name="text_color_primary">主色</string>
@@ -63,6 +64,7 @@
     <string name="key_hook_float_button_move">key_hook_float_button_move</string>
     <string name="text_hook_float_button_move_info">在某些机型上(魅族等),浮动按钮,显示异常,可以打开移动选项.</string>
     <string name="text_hook_float_button_move">我想移动浮动按钮</string>
+    <string name="text_float_button_color">悬浮按钮文字颜色</string>
     <string name="key_conversation_settings">key_conversation_settings</string>
     <string name="text_conversation_settings">聊天列表页设置</string>
     <string name="key_color_conversation_top">key_color_conversation_top</string>

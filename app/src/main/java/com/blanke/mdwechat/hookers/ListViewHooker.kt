@@ -286,8 +286,8 @@ object ListViewHooker : HookerProvider {
                     val title = ViewUtils.getChildView(ActionBarPage, 0) as TextView
                     title.gravity = Gravity.CENTER;
                     title.text = HookConfig.value_mini_program_title
-                    val lp =  title.layoutParams as LinearLayout.LayoutParams
-                    lp.setMargins( 0,  0,  0,  0)
+                    val lp = title.layoutParams as LinearLayout.LayoutParams
+                    lp.setMargins(0, 0, 0, 0)
                     ActionBarPage.removeView(ViewUtils.getChildView(ActionBarPage, 1))
                     ActionBarPage.removeView(ViewUtils.getChildView(ActionBarPage, 2))
 

@@ -1,5 +1,6 @@
 package com.blanke.mdwechat
 
+import com.blanke.mdwechat.Common.isVXPEnv
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
@@ -38,10 +39,9 @@ class WechatHook : IXposedHookLoadPackage {
                     SchemeHooker,
                     LogHooker
             )
-//            virtual xposed 不适用 debug
-//            if (BuildConfig.DEBUG) {
-//                hookers.add(0, DebugHooker)
-//            }
+            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
+                hookers.add(0, DebugHooker)
+            }
             hookMain(lpparam, hookers)
         } catch (e: Throwable) {
             log(e)
