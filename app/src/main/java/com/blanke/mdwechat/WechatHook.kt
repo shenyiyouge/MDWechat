@@ -38,9 +38,10 @@ class WechatHook : IXposedHookLoadPackage {
                     SchemeHooker,
                     LogHooker
             )
-            if (BuildConfig.DEBUG) {
-                hookers.add(0, DebugHooker)
-            }
+//            virtual xposed 不适用 debug
+//            if (BuildConfig.DEBUG) {
+//                hookers.add(0, DebugHooker)
+//            }
             hookMain(lpparam, hookers)
         } catch (e: Throwable) {
             log(e)

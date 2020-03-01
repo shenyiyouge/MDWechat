@@ -2,9 +2,6 @@ package com.blanke.mdwechat.util
 
 import android.view.View
 import android.view.ViewGroup
-import com.blanke.mdwechat.util.LogUtil.logViewStackTracesXp
-import com.blanke.mdwechat.util.LogUtil.logViewXp
-import com.blanke.mdwechat.util.LogUtil.logXp
 
 object ViewUtils {
     fun getChildView(view: View, vararg indexs: Int): View? {

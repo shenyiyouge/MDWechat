@@ -14,14 +14,11 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.ColorUtils
-import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.mainThread
 import com.blankj.utilcode.util.BarUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.XposedHelpers.findAndHookMethod
-import com.blanke.mdwechat.util.LogUtil.logXp
-import java.lang.Exception
 
 
 object StatusBarHooker : HookerProvider {

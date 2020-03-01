@@ -17,7 +17,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="（非官方版本）适配至微信7.0.12,优化一些界面的状态栏显示方式" />
+            android:value="（非官方版本）适配至微信7.0.11" />
         <meta-data
             android:name="xposedminversion"
             android:value="42" />

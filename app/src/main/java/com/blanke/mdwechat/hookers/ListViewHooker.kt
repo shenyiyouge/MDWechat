@@ -298,6 +298,12 @@ object ListViewHooker : HookerProvider {
 //                    小程序字体
                     setMiniProgramTitleColor(appBrandDesktopView)
                     setMiniProgramTitleColor(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
+//                    logXp("---------------------miniProgramPage------------------")
+//                    LogUtil.logViewStackTracesXp(miniProgramPage)
+//                    logXp("---------------------appBrandDesktopView------------------")
+//                    LogUtil.logViewStackTracesXp(appBrandDesktopView)
+//                    logXp("---------------------getChildView------------------")
+//                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
                 }
             }
         })

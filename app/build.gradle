@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 37
-        versionName "3.6.0-beta~1"
+        versionName "3.6.0-beta~3"
     }
     buildTypes {
         release {
@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:23.0.0'
 
     compileOnly 'de.robv.android.xposed:api:53'
