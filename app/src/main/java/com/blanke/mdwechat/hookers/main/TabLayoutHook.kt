@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -27,24 +28,23 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 object TabLayoutHook {
-    fun addTabLayout(viewPagerLinearLayout: ViewGroup) {
-        val context = viewPagerLinearLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
-        val resContext = viewPagerLinearLayout.context
-
+    fun newTabLayout(viewGroup: ViewGroup, primaryColor: Int, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float = 0F): CommonTabLayout {
+        val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
+        val resContext = viewGroup.context
         val tabLayout = CommonTabLayout(context)
-        val primaryColor = HookConfig.get_color_primary
         tabLayout.setBackgroundColor(primaryColor)
         tabLayout.textSelectColor = Color.WHITE
         val dp2 = ConvertUtils.dp2px(resContext, 1f)
         tabLayout.indicatorHeight = dp2.toFloat()
         tabLayout.indicatorColor = Color.WHITE
+        tabLayout.setIndicatorGravity(indicatorGravity)
         tabLayout.indicatorCornerRadius = dp2.toFloat()
         tabLayout.indicatorAnimDuration = 200
-        tabLayout.elevation = if (HookConfig.is_hook_tab_elevation) 5F else 0F
-        tabLayout.unreadBackground = Color.WHITE
+        tabLayout.elevation = tabElevation
+        tabLayout.unreadBackground = Color.RED
         tabLayout.unreadTextColor = primaryColor
-        tabLayout.selectIconColor = Color.WHITE
-        tabLayout.unSelectIconColor = Color.WHITE
+        tabLayout.selectIconColor = Color.GREEN
+        tabLayout.unSelectIconColor = Color.LTGRAY
 
         val mTabEntities = intArrayOf(0, 1, 2, 3)
 //                .filterNot { HookConfig.is_hook_hide_wx_tab_2 && it == 2 }
@@ -70,6 +70,33 @@ object TabLayoutHook {
             override fun onTabReselect(position: Int) {
             }
         })
+        return tabLayout
+    }
+
+    // 返回高度,以便悬浮按钮使用(懒)
+    fun addTabLayoutAtBottom(tabView: ViewGroup): Int {
+        val tabLayout = newTabLayout(tabView, HookConfig.get_color_primary, Gravity.TOP,5f)
+
+        val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val viewChild = tabView.getChildAt(0) as ViewGroup
+        val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        viewChild.measure(w, w)
+        params.height = viewChild.getMeasuredHeight()
+
+        viewChild.addView(tabLayout, 1, params)
+        return params.height
+    }
+
+    fun addTabLayout(viewPagerLinearLayout: ViewGroup) {
+        val primaryColor = HookConfig.get_color_primary
+
+        val context = viewPagerLinearLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
+        val resContext = viewPagerLinearLayout.context
+        // 7.0.7(?) 之后小程序下拉相关
+        val isHideElevation = (WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)
+        val tabElevation = if (!isHideElevation && HookConfig.is_hook_tab_elevation) 5F else 0F
+
+        val tabLayout = newTabLayout(viewPagerLinearLayout, HookConfig.get_color_primary,Gravity.BOTTOM, tabElevation)
 
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
@@ -103,9 +130,19 @@ object TabLayoutHook {
                     statusParam.height = BarUtils.getStatusBarHeight()
                     viewPagerLinearLayout.addView(statusView, 0, statusParam)
                 }
+                viewPagerLinearLayout.height
                 viewPagerLinearLayout.setPadding(0, 0, 0, 0)
                 viewPagerLinearLayout.requestLayout()
-                viewPagerLinearLayout.addView(tabLayout, 1, params)
+                //小程序下拉之后的填空
+                if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)) {
+                    val params1 = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    params1.height = px48
+                    params1.topMargin = actionHeight + BarUtils.getStatusBarHeight() - 2 - px48
+                    val view = FrameLayout(context)
+                    view.setBackgroundColor(primaryColor)
+                    viewPagerLinearLayout.addView(view, 1, params1)
+                }
+                viewPagerLinearLayout.addView(tabLayout, 2, params)
             }
             if (!HookConfig.is_hook_hide_actionbar) {
                 val mActionBar = Objects.Main.HomeUI_mActionBar.get()

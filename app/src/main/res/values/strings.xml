@@ -61,6 +61,7 @@
     <string name="text_hook_float_button_info"></string>
     <string name="key_hook_hide_actionbar">key_hook_hide_actionbar</string>
     <string name="text_hook_hide_actionbar">隐藏 ActionBar</string>
+    <string name="summary_hook_hide_actionbar">如果TabLayout沉底则默认不隐藏</string>
     <string name="key_hook_float_button_move">key_hook_float_button_move</string>
     <string name="text_hook_float_button_move_info">在某些机型上(魅族等),浮动按钮,显示异常,可以打开移动选项.</string>
     <string name="text_hook_float_button_move">我想移动浮动按钮</string>
@@ -102,8 +103,11 @@
     <string name="msg_kill_wechat">请手动强行停止微信,再打开微信看效果.</string>
     <string name="key_hook_tab_elevation">key_hook_tab_elevation</string>
     <string name="text_hook_tab_elevation">TabLayout阴影</string>
+    <string name="key_tab_layout_underneath">key_tab_layout_underneath</string>
+    <string name="text_tab_layout_underneath">TabLayout沉底</string>
     <string name="key_hook_hide_wx_tab">key_hook_hide_wx_tab</string>
     <string name="text_hook_hide_wx_tab">隐藏微信底栏</string>
+    <string name="summary_hook_hide_wx_tab">如果TabLayout沉底则默认隐藏</string>
     <string name="key_feedback_email">key_feedback_email</string>
     <string name="text_feedback_email">给我发邮件反馈</string>
     <string name="text_feedback_email_info">blanke.master+mdwechat@gmail.com,反馈问题请描述问题并提供日志,不定时检查回复</string>

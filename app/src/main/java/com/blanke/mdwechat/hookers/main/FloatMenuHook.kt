@@ -23,7 +23,7 @@ import de.robv.android.xposed.XposedHelpers
 
 object FloatMenuHook {
 
-    fun addFloatMenu(contentLayout: ViewGroup) {
+    fun addFloatMenu(contentLayout: ViewGroup, bottomMargin: Int = 0) {
         val context = contentLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val floatConfig = AppCustomConfig.getFloatButtonConfig()
         if (floatConfig?.items == null || floatConfig.menu?.icon == null) {
@@ -54,7 +54,7 @@ object FloatMenuHook {
                     floatItems.add(it)
                     getFloatButton(actionMenu, context, it.text,
                             BitmapDrawable(context.resources,
-                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor,floatButtonColor)
+                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor, floatButtonColor)
                 }
 
         actionMenu.setFloatButtonClickListener { fab, index ->
@@ -65,7 +65,7 @@ object FloatMenuHook {
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val margin = ConvertUtils.dp2px(contentLayout.context, 12f)
         params.rightMargin = margin
-        params.bottomMargin = margin
+        params.bottomMargin = margin + bottomMargin
         params.gravity = Gravity.END or Gravity.BOTTOM
         if (HookConfig.is_hook_float_button_move) {
             actionMenu.menuButton.setOnTouchListener(object : View.OnTouchListener {
@@ -114,7 +114,7 @@ object FloatMenuHook {
     }
 
     private fun getFloatButton(actionMenu: FloatingActionMenu, context: Context,
-                               label: String, drawable: Drawable, primaryColor: Int,floatButtonColor: Int): FloatingActionButton {
+                               label: String, drawable: Drawable, primaryColor: Int, floatButtonColor: Int): FloatingActionButton {
         val fab = FloatingActionButton(context)
         fab.setImageDrawable(drawable)
         fab.colorNormal = primaryColor

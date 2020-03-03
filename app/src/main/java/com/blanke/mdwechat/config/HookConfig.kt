@@ -21,6 +21,7 @@ object HookConfig {
     private val key_hook_float_button = "key_hook_float_button"
     private val key_hook_search = "key_hook_search"
     private val key_hook_tab = "key_hook_tab"
+    private val key_tab_layout_underneath = "key_tab_layout_underneath"
     private val key_hook_hide_wx_tab = "key_hook_hide_wx_tab"
     private val key_hook_hide_wx_tab_2 = "key_hook_hide_wx_tab_2"
     private val key_hook_hide_wx_tab_3 = "key_hook_hide_wx_tab_3"
@@ -103,6 +104,10 @@ object HookConfig {
     val is_hook_tab: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab, true)
+        }
+    val is_tab_layout_underneath: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_underneath, true)
         }
     val is_hook_tab_elevation: Boolean
         get() {

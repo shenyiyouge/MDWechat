@@ -39,9 +39,9 @@ class WechatHook : IXposedHookLoadPackage {
                     SchemeHooker,
                     LogHooker
             )
-            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
-                hookers.add(0, DebugHooker)
-            }
+//            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
+//                hookers.add(0, DebugHooker)
+//            }
             hookMain(lpparam, hookers)
         } catch (e: Throwable) {
             log(e)

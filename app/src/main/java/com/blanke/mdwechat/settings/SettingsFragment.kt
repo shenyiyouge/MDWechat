@@ -6,12 +6,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.preference.EditTextPreference
-import android.preference.Preference
-import android.preference.PreferenceCategory
-import android.preference.PreferenceFragment
+import android.preference.*
 import android.view.View
 import android.widget.ScrollView
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import com.blanke.mdwechat.BuildConfig
@@ -47,10 +45,11 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val displayOptions = findPreference(getString(R.string.key_conversation_settings)) as PreferenceCategory
         preferenceScreen.removePreference(displayOptions)
 
-        val a = preferenceScreen.findPreference( getString(R.string.key_mini_program_title)) as EditTextPreference
+        val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
         a.summary = a.text
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_tab_layout_underneath))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback))?.onPreferenceClickListener = this
@@ -84,12 +83,20 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         when (preference.key) {
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_mini_program_title) -> setSummary(o as String)
+            getString(R.string.key_tab_layout_underneath) ->setTabLayoutUnderneath((o as Boolean))
         }
         return true
     }
-    private fun setSummary(s:String){
-      val a = preferenceScreen.findPreference( getString(R.string.key_mini_program_title)) as EditTextPreference
+
+    private fun setSummary(s: String) {
+        val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
         a.summary = "当前文字：$s"
+    }
+    private fun setTabLayoutUnderneath(o:Boolean){
+        val hook_hide_actionbar = preferenceScreen.findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
+        val hook_hide_wx_tab = preferenceScreen.findPreference(getString(R.string.key_hook_hide_wx_tab)) as SwitchPreference
+        hook_hide_actionbar.setChecked(false)
+        hook_hide_wx_tab.setChecked(false)
     }
 
 
@@ -128,7 +135,6 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_help_icon) -> {
                 gotoMarkDownAct(getString(R.string.text_help_icon), Common.URL_HELP_ICON)
             }
-
         }
         return true
     }

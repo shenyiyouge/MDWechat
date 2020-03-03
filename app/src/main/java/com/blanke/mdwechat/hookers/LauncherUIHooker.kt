@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.blanke.mdwechat.*
@@ -25,11 +26,15 @@ import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
+import com.blanke.mdwechat.hookers.main.TabLayoutHook.addTabLayoutAtBottom
+import com.blanke.mdwechat.hookers.main.TabLayoutHook.newTabLayout
 import com.blanke.mdwechat.util.LogUtil.log
+import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 import java.lang.ref.WeakReference
+
 
 object LauncherUIHooker : HookerProvider {
     const val keyInit = "key_init"
@@ -82,27 +87,14 @@ object LauncherUIHooker : HookerProvider {
                         }
                         LauncherUI_mViewPager = WeakReference(viewPager)
 
-                        // remove tabView
+                        // 微信底栏 & action bar
                         val linearViewGroup = viewPager.parent as ViewGroup
-                        val tabView = linearViewGroup.getChildAt(1)
-                        if (HookConfig.is_hook_hide_wx_tab) {
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                // 672报错
-                                tabView.visibility = View.GONE
-                                tabView.layoutParams.height = 0
-                            } else {
-                                linearViewGroup.removeView(tabView)
-                            }
-                            log("移除 tabView $tabView")
-                        }
-
-                        val contentViewGroup = linearViewGroup.parent as ViewGroup
-                        Objects.Main.LauncherUI_mContentLayout = WeakReference(contentViewGroup)
-
-                        val actionBar = Fields.HomeUI_mActionBar.get(homeUI)
-                        Objects.Main.HomeUI_mActionBar = WeakReference<Any>(actionBar)
-                        HomeActionBarHook.fix(linearViewGroup)
-                        if (HookConfig.is_hook_tab) {
+                        val tabView = linearViewGroup.getChildAt(1) as ViewGroup
+                        var tabViewUnderneathHeight = 0
+                        if (HookConfig.is_tab_layout_underneath) {
+                            tabViewUnderneathHeight = addTabLayoutAtBottom(tabView)
+                            log("添加底栏")
+                        } else if (HookConfig.is_hook_tab) {
                             try {
                                 log("添加 TabLayout")
                                 TabLayoutHook.addTabLayout(linearViewGroup)
@@ -111,10 +103,30 @@ object LauncherUIHooker : HookerProvider {
                                 log(e)
                             }
                         }
+
+                        val contentViewGroup = linearViewGroup.parent as ViewGroup
+                        Objects.Main.LauncherUI_mContentLayout = WeakReference(contentViewGroup)
+
+                        val actionBar = Fields.HomeUI_mActionBar.get(homeUI)
+                        Objects.Main.HomeUI_mActionBar = WeakReference<Any>(actionBar)
+                        HomeActionBarHook.fix(linearViewGroup)
+                        //顶栏
+                        if (HookConfig.is_hook_hide_wx_tab) {
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                // 672报错
+                                val a = tabView.getChildAt(0)
+                                a.visibility = View.GONE
+                                a.layoutParams.height = 0
+                            } else {
+                                linearViewGroup.removeView(tabView)
+                            }
+                            log("移除 tabView $tabView")
+                        }
+                        // float menu
                         if (HookConfig.is_hook_float_button) {
                             try {
                                 log("添加 FloatMenu")
-                                FloatMenuHook.addFloatMenu(contentViewGroup)
+                                FloatMenuHook.addFloatMenu(contentViewGroup, tabViewUnderneathHeight)
                             } catch (e: Throwable) {
                                 log("添加 FloatMenu 报错")
                                 log(e)
