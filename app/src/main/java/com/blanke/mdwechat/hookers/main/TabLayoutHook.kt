@@ -17,6 +17,7 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.ConvertUtils
 import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.waitInvoke
 import com.blankj.utilcode.util.BarUtils
@@ -24,11 +25,15 @@ import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import de.robv.android.xposed.XposedHelpers
+import java.lang.Exception
 import java.lang.ref.WeakReference
 import java.util.*
 
 object TabLayoutHook {
-    fun newTabLayout(viewGroup: ViewGroup, primaryColor: Int, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float = 0F): CommonTabLayout {
+    fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float = 0F): CommonTabLayout {
+        val primaryColor: Int = HookConfig.get_color_primary
+        val secondaryColor: Int = HookConfig.get_color_secondary
+        val tipColor: Int = HookConfig.get_color_tip
         val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewGroup.context
         val tabLayout = CommonTabLayout(context)
@@ -36,15 +41,15 @@ object TabLayoutHook {
         tabLayout.textSelectColor = Color.WHITE
         val dp2 = ConvertUtils.dp2px(resContext, 1f)
         tabLayout.indicatorHeight = dp2.toFloat()
-        tabLayout.indicatorColor = Color.WHITE
+        tabLayout.indicatorColor = if (HookConfig.is_hook_tab_elevation) secondaryColor else primaryColor
         tabLayout.setIndicatorGravity(indicatorGravity)
         tabLayout.indicatorCornerRadius = dp2.toFloat()
         tabLayout.indicatorAnimDuration = 200
         tabLayout.elevation = tabElevation
-        tabLayout.unreadBackground = Color.RED
+        tabLayout.unreadBackground = tipColor
         tabLayout.unreadTextColor = primaryColor
-        tabLayout.selectIconColor = Color.GREEN
-        tabLayout.unSelectIconColor = Color.LTGRAY
+        tabLayout.selectIconColor = secondaryColor
+//        tabLayout.unSelectIconColor = Color.WHITE
 
         val mTabEntities = intArrayOf(0, 1, 2, 3)
 //                .filterNot { HookConfig.is_hook_hide_wx_tab_2 && it == 2 }
@@ -75,7 +80,7 @@ object TabLayoutHook {
 
     // 返回高度,以便悬浮按钮使用(懒)
     fun addTabLayoutAtBottom(tabView: ViewGroup): Int {
-        val tabLayout = newTabLayout(tabView, HookConfig.get_color_primary, Gravity.TOP,5f)
+        val tabLayout = newTabLayout(tabView, Gravity.TOP, 5f)
 
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val viewChild = tabView.getChildAt(0) as ViewGroup
@@ -83,7 +88,20 @@ object TabLayoutHook {
         viewChild.measure(w, w)
         params.height = viewChild.getMeasuredHeight()
 
-        viewChild.addView(tabLayout, 1, params)
+        viewChild.addView(tabLayout, 4, params)
+        try {
+            LogUtil.log("add tableyout success")
+            Objects.Main.LauncherUI_mTabLayout = WeakReference(tabLayout)
+            for (index in 0..4) {
+                viewChild.getChildAt(1).visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            logXp(e)
+        }
+        // change main ActionBar elevation = 0
+//        val actionBarLayout = ViewUtils.getParentView(tabView, 3) as ViewGroup
+//        val actionBar = actionBarLayout.getChildAt(1)
+//        actionBar.elevation = 0F
         return params.height
     }
 
@@ -96,7 +114,7 @@ object TabLayoutHook {
         val isHideElevation = (WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)
         val tabElevation = if (!isHideElevation && HookConfig.is_hook_tab_elevation) 5F else 0F
 
-        val tabLayout = newTabLayout(viewPagerLinearLayout, HookConfig.get_color_primary,Gravity.BOTTOM, tabElevation)
+        val tabLayout = newTabLayout(viewPagerLinearLayout, Gravity.BOTTOM, tabElevation)
 
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)

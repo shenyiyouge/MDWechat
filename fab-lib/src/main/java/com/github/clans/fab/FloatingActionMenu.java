@@ -1045,6 +1045,18 @@ public class FloatingActionMenu extends ViewGroup {
         return super.onKeyDown(keyCode, event);
     }
 
+    public ColorStateList getmLabelsTextColor() {
+        return mLabelsTextColor;
+    }
+
+    public void setmLabelsTextColor(ColorStateList mLabelsTextColor) {
+        this.mLabelsTextColor = mLabelsTextColor;
+    }
+
+    public void setmLabelsTextColor(Integer mLabelsTextColor) {
+        this.mLabelsTextColor = ColorStateList.valueOf(mLabelsTextColor);
+    }
+
     public FloatingActionButton getMenuButton() {
         return mMenuButton;
     }

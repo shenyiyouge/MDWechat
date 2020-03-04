@@ -31,10 +31,12 @@ object FloatMenuHook {
             return
         }
         val primaryColor = HookConfig.get_color_primary
+        val secondaryColor = HookConfig.get_color_secondary
         val floatButtonColor = HookConfig.get_color_float_button
         val actionMenu = FloatingActionMenu(context)
         actionMenu.menuButtonColorNormal = primaryColor
         actionMenu.menuButtonColorPressed = primaryColor
+        actionMenu.setmLabelsTextColor(secondaryColor)
         val drawable: Bitmap? = AppCustomConfig.getIcon(floatConfig.menu!!.icon)
         if (drawable == null) {
             log("floatButton 主 icon 为空")

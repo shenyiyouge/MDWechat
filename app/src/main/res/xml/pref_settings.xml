@@ -112,13 +112,13 @@
             android:key="@string/key_hook_float_button_move"
             android:summary="@string/text_hook_float_button_move_info"
             android:title="@string/text_hook_float_button_move" />
-        <!--        <com.jaredrummler.android.colorpicker.ColorPreference-->
-        <!--            android:defaultValue="@color/material_white"-->
-        <!--            android:dependency="@string/key_hook_float_button"-->
-        <!--            android:key="@string/key_color_float_button"-->
-        <!--            android:title="@string/text_float_button_color"-->
-        <!--            app:cpv_colorPresets="@array/colors"-->
-        <!--            app:cpv_showAlphaSlider="true" />-->
+<!--                <com.jaredrummler.android.colorpicker.ColorPreference-->
+<!--                    android:defaultValue="@color/material_white"-->
+<!--                    android:dependency="@string/key_hook_float_button"-->
+<!--                    android:key="@string/key_color_float_button"-->
+<!--                    android:title="@string/text_float_button_color"-->
+<!--                    app:cpv_colorPresets="@array/colors"-->
+<!--                    app:cpv_showAlphaSlider="true" />-->
 
         <SwitchPreference
             android:defaultValue="true"

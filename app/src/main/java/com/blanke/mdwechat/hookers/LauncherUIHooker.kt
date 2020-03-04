@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.blanke.mdwechat.*
@@ -27,9 +26,7 @@ import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.addTabLayoutAtBottom
-import com.blanke.mdwechat.hookers.main.TabLayoutHook.newTabLayout
 import com.blanke.mdwechat.util.LogUtil.log
-import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
@@ -87,14 +84,28 @@ object LauncherUIHooker : HookerProvider {
                         }
                         LauncherUI_mViewPager = WeakReference(viewPager)
 
-                        // 微信底栏 & action bar
                         val linearViewGroup = viewPager.parent as ViewGroup
+
+                        val contentViewGroup = linearViewGroup.parent as ViewGroup
+                        Objects.Main.LauncherUI_mContentLayout = WeakReference(contentViewGroup)
+
+                        val actionBar = Fields.HomeUI_mActionBar.get(homeUI)
+                        Objects.Main.HomeUI_mActionBar = WeakReference<Any>(actionBar)
+
+                        // 微信底栏 & action bar
                         val tabView = linearViewGroup.getChildAt(1) as ViewGroup
                         var tabViewUnderneathHeight = 0
                         if (HookConfig.is_tab_layout_underneath) {
-                            tabViewUnderneathHeight = addTabLayoutAtBottom(tabView)
-                            log("添加底栏")
-                        } else if (HookConfig.is_hook_tab) {
+                            try {
+                                log("添加底栏")
+                                tabViewUnderneathHeight = addTabLayoutAtBottom(tabView)
+                            } catch (e: Throwable) {
+                                log("添加底栏 报错")
+                                log(e)
+                            }
+                        }
+                        else if (HookConfig.is_hook_tab) {
+                        HomeActionBarHook.fix(linearViewGroup)
                             try {
                                 log("添加 TabLayout")
                                 TabLayoutHook.addTabLayout(linearViewGroup)
@@ -104,12 +115,6 @@ object LauncherUIHooker : HookerProvider {
                             }
                         }
 
-                        val contentViewGroup = linearViewGroup.parent as ViewGroup
-                        Objects.Main.LauncherUI_mContentLayout = WeakReference(contentViewGroup)
-
-                        val actionBar = Fields.HomeUI_mActionBar.get(homeUI)
-                        Objects.Main.HomeUI_mActionBar = WeakReference<Any>(actionBar)
-                        HomeActionBarHook.fix(linearViewGroup)
                         //顶栏
                         if (HookConfig.is_hook_hide_wx_tab) {
                             if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
@@ -137,7 +142,8 @@ object LauncherUIHooker : HookerProvider {
                 })
     }
 
-    private val mainTabUIPageAdapterHook = Hooker {
+    private
+    val mainTabUIPageAdapterHook = Hooker {
         XposedHelpers.findAndHookMethod(WxViewPager, WxViewPager_selectedPage.name, CC.Int, CC.Boolean, CC.Boolean, CC.Int, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam?) {
                 val vp = param?.thisObject
@@ -213,7 +219,8 @@ object LauncherUIHooker : HookerProvider {
         })
     }
 
-    private val actionMenuHooker = Hooker {
+    private
+    val actionMenuHooker = Hooker {
         //hide menu item in actionBar
         XposedHelpers.findAndHookMethod(Classes.LauncherUI, "onCreateOptionsMenu", CC.Menu, object : XC_MethodHook() {
             @Throws(Throwable::class)

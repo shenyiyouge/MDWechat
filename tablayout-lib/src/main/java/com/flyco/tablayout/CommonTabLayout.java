@@ -130,7 +130,7 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
     private float indicatorOffset = 0;
     private int startScrollPosition = -1;
     private int unreadBackground = Color.BLACK, unreadTextColor = Color.WHITE;
-    private int unSelectIconColor = Color.GRAY, selectIconColor = Color.WHITE;
+    private int /*unSelectIconColor = Color.GRAY, */selectIconColor = Color.WHITE;
 
     public CommonTabLayout(Context context) {
         this(context, null, 0);
@@ -291,7 +291,8 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         }
         ImageView iv_tab_icon = (ImageView) tabView.findViewById(R.id.iv_tab_icon);
         iv_tab_icon.setImageDrawable(mTabEntitys.get(position).getTabIcon());
-        iv_tab_icon.setColorFilter(unSelectIconColor);
+//        iv_tab_icon.setColorFilter(unSelectIconColor);
+        iv_tab_icon.clearColorFilter();
 
         tabView.setOnClickListener(new OnClickListener() {
             @Override
@@ -353,7 +354,12 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
             if (mIconVisible) {
                 iv_tab_icon.setVisibility(View.VISIBLE);
 //                CustomTabEntity tabEntity = mTabEntitys.get(i);
-                iv_tab_icon.setColorFilter(selected ? selectIconColor : unSelectIconColor);
+                if (selected) {
+                    iv_tab_icon.setColorFilter(selectIconColor);
+                } else {
+                    iv_tab_icon.clearColorFilter();
+                }
+//                iv_tab_icon.setColorFilter(selected ? selectIconColor : unSelectIconColor);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                         mIconWidth <= 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int) mIconWidth,
                         mIconHeight <= 0 ? LinearLayout.LayoutParams.WRAP_CONTENT : (int) mIconHeight);
@@ -381,7 +387,12 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
             TextView tab_title = (TextView) tabView.findViewById(R.id.tv_tab_title);
             tab_title.setTextColor(isSelect ? mTextSelectColor : mTextUnselectColor);
             ImageView iv_tab_icon = (ImageView) tabView.findViewById(R.id.iv_tab_icon);
-            iv_tab_icon.setColorFilter(isSelect ? selectIconColor : unSelectIconColor);
+            if (isSelect) {
+                iv_tab_icon.setColorFilter(selectIconColor);
+            } else {
+                iv_tab_icon.clearColorFilter();
+            }
+//            iv_tab_icon.setColorFilter(isSelect ? selectIconColor : unSelectIconColor);
             if (mTextBold == TEXT_BOLD_WHEN_SELECT) {
                 tab_title.getPaint().setFakeBoldText(isSelect);
             }
@@ -863,13 +874,13 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
         return tv_tab_title;
     }
 
-    public int getUnSelectIconColor() {
-        return unSelectIconColor;
-    }
-
-    public void setUnSelectIconColor(int unSelectIconColor) {
-        this.unSelectIconColor = unSelectIconColor;
-    }
+//    public int getUnSelectIconColor() {
+//        return unSelectIconColor;
+//    }
+//
+//    public void setUnSelectIconColor(int unSelectIconColor) {
+//        this.unSelectIconColor = unSelectIconColor;
+//    }
 
     public int getStartScrollPosition() {
         return startScrollPosition;
