@@ -140,6 +140,9 @@ object ListViewHooker : HookerProvider {
 
                 // ConversationFragment 聊天列表 item 7.0.11
                 else if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem_7_0_11, view)) {
+//                    logXp("=====================")
+//                    LogUtil.logViewStackTracesXp(getParentViewSafe(view, 15))
+//                    logXp("=====================")
                     val chatNameView = ViewUtils.getChildView(view, 1, 0, 0, 0)
                     val chatTimeView = ViewUtils.getChildView(view, 1, 0, 1)
                     val recentMsgView = ViewUtils.getChildView(view, 1, 1, 0, 1)
@@ -279,6 +282,8 @@ object ListViewHooker : HookerProvider {
                 }
                 // (7.0.7 以上) 下拉小程序框
                 else if (ViewTreeUtils.equals(ViewTreeRepo.ActionBarItem, view)) {
+//                    LogUtil.logXp("-------------------")
+//                    LogUtil.logViewStackTracesXp(view)
                     val miniProgramPage = ViewUtils.getChildView(view, 0) as RelativeLayout
 
                     // old action bar

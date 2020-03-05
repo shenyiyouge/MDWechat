@@ -103,10 +103,8 @@
     <string name="msg_kill_wechat">请手动强行停止微信,再打开微信看效果.</string>
     <string name="key_hook_tab_elevation">key_hook_tab_elevation</string>
     <string name="text_hook_tab_elevation">TabLayout阴影</string>
-    <string name="key_tab_layout_underneath">key_tab_layout_underneath</string>
-    <string name="text_tab_layout_underneath">TabLayout沉底</string>
-    <string name="key_hook_hide_wx_tab">key_hook_hide_wx_tab</string>
-    <string name="text_hook_hide_wx_tab">隐藏微信底栏</string>
+    <string name="key_tab_layout_on_top">key_tab_layout_on_top</string>
+    <string name="text_tab_layout_on_top">TabLayout置顶</string>
     <string name="summary_hook_hide_wx_tab">如果TabLayout沉底则默认隐藏</string>
     <string name="key_feedback_email">key_feedback_email</string>
     <string name="text_feedback_email">给我发邮件反馈</string>

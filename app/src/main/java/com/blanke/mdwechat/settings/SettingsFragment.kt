@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.preference.*
 import android.view.View
 import android.widget.ScrollView
-import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import com.blanke.mdwechat.BuildConfig
@@ -48,9 +47,10 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
         a.summary = a.text
 
-        findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
-        findPreference(getString(R.string.key_tab_layout_underneath))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
+
+        findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_wechat_config))?.onPreferenceClickListener = this
@@ -83,7 +83,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         when (preference.key) {
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_mini_program_title) -> setSummary(o as String)
-            getString(R.string.key_tab_layout_underneath) ->setTabLayoutUnderneath((o as Boolean))
+            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
         }
         return true
     }
@@ -92,11 +92,9 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
         a.summary = "当前文字：$s"
     }
-    private fun setTabLayoutUnderneath(o:Boolean){
+    private fun setTabLayoutOnTop(o:Boolean){
         val hook_hide_actionbar = preferenceScreen.findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
-        val hook_hide_wx_tab = preferenceScreen.findPreference(getString(R.string.key_hook_hide_wx_tab)) as SwitchPreference
         hook_hide_actionbar.setChecked(false)
-        hook_hide_wx_tab.setChecked(false)
     }
 
 

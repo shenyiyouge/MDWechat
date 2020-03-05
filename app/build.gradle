@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 27
+//    aaptOptions.cruncherEnabled = false
+//    aaptOptions.useNewCruncher = false
 
     defaultConfig {
         applicationId "com.blanke.mdwechat"

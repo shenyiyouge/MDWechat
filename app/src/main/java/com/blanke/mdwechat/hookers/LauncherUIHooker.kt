@@ -26,7 +26,9 @@ import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.addTabLayoutAtBottom
+import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
 import com.blanke.mdwechat.util.LogUtil.log
+import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
@@ -94,29 +96,14 @@ object LauncherUIHooker : HookerProvider {
 
                         // 微信底栏 & action bar
                         val tabView = linearViewGroup.getChildAt(1) as ViewGroup
-                        var tabViewUnderneathHeight = 0
-                        if (HookConfig.is_tab_layout_underneath) {
-                            try {
-                                log("添加底栏")
-                                tabViewUnderneathHeight = addTabLayoutAtBottom(tabView)
-                            } catch (e: Throwable) {
-                                log("添加底栏 报错")
-                                log(e)
-                            }
-                        }
-                        else if (HookConfig.is_hook_tab) {
-                        HomeActionBarHook.fix(linearViewGroup)
-                            try {
-                                log("添加 TabLayout")
-                                TabLayoutHook.addTabLayout(linearViewGroup)
-                            } catch (e: Throwable) {
-                                log("添加 TabLayout 报错")
-                                log(e)
-                            }
-                        }
+                        val tabViewUnderneathHeight = measureHeight(tabView)
+                        var MarginBottom = 1
 
-                        //顶栏
-                        if (HookConfig.is_hook_hide_wx_tab) {
+
+
+                        if (HookConfig.is_hook_tab) {
+                            // region 隐藏底栏
+                            MarginBottom = 0
                             if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                 // 672报错
                                 val a = tabView.getChildAt(0)
@@ -126,12 +113,34 @@ object LauncherUIHooker : HookerProvider {
                                 linearViewGroup.removeView(tabView)
                             }
                             log("移除 tabView $tabView")
+                            //endregion1
+                            if (!HookConfig.is_tab_layout_on_top) {
+                                try {
+                                    log("添加底栏")
+                                    addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
+                                } catch (e: Throwable) {
+                                    log("添加底栏 报错")
+                                    log(e)
+                                }
+                            }
+                            else {
+                                HomeActionBarHook.fix(linearViewGroup)
+                                try {
+                                    log("添加 TabLayout")
+                                    TabLayoutHook.addTabLayout(linearViewGroup)
+                                } catch (e: Throwable) {
+                                    log("添加 TabLayout 报错")
+                                    log(e)
+                                }
+                            }
                         }
+
+
                         // float menu
                         if (HookConfig.is_hook_float_button) {
                             try {
                                 log("添加 FloatMenu")
-                                FloatMenuHook.addFloatMenu(contentViewGroup, tabViewUnderneathHeight)
+                                FloatMenuHook.addFloatMenu(contentViewGroup, MarginBottom * tabViewUnderneathHeight)
                             } catch (e: Throwable) {
                                 log("添加 FloatMenu 报错")
                                 log(e)

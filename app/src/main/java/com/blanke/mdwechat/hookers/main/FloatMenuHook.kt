@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -21,6 +22,7 @@ import com.github.clans.fab.FloatingActionButton.SIZE_MINI
 import com.github.clans.fab.FloatingActionMenu
 import de.robv.android.xposed.XposedHelpers
 
+
 object FloatMenuHook {
 
     fun addFloatMenu(contentLayout: ViewGroup, bottomMargin: Int = 0) {
@@ -32,7 +34,7 @@ object FloatMenuHook {
         }
         val primaryColor = HookConfig.get_color_primary
         val secondaryColor = HookConfig.get_color_secondary
-        val floatButtonColor = HookConfig.get_color_float_button
+//        val floatButtonColor = HookConfig.get_color_float_button
         val actionMenu = FloatingActionMenu(context)
         actionMenu.menuButtonColorNormal = primaryColor
         actionMenu.menuButtonColorPressed = primaryColor
@@ -42,9 +44,10 @@ object FloatMenuHook {
             log("floatButton 主 icon 为空")
             return
         }
-        actionMenu.setMenuIcon(BitmapDrawable(context.resources, drawable))
+        actionMenu.setMenuIcon(setDrawableColor(BitmapDrawable(context.resources, drawable), secondaryColor))
         actionMenu.initMenuButton()
 
+        //menu items
         val floatItems = arrayListOf<FLoatButtonConfigItem>()
         floatConfig.items?.sortedBy { it.order }
                 ?.forEach {
@@ -56,7 +59,7 @@ object FloatMenuHook {
                     floatItems.add(it)
                     getFloatButton(actionMenu, context, it.text,
                             BitmapDrawable(context.resources,
-                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor, floatButtonColor)
+                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor, secondaryColor)
                 }
 
         actionMenu.setFloatButtonClickListener { fab, index ->
@@ -116,9 +119,9 @@ object FloatMenuHook {
     }
 
     private fun getFloatButton(actionMenu: FloatingActionMenu, context: Context,
-                               label: String, drawable: Drawable, primaryColor: Int, floatButtonColor: Int): FloatingActionButton {
+                               label: String, drawable: Drawable, primaryColor: Int, secondaryColor: Int): FloatingActionButton {
         val fab = FloatingActionButton(context)
-        fab.setImageDrawable(drawable)
+        fab.setImageDrawable(setDrawableColor(drawable, secondaryColor))
         fab.colorNormal = primaryColor
         fab.colorPressed = primaryColor
         fab.buttonSize = SIZE_MINI
@@ -154,5 +157,19 @@ object FloatMenuHook {
                 }
             }
         }
+    }
+
+    /**
+     * 为单个drawable着色并返回着色后的drawable
+     *
+     * @param drawable
+     * @param colorResId
+     * @return
+     */
+    fun setDrawableColor(drawable: Drawable, colorResId: Int): Drawable {
+        val modeDrawable = drawable.mutate()
+        val temp = DrawableCompat.wrap(modeDrawable)
+        DrawableCompat.setTint(temp, colorResId)
+        return temp
     }
 }

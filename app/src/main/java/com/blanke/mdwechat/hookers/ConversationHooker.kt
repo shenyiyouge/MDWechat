@@ -3,7 +3,9 @@ package com.blanke.mdwechat.hookers
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.ConversationListView
 import com.blanke.mdwechat.Classes.ConversationWithAppBrandListView
@@ -14,8 +16,9 @@ import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.LogUtil
-import com.blanke.mdwechat.util.NightModeUtils
+import com.blanke.mdwechat.util.*
+import com.blanke.mdwechat.util.LogUtil.logViewStackTracesXp
+import com.blanke.mdwechat.util.LogUtil.logXp
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -59,8 +62,53 @@ object ConversationHooker : HookerProvider {
                     val view = param.thisObject as View
                     val clazz = view::class.java.name
                     when (clazz) {
-                        Classes.ActionBarContainer.name -> param.result = WeChatHelper.colorPrimary
+                        //action bar 和 发送按钮
+                        Classes.ActionBarContainer.name -> {
+//                            logXp("-------------------")
+//                            logXp("-------------------")
+//                            logXp("-------------------")
+////                            LogUtil.logViewStackTracesXp(view)
+//                            if (ViewTreeUtils.equals(ViewTreeRepo.ActionBarContainerItem, view)) {
+//                                logXp("got")
+//                                val textView = ViewUtils.getChildView(view, 0, 0, 1, 0, 1) as TextView
+////                                logXp(textView::class.java.name)
+//                                logXp("${textView.text}")
+//                                textView.setTextColor(HookConfig.get_color_primary)
+//                                textView.setText("123")
+//                                logXp("${textView.text}")
+//                            }
+////                            view.setTextColor(1)
+////                            LogUtil.logViewStackTracesXp(ViewUtils.getParentView(view, 5) as View)
+////region 发送按钮
+//                            //todo
+//                            val parent = ViewUtils.getParentViewSafe(view, 4)
+////                            logXp("----------0-----------")
+////                            logXp(parent::class.java.name)
+////                            logViewStackTracesXp(parent)
+////                            logXp("----------1-----------")
+//                            if (parent::class.java.name.contains("com.tencent.mm.ui.HomeUI")) {
+////                                logViewStackTracesXp(parent)
+////                                logXp("----------2-----------")
+//                                val sendButton = ViewUtils.getChildView(parent, 2, 0, 0, 0, 2, 1, 0, 0, 1, 4, 1, 1) as Button
+////                                logViewStackTracesXp(sendButton)
+////                                logXp("=======3======")
+//                                sendButton.setBackgroundColor(WeChatHelper.colorPrimary)
+//                                sendButton.setText("666")
+//                                sendButton.setTextColor(WeChatHelper.colorSecondary)
+//                            }
+//                            //endregion
+                            param.result = WeChatHelper.colorPrimary
+                        }
                         ConversationListView.name -> param.result = 0
+//                        "android.widget.Button" -> {
+//                            val parent = ViewUtils.getParentView(view, 6)
+//                            if (parent is View) {
+//                                logXp(parent::class.java.name)
+//                                if (parent::class.java.name=="com.tencent.mm.pluginsdk.ui.chat.ChatFooter"){
+//                                    param.result = WeChatHelper.colorPrimary
+//                                }
+//                            }
+//                        }
                     }
                 }
             })

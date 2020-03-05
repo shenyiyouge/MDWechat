@@ -34,6 +34,19 @@ object ViewUtils {
         return currentView
     }
 
+    fun getParentViewSafe(view: View, index: Int): View {
+        var currentView = view
+        for (i in 0 until index) {
+            val v = currentView.parent
+            if (v != null && v is View) {
+                currentView = v
+            } else {
+                break
+            }
+        }
+        return currentView
+    }
+
     fun findFirstChildView(rootView: ViewGroup, viewClassName: String): View? {
         val childCount = rootView.childCount
         for (i in 0 until childCount) {
@@ -46,9 +59,10 @@ object ViewUtils {
         }
         return null
     }
+
     fun findLastChildView(rootView: ViewGroup, viewClassName: String): View? {
         val childCount = rootView.childCount
-        for (i in childCount-1 downTo 0) {
+        for (i in childCount - 1 downTo 0) {
             val v = rootView.getChildAt(i)
             if (v.javaClass.name == viewClassName) {
                 return v

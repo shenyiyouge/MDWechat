@@ -78,15 +78,19 @@ object TabLayoutHook {
         return tabLayout
     }
 
+    fun measureHeight(view: ViewGroup): Int {
+        val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.measure(w, w)
+        return view.getMeasuredHeight()
+    }
+
     // 返回高度,以便悬浮按钮使用(懒)
-    fun addTabLayoutAtBottom(tabView: ViewGroup): Int {
+    fun addTabLayoutAtBottom(tabView: ViewGroup, height: Int) {
         val tabLayout = newTabLayout(tabView, Gravity.TOP, 5f)
 
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val viewChild = tabView.getChildAt(0) as ViewGroup
-        val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-        viewChild.measure(w, w)
-        params.height = viewChild.getMeasuredHeight()
+        params.height = height
 
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -102,7 +106,6 @@ object TabLayoutHook {
 //        val actionBarLayout = ViewUtils.getParentView(tabView, 3) as ViewGroup
 //        val actionBar = actionBarLayout.getChildAt(1)
 //        actionBar.elevation = 0F
-        return params.height
     }
 
     fun addTabLayout(viewPagerLinearLayout: ViewGroup) {

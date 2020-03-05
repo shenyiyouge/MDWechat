@@ -556,9 +556,32 @@ object ViewTreeRepo {
                 )
         )
     }
+//    val ActionBarContainerItem: ViewTreeItem by lazy {
+//        ViewTreeItem(
+//                "android.support.v7.widget.ActionBarContainer",
+//                arrayOf(
+//                        ViewTreeItem(
+//                                "android.support.v7.widget.Toolbar",
+//                                arrayOf(
+//                                        ViewTreeItem(
+//                                                CC.LinearLayout.name,
+//                                                arrayOf(
+//                                                        ViewTreeItem(
+//                                                                CC.LinearLayout.name,
+//                                                                arrayOf(
+//                                                                        ViewTreeItem(CC.ImageView.name))),
+//                                                        ViewTreeItem(
+//                                                                CC.LinearLayout.name,
+//                                                                arrayOf(
+//                                                                        ViewTreeItem(
+//                                                                                CC.RelativeLayout.name,
+//                                                                                arrayOf(
+//                                                                                        ViewTreeItem(CC.ImageView.name),
+//                                                                                        ViewTreeItem(CC.TextView.name))),
+//                                                                        ViewTreeItem(CC.TextView.name)))))))))
+//    }
 
     // todo
-
     val ActionBarItem: ViewTreeItem by lazy {
         ViewTreeItem(
                 "com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopContainer",
