@@ -23,15 +23,15 @@ import de.robv.android.xposed.XposedHelpers
 object ListViewHooker : HookerProvider {
     private val excludeContext = arrayOf("com.tencent.mm.plugin.mall.ui.MallIndexUI")
 
-    private var headTextColor = Color.BLACK
-        get() {
-            return NightModeUtils.getContentTextColor()
-        }
-
     private var titleTextColor = Color.BLACK
         get() {
             return NightModeUtils.getTitleTextColor()
         }
+    private var summaryTextColor = Color.BLACK
+        get() {
+            return NightModeUtils.getContentTextColor()
+        }
+
     private var isHookTextColor = false
         get() {
             return HookConfig.is_hook_main_textcolor || NightModeUtils.isNightMode()
@@ -152,8 +152,8 @@ object ListViewHooker : HookerProvider {
 //                    LogUtil.log("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
                     if (isHookTextColor) {
                         XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
-                        XposedHelpers.callMethod(chatTimeView, "setTextColor", headTextColor)
-                        XposedHelpers.callMethod(recentMsgView, "setTextColor", headTextColor)
+                        XposedHelpers.callMethod(chatTimeView, "setTextColor", summaryTextColor)
+                        XposedHelpers.callMethod(recentMsgView, "setTextColor", summaryTextColor)
                     }
                     unreadCountView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
                     unreadView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
@@ -171,8 +171,8 @@ object ListViewHooker : HookerProvider {
 //                    LogUtil.log("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
                     if (isHookTextColor) {
                         XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
-                        XposedHelpers.callMethod(chatTimeView, "setTextColor", headTextColor)
-                        XposedHelpers.callMethod(recentMsgView, "setTextColor", headTextColor)
+                        XposedHelpers.callMethod(chatTimeView, "setTextColor", summaryTextColor)
+                        XposedHelpers.callMethod(recentMsgView, "setTextColor", summaryTextColor)
                     }
                     unreadCountView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
                     unreadView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
@@ -191,7 +191,7 @@ object ListViewHooker : HookerProvider {
                     ViewUtils.getChildView(contentLayout, 0)?.background = transparentDrawable
                     titleView?.background = transparentDrawable
                     if (isHookTextColor) {
-                        headTextView.setTextColor(headTextColor)
+                        headTextView.setTextColor(summaryTextColor)
                         XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
                     }
                 }
@@ -201,7 +201,7 @@ object ListViewHooker : HookerProvider {
                     val titleView = ViewUtils.getChildView(view, 1, 0, 3)
 //                    log("headTextView=$headTextView,titleView=$titleView")
                     if (isHookTextColor) {
-                        headTextView.setTextColor(headTextColor)
+                        headTextView.setTextColor(summaryTextColor)
                         XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
                     }
                     // 修改背景
@@ -299,7 +299,7 @@ object ListViewHooker : HookerProvider {
                     val appBrandDesktopView = ViewUtils.getChildView(miniProgramPage, 0, 0, 2, 0) as ViewGroup
                     //小程序搜索框
                     val searchEditText = ViewUtils.getChildView(appBrandDesktopView, 0, 0) as EditText
-                    searchEditText.setBackgroundColor(WeChatHelper.colorSecondary)
+                    searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
 //                    小程序字体
                     setMiniProgramTitleColor(appBrandDesktopView)
                     setMiniProgramTitleColor(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
@@ -321,7 +321,7 @@ object ListViewHooker : HookerProvider {
             if (view0 is ViewGroup) {
                 val textView = findLastChildView(view0, CC.TextView.name)
                 if (textView is TextView) {
-                    textView.setTextColor(headTextColor)
+                    textView.setTextColor(titleTextColor)
                 }
             }
         }

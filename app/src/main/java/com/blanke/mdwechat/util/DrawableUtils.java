@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 import java.util.Arrays;
 
@@ -17,6 +18,19 @@ import java.util.Arrays;
 
 public class DrawableUtils {
 
+    /**
+     * 为单个drawable着色并返回着色后的drawable
+     *
+     * @param drawable
+     * @param colorResId
+     * @return
+     */
+    public static Drawable setDrawableColor( Drawable drawable,Integer colorResId ) {
+        Drawable modeDrawable = drawable.mutate();
+        Drawable temp = DrawableCompat.wrap(modeDrawable);
+        DrawableCompat.setTint(temp, colorResId);
+        return temp;
+    }
     public static Drawable getNineDrawable(Resources resources, Bitmap bitmap) {
         return NinePatchBitmapFactory.createNinePatchDrawable(resources, bitmap);
 //        byte[] chunk = bitmap.getNinePatchChunk();

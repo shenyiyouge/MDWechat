@@ -94,7 +94,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     }
     private fun setTabLayoutOnTop(o:Boolean){
         val hook_hide_actionbar = preferenceScreen.findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
-        hook_hide_actionbar.setChecked(false)
+        hook_hide_actionbar.setChecked(o)
     }
 
 

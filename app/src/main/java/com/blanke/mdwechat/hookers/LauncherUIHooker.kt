@@ -28,7 +28,6 @@ import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.addTabLayoutAtBottom
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
 import com.blanke.mdwechat.util.LogUtil.log
-import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
@@ -99,37 +98,35 @@ object LauncherUIHooker : HookerProvider {
                         val tabViewUnderneathHeight = measureHeight(tabView)
                         var MarginBottom = 1
 
-
-
                         if (HookConfig.is_hook_tab) {
-                            // region 隐藏底栏
-                            MarginBottom = 0
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                // 672报错
-                                val a = tabView.getChildAt(0)
-                                a.visibility = View.GONE
-                                a.layoutParams.height = 0
-                            } else {
-                                linearViewGroup.removeView(tabView)
-                            }
-                            log("移除 tabView $tabView")
-                            //endregion1
-                            if (!HookConfig.is_tab_layout_on_top) {
-                                try {
-                                    log("添加底栏")
-                                    addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
-                                } catch (e: Throwable) {
-                                    log("添加底栏 报错")
-                                    log(e)
+                            if (HookConfig.is_tab_layout_on_top) {
+                                // region 隐藏底栏
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    // 672报错
+                                    val bottomLine = tabView.getChildAt(0)
+                                    bottomLine.visibility = View.GONE
+                                    bottomLine.layoutParams.height = 0
+                                } else {
+                                    linearViewGroup.removeView(tabView)
                                 }
-                            }
-                            else {
+                                log("移除 tabView $tabView")
+                                //endregion
+                                MarginBottom = 0
                                 HomeActionBarHook.fix(linearViewGroup)
                                 try {
                                     log("添加 TabLayout")
                                     TabLayoutHook.addTabLayout(linearViewGroup)
                                 } catch (e: Throwable) {
                                     log("添加 TabLayout 报错")
+                                    log(e)
+                                }
+                            } else {
+                                try {
+                                    log("添加底栏")
+                                    addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
+                                    log("添加底栏成功")
+                                } catch (e: Throwable) {
+                                    log("添加底栏 报错")
                                     log(e)
                                 }
                             }

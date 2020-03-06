@@ -15,11 +15,9 @@ import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
-import com.blanke.mdwechat.util.ConvertUtils
-import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.*
+import com.blanke.mdwechat.util.LogUtil.logViewStackTracesXp
 import com.blanke.mdwechat.util.LogUtil.logXp
-import com.blanke.mdwechat.util.ViewUtils
-import com.blanke.mdwechat.util.waitInvoke
 import com.blankj.utilcode.util.BarUtils
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
@@ -33,6 +31,7 @@ object TabLayoutHook {
     fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float = 0F): CommonTabLayout {
         val primaryColor: Int = HookConfig.get_color_primary
         val secondaryColor: Int = HookConfig.get_color_secondary
+        val get_color_tertiary: Int = HookConfig.get_color_tertiary
         val tipColor: Int = HookConfig.get_color_tip
         val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewGroup.context
@@ -57,7 +56,8 @@ object TabLayoutHook {
                 .mapTo(ArrayList<CustomTabEntity>()) {
                     object : CustomTabEntity.TabCustomData() {
                         override fun getTabIcon(): Drawable {
-                            return BitmapDrawable(resContext.resources, AppCustomConfig.getTabIcon(it))
+                            val drawable:Drawable=BitmapDrawable(resContext.resources, AppCustomConfig.getTabIcon(it))
+                            return  if(HookConfig.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, get_color_tertiary) else drawable
                         }
                     }
                 }
@@ -96,8 +96,8 @@ object TabLayoutHook {
         try {
             LogUtil.log("add tableyout success")
             Objects.Main.LauncherUI_mTabLayout = WeakReference(tabLayout)
-            for (index in 0..4) {
-                viewChild.getChildAt(1).visibility = View.GONE
+            for (index in 0..3) {
+                viewChild.getChildAt(index).visibility = View.GONE
             }
         } catch (e: Exception) {
             logXp(e)
