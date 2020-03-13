@@ -17,6 +17,7 @@ import com.blanke.mdwechat.util.ConvertUtils
 import com.blanke.mdwechat.util.DrawableUtils
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
+import com.blanke.mdwechat.util.NightModeUtils
 import com.github.clans.fab.FloatingActionButton
 import com.github.clans.fab.FloatingActionButton.SIZE_MINI
 import com.github.clans.fab.FloatingActionMenu
@@ -32,9 +33,9 @@ object FloatMenuHook {
             log("floatButton 主 icon 为空")
             return
         }
-        val primaryColor = HookConfig.get_color_primary
+        val primaryColor = NightModeUtils.colorPrimary
 //        val secondaryColor = HookConfig.get_color_secondary
-        val floatButtonColor = HookConfig.get_float_button_color
+        val floatButtonColor = NightModeUtils.colorFloatButton
         val actionMenu = FloatingActionMenu(context)
         actionMenu.menuButtonColorNormal = primaryColor
         actionMenu.menuButtonColorPressed = primaryColor
@@ -44,8 +45,8 @@ object FloatMenuHook {
             log("floatButton 主 icon 为空")
             return
         }
-        var drawable:Drawable=BitmapDrawable(context.resources, bitmap)
-        drawable=  if(HookConfig.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, floatButtonColor) else drawable
+        var drawable: Drawable = BitmapDrawable(context.resources, bitmap)
+        drawable = if (HookConfig.is_hook_float_button_color_up) DrawableUtils.setDrawableColor(drawable, floatButtonColor) else drawable
         actionMenu.setMenuIcon(drawable)
         actionMenu.initMenuButton()
 
@@ -61,7 +62,7 @@ object FloatMenuHook {
                     floatItems.add(it)
                     getFloatButton(actionMenu, context, it.text,
                             BitmapDrawable(context.resources,
-                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor, floatButtonColor,HookConfig.is_hook_float_button_color_up)
+                                    AppCustomConfig.getScaleBitmap(drawable2)), primaryColor, floatButtonColor, HookConfig.is_hook_float_button_color_up)
                 }
 
         actionMenu.setFloatButtonClickListener { fab, index ->
@@ -121,9 +122,9 @@ object FloatMenuHook {
     }
 
     private fun getFloatButton(actionMenu: FloatingActionMenu, context: Context,
-                               label: String, drawable: Drawable, primaryColor: Int, floatButtonColor: Int,isColorUp:Boolean=false): FloatingActionButton {
+                               label: String, drawable: Drawable, primaryColor: Int, floatButtonColor: Int, isColorUp: Boolean = false): FloatingActionButton {
         val fab = FloatingActionButton(context)
-        val filteredDrawable=  if(isColorUp) DrawableUtils.setDrawableColor(drawable, floatButtonColor) else drawable
+        val filteredDrawable = if (isColorUp) DrawableUtils.setDrawableColor(drawable, floatButtonColor) else drawable
 
         fab.setImageDrawable(filteredDrawable)
         fab.colorNormal = primaryColor

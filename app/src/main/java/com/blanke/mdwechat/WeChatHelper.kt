@@ -12,30 +12,29 @@ import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.util.ColorUtils
 import com.blanke.mdwechat.util.DrawableUtils
+import com.blanke.mdwechat.util.NightModeUtils.colorPrimary
 import de.robv.android.xposed.XSharedPreferences
 import java.io.File
 
 object WeChatHelper {
     lateinit var XMOD_PREFS: XSharedPreferences
 
-    val colorPrimary: Int by lazy {
-        HookConfig.get_color_primary
-    }
-    val colorSecondary: Int by lazy {
-        HookConfig.get_color_secondary
-    }
-    val colorTip: Int by lazy {
-        HookConfig.get_color_tip
-    }
 
-    val transparentDrawable: ColorDrawable
+    val colorWhite: Int
+        get() = Color.parseColor("#FAFAFA")
+
+    val colorDark: Int
+        get() = Color.parseColor("#303030")
+
+
+    val drawableTransparent: ColorDrawable
         get() = ColorDrawable(Color.TRANSPARENT)
 
-    val whiteDrawable: ColorDrawable
-        get() = ColorDrawable(Color.parseColor("#FAFAFA"))
+    val drawableWhite: ColorDrawable
+        get() = ColorDrawable(colorWhite)
 
-    val darkDrawable: ColorDrawable
-        get() = ColorDrawable(Color.parseColor("#303030"))
+    val drawableDark: ColorDrawable
+        get() = ColorDrawable(colorDark)
 
     val colorPrimaryDrawable: ColorDrawable
         get() {

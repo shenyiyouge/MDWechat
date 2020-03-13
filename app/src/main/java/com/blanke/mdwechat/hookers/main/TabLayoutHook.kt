@@ -29,10 +29,10 @@ import java.util.*
 
 object TabLayoutHook {
     fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float = 0F): CommonTabLayout {
-        val primaryColor: Int = HookConfig.get_color_primary
-        val secondaryColor: Int = HookConfig.get_color_secondary
-        val get_color_tertiary: Int = HookConfig.get_color_tertiary
-        val tipColor: Int = HookConfig.get_color_tip
+        val primaryColor: Int = NightModeUtils.colorPrimary
+        val secondaryColor: Int = NightModeUtils.colorSecondary
+        val get_color_tertiary: Int = NightModeUtils.colorTeritary
+        val tipColor: Int = NightModeUtils.colorTip
         val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewGroup.context
         val tabLayout = CommonTabLayout(context)
@@ -56,7 +56,7 @@ object TabLayoutHook {
                 .mapTo(ArrayList<CustomTabEntity>()) {
                     object : CustomTabEntity.TabCustomData() {
                         override fun getTabIcon(): Drawable {
-                            val drawable:Drawable=BitmapDrawable(resContext.resources, AppCustomConfig.getTabIcon(it))
+                            val drawable: Drawable = BitmapDrawable(resContext.resources, AppCustomConfig.getTabIcon(it))
                             return  if(HookConfig.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, get_color_tertiary) else drawable
                         }
                     }
@@ -109,7 +109,7 @@ object TabLayoutHook {
     }
 
     fun addTabLayout(viewPagerLinearLayout: ViewGroup) {
-        val primaryColor = HookConfig.get_color_primary
+        val primaryColor = NightModeUtils.colorPrimary
 
         val context = viewPagerLinearLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewPagerLinearLayout.context

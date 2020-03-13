@@ -113,9 +113,9 @@
     <string name="text_hook_tab_elevation">TabLayout阴影</string>
     <string name="key_tab_layout_on_top">key_tab_layout_on_top</string>
     <string name="text_tab_layout_on_top">将TabLayout置于上方</string>
-    <string name="key_tab_layout_filtered">key_tab_layout_filter</string>
+    <string name="key_tab_layout_filtered">key_tab_layout_filtered</string>
     <string name="text_tab_layout_filtered">TabLayout未激活页图标着色</string>
-    <string name="summary_tab_layout_filtered">若着色则使用副色2</string>
+    <string name="summary_tab_layout_filtered">若着色则使用副色2.</string>
     <string name="summary_hook_hide_wx_tab">如果TabLayout沉底则默认隐藏</string>
     <string name="key_feedback_email">key_feedback_email</string>
     <string name="text_feedback_email">给我发邮件反馈</string>

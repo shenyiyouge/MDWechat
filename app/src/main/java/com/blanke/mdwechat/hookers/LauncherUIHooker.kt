@@ -112,6 +112,7 @@ object LauncherUIHooker : HookerProvider {
                                 log("移除 tabView $tabView")
                                 //endregion
                                 MarginBottom = 0
+                                // 隐藏 action bar 测试
                                 HomeActionBarHook.fix(linearViewGroup)
                                 try {
                                     log("添加 TabLayout")
@@ -130,8 +131,10 @@ object LauncherUIHooker : HookerProvider {
                                     log(e)
                                 }
                             }
+                        } else if (HookConfig.is_hook_hide_actionbar) {
+                            // 隐藏 action bar 测试
+                            HomeActionBarHook.fix(linearViewGroup)
                         }
-
 
                         // float menu
                         if (HookConfig.is_hook_float_button) {

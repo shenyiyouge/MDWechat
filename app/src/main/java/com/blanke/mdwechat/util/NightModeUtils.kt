@@ -17,15 +17,15 @@ object NightModeUtils {
     }
 
     fun getBackgroundDrawable(defaultDrawable: Drawable?): Drawable {
-        return if (isNightMode()) WeChatHelper.darkDrawable else defaultDrawable
-                ?: WeChatHelper.whiteDrawable
+        return if (isNightMode()) WeChatHelper.drawableDark else defaultDrawable
+                ?: WeChatHelper.drawableWhite
     }
 
     fun getBackgroundDrawable(defaultDrawable: Bitmap?): Drawable {
         return when {
-            isNightMode() -> WeChatHelper.darkDrawable
+            isNightMode() -> WeChatHelper.drawableDark
             defaultDrawable != null -> BitmapDrawable(defaultDrawable)
-            else -> WeChatHelper.whiteDrawable
+            else -> WeChatHelper.drawableWhite
         }
     }
 
@@ -43,5 +43,21 @@ object NightModeUtils {
             !isHookMainColor() -> Color.BLACK
             else -> defaultColor ?: Color.BLACK
         }
+    }
+
+    val colorPrimary: Int by lazy {
+        if (isNightMode()) WeChatHelper.colorDark else HookConfig.get_color_primary
+    }
+    val colorSecondary: Int by lazy {
+        if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_secondary
+    }
+    val colorTeritary: Int by lazy {
+        if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_tertiary
+    }
+    val colorFloatButton: Int by lazy {
+        if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_float_button_color
+    }
+    val colorTip: Int by lazy {
+        HookConfig.get_color_tip
     }
 }

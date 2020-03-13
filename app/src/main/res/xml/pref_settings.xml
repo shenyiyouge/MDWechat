@@ -89,7 +89,7 @@
             app:cpv_colorPresets="@array/colors"
             app:cpv_showAlphaSlider="true" />
         <com.jaredrummler.android.colorpicker.ColorPreference
-            android:defaultValue="@color/colorTertiary "
+            android:defaultValue="@color/colorTertiary"
             android:key="@string/key_color_tertiary"
             android:summary="@string/summary_color_tertiary"
             android:title="@string/text_color_tertiary"
@@ -107,7 +107,7 @@
             android:key="@string/key_hook_avatar"
             android:title="@string/text_hook_avatar" />
         <SwitchPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="@string/key_hook_statusbar_transparent"
             android:title="@string/text_hook_statusbar_transparent" />
 
@@ -160,7 +160,6 @@
             android:title="@string/text_tab_layout_on_top" />
         <SwitchPreference
             android:defaultValue="false"
-            android:dependency="@string/key_tab_layout_on_top"
             android:key="@string/key_hook_hide_actionbar"
             android:summary="如较新的微信首页小程序下滑恢复之后有黑色遮罩，可尝试取消勾选此项"
             android:title="@string/text_hook_hide_actionbar" />

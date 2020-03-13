@@ -11,7 +11,7 @@ import com.blanke.mdwechat.Fields.ContactFragment_mListView
 import com.blanke.mdwechat.Methods.HomeFragment_lifecycles
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
-import com.blanke.mdwechat.WeChatHelper.transparentDrawable
+import com.blanke.mdwechat.WeChatHelper.drawableTransparent
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
@@ -90,20 +90,20 @@ object ContactHooker : HookerProvider {
 //                                                LogUtil.log("-------------")
                                                 if (itemContent is ViewGroup) {
                                                     val childView = itemContent.getChildAt(0)
-                                                    childView.background = transparentDrawable
+                                                    childView.background = drawableTransparent
                                                     if (childView is TextView) {// 企业号
                                                         headTextView = childView // 我的企业 textView
-                                                        itemContent.background = transparentDrawable
+                                                        itemContent.background = drawableTransparent
                                                         val lll = (itemContent.getChildAt(1) as ViewGroup)
                                                         for (m in 0 until lll.childCount) {
                                                             val comItem = (lll.getChildAt(m) as ViewGroup)
                                                             val ll = comItem.getChildAt(0) as ViewGroup
                                                             ll.background = defaultImageRippleDrawable
                                                             // 去掉分割线
-                                                            ll.getChildAt(0).background = transparentDrawable
+                                                            ll.getChildAt(0).background = drawableTransparent
                                                             titleTextView = ViewUtils.getChildView(ll, 0, 1)
                                                             titleTextView?.apply {
-                                                                this.background = transparentDrawable
+                                                                this.background = drawableTransparent
                                                                 if (this is TextView && isHookTextColor) {
                                                                     this.setTextColor(titleTextColor)
                                                                 }
@@ -121,7 +121,7 @@ object ContactHooker : HookerProvider {
                                                         if (titleTextView == null) {// 企业微信联系人
                                                             maskLayout = ViewUtils.getChildView(childView, 0, 0, 0, 0)
                                                             titleTextView = ViewUtils.getChildView(childView, 0, 0, 0, 1)
-                                                            ViewUtils.getChildView(childView, 0, 0)?.background = transparentDrawable
+                                                            ViewUtils.getChildView(childView, 0, 0)?.background = drawableTransparent
                                                         }
                                                         if (maskLayout != null && maskLayout is ViewGroup) {
                                                             val iv = maskLayout.getChildAt(0)
@@ -134,7 +134,7 @@ object ContactHooker : HookerProvider {
                                                             }
                                                         }
                                                         if (titleTextView != null) {
-                                                            titleTextView.background = transparentDrawable
+                                                            titleTextView.background = drawableTransparent
                                                             if (isHookTextColor) {
                                                                 titleTextView.apply {
                                                                     if (this is TextView) {

@@ -65,11 +65,11 @@ object HookConfig {
 
     val get_color_primary: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getInt(key_color_primary, Color.BLACK)
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_primary, Color.WHITE)
         }
     val get_color_secondary: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getInt(key_color_secondary, Color.WHITE)
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_secondary, Color.BLUE)
         }
     val get_color_tertiary: Int
         get() {
@@ -78,6 +78,11 @@ object HookConfig {
     val get_color_tip: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_color_tip, Color.RED)
+        }
+    val get_float_button_color: Int
+        get() {
+            val a = WeChatHelper.XMOD_PREFS.getBoolean(key_hook_float_button_color_is_secondary, true)
+            return if (a) get_color_secondary else get_color_tertiary
         }
 
     val is_hook_actionbar: Boolean
@@ -105,11 +110,6 @@ object HookConfig {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_float_button_color_up, true)
         }
 
-    val get_float_button_color: Int
-        get() {
-            val a = WeChatHelper.XMOD_PREFS.getBoolean(key_hook_float_button_color_is_secondary, true)
-            return if (a) get_color_secondary else get_color_tertiary
-        }
 
     val is_hook_search: Boolean
         get() {
@@ -121,7 +121,7 @@ object HookConfig {
         }
     val is_tab_layout_filtered: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_filtered, true)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_filtered, false)
         }
     val is_tab_layout_on_top: Boolean
         get() {

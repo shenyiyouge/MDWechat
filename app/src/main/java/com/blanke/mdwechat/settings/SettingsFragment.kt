@@ -47,7 +47,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
         a.summary = a.text
 
-        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
+//        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
@@ -83,7 +83,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         when (preference.key) {
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_mini_program_title) -> setSummary(o as String)
-            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
+//            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
         }
         return true
     }
@@ -92,10 +92,10 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
         a.summary = "当前文字：$s"
     }
-    private fun setTabLayoutOnTop(o:Boolean){
-        val hook_hide_actionbar = preferenceScreen.findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
-        hook_hide_actionbar.setChecked(o)
-    }
+//    private fun setTabLayoutOnTop(o:Boolean){
+//        val hook_hide_actionbar = preferenceScreen.findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
+//        hook_hide_actionbar.setChecked(o)
+//    }
 
 
     override fun onPreferenceClick(preference: Preference): Boolean {

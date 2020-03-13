@@ -97,7 +97,7 @@ object ConversationHooker : HookerProvider {
 //                                sendButton.setTextColor(WeChatHelper.colorSecondary)
 //                            }
 //                            //endregion
-                            param.result = WeChatHelper.colorPrimary
+                            param.result = NightModeUtils.colorPrimary
                         }
                         ConversationListView.name -> param.result = 0
 //                        "android.widget.Button" -> {

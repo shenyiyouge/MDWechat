@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
-import com.blanke.mdwechat.WeChatHelper.transparentDrawable
+import com.blanke.mdwechat.WeChatHelper.drawableTransparent
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
@@ -48,7 +48,7 @@ object ListViewHooker : HookerProvider {
     private val listViewHook = Hooker {
         XposedHelpers.findAndHookMethod(AbsListView::class.java, "setSelector", Drawable::class.java, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam?) {
-                param?.args!![0] = transparentDrawable
+                param?.args!![0] = drawableTransparent
             }
         })
         XposedHelpers.findAndHookMethod(AbsListView::class.java, "obtainView", CC.Int, BooleanArray::class.java, object : XC_MethodHook() {
@@ -155,10 +155,10 @@ object ListViewHooker : HookerProvider {
                         XposedHelpers.callMethod(chatTimeView, "setTextColor", summaryTextColor)
                         XposedHelpers.callMethod(recentMsgView, "setTextColor", summaryTextColor)
                     }
-                    unreadCountView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
-                    unreadView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
+                    unreadCountView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                    unreadView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                     val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
-                    contentView.background = transparentDrawable
+                    contentView.background = drawableTransparent
                 }
                 // ConversationFragment 聊天列表 item
                 else if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem, view)) {
@@ -174,22 +174,22 @@ object ListViewHooker : HookerProvider {
                         XposedHelpers.callMethod(chatTimeView, "setTextColor", summaryTextColor)
                         XposedHelpers.callMethod(recentMsgView, "setTextColor", summaryTextColor)
                     }
-                    unreadCountView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
-                    unreadView.backgroundTintList = ColorStateList.valueOf(HookConfig.get_color_tip)
+                    unreadCountView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                    unreadView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                     val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
-                    contentView.background = transparentDrawable
+                    contentView.background = drawableTransparent
                 }
 
                 // 联系人列表 7.0.0
                 else if (ViewTreeUtils.equals(ViewTreeRepo.ContactListViewItem_7_0_0, view)) {
                     val headLayout = ViewUtils.getChildView(view, 0) as ViewGroup
-                    headLayout.background = transparentDrawable
+                    headLayout.background = drawableTransparent
                     val headTextView = ViewUtils.getChildView(headLayout, 0) as TextView
                     val contentLayout = ViewUtils.getChildView(view, 1) as ViewGroup
-                    contentLayout.background = transparentDrawable
+                    contentLayout.background = drawableTransparent
                     val titleView = ViewUtils.getChildView(contentLayout, 0, 3, 1)
-                    ViewUtils.getChildView(contentLayout, 0)?.background = transparentDrawable
-                    titleView?.background = transparentDrawable
+                    ViewUtils.getChildView(contentLayout, 0)?.background = drawableTransparent
+                    titleView?.background = drawableTransparent
                     if (isHookTextColor) {
                         headTextView.setTextColor(summaryTextColor)
                         XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
@@ -209,7 +209,7 @@ object ListViewHooker : HookerProvider {
                     contentView.background = defaultImageRippleDrawable
                     val innerView = ViewUtils.getChildView(contentView, 0) as View
                     // 去掉分割线
-                    innerView.background = transparentDrawable
+                    innerView.background = drawableTransparent
                 }
 
                 // 发现 设置 item 7.0.11
@@ -223,8 +223,8 @@ object ListViewHooker : HookerProvider {
                     }
                     val unreadPointView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 2, 1)
                     val unreadCountView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 0, 0, 1)
-                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorTip)
-                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorTip)
+                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                 }
                 // 发现 设置 item 7.0.0
                 else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem_7_0_0, view)) {
@@ -237,8 +237,8 @@ object ListViewHooker : HookerProvider {
                     }
                     val unreadPointView = ViewUtils.getChildView(view, 0, 0, 0, 1, 2, 1)
                     val unreadCountView = ViewUtils.getChildView(view, 0, 0, 0, 1, 0, 0, 1)
-                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorTip)
-                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(WeChatHelper.colorTip)
+                    unreadPointView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                    unreadCountView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                 }
                 // 发现 设置 item
                 else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem, view)) {
