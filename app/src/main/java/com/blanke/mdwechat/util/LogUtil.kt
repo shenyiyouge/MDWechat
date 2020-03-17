@@ -29,6 +29,7 @@ object LogUtil {
     fun logXp(t: Throwable) {
         XposedBridge.log("MDWechatModule: " + Log.getStackTraceString(t))
     }
+
     fun logViewStackTracesXp(view: View, level: Int = 0) {
         val sb = StringBuffer()
         for (i in 0..level) {
@@ -42,6 +43,7 @@ object LogUtil {
             }
         }
     }
+
     fun logParentViewXp(view: View, level: Int = 5) {
         logXp("---------logParentView start----------")
         var currentView = view
@@ -54,10 +56,31 @@ object LogUtil {
         }
         logXp("---------logParentView end----------")
     }
+
     fun logViewXp(view: View) {
         logXp(getViewLogInfo(view))
     }
 
+    fun logStackTraceXp(find: String = ""): Boolean {
+        logXp("Dump Stack: --------------start----------------")
+        var ret = false
+        val ex = Throwable()
+        val stackElements = ex.stackTrace
+        if (stackElements != null) {
+            for (i in stackElements.indices) {
+                val s: String = stackElements[i].className + "----" +
+                        stackElements[i].methodName + "----" +
+                        stackElements[i].fileName + "----" +
+                        stackElements[i].lineNumber
+                if (s.contains(find)) {
+                    ret = true
+                }
+                logXp("Dump Stack$i: " + s)
+            }
+        }
+        logXp("Dump Stack: --------------over----------------")
+        return ret
+    }
     // endregion
 
     fun bundleToString(bundle: Bundle?): String? {

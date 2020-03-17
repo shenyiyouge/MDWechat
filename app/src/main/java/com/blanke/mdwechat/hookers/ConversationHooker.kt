@@ -3,9 +3,7 @@ package com.blanke.mdwechat.hookers
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Button
 import android.widget.ListView
-import android.widget.TextView
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.ConversationListView
 import com.blanke.mdwechat.Classes.ConversationWithAppBrandListView
@@ -17,8 +15,6 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.*
-import com.blanke.mdwechat.util.LogUtil.logViewStackTracesXp
-import com.blanke.mdwechat.util.LogUtil.logXp
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -64,21 +60,20 @@ object ConversationHooker : HookerProvider {
                     when (clazz) {
                         //action bar 和 发送按钮
                         Classes.ActionBarContainer.name -> {
-//                            logXp("-------------------")
-//                            logXp("-------------------")
-//                            logXp("-------------------")
 ////                            LogUtil.logViewStackTracesXp(view)
+//                            logXp("-------------------")
+//                            logXp("--------ActionBarContainerItem-----------")
+//                            logXp("-------------------")
 //                            if (ViewTreeUtils.equals(ViewTreeRepo.ActionBarContainerItem, view)) {
 //                                logXp("got")
-//                                val textView = ViewUtils.getChildView(view, 0, 0, 1, 0, 1) as TextView
+//                                val textView = ViewUtils.getChildView(view,  0, 1, 1, 0, 1) as TextView
 ////                                logXp(textView::class.java.name)
 //                                logXp("${textView.text}")
-//                                textView.setTextColor(HookConfig.get_color_primary)
+//                                textView.setTextColor(Color.parseColor("#ff00aa"))
 //                                textView.setText("123")
 //                                logXp("${textView.text}")
 //                            }
-////                            view.setTextColor(1)
-////                            LogUtil.logViewStackTracesXp(ViewUtils.getParentView(view, 5) as View)
+
 ////region 发送按钮
 //                            //todo
 //                            val parent = ViewUtils.getParentViewSafe(view, 4)
@@ -98,6 +93,7 @@ object ConversationHooker : HookerProvider {
 //                            }
 //                            //endregion
                             param.result = NightModeUtils.colorPrimary
+//                            printStackTraceXp()
                         }
                         ConversationListView.name -> param.result = 0
 //                        "android.widget.Button" -> {

@@ -234,4 +234,19 @@ object Classes {
         get() {
             return ReflectionUtil.findClassIfExists("com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity", WechatGlobal.wxLoader)
         }
+
+    val NightModeClass: Class<*>?
+        get() {
+            val a = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.plugin.expt.")
+                    .filterByField(String::class.java.name)
+                    .filterByMethod(CC.String, CC.String, CC.String)
+                    .filterByMethod(CC.String, CC.String, CC.String, CC.Boolean, CC.Boolean)
+            if (a.classes.size == 0) {
+                return ClassNotSupported().javaClass
+            } else {
+                return a.firstOrNull()
+            }
+//            return a.firstOrNull()
+        }
+
 }

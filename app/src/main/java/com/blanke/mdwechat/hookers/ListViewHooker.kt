@@ -13,6 +13,7 @@ import com.blanke.mdwechat.WeChatHelper.drawableTransparent
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.ViewTreeUtils
 import com.blanke.mdwechat.util.ViewUtils
@@ -93,12 +94,18 @@ object ListViewHooker : HookerProvider {
                 } else if (ViewTreeUtils.equals(ViewTreeRepo.ChatLeftMessageItem, view)) {
                     val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                     val msgView = ViewUtils.getChildView(view, 3, 1, 1) as View
-//                    logXp("msgView=$msgView")
+//                    LogUtil.logXp("=======start=========")
+//                    LogUtil.logXp("msgView=$msgView")
 //                    val mText = XposedHelpers.getObjectField(msgView, "mText")
-//                    logXp("msg left text=$mText")
+//                    LogUtil.logXp("msg left text=$mText")
+//                    LogUtil.logViewXp(view)
+//                    LogUtil.logStackTraceXp()
+//                    LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(view, 111))
+//                    LogUtil.logXp("=======end=========")
                     XposedHelpers.callMethod(msgView, "setTextColor", chatMsgLeftTextColor)
                     XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgLeftTextColor)
                     XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgLeftTextColor)
+                    // 聊天气泡
                     if (HookConfig.is_hook_bubble) {
                         val bubble = WeChatHelper.getLeftBubble(msgView.resources)
                         msgView.background = bubble
@@ -140,9 +147,9 @@ object ListViewHooker : HookerProvider {
 
                 // ConversationFragment 聊天列表 item 7.0.11
                 else if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem_7_0_11, view)) {
-//                    logXp("=====================")
-//                    LogUtil.logViewStackTracesXp(getParentViewSafe(view, 15))
-//                    logXp("=====================")
+//                    LogUtil.logXp("=====================")
+//                    LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(view, 15))
+//                    LogUtil.logXp("=====================")
                     val chatNameView = ViewUtils.getChildView(view, 1, 0, 0, 0)
                     val chatTimeView = ViewUtils.getChildView(view, 1, 0, 1)
                     val recentMsgView = ViewUtils.getChildView(view, 1, 1, 0, 1)

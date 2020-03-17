@@ -27,10 +27,12 @@ import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.addTabLayoutAtBottom
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
+import java.lang.Exception
 import java.lang.ref.WeakReference
 
 
@@ -39,7 +41,9 @@ object LauncherUIHooker : HookerProvider {
     private var disablePageScrolledHook = false
 
     override fun provideStaticHookers(): List<Hooker>? {
-        return listOf(launcherLifeHooker, mainTabUIPageAdapterHook, actionMenuHooker)
+        return listOf(
+                launcherLifeHooker,
+                mainTabUIPageAdapterHook, actionMenuHooker)
     }
 
     private val launcherLifeHooker = Hooker {
@@ -49,10 +53,38 @@ object LauncherUIHooker : HookerProvider {
                 if (activity::class.java != Classes.LauncherUI) {
                     return
                 }
-                log("LauncherUI onDestroy()")
+//                if (!LogUtil.logStackTraceXp("onRecreate")) {
+//                    LogUtil.logXp("\n\n\n\nLauncherUI onDestroy()")
                 Objects.clear()
+//                }
             }
         })
+//        try {
+//            XposedHelpers.findAndHookMethod(CC.Activity, "onSaveInstanceState", object : XC_MethodHook() {
+//                override fun afterHookedMethod(param: MethodHookParam) {
+//                    val activity = param.thisObject as? Activity ?: return
+//                    if (activity::class.java != Classes.LauncherUI) {
+//                        return
+//                    }
+//                    LogUtil.logStackTraceXp()
+//                    LogUtil.logXp("\n\n\n\nLauncherUI save()")
+//                    Objects.save()
+//                }
+//            })
+//            XposedHelpers.findAndHookMethod(CC.Activity, "onRestoreInstanceState", object : XC_MethodHook() {
+//                override fun afterHookedMethod(param: MethodHookParam) {
+//                    val activity = param.thisObject as? Activity ?: return
+//                    if (activity::class.java != Classes.LauncherUI) {
+//                        return
+//                    }
+//                    LogUtil.logStackTraceXp()
+//                    LogUtil.logXp("\n\n\n\nLauncherUI onRestoreInstanceState()")
+//                    Objects.restore()
+//                }
+//            })
+//        } catch (e: Exception) {
+//            LogUtil.logXp(e)
+//        }
         XposedHelpers.findAndHookMethod(CC.Activity, "onPostResume",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {

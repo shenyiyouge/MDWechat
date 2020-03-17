@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap
 object ReflectionUtil {
     val TAG: String = javaClass.simpleName
 
-    class Classes(private val classes: List<Class<*>>) {
+    class Classes(val classes: List<Class<*>>) {
         fun filterBySuper(superClass: Class<*>?): Classes {
             return Classes(classes.filter { it.superclass == superClass }.also {
                 if (it.isEmpty()) {

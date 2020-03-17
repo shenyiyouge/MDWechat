@@ -134,7 +134,9 @@ class Main {
         val methodMap = mutableMapOf<String, Any>()
         Methods::class.java.methods.forEach {
             var methodName = it.name
-            if (!methodName.startsWith("get") || methodName == "getClass") {
+            if (!methodName.startsWith("get")
+                    || methodName == "getClass"
+                    || ((methodName=="NightModeClass_getNightModeMethod")&&(Classes.NightModeClass!!.name == ClassNotSupported::class.java.name))) {
                 return@forEach
             }
             methodName = methodName.substring("get".length)

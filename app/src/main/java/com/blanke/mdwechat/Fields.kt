@@ -66,4 +66,7 @@ object Fields {
     val PreferenceFragment_mListView: Field by wxLazy("PreferenceFragment_mListView") {
         findFieldsWithName(PreferenceFragment, WechatGlobal.wxVersionConfig.fields.PreferenceFragment_mListView)
     }
+    val testknE: Field by wxLazy("testknE") {
+        findFieldsWithName(Classes.findClass("com.tencent.mm.ui.conversation.ConversationListView"), "knE")
+    }
 }

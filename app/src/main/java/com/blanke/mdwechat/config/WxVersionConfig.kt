@@ -34,6 +34,7 @@ class WxVersionConfig {
         var ThreadExecutor: String? = null
         var WxViewPager: String? = null
         var WXCustomSchemeEntryActivity: String? = null
+        var NightModeClass: String? = null
     }
 
     class Fields {
@@ -57,6 +58,8 @@ class WxVersionConfig {
         var MainTabUIPageAdapter_onPageScrolled: String? = null
         var WxViewPager_selectedPage: String? = null
         var WXCustomSchemeEntryActivity_entry: String? = null
+        var NightModeClass_getNightModeMethod: String? = null
+        var HomeUI_setActionBarColor: List<String>? = null
     }
 
     companion object {

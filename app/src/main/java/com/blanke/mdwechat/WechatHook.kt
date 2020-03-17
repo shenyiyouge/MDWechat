@@ -5,6 +5,7 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -23,6 +24,10 @@ class WechatHook : IXposedHookLoadPackage {
             WeChatHelper.initPrefs()
             if (!HookConfig.is_hook_switch) {
                 log("模块总开关已关闭")
+                // todo night mode
+                val hookers = mutableListOf(NightModeHooker)
+                hookMain(lpparam, hookers)
+                // todo end
                 return
             }
             log("模块加载成功")
@@ -37,7 +42,8 @@ class WechatHook : IXposedHookLoadPackage {
                     DiscoverHooker,
                     SettingsHooker,
                     SchemeHooker,
-                    LogHooker
+                    LogHooker,
+                    NightModeHooker
             )
 //            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
 //                hookers.add(0, DebugHooker)

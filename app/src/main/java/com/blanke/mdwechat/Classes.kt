@@ -4,7 +4,7 @@ import com.blanke.mdwechat.util.LogUtil.log
 import de.robv.android.xposed.XposedHelpers
 
 object Classes {
-    private fun findClass(className: String?): Class<*>? {
+    fun findClass(className: String?): Class<*>? {
         className ?: return null
         try {
             return XposedHelpers.findClass(className, com.blanke.mdwechat.WechatGlobal.wxLoader)
@@ -140,5 +140,8 @@ object Classes {
     }
     val SnsOnlineVideoActivity: Class<*> by WechatGlobal.wxLazy("SnsOnlineVideoActivity") {
         findClass("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity")
+    }
+    val NightModeClass: Class<*> by WechatGlobal.wxLazy("NightModeClass") {
+        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.NightModeClass)
     }
 }

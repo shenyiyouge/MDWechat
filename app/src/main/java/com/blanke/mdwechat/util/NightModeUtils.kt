@@ -1,5 +1,6 @@
 package com.blanke.mdwechat.util
 
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -8,8 +9,13 @@ import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.config.HookConfig
 
 object NightModeUtils {
+    private var _isNightMode = HookConfig.is_hook_night_mode
     fun isNightMode(): Boolean {
-        return HookConfig.is_hook_night_mode
+        return _isNightMode
+    }
+
+    fun setNightMode(b: Boolean) {
+        _isNightMode =HookConfig.is_hook_night_mode && b
     }
 
     fun isHookMainColor(): Boolean {
@@ -45,19 +51,27 @@ object NightModeUtils {
         }
     }
 
-    val colorPrimary: Int by lazy {
-        if (isNightMode()) WeChatHelper.colorDark else HookConfig.get_color_primary
-    }
-    val colorSecondary: Int by lazy {
-        if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_secondary
-    }
-    val colorTeritary: Int by lazy {
-        if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_tertiary
-    }
-    val colorFloatButton: Int by lazy {
-        if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_float_button_color
-    }
-    val colorTip: Int by lazy {
-        HookConfig.get_color_tip
-    }
+    val colorPrimary: Int
+        get() {
+            return if (isNightMode()) WeChatHelper.colorDark else HookConfig.get_color_primary
+        }
+
+    val colorSecondary: Int
+        get() {
+            return if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_secondary
+
+        }
+    val colorTeritary: Int
+        get() {
+            return if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_tertiary
+        }
+    val colorFloatButton: Int
+        get() {
+            return if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_float_button_color
+
+        }
+    val colorTip: Int
+        get() {
+            return HookConfig.get_color_tip
+        }
 }
