@@ -110,7 +110,11 @@
             android:defaultValue="true"
             android:key="@string/key_hook_statusbar_transparent"
             android:title="@string/text_hook_statusbar_transparent" />
-
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/key_hook_night_mode"
+            android:summary="当微信开启深色模式时自动开启MDWechat夜间深色模式。依赖于第三方夜间模式插件（微x、微信深色主题等）来开启微信自带的深色模式。"
+            android:title="@string/text_hook_night_mode" />
     </PreferenceCategory>
     <!--主界面设置-->
     <PreferenceCategory
@@ -140,6 +144,11 @@
 
         <SwitchPreference
             android:defaultValue="true"
+            android:key="@string/key_hide_tab"
+            android:title="@string/text_hide_tab" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="@string/key_hide_tab"
             android:key="@string/key_hook_tab"
             android:title="@string/text_hook_tab" />
         <SwitchPreference
@@ -183,10 +192,6 @@
             android:title="@string/text_main_textcolor_content"
             app:cpv_colorPresets="@array/colors"
             app:cpv_showAlphaSlider="true" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_hook_night_mode"
-            android:title="@string/text_hook_night_mode" />
     </PreferenceCategory>
     <!--下拉小程序设置-->
     <PreferenceCategory

@@ -26,7 +26,7 @@ object HomeActionBarHook {
             viewpager.layoutParams = layoutParams
             viewpager.requestLayout()
         }
-        val mActionBar = Objects.Main.HomeUI_mActionBar.get()
+        val mActionBar = Objects.Main.HomeUI_mActionBar!!
         waitInvoke(10, true, {
             XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
         }, {

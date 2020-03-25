@@ -47,44 +47,18 @@ object LauncherUIHooker : HookerProvider {
     }
 
     private val launcherLifeHooker = Hooker {
-        XposedHelpers.findAndHookMethod(CC.Activity, "onDestroy", object : XC_MethodHook() {
-            override fun afterHookedMethod(param: MethodHookParam) {
-                val activity = param.thisObject as? Activity ?: return
-                if (activity::class.java != Classes.LauncherUI) {
-                    return
-                }
-//                if (!LogUtil.logStackTraceXp("onRecreate")) {
-//                    LogUtil.logXp("\n\n\n\nLauncherUI onDestroy()")
-                Objects.clear()
+//        XposedHelpers.findAndHookMethod(CC.Activity, "onDestroy", object : XC_MethodHook() {
+//            override fun afterHookedMethod(param: MethodHookParam) {
+//                val activity = param.thisObject as? Activity ?: return
+//                if (activity::class.java != Classes.LauncherUI) {
+//                    return
 //                }
-            }
-        })
-//        try {
-//            XposedHelpers.findAndHookMethod(CC.Activity, "onSaveInstanceState", object : XC_MethodHook() {
-//                override fun afterHookedMethod(param: MethodHookParam) {
-//                    val activity = param.thisObject as? Activity ?: return
-//                    if (activity::class.java != Classes.LauncherUI) {
-//                        return
-//                    }
-//                    LogUtil.logStackTraceXp()
-//                    LogUtil.logXp("\n\n\n\nLauncherUI save()")
-//                    Objects.save()
-//                }
-//            })
-//            XposedHelpers.findAndHookMethod(CC.Activity, "onRestoreInstanceState", object : XC_MethodHook() {
-//                override fun afterHookedMethod(param: MethodHookParam) {
-//                    val activity = param.thisObject as? Activity ?: return
-//                    if (activity::class.java != Classes.LauncherUI) {
-//                        return
-//                    }
-//                    LogUtil.logStackTraceXp()
-//                    LogUtil.logXp("\n\n\n\nLauncherUI onRestoreInstanceState()")
-//                    Objects.restore()
-//                }
-//            })
-//        } catch (e: Exception) {
-//            LogUtil.logXp(e)
-//        }
+////                if (!LogUtil.logStackTraceXp("onRecreate")) {
+////                    LogUtil.logXp("\n\n\n\nLauncherUI onDestroy()")
+//                Objects.clear()
+////                }
+//            }
+//        })
         XposedHelpers.findAndHookMethod(CC.Activity, "onPostResume",
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
@@ -107,7 +81,7 @@ object LauncherUIHooker : HookerProvider {
                         val density = activity.resources.displayMetrics.density
                         AppCustomConfig.bitmapScale = density / 3F
 
-                        Objects.Main.LauncherUI = WeakReference(activity)
+                        Objects.Main.LauncherUI = activity
                         val homeUI = LauncherUI_mHomeUI.get(activity)
                         val mainTabUI = HomeUI_mMainTabUI.get(homeUI)
                         val viewPager = MainTabUI_mCustomViewPager.get(mainTabUI)
@@ -115,22 +89,29 @@ object LauncherUIHooker : HookerProvider {
                             log("MainTabUI_mCustomViewPager == null return;")
                             return
                         }
-                        LauncherUI_mViewPager = WeakReference(viewPager)
+                        Objects.Main.LauncherUI_mViewPager = viewPager
 
                         val linearViewGroup = viewPager.parent as ViewGroup
 
                         val contentViewGroup = linearViewGroup.parent as ViewGroup
-                        Objects.Main.LauncherUI_mContentLayout = WeakReference(contentViewGroup)
+                        Objects.Main.LauncherUI_mContentLayout = contentViewGroup
 
-                        val actionBar = Fields.HomeUI_mActionBar.get(homeUI)
-                        Objects.Main.HomeUI_mActionBar = WeakReference<Any>(actionBar)
+                        Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
 
                         // 微信底栏 & action bar
                         val tabView = linearViewGroup.getChildAt(1) as ViewGroup
                         val tabViewUnderneathHeight = measureHeight(tabView)
                         var MarginBottom = 1
-
-                        if (HookConfig.is_hook_tab) {
+                        if (HookConfig.is_key_hide_tab && !HookConfig.is_hook_tab) {
+                            MarginBottom = 0
+                            // region 隐藏底栏
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                // 672报错
+                                val bottomLine = tabView.getChildAt(0)
+                                bottomLine.visibility = View.GONE
+                                bottomLine.layoutParams.height = 0
+                            }
+                        } else if (HookConfig.is_hook_tab) {
                             if (HookConfig.is_tab_layout_on_top) {
                                 // region 隐藏底栏
                                 if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
@@ -163,7 +144,8 @@ object LauncherUIHooker : HookerProvider {
                                     log(e)
                                 }
                             }
-                        } else if (HookConfig.is_hook_hide_actionbar) {
+                        }
+                        if (HookConfig.is_hook_hide_actionbar) {
                             // 隐藏 action bar 测试
                             HomeActionBarHook.fix(linearViewGroup)
                         }
@@ -188,10 +170,10 @@ object LauncherUIHooker : HookerProvider {
         XposedHelpers.findAndHookMethod(WxViewPager, WxViewPager_selectedPage.name, CC.Int, CC.Boolean, CC.Boolean, CC.Int, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam?) {
                 val vp = param?.thisObject
-                if (LauncherUI_mViewPager.get() == vp) {
+                if (LauncherUI_mViewPager == vp) {
                     val position = param?.args!![0] as Int
 //                    log("WxViewPager_selectedPage position = $position , arg[1] =${param?.args!![1]}")
-                    LauncherUI_mTabLayout.get()?.currentTab = position
+                    LauncherUI_mTabLayout?.currentTab = position
                 }
             }
         })
@@ -204,7 +186,7 @@ object LauncherUIHooker : HookerProvider {
                     disablePageScrolledHook = true
                     return
                 }
-                LauncherUI_mTabLayout.get()?.apply {
+                LauncherUI_mTabLayout?.apply {
                     startScrollPosition = position as Int
                     indicatorOffset = positionOffset
                 }
@@ -225,7 +207,7 @@ object LauncherUIHooker : HookerProvider {
                         val position = tabViewItemParent.indexOfChild(this)
 //                        log("unread position= $position,count = $text")
                         val number = if (text.length == 0) 0 else text.toIntOrNull()
-                        LauncherUI_mTabLayout.get()?.apply {
+                        LauncherUI_mTabLayout?.apply {
                             number?.apply {
                                 showMsg(position, number)
                             }
@@ -247,7 +229,7 @@ object LauncherUIHooker : HookerProvider {
                         val tabViewItemParent = this.parent as ViewGroup
                         val position = tabViewItemParent.indexOfChild(this)
 //                        log("unread position= $position,visible = ${visible == View.VISIBLE}")
-                        LauncherUI_mTabLayout.get()?.apply {
+                        LauncherUI_mTabLayout?.apply {
                             if (visible == View.VISIBLE) {
                                 showMsg(position, -1)
                             } else if (!hasMsg(position)) {
@@ -283,7 +265,7 @@ object LauncherUIHooker : HookerProvider {
                             if (str == "微X模块") {
                                 log("检测到 微X模块")
                                 menuItem.isVisible = false
-                                Objects.Main.LauncherUI_mWechatXMenuItem = WeakReference(menuItem)
+                                Objects.Main.LauncherUI_mWechatXMenuItem = menuItem
                             }
                         }
                     }

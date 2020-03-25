@@ -23,6 +23,7 @@ object HookConfig {
     private val key_hook_float_button_color_is_secondary = "key_hook_float_button_color_is_secondary"
     private val key_hook_search = "key_hook_search"
     private val key_hook_tab = "key_hook_tab"
+    private val key_hide_tab = "key_hide_tab"
     private val key_tab_layout_filtered = "key_tab_layout_filtered"
     private val key_tab_layout_on_top = "key_tab_layout_on_top"
     private val key_hook_hide_wx_tab = "key_hook_hide_wx_tab"
@@ -114,6 +115,10 @@ object HookConfig {
     val is_hook_search: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_search, false)
+        }
+    val is_key_hide_tab: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hide_tab, true)
         }
     val is_hook_tab: Boolean
         get() {

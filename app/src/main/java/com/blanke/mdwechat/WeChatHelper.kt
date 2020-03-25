@@ -22,9 +22,11 @@ object WeChatHelper {
 
     val colorWhite: Int
         get() = Color.parseColor("#FAFAFA")
+    val colorDarkWhite: Int
+        get() =  Color.LTGRAY
 
     val colorDark: Int
-        get() = Color.parseColor("#303030")
+        get() = Color.parseColor("#232323")
 
 
     val drawableTransparent: ColorDrawable
@@ -45,7 +47,7 @@ object WeChatHelper {
 
     val defaultImageRippleDrawable: Drawable?
         get() {
-            val context = Objects.Main.LauncherUI.get() ?: return null
+            val context = Objects.Main.LauncherUI ?: return null
             val attrs = intArrayOf(android.R.attr.selectableItemBackground)
             val ta = context.obtainStyledAttributes(attrs)
             val imageRippleDrawable = ta.getDrawable(0)
@@ -55,7 +57,7 @@ object WeChatHelper {
 
     val defaultImageRippleBorderDrawable: Drawable?
         get() {
-            val context = Objects.Main.LauncherUI.get() ?: return null
+            val context = Objects.Main.LauncherUI ?: return null
             val attrs = intArrayOf(android.R.attr.selectableItemBackgroundBorderless)
             val ta = context.obtainStyledAttributes(attrs)
             val imageRippleDrawable = ta.getDrawable(0)
@@ -97,7 +99,7 @@ object WeChatHelper {
     }
 
     fun startActivity(actName: String) {
-        val context = Objects.Main.LauncherUI.get() ?: return
+        val context = Objects.Main.LauncherUI ?: return
         val intent = Intent()
         intent.setClassName(context as Context, actName)
         context.startActivity(intent)

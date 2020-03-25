@@ -126,7 +126,7 @@ object ContactHooker : HookerProvider {
                                                         if (maskLayout != null && maskLayout is ViewGroup) {
                                                             val iv = maskLayout.getChildAt(0)
                                                             if (iv is ImageView) {
-                                                                val roundLayout = RCRelativeLayout(Objects.Main.LauncherUI.get())
+                                                                val roundLayout = RCRelativeLayout(Objects.Main.LauncherUI!!)
                                                                 roundLayout.isRoundAsCircle = true
                                                                 maskLayout.addView(roundLayout, iv.layoutParams)
                                                                 maskLayout.removeView(iv)

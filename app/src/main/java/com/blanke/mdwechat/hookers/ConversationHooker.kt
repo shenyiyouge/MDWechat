@@ -57,23 +57,13 @@ object ConversationHooker : HookerProvider {
                 override fun beforeHookedMethod(param: MethodHookParam) {
                     val view = param.thisObject as View
                     val clazz = view::class.java.name
+//                    LogUtil.logXp("=====================")
+//                    LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(view, 15))
+//                    LogUtil.logStackTraceXp()
+//                    LogUtil.logXp("=====================")
                     when (clazz) {
                         //action bar 和 发送按钮
                         Classes.ActionBarContainer.name -> {
-////                            LogUtil.logViewStackTracesXp(view)
-//                            logXp("-------------------")
-//                            logXp("--------ActionBarContainerItem-----------")
-//                            logXp("-------------------")
-//                            if (ViewTreeUtils.equals(ViewTreeRepo.ActionBarContainerItem, view)) {
-//                                logXp("got")
-//                                val textView = ViewUtils.getChildView(view,  0, 1, 1, 0, 1) as TextView
-////                                logXp(textView::class.java.name)
-//                                logXp("${textView.text}")
-//                                textView.setTextColor(Color.parseColor("#ff00aa"))
-//                                textView.setText("123")
-//                                logXp("${textView.text}")
-//                            }
-
 ////region 发送按钮
 //                            //todo
 //                            val parent = ViewUtils.getParentViewSafe(view, 4)

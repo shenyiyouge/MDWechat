@@ -141,7 +141,7 @@ object FloatMenuHook {
         log("点击悬浮按钮，index=$index,item=$item")
         when (item.type) {
             "weiX" -> {
-                Objects.Main.LauncherUI_mWechatXMenuItem.get()?.run {
+                Objects.Main.LauncherUI_mWechatXMenuItem?.run {
                     this::class.java.declaredFields
                             .firstOrNull { it.type == MenuItem.OnMenuItemClickListener::class.java }
                             ?.apply {
@@ -156,7 +156,7 @@ object FloatMenuHook {
                     WeChatHelper.startActivity(item.type)
                 } catch (e: Throwable) {
                     LogUtil.log(e)
-                    Objects.Main.LauncherUI.get()?.apply {
+                    Objects.Main.LauncherUI?.apply {
                         Toast.makeText(this, "跳转失败，请检查类名是否正确", Toast.LENGTH_SHORT).show()
                     }
                 }

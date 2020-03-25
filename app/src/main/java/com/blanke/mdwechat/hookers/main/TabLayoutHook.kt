@@ -67,7 +67,7 @@ object TabLayoutHook {
             override fun onTabSelect(position: Int) {
                 LogUtil.log("tab click position=$position")
                 tabLayout.currentTab = position
-                Objects.Main.LauncherUI_mViewPager.get()?.apply {
+                Objects.Main.LauncherUI_mViewPager?.apply {
                     Methods.WxViewPager_selectedPage.invoke(this, position, false, false, 0)
                 }
             }
@@ -95,7 +95,7 @@ object TabLayoutHook {
         viewChild.addView(tabLayout, 4, params)
         try {
             LogUtil.log("add tableyout success")
-            Objects.Main.LauncherUI_mTabLayout = WeakReference(tabLayout)
+            Objects.Main.LauncherUI_mTabLayout = tabLayout
             for (index in 0..3) {
                 viewChild.getChildAt(index).visibility = View.GONE
             }
@@ -166,7 +166,7 @@ object TabLayoutHook {
                 viewPagerLinearLayout.addView(tabLayout, 2, params)
             }
             if (!HookConfig.is_hook_hide_actionbar) {
-                val mActionBar = Objects.Main.HomeUI_mActionBar.get()
+                val mActionBar = Objects.Main.HomeUI_mActionBar!!
                 waitInvoke(100, true, {
                     XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
                 }, {
@@ -178,7 +178,7 @@ object TabLayoutHook {
             }
         }
         LogUtil.log("add tableyout success")
-        Objects.Main.LauncherUI_mTabLayout = WeakReference(tabLayout)
+        Objects.Main.LauncherUI_mTabLayout = tabLayout
         // change main ActionBar elevation = 0
         val actionBarLayout = ViewUtils.getParentView(viewPagerLinearLayout, 3) as ViewGroup
         val actionBar = actionBarLayout.getChildAt(1)

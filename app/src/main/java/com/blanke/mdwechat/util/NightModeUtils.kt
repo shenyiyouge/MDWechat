@@ -9,7 +9,7 @@ import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.config.HookConfig
 
 object NightModeUtils {
-    private var _isNightMode = HookConfig.is_hook_night_mode
+    private var _isNightMode = false
     fun isNightMode(): Boolean {
         return _isNightMode
     }
@@ -45,7 +45,7 @@ object NightModeUtils {
 
     private fun getTextColor(defaultColor: Int?): Int {
         return when {
-            isNightMode() -> Color.WHITE
+            isNightMode() ->WeChatHelper.colorDarkWhite
             !isHookMainColor() -> Color.BLACK
             else -> defaultColor ?: Color.BLACK
         }
@@ -58,16 +58,16 @@ object NightModeUtils {
 
     val colorSecondary: Int
         get() {
-            return if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_secondary
+            return if (isNightMode()) WeChatHelper.colorDarkWhite else HookConfig.get_color_secondary
 
         }
     val colorTeritary: Int
         get() {
-            return if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_color_tertiary
+            return if (isNightMode()) WeChatHelper.colorDarkWhite else HookConfig.get_color_tertiary
         }
     val colorFloatButton: Int
         get() {
-            return if (isNightMode()) WeChatHelper.colorWhite else HookConfig.get_float_button_color
+            return if (isNightMode()) WeChatHelper.colorDarkWhite else HookConfig.get_float_button_color
 
         }
     val colorTip: Int

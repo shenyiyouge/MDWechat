@@ -1,5 +1,6 @@
 package com.blanke.mdwechat.util
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -150,6 +151,10 @@ object LogUtil {
             sb.append(" childCount = ${view.childCount}")
         }
         sb.append(" desc= ${view.contentDescription}")
+        if (view.background is ColorDrawable) {
+            val bg=view.background as ColorDrawable
+            sb.append(" bgColor=${bg.color}")
+        }
         return sb.toString()
     }
 
