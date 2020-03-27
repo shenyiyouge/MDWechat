@@ -17,7 +17,6 @@ import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.mainThread
 import com.blankj.utilcode.util.BarUtils
 import de.robv.android.xposed.XC_MethodHook
-import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.XposedHelpers.findAndHookMethod
 
 

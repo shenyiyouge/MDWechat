@@ -58,7 +58,7 @@ class WxVersionConfig {
         var MainTabUIPageAdapter_onPageScrolled: String? = null
         var WxViewPager_selectedPage: String? = null
         var WXCustomSchemeEntryActivity_entry: String? = null
-        var NightModeClass_getNightModeMethod: String? = null
+//        var NightModeClass_getNightModeMethod: String? = null
         var HomeUI_setActionBarColor: List<String>? = null
     }
 

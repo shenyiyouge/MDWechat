@@ -10,7 +10,7 @@ import com.blanke.mdwechat.auto_search.Classes.HomeUI
 import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabView
 import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabViewItem
 import com.blanke.mdwechat.auto_search.Classes.MainTabUIPageAdapter
-import com.blanke.mdwechat.auto_search.Classes.NightModeClass
+//import com.blanke.mdwechat.auto_search.Classes.NightModeClass
 import com.blanke.mdwechat.auto_search.Classes.WXCustomSchemeEntryActivity
 import com.blanke.mdwechat.auto_search.Classes.WxViewPager
 import com.blanke.mdwechat.util.ReflectionUtil.findMethodsByExactParameters
@@ -73,12 +73,15 @@ object Methods {
                     .firstOrNull()?.apply { isAccessible = true }
         }
 
-    val NightModeClass_getNightModeMethod: Method?
-        get() {
-            return findMethodsByExactParameters(NightModeClass!!, CC.String, CC.String, CC.String, CC.Boolean, CC.Boolean).firstOrNull()
-        }
+//    val NightModeClass_getNightModeMethod: Method?
+//        get() {
+//            if (NightModeClass!!::class.java.name == ClassNotSupported::class.java.name) {
+//                return ClassNotSupported::class.java.getMethod("MethodNotSupported")
+//            }
+//            return findMethodsByExactParameters(NightModeClass!!, CC.String, CC.String, CC.String, CC.Boolean, CC.Boolean).firstOrNull()
+//        }
     val HomeUI_setActionBarColor: List<Method>?
         get() {
-            return findMethodsByExactParameters(HomeUI!!,null, Float::class.java, Int::class.java, Int::class.java)
+            return findMethodsByExactParameters(HomeUI!!, null, Float::class.java, Int::class.java, Int::class.java)
         }
 }

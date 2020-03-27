@@ -3,7 +3,11 @@ package com.blanke.mdwechat.hookers.main
 import android.view.View
 import android.view.ViewGroup
 import com.blanke.mdwechat.Objects
+import com.blanke.mdwechat.Version
+import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.HookConfig
+import com.blanke.mdwechat.config.WxVersionConfig
+import com.blanke.mdwechat.settings.bean.WechatConfig
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.waitInvoke
@@ -12,6 +16,9 @@ import org.jooq.tools.reflect.Reflect.on
 
 object HomeActionBarHook {
     fun fix(viewPagerLinearLayout: ViewGroup) {
+        if (WechatGlobal.wxVersion!! < Version("7.0.0")) {
+            return
+        }
         val cb = { actionHeight: Int ->
             val viewpager = viewPagerLinearLayout.getChildAt(0)
             val layoutParams = viewpager.layoutParams as ViewGroup.MarginLayoutParams

@@ -113,6 +113,7 @@
     <string name="msg_kill_wechat">请手动强行停止微信,再打开微信看效果.</string>
     <string name="key_hook_tab_elevation">key_hook_tab_elevation</string>
     <string name="text_hook_tab_elevation">TabLayout阴影</string>
+    <string name="summary_hook_tab_elevation">阴影和TabLayout当前页的横杠</string>
     <string name="key_tab_layout_on_top">key_tab_layout_on_top</string>
     <string name="text_tab_layout_on_top">将TabLayout置于上方</string>
     <string name="key_tab_layout_filtered">key_tab_layout_filtered</string>
@@ -131,7 +132,7 @@
     <string name="text_hook_hide_wx_tab_3">隐藏设置页面</string>
     <string name="key_hook_remove_appbrand">key_hook_remove_appbrand</string>
     <string name="text_hook_remove_appbrand">移除顶部下拉小程序</string>
-    <string name="key_hook_remove_appbrand_summary">该功能最低支持微信版本为 6.6.2</string>
+    <string name="key_hook_remove_appbrand_summary">该功能最低支持微信版本为 6.7.2</string>
     <string name="key_hook_remove_foot_view">key_hook_remove_foot_view</string>
     <string name="text_hook_remove_foot_view">修复消息列表背景图显示不完整(底部空白)</string>
     <string name="text_hook_remove_foot_view_summary">当消息列表显示不超过一屏时背景图会显示不完整,最低支持微信版本 6.6.1,如显示异常,尝试关闭此项</string>
@@ -149,7 +150,7 @@
     <string name="text_hook_mini_program">聊天页面下拉小程序设置</string>
     <string name="key_mini_program_title">key_mini_program_title</string>
     <string name="text_mini_program_title">主界面下拉小程序底端显示文字</string>
-    <string name="value_mini_program_title">点击收起列表</string>
+    <string name="value_mini_program_title"> </string>
     <string name="summary_mini_program_title">当前文字：点击收起列表</string>
     <string name="text_settings_debug">调试</string>
     <string name="key_hook_log">key_hook_log</string>

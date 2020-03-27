@@ -20,6 +20,15 @@ object ViewUtils {
         }
         return null
     }
+    fun getChildView1(view: View, indexs: IntArray): View? {
+        var parentView: View = view
+        var childView: View? = null
+        for (index in indexs) {
+            childView = getChildView(parentView, index) ?: break
+            parentView = childView
+        }
+        return childView
+    }
 
     fun getParentView(view: View, index: Int): View? {
         var currentView = view

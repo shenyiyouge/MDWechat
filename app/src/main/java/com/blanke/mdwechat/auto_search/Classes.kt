@@ -17,6 +17,7 @@ import com.blanke.mdwechat.auto_search.WechatGlobal.wxLoader
 import com.blanke.mdwechat.auto_search.WechatGlobal.wxPackageName
 import com.blanke.mdwechat.util.ReflectionUtil
 import com.blanke.mdwechat.util.ReflectionUtil.findClassIfExists
+import java.lang.Exception
 
 object Classes {
     val LauncherUI: Class<*>?
@@ -131,12 +132,16 @@ object Classes {
 
     val ConversationListView: Class<*>?
         get() {
-            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.conversation.ConversationListView", WechatGlobal.wxLoader)
+            try {
+                return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.conversation.ConversationListView", WechatGlobal.wxLoader)
+            } catch (e: Exception) {
+                return ClassNotSupported().javaClass
+            }
         }
 
     val ConversationFragment: Class<*>?
         get() {
-            if (WechatGlobal.wxVersion!! < Version("7.0.3")) {
+            if (WechatGlobal.wxVersion!!.compareTo(Version("7.0.3")) < 0) {
                 return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui.conversation")
                         .filterByField(ConversationWithAppBrandListView!!.name)
                         .filterByField(TextView::class.java.name)
@@ -235,18 +240,18 @@ object Classes {
             return ReflectionUtil.findClassIfExists("com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity", WechatGlobal.wxLoader)
         }
 
-    val NightModeClass: Class<*>?
-        get() {
-            val a = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.plugin.expt.")
-                    .filterByField(String::class.java.name)
-                    .filterByMethod(CC.String, CC.String, CC.String)
-                    .filterByMethod(CC.String, CC.String, CC.String, CC.Boolean, CC.Boolean)
-            if (a.classes.size == 0) {
-                return ClassNotSupported().javaClass
-            } else {
-                return a.firstOrNull()
-            }
-//            return a.firstOrNull()
-        }
+//    val NightModeClass: Class<*>?
+//        get() {
+//            val a = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.plugin.expt.")
+//                    .filterByField(String::class.java.name)
+//                    .filterByMethod(CC.String, CC.String, CC.String)
+//                    .filterByMethod(CC.String, CC.String, CC.String, CC.Boolean, CC.Boolean)
+//            if (a.classes.size == 0) {
+//                return ClassNotSupported().javaClass
+//            } else {
+//                return a.firstOrNull()
+//            }
+////            return a.firstOrNull()
+//        }
 
 }

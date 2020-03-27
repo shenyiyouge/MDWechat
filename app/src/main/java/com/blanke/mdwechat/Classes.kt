@@ -141,7 +141,7 @@ object Classes {
     val SnsOnlineVideoActivity: Class<*> by WechatGlobal.wxLazy("SnsOnlineVideoActivity") {
         findClass("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity")
     }
-    val NightModeClass: Class<*> by WechatGlobal.wxLazy("NightModeClass") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.NightModeClass)
-    }
+//    val NightModeClass: Class<*> by WechatGlobal.wxLazy("NightModeClass") {
+//        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.NightModeClass)
+//    }
 }

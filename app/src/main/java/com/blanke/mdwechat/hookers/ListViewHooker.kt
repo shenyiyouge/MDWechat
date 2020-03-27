@@ -11,13 +11,16 @@ import com.blanke.mdwechat.*
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WeChatHelper.drawableTransparent
 import com.blanke.mdwechat.config.HookConfig
+import com.blanke.mdwechat.config.ViewTreeConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.*
 import com.blanke.mdwechat.util.ViewUtils.findLastChildView
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
+import java.lang.ClassCastException
 import java.lang.Exception
+import  com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 object ListViewHooker : HookerProvider {
     private val excludeContext = arrayOf("com.tencent.mm.plugin.mall.ui.MallIndexUI")
@@ -71,14 +74,9 @@ object ListViewHooker : HookerProvider {
                     // 按照使用频率重排序
                     if (!NightModeUtils.isNightMode()) {// 夜间模式不改变气泡
                         // 聊天消息 item
-                        if (ViewTreeUtils.equals(ViewTreeRepo.ChatRightMessageItem, view)) {
+                        if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
-                            val msgView: View?
-                            if (WechatGlobal.wxVersion!! >= Version("7.0.7")) {
-                                msgView = ViewUtils.getChildView(view, 3, 1, 1, 3, 0) as View
-                            } else {
-                                msgView = ViewUtils.getChildView(view, 3, 1, 1, 3) as View
-                            }
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightMessageItem.treeStacks.get("msgView")!!) as View
 //                    log("msgView=$msgView")
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgRightTextColor)
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgRightTextColor)
@@ -92,9 +90,9 @@ object ListViewHooker : HookerProvider {
                                     msgView.setPadding(30, 25, 45, 25)
                                 }
                             }
-                        } else if (ViewTreeUtils.equals(ViewTreeRepo.ChatLeftMessageItem, view)) {
+                        } else if (ViewTreeUtils.equals(VTTV.ChatLeftMessageItem.item, view)) {
                             val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
-                            val msgView = ViewUtils.getChildView(view, 3, 1, 1) as View
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftMessageItem.treeStacks.get("msgView")!!) as View
 //                    LogUtil.logXp("=======start=========")
 //                    LogUtil.logXp("msgView=$msgView")
 //                    val mText = XposedHelpers.getObjectField(msgView, "mText")
@@ -116,9 +114,9 @@ object ListViewHooker : HookerProvider {
                             }
                         }
                         // 聊天消息 audio
-                        else if (ViewTreeUtils.equals(ViewTreeRepo.ChatRightAudioMessageItem, view)) {
-                            val msgView = ViewUtils.getChildView(view, 3, 5, 0, 0) as View
-                            val msgAnimView = ViewUtils.getChildView(view, 3, 5, 0, 1) as View
+                        else if (ViewTreeUtils.equals(VTTV.ChatRightAudioMessageItem.item, view)) {
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgView")!!) as View
+                            val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             if (HookConfig.is_hook_bubble) {
                                 val bubble = WeChatHelper.getRightBubble(msgView.resources)
                                 msgView.background = bubble
@@ -130,9 +128,9 @@ object ListViewHooker : HookerProvider {
                                     msgAnimView.setPadding(30, 25, 45, 25)
                                 }
                             }
-                        } else if (ViewTreeUtils.equals(ViewTreeRepo.ChatLeftAudioMessageItem, view)) {
-                            val msgView = ViewUtils.getChildView(view, 3, 1, 3, 0, 0) as View
-                            val msgAnimView = ViewUtils.getChildView(view, 3, 1, 3, 0, 1) as View
+                        } else if (ViewTreeUtils.equals(VTTV.ChatLeftAudioMessageItem.item, view)) {
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
+                            val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             if (HookConfig.is_hook_bubble) {
                                 val bubble = WeChatHelper.getLeftBubble(msgView.resources)
                                 msgView.background = bubble
@@ -147,41 +145,15 @@ object ListViewHooker : HookerProvider {
                         }
                     }  //
 
-                    // ConversationFragment 聊天列表 item 7.0.11
-                    if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem_7_0_10, view)) {
+                    // ConversationFragment 聊天列表 item sum
+                    if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
                         view.background.alpha = 120
-//                    LogUtil.logXp("=====================")
-//                    LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(view, 15))
-//                    LogUtil.logStackTraceXp()
-//                    LogUtil.logXp("=====================")
-                        val chatNameView = ViewUtils.getChildView(view, 1, 0, 0, 0)
-                        val chatTimeView = ViewUtils.getChildView(view, 1, 0, 1)
-                        val recentMsgView = ViewUtils.getChildView(view, 1, 1, 0, 1)
-                        val unreadCountView = ViewUtils.getChildView(view, 0, 1) as TextView
-                        val unreadView = ViewUtils.getChildView(view, 0, 2) as ImageView
-
+                        val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView")!!)
+                        val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView")!!)
+                        val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView")!!)
+                        val unreadCountView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadCountView")!!) as TextView
+                        val unreadView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadView")!!) as ImageView
 //                    LogUtil.logXp("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
-                        if (isHookTextColor) {
-                            XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
-                            XposedHelpers.callMethod(chatTimeView, "setTextColor", summaryTextColor)
-                            XposedHelpers.callMethod(recentMsgView, "setTextColor", summaryTextColor)
-                        }
-                        unreadCountView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        unreadView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
-                        contentView.background = drawableTransparent
-                        return
-                    }
-                    // ConversationFragment 聊天列表 item
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.ConversationListViewItem, view)) {
-                        view.background.alpha = 120
-                        val chatNameView = ViewUtils.getChildView(view, 1, 0, 0, 0)
-                        val chatTimeView = ViewUtils.getChildView(view, 1, 0, 1)
-                        val recentMsgView = ViewUtils.getChildView(view, 1, 1, 0, 1)
-                        val unreadCountView = ViewUtils.getChildView(view, 0, 1) as TextView
-                        val unreadView = ViewUtils.getChildView(view, 0, 2) as ImageView
-
-//                    LogUtil.log("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
                         if (isHookTextColor) {
                             XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
                             XposedHelpers.callMethod(chatTimeView, "setTextColor", summaryTextColor)
@@ -195,135 +167,98 @@ object ListViewHooker : HookerProvider {
                     }
 
                     view.background = defaultImageRippleDrawable
-                    // 联系人列表 7.0.0
-                    if (ViewTreeUtils.equals(ViewTreeRepo.ContactListViewItem_7_0_0, view)) {
-                        val headLayout = ViewUtils.getChildView(view, 0) as ViewGroup
-                        headLayout.background = drawableTransparent
-                        val headTextView = ViewUtils.getChildView(headLayout, 0) as TextView
-                        val contentLayout = ViewUtils.getChildView(view, 1) as ViewGroup
-                        contentLayout.background = drawableTransparent
-                        val titleView = ViewUtils.getChildView(contentLayout, 0, 3, 1)
-                        ViewUtils.getChildView(contentLayout, 0)?.background = drawableTransparent
+                    // 联系人列表 sum
+                    if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
+                        // 标题下面的线
+                        if (VTTV.ContactListViewItem.treeStacks.get("headerView") != null) {
+                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headerView")!!)
+                                    ?.background = drawableTransparent
+                        }
+                        //内容下面的线 innerView
+                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("innerView")!!)
+                                ?.background = drawableTransparent
+
+                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("contentView")!!)
+                                ?.background = drawableTransparent
+
+                        val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("titleView")!!)
                         titleView?.background = drawableTransparent
                         if (isHookTextColor) {
+                            val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headTextView")!!) as TextView
                             headTextView.setTextColor(summaryTextColor)
                             XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
                         }
                     }
-                    // 联系人列表
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.ContactListViewItem, view)) {
-                        val headTextView = ViewUtils.getChildView(view, 0) as TextView
-                        val titleView = ViewUtils.getChildView(view, 1, 0, 3)
-//                    log("headTextView=$headTextView,titleView=$titleView")
-                        if (isHookTextColor) {
-                            headTextView.setTextColor(summaryTextColor)
-                            XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
+
+                    // 发现 设置 item sum
+                    else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
+                        val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("iconImageView")!!) as View
+                        if (iconImageView.visibility == View.VISIBLE) {
+                            val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("titleView")!!) as TextView
+                            if (isHookTextColor) {
+                                titleView.setTextColor(titleTextColor)
+                            }
                         }
-                        // 修改背景
-                        val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
-                        contentView.background = defaultImageRippleDrawable
-                        val innerView = ViewUtils.getChildView(contentView, 0) as View
-                        // 去掉分割线
-                        innerView.background = drawableTransparent
+
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadPointView")!!)
+                                ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadCountView")!!)
+                                ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                     }
 
-                    // 发现 设置 item 7.0.11
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem_7_0_10, view)) {
-                        val iconImageView = ViewUtils.getChildView(view, 1, 0, 0, 0, 0) as View
-                        if (iconImageView.visibility == View.VISIBLE) {
-                            val titleView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 0, 0, 0) as TextView
-                            if (isHookTextColor) {
-                                titleView.setTextColor(titleTextColor)
-                            }
+                    // 设置 头像 sum
+                    else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
+                        val nickNameView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("nickNameView")!!)
+                        val wechatTextView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("wechatTextView")!!) as TextView
+                        if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
+                            wechatTextView.setTextColor(titleTextColor)
+                            XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
                         }
-                        val unreadPointView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 2, 1)
-                        val unreadCountView = ViewUtils.getChildView(view, 1, 0, 0, 0, 1, 0, 0, 1)
-                        unreadPointView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        unreadCountView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                    }
-                    // 发现 设置 item 7.0.0
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem_7_0_0, view)) {
-                        val iconImageView = ViewUtils.getChildView(view, 0, 0, 0, 0) as View
-                        if (iconImageView.visibility == View.VISIBLE) {
-                            val titleView = ViewUtils.getChildView(view, 0, 0, 0, 1, 0, 0, 0) as TextView
-                            if (isHookTextColor) {
-                                titleView.setTextColor(titleTextColor)
-                            }
-                        }
-                        val unreadPointView = ViewUtils.getChildView(view, 0, 0, 0, 1, 2, 1)
-                        val unreadCountView = ViewUtils.getChildView(view, 0, 0, 0, 1, 0, 0, 1)
-                        unreadPointView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        unreadCountView?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                    }
-                    // 发现 设置 item
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.DiscoverViewItem, view)) {
-                        val iconImageView = ViewUtils.getChildView(view, 0, 0, 0, 0) as View
-                        if (iconImageView.visibility == View.VISIBLE) {
-                            val titleView = ViewUtils.getChildView(view, 0, 0, 0, 1, 0, 0) as TextView
-                            if (isHookTextColor) {
-                                titleView.setTextColor(titleTextColor)
-                            }
-                        }
+                        ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("headView")!!)
+                                ?.background = defaultImageRippleDrawable
                     }
 
-                    // 设置 头像 7.0.12
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.SettingAvatarView_7_0_12, view)) {
-                        ViewUtils.getChildView(view, 0)?.background = defaultImageRippleDrawable
-                        val nickNameView = ViewUtils.getChildView(view, 2, 0, 1, 0, 0)
-                        val wechatTextView = ViewUtils.getChildView(view, 2, 0, 1, 1, 0) as TextView
-                        if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
-                            wechatTextView.setTextColor(titleTextColor)
-                            XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
-                        }
-                    }
-                    // 设置 头像 7.0.0
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.SettingAvatarView_7_0_0, view)) {
-                        ViewUtils.getChildView(view, 0)?.background = defaultImageRippleDrawable
-                        val nickNameView = ViewUtils.getChildView(view, 1, 0, 1, 0)
-                        val wechatTextView = ViewUtils.getChildView(view, 1, 0, 1, 1) as TextView
-                        if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
-                            wechatTextView.setTextColor(titleTextColor)
-                            XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
-                        }
-                    }
-                    // 设置 头像
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.SettingAvatarView, view)) {
-                        val nickNameView = ViewUtils.getChildView(view, 0, 1, 0)
-                        val wechatTextView = ViewUtils.getChildView(view, 0, 1, 1) as TextView
-                        if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
-                            wechatTextView.setTextColor(titleTextColor)
-                            XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
-                        }
-                    }
                     // (7.0.7 以上) 下拉小程序框
-                    else if (ViewTreeUtils.equals(ViewTreeRepo.ActionBarItem, view)) {
-//                    LogUtil.logXp("-------------------")
-//                    LogUtil.logViewStackTracesXp(view)
-                        val miniProgramPage = ViewUtils.getChildView(view, 0) as RelativeLayout
+                    else if (ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
+                        try {
+                            val miniProgramPage = ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage")!!) as RelativeLayout
 
-                        // old action bar
-                        val ActionBarPage = ViewUtils.getChildView(miniProgramPage, 1, 1) as LinearLayout
-                        val title = ViewUtils.getChildView(ActionBarPage, 0) as TextView
-                        title.gravity = Gravity.CENTER;
-                        title.text = HookConfig.value_mini_program_title
-                        val lp = title.layoutParams as LinearLayout.LayoutParams
-                        lp.setMargins(0, 0, 0, 0)
-                        ActionBarPage.removeView(ViewUtils.getChildView(ActionBarPage, 1))
-                        ActionBarPage.removeView(ViewUtils.getChildView(ActionBarPage, 2))
+                            // old action bar
+                            val actionBarPage = ViewUtils.getChildView1(miniProgramPage,
+                                    VTTV.ActionBarItem.treeStacks.get("miniProgramPage_actionBarPage")!!) as LinearLayout
+                            val title: TextView
+                            title = ViewUtils.getChildView1(actionBarPage,
+                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_title")!!) as TextView
 
-                        val appBrandDesktopView = ViewUtils.getChildView(miniProgramPage, 0, 0, 2, 0) as ViewGroup
-                        //小程序搜索框
-                        val searchEditText = ViewUtils.getChildView(appBrandDesktopView, 0, 0) as EditText
-                        searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
+                            title.gravity = Gravity.CENTER;
+                            title.text = HookConfig.value_mini_program_title
+                            val lp = title.layoutParams as LinearLayout.LayoutParams
+                            lp.setMargins(0, 0, 0, 0)
+                            actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
+                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_child1")!!))
+                            actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
+                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_child2")!!))
+
+                            val appBrandDesktopView = ViewUtils.getChildView1(miniProgramPage,
+                                    VTTV.ActionBarItem.treeStacks.get("miniProgramPage_appBrandDesktopView")!!) as ViewGroup
+                            //小程序搜索框
+                            val searchEditText = ViewUtils.getChildView1(appBrandDesktopView,
+                                    VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_searchEditText")!!) as EditText
+                            searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
 //                    小程序字体
-                        setMiniProgramTitleColor(appBrandDesktopView)
-                        setMiniProgramTitleColor(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
+                            setMiniProgramTitleColor(appBrandDesktopView)
+                            setMiniProgramTitleColor(ViewUtils.getChildView1(appBrandDesktopView,
+                                    VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_miniProgramTitle")!!) as ViewGroup)
 //                    logXp("---------------------miniProgramPage------------------")
 //                    LogUtil.logViewStackTracesXp(miniProgramPage)
 //                    logXp("---------------------appBrandDesktopView------------------")
 //                    LogUtil.logViewStackTracesXp(appBrandDesktopView)
 //                    logXp("---------------------getChildView------------------")
 //                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
+
+                        } catch (e: ClassCastException) {
+                            return
+                        }
                     }
                 } catch (e: Exception) {
                     LogUtil.logXp(e)

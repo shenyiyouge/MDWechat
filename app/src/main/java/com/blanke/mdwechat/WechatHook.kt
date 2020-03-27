@@ -1,11 +1,10 @@
 package com.blanke.mdwechat
 
-import com.blanke.mdwechat.Common.isVXPEnv
 import com.blanke.mdwechat.config.HookConfig
+import com.blanke.mdwechat.config.ViewTreeConfig
 import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -24,10 +23,6 @@ class WechatHook : IXposedHookLoadPackage {
             WeChatHelper.initPrefs()
             if (!HookConfig.is_hook_switch) {
                 log("模块总开关已关闭")
-                // todo night mode
-                val hookers = mutableListOf(NightModeHooker)
-                hookMain(lpparam, hookers)
-                // todo end
                 return
             }
             log("模块加载成功")
@@ -58,6 +53,7 @@ class WechatHook : IXposedHookLoadPackage {
         WechatGlobal.init(lpparam)
         try {
             WechatGlobal.wxVersionConfig = WxVersionConfig.loadConfig(WechatGlobal.wxVersion!!.toString())
+            ViewTreeConfig.set(WechatGlobal.wxVersion!!)
         } catch (e: Exception) {
             log("${WechatGlobal.wxVersion} 配置文件不存在或解析失败")
             return

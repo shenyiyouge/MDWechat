@@ -1,7 +1,7 @@
 package com.blanke.mdwechat
 
 // Version is a helper class for comparing version strings.
-class Version(private val versionName: String) {
+class VersionKt(private val versionName: String) {
 
     val version: List<Int> = versionName.split('.').mapNotNull(String::toIntOrNull)
 
@@ -11,11 +11,11 @@ class Version(private val versionName: String) {
 
     override fun equals(other: Any?): Boolean = when (other) {
         null -> false
-        !is Version -> false
+        !is VersionKt -> false
         else -> this.version == other.version
     }
 
-    operator fun compareTo(other: Version): Int {
+    operator fun compareTo(other: VersionKt): Int {
         var result = 0
         when {
             this.version.size > other.version.size -> result = 1

@@ -16,7 +16,6 @@ import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
-import com.blanke.mdwechat.util.LogUtil.logViewStackTracesXp
 import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blankj.utilcode.util.BarUtils
 import com.flyco.tablayout.CommonTabLayout
@@ -24,7 +23,6 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import de.robv.android.xposed.XposedHelpers
 import java.lang.Exception
-import java.lang.ref.WeakReference
 import java.util.*
 
 object TabLayoutHook {

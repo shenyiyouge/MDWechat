@@ -6,19 +6,19 @@ import com.blanke.mdwechat.Classes.ConversationWithAppBrandListView
 import com.blanke.mdwechat.Classes.HomeUI
 import com.blanke.mdwechat.Classes.LauncherUIBottomTabView
 import com.blanke.mdwechat.Classes.MainTabUIPageAdapter
-import com.blanke.mdwechat.Classes.NightModeClass
+//import com.blanke.mdwechat.Classes.NightModeClass
 import com.blanke.mdwechat.Classes.WXCustomSchemeEntryActivity
 import com.blanke.mdwechat.Classes.WxViewPager
 import java.lang.reflect.Method
 
 object Methods {
-    private fun findMethodsByName(clazz: Class<*>?, name: String?, vararg parameterTypes: Class<*>): Method? {
+    fun findMethodsByName(clazz: Class<*>?, name: String?, vararg parameterTypes: Class<*>): Method? {
         name ?: return null
         clazz ?: return null
         return clazz.getDeclaredMethod(name, *parameterTypes)?.apply { isAccessible = true }
     }
 
-    private fun findMethodsByName(clazz: Class<*>?, names: List<String>?, vararg parameterTypes: Class<*>): List<Method> {
+    fun findMethodsByName(clazz: Class<*>?, names: List<String>?, vararg parameterTypes: Class<*>): List<Method> {
         clazz ?: return listOf()
         names ?: return listOf()
         return names.map {
@@ -78,9 +78,9 @@ object Methods {
                 WechatGlobal.wxVersionConfig.methods.WXCustomSchemeEntryActivity_entry,
                 CC.Intent)
     }
-    val NightModeClass_getNightModeMethod: String by WechatGlobal.wxLazy("NightModeClass_getNightModeMethod") {
-        WechatGlobal.wxVersionConfig.methods.NightModeClass_getNightModeMethod
-    }
+//    val NightModeClass_getNightModeMethod: String by WechatGlobal.wxLazy("NightModeClass_getNightModeMethod") {
+//        WechatGlobal.wxVersionConfig.methods.NightModeClass_getNightModeMethod
+//    }
     val HomeUI_setActionBarColor: List<String> by WechatGlobal.wxLazy("HomeUI_setActionBarColor") {
         WechatGlobal.wxVersionConfig.methods.HomeUI_setActionBarColor
     }

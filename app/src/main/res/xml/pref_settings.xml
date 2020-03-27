@@ -155,6 +155,7 @@
             android:defaultValue="true"
             android:dependency="@string/key_hook_tab"
             android:key="@string/key_hook_tab_elevation"
+            android:summary="@string/summary_hook_tab_elevation"
             android:title="@string/text_hook_tab_elevation" />
         <SwitchPreference
             android:defaultValue="false"

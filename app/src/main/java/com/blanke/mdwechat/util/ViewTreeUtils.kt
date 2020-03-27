@@ -3,6 +3,7 @@ package com.blanke.mdwechat.util
 import android.view.View
 import android.view.ViewGroup
 import com.blanke.mdwechat.WechatGlobal
+import com.blanke.mdwechat.bean.ViewTree
 import com.blanke.mdwechat.bean.ViewTreeItem
 
 object ViewTreeUtils {

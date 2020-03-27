@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.blanke.mdwechat.BuildConfig
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.R
+import com.blanke.mdwechat.ViewTreeRepo.ConversationListViewItem
 import com.blanke.mdwechat.auto_search.Main
 import com.blanke.mdwechat.auto_search.bean.LogEvent
 import com.blanke.mdwechat.markdown.MarkDownActivity
@@ -40,12 +41,13 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
         preferenceManager.sharedPreferencesName = Common.MOD_PREFS
         addPreferencesFromResource(R.xml.pref_settings)
-        //去除 移除小程序 选项
-        val displayOptions = findPreference(getString(R.string.key_conversation_settings)) as PreferenceCategory
-        preferenceScreen.removePreference(displayOptions)
+//        去除 移除小程序
+//        preferenceScreen.removePreference(findPreference(getString(R.string.key_conversation_settings)) as PreferenceCategory)
 
+//        去除 小程序下拉框文字
+//        preferenceScreen.removePreference(findPreference(getString(R.string.key_hook_mini_program)) as PreferenceCategory)
         val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
-        a.summary = a.text
+        a.summary = "当前文字: ${a.text}"
 
 //        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this

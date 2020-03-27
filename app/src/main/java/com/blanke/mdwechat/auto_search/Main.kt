@@ -3,7 +3,9 @@ package com.blanke.mdwechat.auto_search
 import android.content.Context
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.bean.OutputJson
+import com.blanke.mdwechat.util.LogUtil
 import com.blankj.utilcode.util.FileIOUtils
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import dalvik.system.DexClassLoader
 import net.dongliu.apk.parser.ApkFile
@@ -38,7 +40,7 @@ class Main {
 
         wxClasses = wechatApkFile.dexClasses.toList()
         Logs.i("class 总数= ${wxClasses.size}")
-        // todo debugging
+        // region todo debugging
 //        var classes = ""
 //        var i = 0
 //        for (index in 0..wxClasses.size - 1) {
@@ -51,7 +53,7 @@ class Main {
 //                i = 0
 //            }
 //        }
-        // todo debug end
+        // endregion todo debug end
 
         val optimizedDirectoryFile = context.getDir("dex", 0)
         val classLoader = DexClassLoader(path, optimizedDirectoryFile.absolutePath, null, ClassLoader.getSystemClassLoader())
@@ -81,6 +83,9 @@ class Main {
                 }
             } catch (e: Exception) {
                 Logs.i("$methodName 解析失败,${e}")
+//                e.stackTrace.forEach {
+//                    Logs.i(it.toString())
+//                }
                 e.printStackTrace()
                 errorCount++
             }
@@ -136,7 +141,8 @@ class Main {
             var methodName = it.name
             if (!methodName.startsWith("get")
                     || methodName == "getClass"
-                    || ((methodName=="NightModeClass_getNightModeMethod")&&(Classes.NightModeClass!!.name == ClassNotSupported::class.java.name))) {
+//                    || ((methodName.contains("NightModeClass"))&&(Classes.NightModeClass!!.name == ClassNotSupported::class.java.name))
+            ) {
                 return@forEach
             }
             methodName = methodName.substring("get".length)

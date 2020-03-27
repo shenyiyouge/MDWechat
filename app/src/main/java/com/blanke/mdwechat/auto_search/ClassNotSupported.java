@@ -4,4 +4,10 @@ package com.blanke.mdwechat.auto_search;
 public class ClassNotSupported {
     public ClassNotSupported() {
     }
+
+    public boolean MethodNotSupported() {
+        return methodNotSupported;
+    }
+
+    public boolean methodNotSupported=true;
 }
