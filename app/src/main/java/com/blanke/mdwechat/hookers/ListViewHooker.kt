@@ -27,20 +27,20 @@ import  com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 object ListViewHooker : HookerProvider {
     private val excludeContext = arrayOf("com.tencent.mm.plugin.mall.ui.MallIndexUI")
 
-    private var titleTextColor = Color.BLACK
+    private val titleTextColor:Int
         get() {
             return NightModeUtils.getTitleTextColor()
         }
-    private var summaryTextColor = Color.BLACK
+    private val summaryTextColor:Int
         get() {
             return NightModeUtils.getContentTextColor()
         }
 
-    private var isHookTextColor = false
+    private val isHookTextColor :Boolean
         get() {
             return HookConfig.is_hook_main_textcolor || NightModeUtils.isNightMode()
         }
-    private var isHookMiniProgram = false
+    private val isHookMiniProgram :Boolean
         get() {
             return HookConfig.is_hook_mini_program
         }
@@ -173,7 +173,7 @@ object ListViewHooker : HookerProvider {
                     if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
                         try {
                             view.background.alpha = HookConfig.get_hook_conversation_background_alpha
-                        } catch (e: Exception) {                        }
+                        } catch (e: Exception) {}
                         val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView")!!)
                         val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView")!!)
                         val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView")!!)
