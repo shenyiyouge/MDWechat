@@ -14,7 +14,7 @@ import android.widget.Toast
 import com.blanke.mdwechat.BuildConfig
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.R
-import com.blanke.mdwechat.ViewTreeRepo.ConversationListViewItem
+import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.Main
 import com.blanke.mdwechat.auto_search.bean.LogEvent
 import com.blanke.mdwechat.markdown.MarkDownActivity
@@ -35,22 +35,42 @@ import kotlin.concurrent.thread
  */
 
 class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+    lateinit var wxVersion: Version
+    private fun getWechatPath(): String {
+        val pm = activity.packageManager
+        val ai = pm.getApplicationInfo(Common.WECHAT_PACKAGENAME, 0)
+        return ai.publicSourceDir
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         EventBus.getDefault().register(this)
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
         preferenceManager.sharedPreferencesName = Common.MOD_PREFS
         addPreferencesFromResource(R.xml.pref_settings)
-//        去除 移除小程序
-//        preferenceScreen.removePreference(findPreference(getString(R.string.key_conversation_settings)) as PreferenceCategory)
+        setLayoutResource(getPreferenceScreen())
 
-//        去除 小程序下拉框文字
-//        preferenceScreen.removePreference(findPreference(getString(R.string.key_hook_mini_program)) as PreferenceCategory)
-        val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
-        a.summary = "当前文字: ${a.text}"
+//        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
+//        //隐藏主界面部分选项
+//        val main_settings=findPreference(getString(R.string.key_main_settings))as PreferenceScreen
+//        if (wxVersion < Version("7.0.3")) {
+////        隐藏 小程序下拉框文字
+//            main_settings.removePreference(main_settings.findPreference(getString(R.string.key_mini_program_title)) as SwitchPreference)
+//        } else {
+////        隐藏 移除小程序
+//            main_settings.removePreference(main_settings.findPreference(getString(R.string.key_hook_remove_appbrand)) as SwitchPreference)
+//
+//            val a = main_settings.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
+//            a.summary = "当前文字: ${a.text}"
+//        }
 
 //        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
-        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
+//        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
+
+        findPreference(getString(R.string.key_hook_hide_actionbar))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_hook_hide_actionbar_1))?.onPreferenceChangeListener = this
+        setHideActionbar1((findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference).isChecked)
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
@@ -81,19 +101,64 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         showAppInfoDialog()
     }
 
+    private fun setLayoutResource(preference: Preference) {
+        if (preference is PreferenceScreen) {
+            val ps = preference
+            ps.layoutResource = R.layout.preference_screen
+            val cnt = ps.preferenceCount
+            for (i in 0 until cnt) {
+                val p = ps.getPreference(i)
+                setLayoutResource(p)
+            }
+        } else if (preference is PreferenceCategory) {
+            val pc = preference
+            pc.layoutResource = R.layout.preference_category
+            val cnt = pc.preferenceCount
+            for (i in 0 until cnt) {
+                val p = pc.getPreference(i)
+                setLayoutResource(p)
+            }
+        }
+//        else {
+//            preference_warning.layoutResource = R.layout.preference_warning
+//        }
+    }
+
     override fun onPreferenceChange(preference: Preference, o: Any): Boolean {
         when (preference.key) {
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
-            getString(R.string.key_mini_program_title) -> setSummary(o as String)
+            getString(R.string.key_hook_hide_actionbar) -> setHideActionbar1(o as Boolean)
+            getString(R.string.key_hook_hide_actionbar_1) -> setHideActionbar(o as Boolean)
+            getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
+//            getString(R.string.key_mini_program_title) -> setSummary(o as String)
 //            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
         }
         return true
     }
 
-    private fun setSummary(s: String) {
-        val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
-        a.summary = "当前文字：$s"
+    private fun setHideActionbar(o: Boolean) {
+        val hideActionbar = findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
+        if (hideActionbar.isChecked != o) {
+            hideActionbar.isChecked = o
+        }
     }
+
+    private fun setHideActionbar1(o: Boolean) {
+        val hideActionbar1 = findPreference(getString(R.string.key_hook_hide_actionbar_1)) as SwitchPreference
+        if (hideActionbar1.isChecked != o) {
+            hideActionbar1.isChecked = o
+        }
+    }
+
+    private fun verifyAlpha(s: String) {
+        val alpha = s.toInt()
+        val p = findPreference(getString(R.string.key_hook_conversation_background_alpha)) as EditTextPreference
+        p.text = Math.min(255, Math.max(alpha, 0)).toString()
+    }
+//    private fun setSummary(s: String) {
+//        val a = preferenceScreen.findPreference(getString(R.string.key_mini_program_title)) as EditTextPreference
+//        a.summary = "当前文字：$s"
+//    }
 //    private fun setTabLayoutOnTop(o:Boolean){
 //        val hook_hide_actionbar = preferenceScreen.findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
 //        hook_hide_actionbar.setChecked(o)
@@ -162,11 +227,8 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
                 .setPositiveButton(R.string.text_confirm, null)
                 .show()
         val outputPath = Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR
-        val pm = activity.packageManager
         try {
-            val ai = pm.getApplicationInfo(Common.WECHAT_PACKAGENAME, 0)
-            val wechatApkPath = ai.publicSourceDir
-            Main().main(activity.applicationContext, wechatApkPath, outputPath)
+            Main().main(activity.applicationContext, getWechatPath(), outputPath)
         } catch (e: Exception) {
             e.printStackTrace()
             ToastUtils.showShort(R.string.msg_wechat_notfound)

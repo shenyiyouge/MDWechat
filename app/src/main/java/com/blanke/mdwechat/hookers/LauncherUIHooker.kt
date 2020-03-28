@@ -86,12 +86,12 @@ object LauncherUIHooker : HookerProvider {
                             log("MainTabUI_mCustomViewPager == null return;")
                             return
                         }
-                        Objects.Main.LauncherUI_mViewPager = viewPager
 
                         val linearViewGroup = viewPager.parent as ViewGroup
                         val contentViewGroup = linearViewGroup.parent as ViewGroup
                         Objects.Main.LauncherUI_mContentLayout = contentViewGroup
                         Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
+                        Objects.Main.LauncherUI_mViewPager = viewPager
 
                         // region 微信底栏 & action bar
                         val is_tab_layout_on_bottom = HookConfig.is_hook_tab && !HookConfig.is_tab_layout_on_top

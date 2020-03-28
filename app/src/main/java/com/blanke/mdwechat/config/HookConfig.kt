@@ -15,6 +15,7 @@ object HookConfig {
     private val key_color_secondary = "key_color_secondary"
     private val key_color_tertiary = "key_color_tertiary"
     private val key_color_tip = "key_color_tip"
+    private val key_hook_conversation_background_alpha = "key_hook_conversation_background_alpha"
     private val key_hook_actionbar = "key_hook_actionbar"
     private val key_hook_avatar = "key_hook_avatar"
     private val key_hook_ripple = "key_hook_ripple"
@@ -41,11 +42,13 @@ object HookConfig {
     private val key_hook_hide_actionbar = "key_hook_hide_actionbar"
     private val key_hook_float_button_move = "key_hook_float_button_move"
     private val key_color_conversation_top = "key_color_conversation_top"
-    private val key_hook_remove_appbrand = "key_hook_remove_appbrand"
+
+    //    private val key_hook_remove_appbrand = "key_hook_remove_appbrand"
     private val key_hook_remove_foot_view = "key_hook_remove_foot_view"
     private val key_hook_menu_sns = "key_hook_menu_sns"
     private val key_hook_menu_appbrand = "key_hook_menu_appbrand"
     private val key_hook_bubble = "key_hook_bubble"
+    private val key_hook_bubble_in_night_mode = "key_hook_bubble_in_night_mode"
     private val key_hook_bubble_tint_left = "key_hook_bubble_tint_left"
     private val key_hook_bubble_tint_right = "key_hook_bubble_tint_right"
     private val key_hook_chat_text_color_left = "key_hook_chat_text_color_left"
@@ -56,7 +59,8 @@ object HookConfig {
     private val key_main_textcolor_title = "key_main_textcolor_title"
     private val key_main_textcolor_content = "key_main_textcolor_content"
     private val key_hook_mini_program = "key_hook_mini_program"
-    private val key_mini_program_title = "key_mini_program_title"
+
+    //    private val key_mini_program_title = "key_mini_program_title"
     private val key_hook_night_mode = "key_hook_night_mode"
 
     val is_hook_switch: Boolean
@@ -86,6 +90,11 @@ object HookConfig {
             return if (a) get_color_secondary else get_color_tertiary
         }
 
+    val get_hook_conversation_background_alpha: Int
+        get() {
+            val alpha = WeChatHelper.XMOD_PREFS.getString(key_hook_conversation_background_alpha, "120")
+            return Math.min(255, Math.max(alpha.toInt(), 0))
+        }
     val is_hook_actionbar: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_actionbar, true)
@@ -192,10 +201,11 @@ object HookConfig {
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_color_conversation_top, Color.GRAY)
         }
-    val is_hook_remove_appbrand: Boolean
-        get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_remove_appbrand, false)
-        }
+
+    //    val is_hook_remove_appbrand: Boolean
+//        get() {
+//            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_remove_appbrand, false)
+//        }
     val is_hook_remove_foot_view: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_remove_foot_view, true)
@@ -211,6 +221,10 @@ object HookConfig {
     val is_hook_bubble: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_bubble, true)
+        }
+    val is_hook_bubble_in_night_mode: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_bubble_in_night_mode, false)
         }
     val is_hook_statusbar_transparent: Boolean
         get() {
@@ -256,8 +270,8 @@ object HookConfig {
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, false)
         }
-    val value_mini_program_title: String
-        get() {
-            return WeChatHelper.XMOD_PREFS.getString(key_mini_program_title, "点击收起")
-        }
+//    val value_mini_program_title: String
+//        get() {
+//            return WeChatHelper.XMOD_PREFS.getString(key_mini_program_title, "点击收起")
+//        }
 }

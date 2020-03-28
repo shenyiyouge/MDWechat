@@ -118,7 +118,7 @@ public class ColorPreference extends Preference implements ColorPickerDialogList
       ColorPickerDialog fragment =
           (ColorPickerDialog) activity.getFragmentManager().findFragmentByTag(getFragmentTag());
       if (fragment != null) {
-        // re-bind preference to fragment
+        // re-bind preference_warning to fragment
         fragment.setColorPickerDialogListener(this);
       }
     }

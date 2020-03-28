@@ -5,6 +5,7 @@ import com.blanke.mdwechat.bean.ViewTreeItem
 import com.blanke.mdwechat.config.ViewTreeConfig
 
 // 当前微信版本适用的repo
+// based on ViewTreeRepo
 object ViewTreeRepoThisVersion {
     val ConversationListViewItem: ViewTree by lazy {
         ViewTreeConfig.get().conversationListViewItem.invoke(ViewTreeRepo) as ViewTree
@@ -29,6 +30,12 @@ object ViewTreeRepoThisVersion {
     }
     val ChatLeftAudioMessageItem: ViewTree by lazy {
         ViewTreeConfig.get().chatLeftAudioMessageItem.invoke(ViewTreeRepo) as ViewTree
+    }
+    val ChatRightCallMessageItem: ViewTree by lazy {
+        ViewTreeConfig.get().chatRightCallMessageItem.invoke(ViewTreeRepo) as ViewTree
+    }
+    val ChatLeftCallMessageItem: ViewTree by lazy {
+        ViewTreeConfig.get().chatLeftCallMessageItem.invoke(ViewTreeRepo) as ViewTree
     }
     val ActionBarItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarItem.invoke(ViewTreeRepo) as ViewTree
@@ -150,6 +157,67 @@ object ViewTreeRepo {
                                                                                 ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView"),
                                                                                 ViewTreeItem(CC.ImageView.name),
                                                                                 ViewTreeItem(CC.ImageView.name)
+                                                                        )
+                                                                )
+
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                ))
+    }
+    val ConversationListViewItem_7_0_12: ViewTree by lazy {
+        ViewTree(
+                mapOf("chatNameView" to intArrayOf(1, 0, 0, 0),
+                        "chatTimeView" to intArrayOf(1, 0, 1),
+                        "recentMsgView" to intArrayOf(1, 1, 0, 1),
+                        "unreadCountView" to intArrayOf(0, 1),
+                        "unreadView" to intArrayOf(0, 2)
+                ),
+                ViewTreeItem(
+                        CC.LinearLayout.name,
+                        arrayOf(
+                                ViewTreeItem(
+                                        CC.RelativeLayout.name,
+                                        arrayOf(
+                                                ViewTreeItem(CC.ImageView.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.ImageView.name)
+                                        )
+                                ),
+                                ViewTreeItem(
+                                        CC.LinearLayout.name,
+                                        arrayOf(
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(Classes.NoMeasuredTextView.name)
+                                                                        )
+                                                                ),
+                                                                ViewTreeItem(Classes.NoMeasuredTextView.name)
+                                                        )
+                                                ),
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem(Classes.NoMeasuredTextView.name)
+                                                                        )
+                                                                ),
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView"),
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView")
                                                                         )
                                                                 )
 
@@ -679,6 +747,19 @@ object ViewTreeRepo {
                                                         arrayOf(
                                                                 ViewTreeItem(CC.ProgressBar.name)
                                                         )
+                                                ),
+                                                ViewTreeItem(
+                                                        CC.FrameLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.FrameLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.TextView.name),
+                                                                                ViewTreeItem("com.tencent.mm.ui.base.AnimImageView"),
+                                                                                ViewTreeItem(CC.TextView.name)
+                                                                        )
+                                                                )
+                                                        )
                                                 )
                                         )
                                 ),
@@ -723,6 +804,91 @@ object ViewTreeRepo {
                                                         null,
                                                         null
                                                 ))
+                                        )
+                                ),
+                                ViewTreeItem(CC.View.name)
+                        )
+                ))
+    }
+
+    val ChatRightCallMessageItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("msgView" to intArrayOf(3, 0)
+                ),
+                ViewTreeItem(
+                        "com.tencent.mm.ui.chatting.viewitems.",
+                        arrayOf(
+                                ViewTreeItem(
+                                        CC.LinearLayout.name,
+                                        arrayOf(
+                                                ViewTreeItem(CC.View.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.View.name)
+                                        )
+                                ),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.CheckBox.name),
+                                ViewTreeItem(
+                                        CC.LinearLayout.name,
+                                        arrayOf(
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(CC.TextView.name),
+                                                                ViewTreeItem(CC.LinearLayout.name)
+                                                        )
+                                                ),
+                                                ViewTreeItem(
+                                                        "com.tencent.mm.ui.base.MaskLayout",
+                                                        arrayOf(
+                                                                null,
+                                                                ViewTreeItem(CC.ViewStub.name),
+                                                                ViewTreeItem(CC.View.name),
+                                                                ViewTreeItem(CC.ImageView.name)
+                                                        )
+                                                )
+                                        )
+                                ),
+                                ViewTreeItem(CC.View.name)
+                        )
+                ))
+    }
+    val ChatLeftCallMessageItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("msgView" to intArrayOf(3, 1)
+                ),
+                ViewTreeItem(
+                        "com.tencent.mm.ui.chatting.viewitems.",
+                        arrayOf(
+                                ViewTreeItem(
+                                        CC.LinearLayout.name,
+                                        arrayOf(
+                                                ViewTreeItem(CC.View.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.View.name)
+                                        )
+                                ),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.CheckBox.name),
+                                ViewTreeItem(
+                                        CC.LinearLayout.name,
+                                        arrayOf(
+                                                ViewTreeItem(
+                                                        "com.tencent.mm.ui.base.MaskLayout",
+                                                        arrayOf(
+                                                                null,
+                                                                ViewTreeItem(CC.ViewStub.name),
+                                                                ViewTreeItem(CC.View.name),
+                                                                ViewTreeItem(CC.ImageView.name)
+                                                        )
+                                                ),
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(CC.LinearLayout.name),
+                                                                ViewTreeItem(CC.TextView.name)
+                                                        )),
+                                                ViewTreeItem(CC.ImageView.name)
                                         )
                                 ),
                                 ViewTreeItem(CC.View.name)

@@ -17,6 +17,8 @@ public class ViewTreeConfig {
     private Method ChatLeftMessageItem = null;
     private Method ChatRightAudioMessageItem = null;
     private Method ChatLeftAudioMessageItem = null;
+    private Method ChatRightCallMessageItem = null;
+    private Method ChatLeftCallMessageItem = null;
     private Method ActionBarItem = null;
 
     //region getters
@@ -50,6 +52,13 @@ public class ViewTreeConfig {
 
     public Method getChatLeftAudioMessageItem() {
         return ChatLeftAudioMessageItem;
+    }
+    public Method getChatRightCallMessageItem() {
+        return ChatRightCallMessageItem;
+    }
+
+    public Method getChatLeftCallMessageItem() {
+        return ChatLeftCallMessageItem;
     }
 
     public Method getActionBarItem() {
@@ -85,6 +94,8 @@ public class ViewTreeConfig {
         ChatLeftMessageItem = findViewTreeMethod("ChatLeftMessageItem", versionName);
         ChatRightAudioMessageItem = findViewTreeMethod("ChatRightAudioMessageItem", versionName);
         ChatLeftAudioMessageItem = findViewTreeMethod("ChatLeftAudioMessageItem", versionName);
+        ChatRightCallMessageItem = findViewTreeMethod("ChatRightCallMessageItem", versionName);
+        ChatLeftCallMessageItem = findViewTreeMethod("ChatLeftCallMessageItem", versionName);
         ActionBarItem = findViewTreeMethod("ActionBarItem", versionName);
     }
 

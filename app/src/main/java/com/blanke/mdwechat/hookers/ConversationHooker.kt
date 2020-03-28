@@ -23,7 +23,9 @@ object ConversationHooker : HookerProvider {
     const val keyInit = "key_init"
 
     override fun provideStaticHookers(): List<Hooker>? {
-        return listOf(resumeHook, disableAppBrand, headViewHook)
+        return listOf(resumeHook,
+//                disableAppBrand,
+                headViewHook)
     }
 
     private val resumeHook = Hooker {
@@ -112,31 +114,34 @@ object ConversationHooker : HookerProvider {
         }
     }
 
+    //7.0.3以上无法使用
     private val disableAppBrand = Hooker {
-        XposedHelpers.findAndHookMethod(ConversationWithAppBrandListView,
-                ConversationWithAppBrandListView_isAppBrandHeaderEnable.name, CC.Boolean, object : XC_MethodHook() {
-            override fun beforeHookedMethod(param: MethodHookParam) {
-                if (HookConfig.is_hook_remove_appbrand) {
-                    try {
-                        if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                            val listView = param.thisObject as ListView
-                            val mHeaderViewInfos = XposedHelpers.getObjectField(listView, "mHeaderViewInfos") as List<*>
-                            if (mHeaderViewInfos.isNotEmpty()) {
-                                val firstHeadView = mHeaderViewInfos[0] as ListView.FixedViewInfo
-                                val mAppBrandDesktopHalfContainer = firstHeadView.view as ViewGroup
-//                                LogUtil.log("firstHeadView=${firstHeadView.view}")
-                                if (mAppBrandDesktopHalfContainer::class.java.name.contains("AppBrandDesktopHalfContainer")) {
-                                    mAppBrandDesktopHalfContainer.getChildAt(1)?.visibility = View.GONE
-                                }
-                            }
-                        }
-                    } catch (t: Throwable) {
-                        LogUtil.log(t)
-                    }
-                    param.result = false
-                }
-            }
-        })
+//        if (WechatGlobal.wxVersion!! <= Version("7.0.3")) {
+//            XposedHelpers.findAndHookMethod(ConversationWithAppBrandListView,
+//                    ConversationWithAppBrandListView_isAppBrandHeaderEnable.name, CC.Boolean, object : XC_MethodHook() {
+//                override fun beforeHookedMethod(param: MethodHookParam) {
+//                    if (HookConfig.is_hook_remove_appbrand) {
+//                        try {
+//                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+//                                val listView = param.thisObject as ListView
+//                                val mHeaderViewInfos = XposedHelpers.getObjectField(listView, "mHeaderViewInfos") as List<*>
+//                                if (mHeaderViewInfos.isNotEmpty()) {
+//                                    val firstHeadView = mHeaderViewInfos[0] as ListView.FixedViewInfo
+//                                    val mAppBrandDesktopHalfContainer = firstHeadView.view as ViewGroup
+////                                LogUtil.log("firstHeadView=${firstHeadView.view}")
+//                                    if (mAppBrandDesktopHalfContainer::class.java.name.contains("AppBrandDesktopHalfContainer")) {
+//                                        mAppBrandDesktopHalfContainer.getChildAt(1)?.visibility = View.GONE
+//                                    }
+//                                }
+//                            }
+//                        } catch (t: Throwable) {
+//                            LogUtil.log(t)
+//                        }
+//                        param.result = false
+//                    }
+//                }
+//            })
+//        }
     }
 
     private val headViewHook = Hooker {

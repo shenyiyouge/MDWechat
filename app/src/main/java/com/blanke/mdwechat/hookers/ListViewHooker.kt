@@ -3,6 +3,8 @@ package com.blanke.mdwechat.hookers
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.opengl.Visibility
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -64,15 +66,17 @@ object ListViewHooker : HookerProvider {
                     }
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
-//                logXp("--------------------")
-//                logXp(WechatGlobal.wxVersion.toString())
-//                logXp("context=" + view.context)
-//                LogUtil.logViewStackTracesXp(view)
-//                logParentViewXp(view, 10)
-//                logXp("--------------------")
+
+//                    LogUtil.logXp("----------抓取view start----------")
+//                    LogUtil.logXp(WechatGlobal.wxVersion.toString())
+//                    LogUtil.logXp("context=" + view.context)
+//                    LogUtil.logViewStackTracesXp(view)
+//                    LogUtil.logParentViewXp(view, 10)
+//                    LogUtil.logXp("--------------------")
 
                     // 按照使用频率重排序
-                    if (!NightModeUtils.isNightMode()) {// 夜间模式不改变气泡
+                    //气泡
+                    if ((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) {
                         // 聊天消息 item
                         if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
@@ -129,9 +133,9 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftAudioMessageItem.item, view)) {
-                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
-                            val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             if (HookConfig.is_hook_bubble) {
+                                val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
+                                val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                                 val bubble = WeChatHelper.getLeftBubble(msgView.resources)
                                 msgView.background = bubble
                                 if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
@@ -143,11 +147,33 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         }
-                    }  //
+                        // 通话消息
+                        else if (ViewTreeUtils.equals(VTTV.ChatRightCallMessageItem.item, view)) {
+                            if (HookConfig.is_hook_bubble) {
+                                val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")!!) as View
+                                val bubble = WeChatHelper.getRightBubble(msgView.resources)
+                                msgView.background = bubble
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    msgView.setPadding(30, 25, 45, 25)
+                                }
+                            }
+                        } else if (ViewTreeUtils.equals(VTTV.ChatLeftCallMessageItem.item, view)) {
+                            if (HookConfig.is_hook_bubble) {
+                                val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")!!) as View
+                                val bubble = WeChatHelper.getLeftBubble(msgView.resources)
+                                msgView.background = bubble
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    msgView.setPadding(45, 25, 30, 25)
+                                }
+                            }
+                        }
+                    }
 
                     // ConversationFragment 聊天列表 item sum
                     if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
-                        view.background.alpha = 120
+                        try {
+                            view.background.alpha = HookConfig.get_hook_conversation_background_alpha
+                        } catch (e: Exception) {                        }
                         val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView")!!)
                         val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView")!!)
                         val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView")!!)
@@ -226,14 +252,14 @@ object ListViewHooker : HookerProvider {
                             // old action bar
                             val actionBarPage = ViewUtils.getChildView1(miniProgramPage,
                                     VTTV.ActionBarItem.treeStacks.get("miniProgramPage_actionBarPage")!!) as LinearLayout
-                            val title: TextView
-                            title = ViewUtils.getChildView1(actionBarPage,
-                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_title")!!) as TextView
-
-                            title.gravity = Gravity.CENTER;
-                            title.text = HookConfig.value_mini_program_title
-                            val lp = title.layoutParams as LinearLayout.LayoutParams
-                            lp.setMargins(0, 0, 0, 0)
+//                            val title: TextView
+//                            title = ViewUtils.getChildView1(actionBarPage,
+//                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_title")!!) as TextView
+//
+//                            title.gravity = Gravity.CENTER;
+//                            title.text = HookConfig.value_mini_program_title
+//                            val lp = title.layoutParams as LinearLayout.LayoutParams
+//                            lp.setMargins(0, 0, 0, 0)
                             actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
                                     VTTV.ActionBarItem.treeStacks.get("actionBarPage_child1")!!))
                             actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
