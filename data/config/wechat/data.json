@@ -1,47 +1,87 @@
 [
   {
+    "name": "7.0.12.config",
+    "desc": "7.0.12 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.12/7.0.12.config"
+  },
+  {
+    "name": "7.0.11.config",
+    "desc": "7.0.11 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.11/7.0.11.config"
+  },
+  {
+    "name": "7.0.10.config",
+    "desc": "7.0.10 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.10/7.0.10.config"
+  },
+  {
+    "name": "7.0.9.config",
+    "desc": "7.0.9 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.9/7.0.9.config"
+  },
+  {
+    "name": "7.0.8.config",
+    "desc": "7.0.8 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.8/7.0.8.config"
+  },
+  {
+    "name": "7.0.7.config",
+    "desc": "7.0.7 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.7/7.0.7.config"
+  },
+  {
+    "name": "7.0.6.config",
+    "desc": "7.0.6 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.6/7.0.6.config"
+  },
+  {
+    "name": "7.0.5.config",
+    "desc": "7.0.5 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.5/7.0.5.config"
+  },
+  {
     "name": "7.0.4.config",
     "desc": "7.0.4 国内版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/7.0.4/7.0.4.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.4/7.0.4.config"
   },
   {
     "name": "7.0.3.config",
     "desc": "7.0.3 国内版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/7.0.3/7.0.3.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.3/7.0.3.config"
   },
   {
     "name": "7.0.0.config",
     "desc": "7.0.0 国内版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/7.0.0/7.0.0.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.0/7.0.0.config"
   },
   {
     "name": "6.7.3.config",
     "desc": "6.7.3 国内版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/6.7.3/6.7.3.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/6.7.3/6.7.3.config"
   },
   {
     "name": "6.7.3.config",
     "desc": "6.7.3 play版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/6.7.3-play/6.7.3.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/6.7.3-play/6.7.3.config"
   },
   {
     "name": "6.7.2.config",
     "desc": "6.7.2 国内版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/6.7.2/6.7.2.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/6.7.2/6.7.2.config"
   },
   {
     "name": "6.7.2.config",
     "desc": "6.7.2 play版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/6.7.2-play/6.7.2.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/6.7.2-play/6.7.2.config"
   },
   {
     "name": "6.6.7.config",
     "desc": "6.6.7 play版",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/6.6.7-play/6.6.7.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/6.6.7-play/6.6.7.config"
   },
   {
     "name": "6.6.6.config",
     "desc": "6.6.6 国内版,热心网友共享,自行测试",
-    "url": "https://raw.githubusercontent.com/Blankeer/MDWechat/v3.0/data/config/wechat/6.6.6/6.6.6.config"
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/6.6.6/6.6.6.config"
   }
 ]
