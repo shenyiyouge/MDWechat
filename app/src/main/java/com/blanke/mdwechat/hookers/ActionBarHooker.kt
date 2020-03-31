@@ -10,24 +10,24 @@ import com.blanke.mdwechat.Methods
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.colorPrimaryDrawable
 import com.blanke.mdwechat.WechatGlobal
+import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
-import de.robv.android.xposed.XposedHelpers.findAndHookMethod
 
 object ActionBarHooker : HookerProvider {
 
     override fun provideStaticHookers(): List<Hooker>? {
-        return listOf(actionBarHooker
-                , actionBarTitleTextColor
-        )
+        val list = mutableListOf(actionBarHooker)
+        if (HookConfig.is_hook_actionbar_color) list.add(actionBarTitleTextColor)
+        return list
     }
 
     private val actionBarHooker = Hooker {
-        findAndHookMethod(ActionBarContainer, "setPrimaryBackground", Drawable::class.java, object : XC_MethodHook() {
+        XposedHelpers.findAndHookMethod(ActionBarContainer, "setPrimaryBackground", Drawable::class.java, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam) {
                 val drawable = param.args[0]
                 var needHook = true
@@ -72,7 +72,6 @@ object ActionBarHooker : HookerProvider {
             val methods = Methods.HomeUI_setActionBarColor
 //            LogUtil.logXp("\n\n\n\n\nmethods$methods")
             methods.forEach {
-//                if(it=="a")return@forEach
                 XposedHelpers.findAndHookMethod(Classes.HomeUI, it,
                         Float::class.java, Int::class.java, Int::class.java, object : XC_MethodHook() {
                     @Throws(Throwable::class)
@@ -85,7 +84,6 @@ object ActionBarHooker : HookerProvider {
                 })
             }
         } catch (e: Exception) {
-            LogUtil.logXp("=====================")
             LogUtil.logXp(e)
         }
     }

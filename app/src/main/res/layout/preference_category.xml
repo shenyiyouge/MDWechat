@@ -5,21 +5,21 @@
     android:background="#D5D5D5"
     android:gravity="center_vertical"
     android:minHeight="@dimen/cpv_color_preference_normal"
-    android:paddingRight="?android:attr/scrollbarSize" >
+    android:baselineAligned="false">
 
-    <ImageView
-        android:id="@android:id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_add" />
+<!--    <ImageView-->
+<!--        android:id="@android:id/icon"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:src="@drawable/ic_add" />-->
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dip"
-        android:layout_marginLeft="15dip"
-        android:layout_marginRight="6dip"
+        android:layout_marginStart="15dip"
+        android:layout_marginEnd="6dip"
         android:layout_marginTop="6dip"
         android:layout_weight="1" >
 
@@ -35,10 +35,10 @@
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@android:id/title"
+            android:layout_alignStart="@android:id/title"
             android:layout_below="@android:id/title"
             android:textAppearance="@android:style/TextAppearance.Small"
-            android:textColor="#F44336" />
+            android:textColor="@color/material_red" />
     </RelativeLayout>
 
     <LinearLayout

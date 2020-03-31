@@ -38,7 +38,7 @@ object TabLayoutHook {
         tabLayout.textSelectColor = Color.WHITE
         val dp2 = ConvertUtils.dp2px(resContext, 1f)
         tabLayout.indicatorHeight = dp2.toFloat()
-        tabLayout.indicatorColor = if (HookConfig.is_hook_tab_elevation) secondaryColor else primaryColor
+        tabLayout.indicatorColor = if (NightModeUtils.is_hook_tab_elevation) secondaryColor else primaryColor
         tabLayout.setIndicatorGravity(indicatorGravity)
         tabLayout.indicatorCornerRadius = dp2.toFloat()
         tabLayout.indicatorAnimDuration = 200
@@ -55,7 +55,7 @@ object TabLayoutHook {
                     object : CustomTabEntity.TabCustomData() {
                         override fun getTabIcon(): Drawable {
                             val drawable: Drawable = BitmapDrawable(resContext.resources, AppCustomConfig.getTabIcon(it))
-                            return  if(HookConfig.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, get_color_tertiary) else drawable
+                            return if (NightModeUtils.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, get_color_tertiary) else drawable
                         }
                     }
                 }
@@ -113,13 +113,13 @@ object TabLayoutHook {
         val resContext = viewPagerLinearLayout.context
         // 7.0.7(?) 之后小程序下拉相关
         val isHideElevation = (WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)
-        val tabElevation = if (!isHideElevation && HookConfig.is_hook_tab_elevation) 5F else 0F
+        val tabElevation = if (!isHideElevation && NightModeUtils.is_hook_tab_elevation) 5F else 0F
 
         val tabLayout = newTabLayout(viewPagerLinearLayout, Gravity.BOTTOM, tabElevation)
 
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
-        params.height = px48
+        params.height = px48 + HookConfig.value_tab_layout_offset
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
         } else if (WechatGlobal.wxVersion!! < Version("7.0.0")) {// 672 wx布局更改
@@ -135,8 +135,6 @@ object TabLayoutHook {
             mockLayout.addView(viewpager)
             viewPagerLinearLayout.addView(mockLayout, 0)
         } else {
-            val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            params.height = px48
             val cb = { actionHeight: Int ->
                 params.topMargin = actionHeight + BarUtils.getStatusBarHeight() - 2
                 if (WechatGlobal.wxVersion!! == Version("7.0.0")) {
@@ -149,17 +147,17 @@ object TabLayoutHook {
                     statusParam.height = BarUtils.getStatusBarHeight()
                     viewPagerLinearLayout.addView(statusView, 0, statusParam)
                 }
-                viewPagerLinearLayout.height
+//                viewPagerLinearLayout.height
                 viewPagerLinearLayout.setPadding(0, 0, 0, 0)
                 viewPagerLinearLayout.requestLayout()
                 //小程序下拉之后的填空
                 if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)) {
-                    val params1 = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    params1.height = px48
-                    params1.topMargin = actionHeight + BarUtils.getStatusBarHeight() - 2 - px48
+                    val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    paramsAddedOnTop.height = px48
+                    paramsAddedOnTop.topMargin = actionHeight + BarUtils.getStatusBarHeight() - 2 - px48
                     val view = FrameLayout(context)
                     view.setBackgroundColor(primaryColor)
-                    viewPagerLinearLayout.addView(view, 1, params1)
+                    viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)
             }

@@ -16,12 +16,12 @@ object Objects {
         var LauncherUI_mWechatXMenuItem :MenuItem?=null
     }
 
-    fun clear() {
-        Main.LauncherUI=null
-        Main.LauncherUI_mContentLayout=null
-        Main.HomeUI_mActionBar=null
+//    fun clear() {
+//        Main.LauncherUI=null
+//        Main.LauncherUI_mContentLayout=null
+//        Main.HomeUI_mActionBar=null
 //        Main.LauncherUI_mViewPager.clear()
 //        Main.LauncherUI_mTabLayout.clear()
 //        Main.LauncherUI_mWechatXMenuItem.clear()
-    }
+//    }
 }

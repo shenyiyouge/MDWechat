@@ -17,7 +17,6 @@ import com.blanke.mdwechat.Fields.MainTabUI_mCustomViewPager
 import com.blanke.mdwechat.Methods.MainTabUIPageAdapter_onPageScrolled
 import com.blanke.mdwechat.Methods.WxViewPager_selectedPage
 import com.blanke.mdwechat.Objects.Main.LauncherUI_mTabLayout
-import com.blanke.mdwechat.Objects.Main.LauncherUI_mViewPager
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
@@ -94,16 +93,16 @@ object LauncherUIHooker : HookerProvider {
                         Objects.Main.LauncherUI_mViewPager = viewPager
 
                         // region 微信底栏 & action bar
-                        val is_tab_layout_on_bottom = HookConfig.is_hook_tab && !HookConfig.is_tab_layout_on_top
-                        val is_tab_layout_on_top = HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
-                        val is_key_hide_tab = is_tab_layout_on_top || (!is_tab_layout_on_bottom && HookConfig.is_key_hide_tab)
-                        val should_fix = is_tab_layout_on_top ||  HookConfig.is_hook_hide_actionbar
-                        val float_button_margin_bottom = if (is_tab_layout_on_bottom || (!is_key_hide_tab)) 1 else 0
+                        val isTabLayoutOnBottom = HookConfig.is_hook_tab && !HookConfig.is_tab_layout_on_top
+                        val isTabLayoutOnTop = HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
+                        val isKeyHideTab = isTabLayoutOnTop || (!isTabLayoutOnBottom && HookConfig.is_key_hide_tab)
+                        val shouldFix = isTabLayoutOnTop ||  HookConfig.is_hook_hide_actionbar
+                        val floatButtonMarginBottom = if (isTabLayoutOnBottom || (!isKeyHideTab)) 1 else 0
 
                         val tabView = linearViewGroup.getChildAt(1) as ViewGroup
                         val tabViewUnderneathHeight = measureHeight(tabView)
 
-                        if (is_key_hide_tab) {
+                        if (isKeyHideTab) {
                             // region 隐藏底栏
                             if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                 // 672报错
@@ -117,7 +116,7 @@ object LauncherUIHooker : HookerProvider {
                             //endregion
                         }
 
-                        if (is_tab_layout_on_top) {
+                        if (isTabLayoutOnTop) {
                             try {
                                 log("添加 TabLayout")
                                 TabLayoutHook.addTabLayout(linearViewGroup)
@@ -125,7 +124,7 @@ object LauncherUIHooker : HookerProvider {
                                 log("添加 TabLayout 报错")
                                 log(e)
                             }
-                        } else if (is_tab_layout_on_bottom) {
+                        } else if (isTabLayoutOnBottom) {
                             try {
                                 log("添加底栏")
                                 addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
@@ -135,7 +134,7 @@ object LauncherUIHooker : HookerProvider {
                                 log(e)
                             }
                         }
-                        if (should_fix) {
+                        if (shouldFix) {
                             // 隐藏 action bar 测试
                             HomeActionBarHook.fix(linearViewGroup)
                         }
@@ -145,7 +144,7 @@ object LauncherUIHooker : HookerProvider {
                         if (HookConfig.is_hook_float_button) {
                             try {
                                 log("添加 FloatMenu")
-                                FloatMenuHook.addFloatMenu(contentViewGroup, float_button_margin_bottom * tabViewUnderneathHeight)
+                                FloatMenuHook.addFloatMenu(contentViewGroup, floatButtonMarginBottom * tabViewUnderneathHeight)
                             } catch (e: Throwable) {
                                 log("添加 FloatMenu 报错")
                                 log(e)
@@ -161,7 +160,7 @@ object LauncherUIHooker : HookerProvider {
         XposedHelpers.findAndHookMethod(WxViewPager, WxViewPager_selectedPage.name, CC.Int, CC.Boolean, CC.Boolean, CC.Int, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam?) {
                 val vp = param?.thisObject
-                if (LauncherUI_mViewPager == vp) {
+                if (Objects.Main.LauncherUI_mViewPager == vp) {
                     val position = param?.args!![0] as Int
 //                    log("WxViewPager_selectedPage position = $position , arg[1] =${param?.args!![1]}")
                     LauncherUI_mTabLayout?.currentTab = position
@@ -212,7 +211,7 @@ object LauncherUIHooker : HookerProvider {
                 if (param.thisObject !is ImageView) {
                     return
                 }
-                val visible = param?.args!![0] as Int
+                val visible = param.args!![0] as Int
                 val view = param.thisObject as ImageView
                 val tabView = ViewUtils.getParentView(view, 5)
                 if (tabView != null && tabView.javaClass.name == LauncherUIBottomTabView.name) {
@@ -238,7 +237,7 @@ object LauncherUIHooker : HookerProvider {
         //hide menu item in actionBar
         XposedHelpers.findAndHookMethod(Classes.LauncherUI, "onCreateOptionsMenu", CC.Menu, object : XC_MethodHook() {
             @Throws(Throwable::class)
-            override fun afterHookedMethod(param: XC_MethodHook.MethodHookParam) {
+            override fun afterHookedMethod(param: MethodHookParam) {
                 if (!HookConfig.is_hook_float_button) {
                     return
                 }
@@ -246,7 +245,7 @@ object LauncherUIHooker : HookerProvider {
                 menu.removeItem(2)
             }
         })
-        XposedHelpers.findAndHookMethod(com.blanke.mdwechat.Classes.ActionMenuView, "add",
+        XposedHelpers.findAndHookMethod(Classes.ActionMenuView, "add",
                 Int::class.java, Int::class.java, Int::class.java, CharSequence::class.java,
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {

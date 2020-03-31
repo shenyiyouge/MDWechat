@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.blanke.mdwechat.auto_search
 
 import android.app.ProgressDialog
@@ -13,16 +15,12 @@ import android.widget.*
 import com.blanke.mdwechat.CC
 import com.blanke.mdwechat.CC.voidd
 import com.blanke.mdwechat.Version
-import com.blanke.mdwechat.auto_search.WechatGlobal.wxLoader
-import com.blanke.mdwechat.auto_search.WechatGlobal.wxPackageName
 import com.blanke.mdwechat.util.ReflectionUtil
-import com.blanke.mdwechat.util.ReflectionUtil.findClassIfExists
-import java.lang.Exception
 
 object Classes {
     val LauncherUI: Class<*>?
         get() {
-            return findClassIfExists("$wxPackageName.ui.LauncherUI", wxLoader!!)
+            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.LauncherUI",WechatGlobal. wxLoader)
         }
 
     val HomeUI: Class<*>?

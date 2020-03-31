@@ -18,15 +18,15 @@
     },
     {
       "order": 3,
-      "type": "com.tencent.mm.plugin.scanner.ui.BaseScanUI",
-      "text": "扫一扫",
-      "icon": "ic_scan.png"
-    },
-    {
-      "order": 4,
       "type": "com.tencent.mm.plugin.offline.ui.WalletOfflineCoinPurseUI",
       "text": "收付款",
       "icon": "ic_money.png"
+    },
+    {
+      "order": 4,
+      "type": "com.tencent.mm.plugin.scanner.ui.BaseScanUI",
+      "text": "扫一扫",
+      "icon": "ic_scan.png"
     },
     {
       "order": 5,

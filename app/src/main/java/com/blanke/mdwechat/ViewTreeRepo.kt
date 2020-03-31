@@ -43,6 +43,7 @@ object ViewTreeRepoThisVersion {
 }
 
 // 所有微信版本的repo
+@Suppress("unused")
 object ViewTreeRepo {
 
     val ConversationListViewItem: ViewTree by lazy {
@@ -941,8 +942,8 @@ object ViewTreeRepo {
                 mapOf("miniProgramPage" to intArrayOf(0),
                         "miniProgramPage_actionBarPage" to intArrayOf(1, 1),
                         "actionBarPage_title" to intArrayOf(0),
-                        "actionBarPage_child1" to intArrayOf(0, 1, 1, 1),
-                        "actionBarPage_child2" to intArrayOf(0, 1, 1, 2),
+                        "actionBarPage_searchIcon" to intArrayOf(1),
+                        "actionBarPage_addIcon" to intArrayOf(2),
                         "miniProgramPage_appBrandDesktopView" to intArrayOf(0, 0, 2, 0),
                         "appBrandDesktopView_searchEditText" to intArrayOf(0, 0),
                         "appBrandDesktopView_miniProgramTitle" to intArrayOf(2, 0, 0)
@@ -975,7 +976,21 @@ object ViewTreeRepo {
                                                                 ViewTreeItem("com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopBottomView"),
                                                                 ViewTreeItem(
                                                                         CC.LinearLayout.name,
-                                                                        arrayOf(null))
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.TextView.name),
+                                                                                ViewTreeItem(
+                                                                                        CC.RelativeLayout.name,
+                                                                                        arrayOf(
+                                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                                ViewTreeItem(CC.ImageView.name)
+                                                                                        )),
+                                                                                ViewTreeItem(
+                                                                                        CC.RelativeLayout.name,
+                                                                                        arrayOf(
+                                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                                ViewTreeItem(CC.ImageView.name)
+                                                                                        ))
+                                                                        ))
                                                         )
                                                 )
                                         )

@@ -27,16 +27,16 @@ import de.robv.android.xposed.XposedHelpers.getObjectField
 object ContactHooker : HookerProvider {
     const val keyInit = "key_init"
 
-    private var headTextColor = Color.BLACK
+    private val headTextColor:Int
         get() {
             return NightModeUtils.getContentTextColor()
         }
 
-    private var titleTextColor = Color.BLACK
+    private val titleTextColor:Int
         get() {
             return NightModeUtils.getTitleTextColor()
         }
-    private var isHookTextColor = false
+    private val isHookTextColor:Boolean
         get() {
             return HookConfig.is_hook_main_textcolor || NightModeUtils.isNightMode()
         }
@@ -63,8 +63,10 @@ object ContactHooker : HookerProvider {
                     val listView = ContactFragment_mListView.get(fragment)
                     if (listView != null && listView is ListView) {
                         XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
-                        val background = AppCustomConfig.getTabBg(1)
-                        listView.background = NightModeUtils.getBackgroundDrawable(background)
+                        if (HookConfig.is_hook_tab_bg) {
+                            val background = AppCustomConfig.getTabBg(1)
+                            listView.background = NightModeUtils.getBackgroundDrawable(background)
+                        }
 //                        LogUtil.log("ContactFragment listview= $listView, ${listView.javaClass.name}")
                         if (listView.headerViewsCount > 0) {
                             val mHeaderViewInfos = getObjectField(listView, "mHeaderViewInfos") as ArrayList<ListView.FixedViewInfo>
@@ -80,8 +82,8 @@ object ContactHooker : HookerProvider {
                                                 continue
                                             }
                                             val itemContent = item.getChildAt(0)
-                                            var titleTextView: View? = null
-                                            var headTextView: View? = null
+                                            var titleTextView: View?
+                                            var headTextView: View?
                                             if (itemContent != null) {
                                                 // 新的朋友 等几个 item
                                                 itemContent.background = defaultImageRippleDrawable

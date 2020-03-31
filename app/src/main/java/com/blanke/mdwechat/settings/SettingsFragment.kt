@@ -36,6 +36,12 @@ import kotlin.concurrent.thread
 
 class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     lateinit var wxVersion: Version
+
+    object STATIC {
+        lateinit var sharedPrefsFile: File
+        lateinit var sdSPFile: File
+    }
+
     private fun getWechatPath(): String {
         val pm = activity.packageManager
         val ai = pm.getApplicationInfo(Common.WECHAT_PACKAGENAME, 0)
@@ -68,18 +74,17 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 //        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
 
-        findPreference(getString(R.string.key_hook_hide_actionbar))?.onPreferenceChangeListener = this
-        findPreference(getString(R.string.key_hook_hide_actionbar_1))?.onPreferenceChangeListener = this
-        setHideActionbar1((findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference).isChecked)
-
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_wechat_config))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_reset_view_config))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_reset_config))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_reset_float_bottom_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_icon_config))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_feedback_email))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_github))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_feedback_email_blanke))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_feedback_email_josh_cai))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_github_blanke))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_github_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_bg))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_generate_wechat_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_donate_wechat))?.onPreferenceClickListener = this
@@ -127,8 +132,6 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     override fun onPreferenceChange(preference: Preference, o: Any): Boolean {
         when (preference.key) {
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
-            getString(R.string.key_hook_hide_actionbar) -> setHideActionbar1(o as Boolean)
-            getString(R.string.key_hook_hide_actionbar_1) -> setHideActionbar(o as Boolean)
             getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
 //            getString(R.string.key_mini_program_title) -> setSummary(o as String)
 //            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
@@ -136,19 +139,6 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         return true
     }
 
-    private fun setHideActionbar(o: Boolean) {
-        val hideActionbar = findPreference(getString(R.string.key_hook_hide_actionbar)) as SwitchPreference
-        if (hideActionbar.isChecked != o) {
-            hideActionbar.isChecked = o
-        }
-    }
-
-    private fun setHideActionbar1(o: Boolean) {
-        val hideActionbar1 = findPreference(getString(R.string.key_hook_hide_actionbar_1)) as SwitchPreference
-        if (hideActionbar1.isChecked != o) {
-            hideActionbar1.isChecked = o
-        }
-    }
 
     private fun verifyAlpha(s: String) {
         val alpha = s.toInt()
@@ -170,10 +160,13 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_donate) -> donate()
             getString(R.string.key_feedback) -> feedback()
             getString(R.string.key_reset_wechat_config) -> copyWechatConfig()
-            getString(R.string.key_reset_view_config) -> copyViewConfig()
+            getString(R.string.key_reset_config) -> copyConfig()
+            getString(R.string.key_reset_float_bottom_config) -> copyFloatBottomConfig()
             getString(R.string.key_reset_icon_config) -> copyIcons()
-            "key_feedback_email" -> sendEmail()
-            "key_github" -> gotoGithub()
+            getString(R.string.key_feedback_email_blanke) -> sendEmail()
+            getString(R.string.key_feedback_email_josh_cai)-> sendEmailCai()
+            getString(R.string.key_github_blanke) -> gotoGithub()
+            getString(R.string.key_github_joshcai)  -> gotoGithubCai()
             "key_hook_main_bg" -> {
 
             }
@@ -249,12 +242,32 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         Toast.makeText(activity, R.string.msg_reset_ok, Toast.LENGTH_SHORT).show()
     }
 
-    private fun copyViewConfig() {
+    private fun copyConfig() {
+        var success = true
+        if (STATIC.sharedPrefsFile.exists()) {
+            success = success && STATIC.sharedPrefsFile.delete()
+        }
+        if (STATIC.sdSPFile.exists()) {
+            success = success && STATIC.sdSPFile.delete()
+        }
+        if (success) {
+            Toast.makeText(activity, R.string.msg_reset_mdwechat_ok, Toast.LENGTH_SHORT).show()
+            thread {
+                Thread.sleep(2000)
+                System.exit(0)
+            }
+        } else {
+            Toast.makeText(activity, R.string.msg_reset_failed, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun copyFloatBottomConfig() {
         thread {
             FileUtils.copyAssets(activity, Common.APP_DIR_PATH, Common.CONFIG_VIEW_DIR, true)
         }
         Toast.makeText(activity, R.string.msg_reset_ok, Toast.LENGTH_SHORT).show()
     }
+
 
     private fun copyIcons() {
         thread {
@@ -284,7 +297,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             startActivity(intent)
             return
         }
-        intent.data = Uri.parse(payUrl.toLowerCase())
+        intent.data = Uri.parse(payUrl.toLowerCase(Locale.getDefault()))
         startActivity(intent)
     }
 
@@ -293,14 +306,14 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val className = "com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity"
         val componentName = ComponentName("com.tencent.mm", className)
         try {
-            view.context.startActivity(Intent(Intent.ACTION_VIEW).apply {
+            view?.context?.startActivity(Intent(Intent.ACTION_VIEW).apply {
                 component = componentName
                 data = Uri.parse("weixin://mdwechat/donate/$wechatPayCode")
                 flags = Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP
             })
-            Toast.makeText(view.context, "模块生效会自动跳转到微信捐赠页面", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view?.context, "模块生效会自动跳转到微信捐赠页面", Toast.LENGTH_SHORT).show()
         } catch (t: Throwable) {
-            Toast.makeText(view.context, "模块未生效,捐赠失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view?.context, "模块未生效,捐赠失败", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -321,7 +334,18 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     private fun sendEmail() {
         try {
             val info = "mailto:blanke.master+mdwechat@gmail.com?subject=[MDWechat] 请简明描述该问题" +
-                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 版本%0d%0a[日志]可以传附件"
+                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
+            val uri = Uri.parse(info)
+            startActivity(Intent(Intent.ACTION_SENDTO, uri))
+        } catch (e: Exception) {
+
+        }
+    }
+
+    private fun sendEmailCai() {
+        try {
+            val info = "mailto:joshcai_mdwechat@163.com?subject=[MDWechat] 请简明描述该问题" +
+                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
             val uri = Uri.parse(info)
             startActivity(Intent(Intent.ACTION_SENDTO, uri))
         } catch (e: Exception) {
@@ -331,6 +355,11 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
     private fun gotoGithub() {
         val uri = Uri.parse("https://github.com/Blankeer/MDWechat")
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+    }
+
+    private fun gotoGithubCai() {
+        val uri = Uri.parse("https://github.com/JoshCai233/MDWechat")
         startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
 
@@ -361,10 +390,10 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         EventBus.getDefault().unregister(this)
     }
 
-    private val weChatVersion: String
-        get() = "unKnow"
-
-    private val isSupportWechat: Boolean
-        get() = false
+//    private val weChatVersion: String
+//        get() = "unKnow"
+//
+//    private val isSupportWechat: Boolean
+//        get() = false
 
 }

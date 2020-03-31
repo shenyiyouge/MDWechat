@@ -2,6 +2,7 @@ package com.blanke.mdwechat.hookers
 
 import android.content.res.Configuration
 import android.content.res.Resources
+import com.blanke.mdwechat.Classes.findClass
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
@@ -14,6 +15,7 @@ object NightModeHooker : HookerProvider {
 
     override fun provideStaticHookers(): List<Hooker>? {
         return listOf(
+//                getNightModeConfiguration1,
                 getNightModeConfiguration
         )
     }
@@ -29,13 +31,25 @@ object NightModeHooker : HookerProvider {
                 }
             })
         } catch (e: Exception) {
-            LogUtil.logXp("=====================")
+            LogUtil.logXp(e)
+        }
+    }
+    private val getNightModeConfiguration1 = Hooker {
+        try {
+            XposedHelpers.findAndHookMethod(findClass("com.tencent.mm.ui.base.CustomViewPager"), "isGutterDrag", object : XC_MethodHook() {
+                @Throws(Throwable::class)
+                override fun beforeHookedMethod(param: MethodHookParam) {
+//                    val configuration = param.result as Configuration
+                    param.result=false
+                }
+            })
+        } catch (e: Exception) {
             LogUtil.logXp(e)
         }
     }
 //    private val Hook5 = Hooker {
 //        try {
-////        夜间模式实现
+////        深色模式实现 7010
 //            XposedBridge.hookAllMethods(Classes.findClass("com.tencent.mm.cb.h"), "a", object : XC_MethodHook() {
 //                @Throws(Throwable::class)
 //                override fun beforeHookedMethod(param: MethodHookParam) {

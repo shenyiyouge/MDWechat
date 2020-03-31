@@ -23,9 +23,11 @@ object ConversationHooker : HookerProvider {
     const val keyInit = "key_init"
 
     override fun provideStaticHookers(): List<Hooker>? {
-        return listOf(resumeHook,
+        return listOf(
+                resumeHook,
 //                disableAppBrand,
-                headViewHook)
+                headViewHook
+        )
     }
 
     private val resumeHook = Hooker {
@@ -43,7 +45,9 @@ object ConversationHooker : HookerProvider {
                     return
                 }
                 XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
-                init(fragment)
+                if (HookConfig.is_hook_tab_bg) {
+                    init(fragment)
+                }
             }
 
             private fun init(fragment: Any) {
@@ -54,53 +58,25 @@ object ConversationHooker : HookerProvider {
                 }
             }
         })
-        if (WechatGlobal.wxVersion!! >= Version("7.0.3")) {
-            XposedBridge.hookAllMethods(CC.View, "setBackgroundColor", object : XC_MethodHook() {
-                override fun beforeHookedMethod(param: MethodHookParam) {
-                    val view = param.thisObject as View
-                    val clazz = view::class.java.name
+        XposedBridge.hookAllMethods(CC.View, "setBackgroundColor", object : XC_MethodHook() {
+            override fun beforeHookedMethod(param: MethodHookParam) {
+                val view = param.thisObject as View
+                val clazz = view::class.java.name
 //                    LogUtil.logXp("=====================")
 //                    LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(view, 15))
 //                    LogUtil.logStackTraceXp()
 //                    LogUtil.logXp("=====================")
-                    when (clazz) {
-                        //action bar 和 发送按钮
-                        Classes.ActionBarContainer.name -> {
-////region 发送按钮
-//                            //todo
-//                            val parent = ViewUtils.getParentViewSafe(view, 4)
-////                            logXp("----------0-----------")
-////                            logXp(parent::class.java.name)
-////                            logViewStackTracesXp(parent)
-////                            logXp("----------1-----------")
-//                            if (parent::class.java.name.contains("com.tencent.mm.ui.HomeUI")) {
-////                                logViewStackTracesXp(parent)
-////                                logXp("----------2-----------")
-//                                val sendButton = ViewUtils.getChildView(parent, 2, 0, 0, 0, 2, 1, 0, 0, 1, 4, 1, 1) as Button
-////                                logViewStackTracesXp(sendButton)
-////                                logXp("=======3======")
-//                                sendButton.setBackgroundColor(WeChatHelper.colorPrimary)
-//                                sendButton.setText("666")
-//                                sendButton.setTextColor(WeChatHelper.colorSecondary)
-//                            }
-//                            //endregion
-                            param.result = NightModeUtils.colorPrimary
-//                            printStackTraceXp()
-                        }
-                        ConversationListView.name -> param.result = 0
-//                        "android.widget.Button" -> {
-//                            val parent = ViewUtils.getParentView(view, 6)
-//                            if (parent is View) {
-//                                logXp(parent::class.java.name)
-//                                if (parent::class.java.name=="com.tencent.mm.pluginsdk.ui.chat.ChatFooter"){
-//                                    param.result = WeChatHelper.colorPrimary
-//                                }
-//                            }
-//                        }
+                when (clazz) {
+                    //action bar
+                    Classes.ActionBarContainer.name -> {
+                        param.result = NightModeUtils.colorPrimary
+                    }
+                    ConversationListView.name -> if (WechatGlobal.wxVersion!! >= Version("7.0.3") && HookConfig.is_hook_tab_bg) {
+                        param.result = 0
                     }
                 }
-            })
-        }
+            }
+        })
         if (WechatGlobal.wxVersion!! >= Version("7.0.4")) {
             XposedBridge.hookAllMethods(CC.View, "setBackground", object : XC_MethodHook() {
                 override fun beforeHookedMethod(param: MethodHookParam) {
@@ -114,8 +90,8 @@ object ConversationHooker : HookerProvider {
         }
     }
 
-    //7.0.3以上无法使用
-    private val disableAppBrand = Hooker {
+//7.0.3以上无法使用
+//    private val disableAppBrand = Hooker {
 //        if (WechatGlobal.wxVersion!! <= Version("7.0.3")) {
 //            XposedHelpers.findAndHookMethod(ConversationWithAppBrandListView,
 //                    ConversationWithAppBrandListView_isAppBrandHeaderEnable.name, CC.Boolean, object : XC_MethodHook() {
@@ -142,7 +118,7 @@ object ConversationHooker : HookerProvider {
 //                }
 //            })
 //        }
-    }
+//    }
 
     private val headViewHook = Hooker {
         XposedHelpers.findAndHookMethod(CC.ListView, "addHeaderView", CC.View, CC.Object, CC.Boolean,

@@ -4,6 +4,7 @@ import android.view.View
 import com.blanke.mdwechat.Classes
 import com.blanke.mdwechat.Fields.PreferenceFragment_mListView
 import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
@@ -31,7 +32,9 @@ object DiscoverHooker : HookerProvider {
                     return
                 }
                 XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
-                init(fragment)
+                if (HookConfig.is_hook_tab_bg) {
+                    init(fragment)
+                }
             }
 
             private fun init(fragment: Any) {

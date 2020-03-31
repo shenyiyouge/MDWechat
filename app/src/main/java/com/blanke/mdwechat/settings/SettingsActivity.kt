@@ -26,6 +26,14 @@ import kotlin.concurrent.thread
  */
 
 class SettingsActivity : Activity() {
+    var a: Activity? = null
+    fun get(): Activity? {
+        if (a == null) {
+            a = SettingsActivity()
+        }
+        return a
+    }
+
     private lateinit var fab: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +59,8 @@ class SettingsActivity : Activity() {
         val sharedPrefsDir = File(filesDir, "../shared_prefs")
         val sharedPrefsFile = File(sharedPrefsDir, Common.MOD_PREFS + ".xml")
         val sdSPFile = File(AppCustomConfig.getConfigFile(Common.MOD_PREFS + ".xml"))
+        SettingsFragment.STATIC.sharedPrefsFile = sharedPrefsFile
+        SettingsFragment.STATIC.sdSPFile = sdSPFile
         if (sharedPrefsFile.exists()) {
             val outStream = FileOutputStream(sdSPFile)
             FileUtils.copyFile(FileInputStream(sharedPrefsFile), outStream)

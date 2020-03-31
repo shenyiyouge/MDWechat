@@ -24,10 +24,12 @@ object LogUtil {
 
     // region log记录到xposed中
     fun logXp(msg: String) {
+        log(msg)
         XposedBridge.log("MDWechatModule: " + msg)
     }
 
     fun logXp(t: Throwable) {
+        log(t)
         XposedBridge.log("MDWechatModule: " + Log.getStackTraceString(t))
     }
 
@@ -38,10 +40,12 @@ object LogUtil {
         }
         sb.append(getViewLogInfo(view))
         logXp(sb.toString())
-        if (view is ViewGroup) {
-            for (i in 0 until view.childCount) {
-                logViewStackTracesXp(view.getChildAt(i), level + 1)
+        try {
+            val viewGroup = view as ViewGroup
+            for (i in 0 until viewGroup.childCount) {
+                logViewStackTracesXp(viewGroup.getChildAt(i), level + 1)
             }
+        } catch (e: ClassCastException) {
         }
     }
 
@@ -152,7 +156,7 @@ object LogUtil {
         }
         sb.append(" desc= ${view.contentDescription}")
         if (view.background is ColorDrawable) {
-            val bg=view.background as ColorDrawable
+            val bg = view.background as ColorDrawable
             sb.append(" bgColor=${bg.color}")
         }
         return sb.toString()

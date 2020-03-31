@@ -10,12 +10,16 @@ import com.blanke.mdwechat.WeChatHelper
  */
 
 object HookConfig {
+//    private val debugConfigText = "debugConfigText"
+//    private val debugConfigText1 = "debugConfigText1"
+    private val key_tab_layout_offset = "key_tab_layout_offset"
     private val key_hook_switch = "hookSwitch"
     private val key_color_primary = "key_color_primary"
     private val key_color_secondary = "key_color_secondary"
     private val key_color_tertiary = "key_color_tertiary"
     private val key_color_tip = "key_color_tip"
     private val key_hook_conversation_background_alpha = "key_hook_conversation_background_alpha"
+    private val key_hook__actionbar_color = "key_hook__actionbar_color"
     private val key_hook_actionbar = "key_hook_actionbar"
     private val key_hook_avatar = "key_hook_avatar"
     private val key_hook_ripple = "key_hook_ripple"
@@ -23,6 +27,7 @@ object HookConfig {
     private val key_hook_float_button_color_up = "key_hook_float_button_color_up"
     private val key_hook_float_button_color_is_secondary = "key_hook_float_button_color_is_secondary"
     private val key_hook_search = "key_hook_search"
+    private val key_hook_tab_bg = "key_hook_tab_bg"
     private val key_hook_tab = "key_hook_tab"
     private val key_hide_tab = "key_hide_tab"
     private val key_tab_layout_filtered = "key_tab_layout_filtered"
@@ -63,6 +68,18 @@ object HookConfig {
     //    private val key_mini_program_title = "key_mini_program_title"
     private val key_hook_night_mode = "key_hook_night_mode"
 
+//    val debug_config_text: String
+//        get() {
+//            return WeChatHelper.XMOD_PREFS.getString(debugConfigText, "")
+//        }
+//    val debug_config_text_1: String
+//        get() {
+//            return WeChatHelper.XMOD_PREFS.getString(debugConfigText1, "")
+//        }
+    val value_tab_layout_offset: Int
+        get() {
+            return if (is_tab_layout_on_top) WeChatHelper.XMOD_PREFS.getString(key_tab_layout_offset, "0")!!.toInt() else 0
+        }
     val is_hook_switch: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_switch, true)
@@ -93,7 +110,11 @@ object HookConfig {
     val get_hook_conversation_background_alpha: Int
         get() {
             val alpha = WeChatHelper.XMOD_PREFS.getString(key_hook_conversation_background_alpha, "120")
-            return Math.min(255, Math.max(alpha.toInt(), 0))
+            return Math.min(255, Math.max(alpha!!.toInt(), 0))
+        }
+    val is_hook_actionbar_color: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook__actionbar_color, true)
         }
     val is_hook_actionbar: Boolean
         get() {
@@ -128,6 +149,10 @@ object HookConfig {
     val is_key_hide_tab: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hide_tab, true)
+        }
+    val is_hook_tab_bg: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab_bg, true)
         }
     val is_hook_tab: Boolean
         get() {

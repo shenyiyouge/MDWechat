@@ -28,6 +28,10 @@ object WeChatHelper {
     val colorDark: Int
         get() = Color.parseColor("#232323")
 
+    //深色模式下 action bar 的颜色
+    val colorDarkPrimary: Int
+        get() = Color.parseColor("#333333")
+
 
     val drawableTransparent: ColorDrawable
         get() = ColorDrawable(Color.TRANSPARENT)

@@ -1,6 +1,5 @@
 package com.blanke.mdwechat.util
 
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -53,7 +52,7 @@ object NightModeUtils {
 
     val colorPrimary: Int
         get() {
-            return if (isNightMode()) WeChatHelper.colorDark else HookConfig.get_color_primary
+            return if (isNightMode()) WeChatHelper.colorDarkPrimary else HookConfig.get_color_primary
         }
 
     val colorSecondary: Int
@@ -73,5 +72,13 @@ object NightModeUtils {
     val colorTip: Int
         get() {
             return HookConfig.get_color_tip
+        }
+    val is_hook_tab_elevation: Boolean
+        get() {
+            return HookConfig.is_hook_tab_elevation || _isNightMode
+        }
+    val is_tab_layout_filtered: Boolean
+        get() {
+            return HookConfig.is_tab_layout_filtered || _isNightMode
         }
 }

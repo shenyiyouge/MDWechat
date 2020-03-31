@@ -27,20 +27,20 @@ import  com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 object ListViewHooker : HookerProvider {
     private val excludeContext = arrayOf("com.tencent.mm.plugin.mall.ui.MallIndexUI")
 
-    private val titleTextColor:Int
+    private val titleTextColor: Int
         get() {
             return NightModeUtils.getTitleTextColor()
         }
-    private val summaryTextColor:Int
+    private val summaryTextColor: Int
         get() {
             return NightModeUtils.getContentTextColor()
         }
 
-    private val isHookTextColor :Boolean
+    private val isHookTextColor: Boolean
         get() {
             return HookConfig.is_hook_main_textcolor || NightModeUtils.isNightMode()
         }
-    private val isHookMiniProgram :Boolean
+    private val isHookMiniProgram: Boolean
         get() {
             return HookConfig.is_hook_mini_program
         }
@@ -173,7 +173,8 @@ object ListViewHooker : HookerProvider {
                     if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
                         try {
                             view.background.alpha = HookConfig.get_hook_conversation_background_alpha
-                        } catch (e: Exception) {}
+                        } catch (e: Exception) {
+                        }
                         val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView")!!)
                         val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView")!!)
                         val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView")!!)
@@ -245,10 +246,10 @@ object ListViewHooker : HookerProvider {
                     }
 
                     // (7.0.7 以上) 下拉小程序框
-                    else if (ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
+                    else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
                         try {
                             val miniProgramPage = ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage")!!) as RelativeLayout
-
+                            miniProgramPage.visibility
                             // old action bar
                             val actionBarPage = ViewUtils.getChildView1(miniProgramPage,
                                     VTTV.ActionBarItem.treeStacks.get("miniProgramPage_actionBarPage")!!) as LinearLayout
@@ -261,9 +262,10 @@ object ListViewHooker : HookerProvider {
 //                            val lp = title.layoutParams as LinearLayout.LayoutParams
 //                            lp.setMargins(0, 0, 0, 0)
                             actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
-                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_child1")!!))
+                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_addIcon")!!))
                             actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
-                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_child2")!!))
+                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_searchIcon")!!))
+//                            actionBarPage.removeView(title)
 
                             val appBrandDesktopView = ViewUtils.getChildView1(miniProgramPage,
                                     VTTV.ActionBarItem.treeStacks.get("miniProgramPage_appBrandDesktopView")!!) as ViewGroup
@@ -283,6 +285,8 @@ object ListViewHooker : HookerProvider {
 //                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
 
                         } catch (e: ClassCastException) {
+                            LogUtil.logXp(e)
+                            LogUtil.logViewStackTracesXp(view)
                             return
                         }
                     }

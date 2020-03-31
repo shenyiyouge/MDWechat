@@ -6,8 +6,6 @@ import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.config.WxVersionConfig
-import com.blanke.mdwechat.settings.bean.WechatConfig
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.waitInvoke
@@ -19,13 +17,14 @@ object HomeActionBarHook {
         if (WechatGlobal.wxVersion!! < Version("7.0.0")) {
             return
         }
+        val is_tab_layout_on_top = HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
         val cb = { actionHeight: Int ->
             val viewpager = viewPagerLinearLayout.getChildAt(0)
             val layoutParams = viewpager.layoutParams as ViewGroup.MarginLayoutParams
-            val offset = -4
-            if (!HookConfig.is_hook_hide_actionbar && HookConfig.is_hook_tab) {
+            val offset = -4 + HookConfig.value_tab_layout_offset
+            if (!HookConfig.is_hook_hide_actionbar && is_tab_layout_on_top) {
                 layoutParams.topMargin = actionHeight + offset
-            } else if (HookConfig.is_hook_hide_actionbar && !HookConfig.is_hook_tab) {
+            } else if (HookConfig.is_hook_hide_actionbar && !is_tab_layout_on_top) {
                 layoutParams.topMargin = -actionHeight + offset
             } else {
                 layoutParams.topMargin = offset
