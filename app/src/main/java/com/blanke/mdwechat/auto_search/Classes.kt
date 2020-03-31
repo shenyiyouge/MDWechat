@@ -205,7 +205,7 @@ object Classes {
 
     val PreferenceFragment: Class<*>?
         get() {
-            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui.base.preference_warning")
+            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui.base.preference")
                     .filterByField(SharedPreferences::class.java.name)
                     .filterByField(CC.ListView.name)
                     .filterByField(CC.Boolean.name)
