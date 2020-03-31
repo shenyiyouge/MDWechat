@@ -28,6 +28,7 @@ type 为跳转后的 Activity 完整类名，可以借助 开发者助手、auto
 钱包 | com.tencent.mm.plugin.mall.ui.MallIndexUI
 收藏 | com.tencent.mm.plugin.fav.ui.FavoriteIndexUI
 群聊 | com.tencent.mm.ui.contact.SelectContactUI
+搜索 | com.tencent.mm.plugin.fts.ui.FTSMainUI
 添加好友 | com.tencent.mm.plugin.subapp.ui.pluginapp.AddMoreFriendsUI
 
 特殊 type：
