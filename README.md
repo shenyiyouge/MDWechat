@@ -27,12 +27,12 @@ MDWechat
 2. ~~只支持 Android 5.0 以上~~(3.6在某些框架(原生xposed等)上存在未知bug,无法运行)
 
 # 效果预览
-![main01](https://raw.githubusercontent.com/JoshCai233/MDWechat/master/image/main01.png)
-![main02](https://raw.githubusercontent.com/JoshCai233/MDWechat/master/image/main02.png)
-![main03](https://raw.githubusercontent.com/JoshCai233/MDWechat/master/image/main03.png)
-![main04](https://raw.githubusercontent.com/JoshCai233/MDWechat/master/image/main04.png)
-![main05](https://raw.githubusercontent.com/JoshCai233/MDWechat/master/image/main05.png)
-![chat01](https://raw.githubusercontent.com/JoshCai233/MDWechat/master/image/chat01.png)
+![main01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main01.png)
+![main02](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main02.png)
+![main03](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main03.png)
+![main04](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main04.png)
+![main05](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main05.png)
+![chat01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/chat01.png)
 
 # 使用教程
 有待整理文档到 wiki
