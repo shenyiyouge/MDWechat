@@ -6,31 +6,56 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import de.robv.android.xposed.XposedBridge
+import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.config.HookConfig
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by blanke on 2017/10/3.
  */
 
 object LogUtil {
+    private val dateStr
+        get() = SimpleDateFormat("yyyy-MM-dd").format(Date())
+
+    fun printLog(log: String) {
+        val logFile = File(AppCustomConfig.getLogFile(dateStr))
+        logFile.parentFile.mkdirs()
+        val time = SimpleDateFormat("HH:mm:ss").format(Date())
+        FileUtils.write(logFile.absolutePath, "$time $log\n", true)
+    }
+
     @JvmStatic
     fun log(msg: String) {
+        try {
+            if (HookConfig.is_hook_log) printLog("LogUtil: " + msg)
+        } catch (e: RuntimeException) {
+        }
         Log.i("MDWechatModule", "MDWechat $msg")
     }
 
+    @JvmStatic
     fun log(t: Throwable) {
+        try {
+            if (HookConfig.is_hook_log) printLog("LogUtil: " + Log.getStackTraceString(t))
+        } catch (e: RuntimeException) {
+        }
         Log.e("MDWechatModule", "MDWechat " + Log.getStackTraceString(t))
     }
 
     // region log记录到xposed中
+    @JvmStatic
     fun logXp(msg: String) {
         log(msg)
-        XposedBridge.log("MDWechatModule: " + msg)
+//        XposedBridge.log("MDWechatModule: " + msg)
     }
 
+    @JvmStatic
     fun logXp(t: Throwable) {
         log(t)
-        XposedBridge.log("MDWechatModule: " + Log.getStackTraceString(t))
+//        XposedBridge.log("MDWechatModule: " + Log.getStackTraceString(t))
     }
 
     fun logViewStackTracesXp(view: View, level: Int = 0) {

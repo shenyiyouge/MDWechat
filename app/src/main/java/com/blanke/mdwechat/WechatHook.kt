@@ -37,7 +37,7 @@ class WechatHook : IXposedHookLoadPackage {
                     DiscoverHooker,
                     SettingsHooker,
                     SchemeHooker,
-                    LogHooker,
+//                    LogHooker,
                     NightModeHooker
             )
 //            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {

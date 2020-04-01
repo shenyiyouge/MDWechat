@@ -39,7 +39,7 @@ object FileUtils {
                 } finally {
                     if (`in` != null) {
                         try {
-                            `in`!!.close()
+                            `in`.close()
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
@@ -47,7 +47,7 @@ object FileUtils {
                     }
                     if (out != null) {
                         try {
-                            out!!.close()
+                            out.close()
                         } catch (e: IOException) {
                             e.printStackTrace()
                         }
@@ -84,7 +84,7 @@ object FileUtils {
                     writer.close()
                 }
             } catch (e: IOException) {
-                e.printStackTrace()
+                XposedBridge.log(e)
             }
         }
     }
