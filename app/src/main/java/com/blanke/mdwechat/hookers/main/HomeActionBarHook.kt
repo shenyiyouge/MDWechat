@@ -21,7 +21,7 @@ object HomeActionBarHook {
         val cb = { actionHeight: Int ->
             val viewpager = viewPagerLinearLayout.getChildAt(0)
             val layoutParams = viewpager.layoutParams as ViewGroup.MarginLayoutParams
-            val offset = -4 + HookConfig.value_tab_layout_offset
+            val offset = 0 + HookConfig.value_tab_layout_offset
             if (!HookConfig.is_hook_hide_actionbar && is_tab_layout_on_top) {
                 layoutParams.topMargin = actionHeight + offset
             } else if (HookConfig.is_hook_hide_actionbar && !is_tab_layout_on_top) {
