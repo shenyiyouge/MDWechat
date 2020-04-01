@@ -20,6 +20,7 @@ import com.blanke.mdwechat.auto_search.bean.LogEvent
 import com.blanke.mdwechat.markdown.MarkDownActivity
 import com.blanke.mdwechat.settings.view.DownloadWechatDialog
 import com.blanke.mdwechat.util.FileUtils
+import com.blanke.mdwechat.util.LogUtil.clearLogs
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import org.greenrobot.eventbus.EventBus
@@ -72,6 +73,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
 //        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
 //        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
+        findPreference("clearLogs")?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
@@ -157,6 +159,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference.key) {
+            "clearLogs" -> _clearLogs()
             getString(R.string.key_donate) -> donate()
             getString(R.string.key_feedback) -> feedback()
             getString(R.string.key_reset_wechat_config) -> copyWechatConfig()
@@ -164,37 +167,23 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_reset_float_bottom_config) -> copyFloatBottomConfig()
             getString(R.string.key_reset_icon_config) -> copyIcons()
             getString(R.string.key_feedback_email_blanke) -> sendEmail()
-            getString(R.string.key_feedback_email_josh_cai)-> sendEmailCai()
+            getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
             getString(R.string.key_github_blanke) -> gotoGithub()
-            getString(R.string.key_github_joshcai)  -> gotoGithubCai()
-            "key_hook_main_bg" -> {
-
-            }
-            getString(R.string.key_generate_wechat_config) -> {
-                generateWechatFile()
-            }
-            getString(R.string.key_donate_wechat) -> {
-                donateWechat()
-            }
-            getString(R.string.key_download_wechat_config) -> {
-                downloadWechatConfig()
-            }
-            getString(R.string.key_feedback_group) -> {
-                gotoMarkDownAct(getString(R.string.text_feedback_group), Common.URL_JOIN_GROUP)
-            }
-            getString(R.string.key_help_float_button) -> {
-                gotoMarkDownAct(getString(R.string.text_help_float_button), Common.URL_HELP_FLOAT_BUTTON)
-            }
-
-            getString(R.string.key_help_bubble) -> {
-                gotoMarkDownAct(getString(R.string.text_help_bubble), Common.URL_HELP_BUBBLE)
-            }
-
-            getString(R.string.key_help_icon) -> {
-                gotoMarkDownAct(getString(R.string.text_help_icon), Common.URL_HELP_ICON)
-            }
+            getString(R.string.key_github_joshcai) -> gotoGithubCai()
+            getString(R.string.key_generate_wechat_config) -> generateWechatFile()
+            getString(R.string.key_donate_wechat) -> donateWechat()
+            getString(R.string.key_download_wechat_config) -> downloadWechatConfig()
+            getString(R.string.key_feedback_group) -> gotoMarkDownAct(getString(R.string.text_feedback_group), Common.URL_JOIN_GROUP)
+            getString(R.string.key_help_float_button) -> gotoMarkDownAct(getString(R.string.text_help_float_button), Common.URL_HELP_FLOAT_BUTTON)
+            getString(R.string.key_help_bubble) -> gotoMarkDownAct(getString(R.string.text_help_bubble), Common.URL_HELP_BUBBLE)
+            getString(R.string.key_help_icon) -> gotoMarkDownAct(getString(R.string.text_help_icon), Common.URL_HELP_ICON)
         }
         return true
+    }
+
+    private fun _clearLogs() {
+        clearLogs()
+        Toast.makeText(activity, getString(R.string.msg_clear_ok), Toast.LENGTH_SHORT).show()
     }
 
     private fun gotoMarkDownAct(title: String, url: String) {

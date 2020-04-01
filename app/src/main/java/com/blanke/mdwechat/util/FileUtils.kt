@@ -88,4 +88,22 @@ object FileUtils {
             }
         }
     }
+
+    /**
+     * 遍历删除指定文件或文件夹下面的文件
+     */
+    fun deleteDirectoryFiles(directory: File?, match: String) {
+        if (directory == null || !directory.exists() || !directory.isDirectory) {
+            return
+        }
+        for (listFile in directory.listFiles()) {
+            if ((listFile.isFile) && (listFile.name.contains(match))) {
+                listFile.delete()
+            }
+//                else if (listFile.isDirectory) {
+//                    deleteDirectoryFiles(listFile)
+//                }
+        }
+    }
+
 }

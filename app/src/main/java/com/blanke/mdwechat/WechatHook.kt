@@ -1,11 +1,13 @@
 package com.blanke.mdwechat
 
+import com.blanke.mdwechat.Common.isVXPEnv
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.config.ViewTreeConfig
 import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil.log
+import com.blanke.mdwechat.util.LogUtil.logXp
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
@@ -25,7 +27,6 @@ class WechatHook : IXposedHookLoadPackage {
                 log("模块总开关已关闭")
                 return
             }
-            log("模块加载成功")
             val hookers = mutableListOf(
                     LauncherUIHooker,
                     ActionBarHooker,
@@ -40,10 +41,26 @@ class WechatHook : IXposedHookLoadPackage {
 //                    LogHooker,
                     NightModeHooker
             )
+//            region test
+//            logXp(hookers.count().toString())
+//            val asd = HookConfig.debug_config_text.split(" ")
+//            for (i in asd[3].toInt() downTo asd[2].toInt()) {
+//                hookers.removeAt(i)
+//            }
+//            for (i in asd[1].toInt() downTo asd[0].toInt()) {
+//                hookers.removeAt(i)
+//            }
+//            logXp(hookers.count().toString())
+//            hookers.forEach {
+//                log(it::class.java.name)
+//            }
+//            //endregion
+
 //            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
 //                hookers.add(0, DebugHooker)
 //            }
             hookMain(lpparam, hookers)
+            logXp("模块加载成功")
         } catch (e: Throwable) {
             log(e)
         }
@@ -60,6 +77,7 @@ class WechatHook : IXposedHookLoadPackage {
         }
         log("wechat version=" + WechatGlobal.wxVersion
                 + ",processName=" + lpparam.processName
+                + ",isVXPEnv = " + isVXPEnv
                 + ",MDWechat version=" + BuildConfig.VERSION_NAME)
         plugins.forEach { provider ->
             provider.provideStaticHookers()?.forEach { hooker ->

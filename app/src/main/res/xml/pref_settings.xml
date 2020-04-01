@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <Preference
         android:layout="@layout/preference_info"
         android:summary="@string/summary"
         android:title="@string/app_name_version" />
-    <!--    <EditTextPreference-->
-    <!--        android:key="debugConfigText"-->
-    <!--        android:title="debugConfigText" />-->
+    <EditTextPreference
+        android:key="debugConfigText"
+        android:title="debugConfigText" />
+    <Preference
+        android:key="clearLogs"
+        android:title="清空日志" />
     <!--    <EditTextPreference-->
     <!--        android:key="debugConfigText1"-->
     <!--        android:title="debugConfigText1" />-->

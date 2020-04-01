@@ -27,6 +27,14 @@ object LogUtil {
         FileUtils.write(logFile.absolutePath, "$time $log\n", true)
     }
 
+    fun clearLogs() {
+        val logFile = File(AppCustomConfig.getLogFile("MDWechat_log")).parentFile
+        FileUtils.deleteDirectoryFiles(logFile, "MDWechat_log_")
+//        val result = logFile.delete()
+        logFile.mkdirs()
+        printLog("------- beginning of log -------")
+    }
+
     @JvmStatic
     fun log(msg: String) {
         try {
