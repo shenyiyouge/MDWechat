@@ -22,7 +22,6 @@ import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import de.robv.android.xposed.XposedHelpers
-import java.lang.Exception
 import java.util.*
 
 object TabLayoutHook {
@@ -82,7 +81,6 @@ object TabLayoutHook {
         return view.getMeasuredHeight()
     }
 
-    // 返回高度,以便悬浮按钮使用(懒)
     fun addTabLayoutAtBottom(tabView: ViewGroup, height: Int) {
         val tabLayout = newTabLayout(tabView, Gravity.TOP, 5f)
 

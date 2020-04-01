@@ -1,7 +1,6 @@
 package com.blanke.mdwechat
 
 import android.os.Environment
-import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.VXPUtils
 import java.io.File
 
@@ -42,8 +41,8 @@ object Common {
         //         debug VXP 环境下，区分目录
         val appDir = if (isVXPEnv && BuildConfig.DEBUG) APP_VXP_DIR else APP_DIR
 //        val appDir = APP_DIR
-        LogUtil.log("isVXPEnv = $isVXPEnv")
-        LogUtil.log("app dir = $appDir")
+//            LogUtil.log("isVXPEnv = $isVXPEnv")
+//            LogUtil.log("app dir = $appDir")
         Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
     }
 }

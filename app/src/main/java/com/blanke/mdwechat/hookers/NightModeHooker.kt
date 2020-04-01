@@ -21,18 +21,14 @@ object NightModeHooker : HookerProvider {
     }
 
     private val getNightModeConfiguration = Hooker {
-        try {
-            XposedHelpers.findAndHookMethod(Resources::class.java, "getConfiguration", object : XC_MethodHook() {
-                @Throws(Throwable::class)
-                override fun afterHookedMethod(param: MethodHookParam) {
-                    val configuration = param.result as Configuration
-                    val uiMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                    NightModeUtils.setNightMode(uiMode == Configuration.UI_MODE_NIGHT_YES)
-                }
-            })
-        } catch (e: Exception) {
-            LogUtil.logXp(e)
-        }
+        XposedHelpers.findAndHookMethod(Resources::class.java, "getConfiguration", object : XC_MethodHook() {
+            @Throws(Throwable::class)
+            override fun afterHookedMethod(param: MethodHookParam) {
+                val configuration = param.result as Configuration
+                val uiMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                NightModeUtils.setNightMode(uiMode == Configuration.UI_MODE_NIGHT_YES)
+            }
+        })
     }
     private val getNightModeConfiguration1 = Hooker {
         try {
@@ -40,7 +36,7 @@ object NightModeHooker : HookerProvider {
                 @Throws(Throwable::class)
                 override fun beforeHookedMethod(param: MethodHookParam) {
 //                    val configuration = param.result as Configuration
-                    param.result=false
+                    param.result = false
                 }
             })
         } catch (e: Exception) {
