@@ -3,21 +3,14 @@ package com.blanke.mdwechat.util;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.Log;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
-
-import de.robv.android.xposed.XposedBridge;
 
 /**
  * Created by blanke on 2017/9/2.
@@ -25,13 +18,7 @@ import de.robv.android.xposed.XposedBridge;
 
 public class DrawableUtils {
 
-    /**
-     * 为单个drawable着色并返回着色后的drawable
-     *
-     * @param drawable
-     * @param colorResId
-     * @return
-     */
+    // 为单个drawable着色并返回着色后的drawable
     public static Drawable setDrawableColor(Drawable drawable, Integer colorResId) {
         Drawable modeDrawable = drawable.mutate();
         Drawable temp = DrawableCompat.wrap(modeDrawable);
@@ -71,26 +58,25 @@ public class DrawableUtils {
         return shapeDrawable;
     }
 
-    public static void drawableToFile(Drawable drawable, String filePath, Bitmap.CompressFormat format) {
-        if (drawable == null)
-            return;
-
-        try {
-            File file = new File(filePath);
-
-            if (file.exists())
-                file.delete();
-
-            if (!file.exists())
-                file.createNewFile();
-
-            FileOutputStream out = null;
-            out = new FileOutputStream(file);
-            ((BitmapDrawable) drawable).getBitmap().compress(format, 100, out);
-            out.close();
-        } catch (IOException e) {
-            XposedBridge.log("MDWechatModule: " + Log.getStackTraceString(e));
-//           LogUtil.logXp(e);
-        }
-    }
+//    public static void drawableToFile(Drawable drawable, String filePath, Bitmap.CompressFormat format) {
+//        if (drawable == null)
+//            return;
+//
+//        try {
+//            File file = new File(filePath);
+//
+//            if (file.exists())
+//                file.delete();
+//
+//            if (!file.exists())
+//                file.createNewFile();
+//
+//            FileOutputStream out = null;
+//            out = new FileOutputStream(file);
+//            ((BitmapDrawable) drawable).getBitmap().compress(format, 100, out);
+//            out.close();
+//        } catch (IOException e) {
+//            LogUtil.logXp(e);
+//        }
+//    }
 }

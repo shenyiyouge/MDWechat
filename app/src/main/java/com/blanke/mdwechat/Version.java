@@ -5,8 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.robv.android.xposed.XposedBridge;
-
 // Version is a helper class for comparing version strings.
 public class Version {
     private String versionName;
@@ -27,7 +25,7 @@ public class Version {
 
     public boolean equals(Version other) {
         if (other == null) return false;
-        return this.versionName.equals(((Version) other).versionName);
+        return this.versionName.equals(other.versionName);
     }
 
     public int compareTo(@NotNull Version other) {
