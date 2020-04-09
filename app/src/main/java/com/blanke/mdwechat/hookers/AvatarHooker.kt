@@ -18,27 +18,23 @@ object AvatarHooker : HookerProvider {
     }
 
     private val avatarUtilsHook = Hooker {
-        XposedHelpers.findAndHookMethod(AvatarUtils, AvatarUtils_getDefaultAvatarBitmap.name, object : XC_MethodHook() {
-            override fun afterHookedMethod(param: MethodHookParam?) {
-                if (!HookConfig.is_hook_avatar) {
-                    return
-                }
-                param?.result?.apply {
-                    param.result = getCircleBitmap(this as Bitmap)
-                }
-            }
-        })
-        AvatarUtils_getAvatarBitmaps.forEach {
-            XposedHelpers.findAndHookMethod(AvatarUtils, it.name, CC.String, object : XC_MethodHook() {
+        if (HookConfig.is_hook_avatar) {
+            XposedHelpers.findAndHookMethod(AvatarUtils, AvatarUtils_getDefaultAvatarBitmap.name, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam?) {
-                    if (!HookConfig.is_hook_avatar) {
-                        return
-                    }
                     param?.result?.apply {
                         param.result = getCircleBitmap(this as Bitmap)
                     }
                 }
             })
+            AvatarUtils_getAvatarBitmaps.forEach {
+                XposedHelpers.findAndHookMethod(AvatarUtils, it.name, CC.String, object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam?) {
+                        param?.result?.apply {
+                            param.result = getCircleBitmap(this as Bitmap)
+                        }
+                    }
+                })
+            }
         }
     }
 
