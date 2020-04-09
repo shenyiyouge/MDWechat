@@ -28,10 +28,12 @@ class WxVersionConfig {
         var NoMeasuredTextView: String? = null
         var PhoneWindow: String? = null
         var PreferenceFragment: String? = null
-        var ScrollingTabContainerView: String? = null
+
+        //        var ScrollingTabContainerView: String? = null
         var SettingsFragment: String? = null
-        var TabIconView: String? = null
-        var ThreadExecutor: String? = null
+
+        //        var TabIconView: String? = null
+//        var ThreadExecutor: String? = null
         var WxViewPager: String? = null
         var WXCustomSchemeEntryActivity: String? = null
         var NightModeClass: String? = null

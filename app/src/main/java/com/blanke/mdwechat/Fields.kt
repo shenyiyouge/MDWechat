@@ -4,7 +4,6 @@ import com.blanke.mdwechat.Classes.ContactFragment
 import com.blanke.mdwechat.Classes.ConversationFragment
 import com.blanke.mdwechat.Classes.HomeUI
 import com.blanke.mdwechat.Classes.LauncherUI
-import com.blanke.mdwechat.Classes.LauncherUIBottomTabViewItem
 import com.blanke.mdwechat.Classes.MainTabUI
 import com.blanke.mdwechat.Classes.PreferenceFragment
 import com.blanke.mdwechat.WechatGlobal.wxLazy
@@ -51,9 +50,9 @@ object Fields {
         findFieldsWithName(HomeUI, WechatGlobal.wxVersionConfig.fields.HomeUI_mActionBar)
     }
 
-    val LauncherUIBottomTabViewItem_mTextViews: List<Field> by wxLazy("LauncherUIBottomTabViewItem_mTextViews") {
-        findFieldsWithName(LauncherUIBottomTabViewItem, WechatGlobal.wxVersionConfig.fields.LauncherUIBottomTabViewItem_mTextViews)
-    }
+//    val LauncherUIBottomTabViewItem_mTextViews: List<Field> by wxLazy("LauncherUIBottomTabViewItem_mTextViews") {
+//        findFieldsWithName(LauncherUIBottomTabViewItem, WechatGlobal.wxVersionConfig.fields.LauncherUIBottomTabViewItem_mTextViews)
+//    }
 
     val ConversationFragment_mListView: Field by wxLazy("ConversationFragment_mListView") {
         findFieldsWithName(ConversationFragment, WechatGlobal.wxVersionConfig.fields.ConversationFragment_mListView)

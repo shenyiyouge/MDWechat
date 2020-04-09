@@ -6,12 +6,14 @@ import android.app.ProgressDialog
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.os.Handler
 import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
 import android.view.animation.Animation
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import com.blanke.mdwechat.CC
 import com.blanke.mdwechat.CC.voidd
 import com.blanke.mdwechat.Version
@@ -65,43 +67,43 @@ object Classes {
             return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.LauncherUIBottomTabView", WechatGlobal.wxLoader)
         }
 
-    val TabIconView: Class<*>?
-        get() {
-            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.TabIconView", WechatGlobal.wxLoader)
-        }
+//    val TabIconView: Class<*>?
+//        get() {
+//            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.TabIconView", WechatGlobal.wxLoader)
+//        }
 
-    val ThreadExecutor: Class<*>?
-        get() {
-            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.sdk.platformtools")
-                    .filterByMethod(voidd, "run")
-                    .filterByField(Thread::class.java.name)
-                    .filterByField(Handler::class.java.name)
-                    .filterByField(Runnable::class.java.name)
-                    .filterByField(Long::class.java.name)
-                    .firstOrNull()
-        }
+//    val ThreadExecutor: Class<*>?
+//        get() {
+//            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.sdk.platformtools")
+//                    .filterByMethod(voidd, "run")
+//                    .filterByField(Thread::class.java.name)
+//                    .filterByField(Handler::class.java.name)
+//                    .filterByField(Runnable::class.java.name)
+//                    .filterByField(Long::class.java.name)
+//                    .firstOrNull()
+//        }
 
-    val LauncherUIBottomTabViewItem: Class<*>?
-        get() {
-            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui")
-                    .filterByField(TabIconView!!.name)
-                    .filterByField(CC.View.name)
-                    .filterByField(TextView::class.java.name)
-                    .filterByField(ImageView::class.java.name)
-                    .firstOrNull()
-        }
+//    val LauncherUIBottomTabViewItem: Class<*>?
+//        get() {
+//            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui")
+//                    .filterByField(TabIconView!!.name)
+//                    .filterByField(CC.View.name)
+//                    .filterByField(TextView::class.java.name)
+//                    .filterByField(ImageView::class.java.name)
+//                    .firstOrNull()
+//        }
 
     val ActionBarContainer: Class<*>?
         get() {
             return ReflectionUtil.findClassIfExists("android.support.v7.widget.ActionBarContainer", WechatGlobal.wxLoader)
         }
 
-    val ScrollingTabContainerView: Class<*>?
-        get() {
-            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "android.support.v7.widget")
-                    .filterBySuper(HorizontalScrollView::class.java)
-                    .firstOrNull()
-        }
+//    val ScrollingTabContainerView: Class<*>?
+//        get() {
+//            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "android.support.v7.widget")
+//                    .filterBySuper(HorizontalScrollView::class.java)
+//                    .firstOrNull()
+//        }
 
     val PhoneWindow: Class<*>?
         get() {
@@ -166,10 +168,10 @@ object Classes {
                     .firstOrNull()
         }
 
-    private val FragmentActivity: Class<*>?
-        get() {
-            return ReflectionUtil.findClassIfExists("android.support.v4.app.FragmentActivity", WechatGlobal.wxLoader)
-        }
+//    private val FragmentActivity: Class<*>?
+//        get() {
+//            return ReflectionUtil.findClassIfExists("android.support.v4.app.FragmentActivity", WechatGlobal.wxLoader)
+//        }
 
     private val Fragment: Class<*>?
         get() {

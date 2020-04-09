@@ -9,7 +9,7 @@ import com.blanke.mdwechat.auto_search.Classes.ConversationWithAppBrandListView
 import com.blanke.mdwechat.auto_search.Classes.CustomViewPager
 import com.blanke.mdwechat.auto_search.Classes.HomeUI
 import com.blanke.mdwechat.auto_search.Classes.LauncherUI
-import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabViewItem
+//import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabViewItem
 import com.blanke.mdwechat.auto_search.Classes.MainTabUI
 import com.blanke.mdwechat.auto_search.Classes.PreferenceFragment
 import com.blanke.mdwechat.util.ReflectionUtil.findFieldsWithType
@@ -42,10 +42,10 @@ object Fields {
                     .firstOrNull()?.apply { isAccessible = true }
         }
 
-    val LauncherUIBottomTabViewItem_mTextViews: List<Field>?
-        get() {
-            return findFieldsWithType(LauncherUIBottomTabViewItem!!, CC.TextView.name)
-        }
+//    val LauncherUIBottomTabViewItem_mTextViews: List<Field>?
+//        get() {
+//            return findFieldsWithType(LauncherUIBottomTabViewItem!!, CC.TextView.name)
+//        }
 
     val ConversationFragment_mListView: Field?
         get() {

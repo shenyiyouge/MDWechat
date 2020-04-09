@@ -7,7 +7,7 @@ object Classes {
     fun findClass(className: String?): Class<*>? {
         className ?: return null
         try {
-            return XposedHelpers.findClass(className, com.blanke.mdwechat.WechatGlobal.wxLoader)
+            return XposedHelpers.findClass(className, WechatGlobal.wxLoader)
         } catch (e: Exception) {
             log("$className = null")
             return null
@@ -15,79 +15,79 @@ object Classes {
     }
 
     val HomeUI: Class<*> by WechatGlobal.wxLazy("HomeUI") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.HomeUI)
+        findClass(WechatGlobal.wxVersionConfig.classes.HomeUI)
     }
 
     val LauncherUI: Class<*> by WechatGlobal.wxLazy("LauncherUI") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.LauncherUI)
+        findClass(WechatGlobal.wxVersionConfig.classes.LauncherUI)
     }
 
     val WxViewPager: Class<*> by WechatGlobal.wxLazy("WxViewPager") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.WxViewPager)
+        findClass(WechatGlobal.wxVersionConfig.classes.WxViewPager)
     }
 
     val CustomViewPager: Class<*> by WechatGlobal.wxLazy("CustomViewPager") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.CustomViewPager)
+        findClass(WechatGlobal.wxVersionConfig.classes.CustomViewPager)
     }
 
     val MainTabUI: Class<*> by WechatGlobal.wxLazy("MainTabUI") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.MainTabUI)
+        findClass(WechatGlobal.wxVersionConfig.classes.MainTabUI)
     }
 
     val MainTabUIPageAdapter: Class<*> by WechatGlobal.wxLazy("MainTabUIPageAdapter") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.MainTabUIPageAdapter)
+        findClass(WechatGlobal.wxVersionConfig.classes.MainTabUIPageAdapter)
     }
 
     val LauncherUIBottomTabView: Class<*> by WechatGlobal.wxLazy("LauncherUIBottomTabView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.LauncherUIBottomTabView)
+        findClass(WechatGlobal.wxVersionConfig.classes.LauncherUIBottomTabView)
     }
 
-    val TabIconView: Class<*> by WechatGlobal.wxLazy("TabIconView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.TabIconView)
-    }
+//    val TabIconView: Class<*> by WechatGlobal.wxLazy("TabIconView") {
+//        findClass(WechatGlobal.wxVersionConfig.classes.TabIconView)
+//    }
 
-    val ThreadExecutor: Class<*> by WechatGlobal.wxLazy("ThreadExecutor") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ThreadExecutor)
-    }
+//    val ThreadExecutor: Class<*> by WechatGlobal.wxLazy("ThreadExecutor") {
+//        findClass(WechatGlobal.wxVersionConfig.classes.ThreadExecutor)
+//    }
 
     val LauncherUIBottomTabViewItem: Class<*> by WechatGlobal.wxLazy("LauncherUIBottomTabViewItem") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.LauncherUIBottomTabViewItem)
+        findClass(WechatGlobal.wxVersionConfig.classes.LauncherUIBottomTabViewItem)
     }
 
     val ActionBarContainer: Class<*> by WechatGlobal.wxLazy("ActionBarContainer") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ActionBarContainer)
+        findClass(WechatGlobal.wxVersionConfig.classes.ActionBarContainer)
     }
 
-    val ScrollingTabContainerView: Class<*> by WechatGlobal.wxLazy("ScrollingTabContainerView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ScrollingTabContainerView)
-    }
+//    val ScrollingTabContainerView: Class<*> by WechatGlobal.wxLazy("ScrollingTabContainerView") {
+//        findClass(WechatGlobal.wxVersionConfig.classes.ScrollingTabContainerView)
+//    }
 
     val PhoneWindow: Class<*> by WechatGlobal.wxLazy("PhoneWindow") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.PhoneWindow)
+        findClass(WechatGlobal.wxVersionConfig.classes.PhoneWindow)
     }
 
     val AvatarUtils: Class<*> by WechatGlobal.wxLazy("AvatarUtils") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.AvatarUtils)
+        findClass(WechatGlobal.wxVersionConfig.classes.AvatarUtils)
     }
 
     val NoDrawingCacheLinearLayout: Class<*> by WechatGlobal.wxLazy("NoDrawingCacheLinearLayout") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.NoDrawingCacheLinearLayout)
+        findClass(WechatGlobal.wxVersionConfig.classes.NoDrawingCacheLinearLayout)
     }
 
     val ConversationWithAppBrandListView: Class<*> by WechatGlobal.wxLazy("ConversationWithAppBrandListView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ConversationWithAppBrandListView)
+        findClass(WechatGlobal.wxVersionConfig.classes.ConversationWithAppBrandListView)
     }
 
     val ConversationListView: Class<*> by WechatGlobal.wxLazy("ConversationListView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ConversationListView)
+        findClass(WechatGlobal.wxVersionConfig.classes.ConversationListView)
     }
 
     val ConversationFragment: Class<*> by WechatGlobal.wxLazy("ConversationFragment") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ConversationFragment)
+        findClass(WechatGlobal.wxVersionConfig.classes.ConversationFragment)
     }
 
     val ContactFragment: Class<*> by WechatGlobal.wxLazy("ContactFragment") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ContactFragment)
+        findClass(WechatGlobal.wxVersionConfig.classes.ContactFragment)
     }
 
     val FragmentActivity: Class<*> by WechatGlobal.wxLazy("FragmentActivity") {
@@ -99,27 +99,27 @@ object Classes {
     }
 
     val DiscoverFragment: Class<*> by WechatGlobal.wxLazy("DiscoverFragment") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.DiscoverFragment)
+        findClass(WechatGlobal.wxVersionConfig.classes.DiscoverFragment)
     }
 
     val SettingsFragment: Class<*> by WechatGlobal.wxLazy("SettingsFragment") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.SettingsFragment)
+        findClass(WechatGlobal.wxVersionConfig.classes.SettingsFragment)
     }
 
     val PreferenceFragment: Class<*> by WechatGlobal.wxLazy("PreferenceFragment") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.PreferenceFragment)
+        findClass(WechatGlobal.wxVersionConfig.classes.PreferenceFragment)
     }
 
     val NoMeasuredTextView: Class<*> by WechatGlobal.wxLazy("NoMeasuredTextView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.NoMeasuredTextView)
+        findClass(WechatGlobal.wxVersionConfig.classes.NoMeasuredTextView)
     }
 
     val ActionMenuView: Class<*> by WechatGlobal.wxLazy("ActionMenuView") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.ActionMenuView)
+        findClass(WechatGlobal.wxVersionConfig.classes.ActionMenuView)
     }
 
     val WXCustomSchemeEntryActivity: Class<*> by WechatGlobal.wxLazy("WXCustomSchemeEntryActivity") {
-        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.WXCustomSchemeEntryActivity)
+        findClass(WechatGlobal.wxVersionConfig.classes.WXCustomSchemeEntryActivity)
     }
 
     val RemittanceAdapterUI: Class<*> by WechatGlobal.wxLazy("RemittanceAdapterUI") {
@@ -142,6 +142,6 @@ object Classes {
         findClass("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity")
     }
 //    val NightModeClass: Class<*> by WechatGlobal.wxLazy("NightModeClass") {
-//        findClass(com.blanke.mdwechat.WechatGlobal.wxVersionConfig.classes.NightModeClass)
+//        findClass(WechatGlobal.wxVersionConfig.classes.NightModeClass)
 //    }
 }
