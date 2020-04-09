@@ -16,7 +16,6 @@ import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
-import com.blanke.mdwechat.util.LogUtil.logXp
 import com.blankj.utilcode.util.BarUtils
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
@@ -90,13 +89,13 @@ object TabLayoutHook {
 
         viewChild.addView(tabLayout, 4, params)
         try {
-            LogUtil.log("add tableyout success")
+            LogUtil.log("add table layout success")
             Objects.Main.LauncherUI_mTabLayout = tabLayout
             for (index in 0..3) {
                 viewChild.getChildAt(index).visibility = View.GONE
             }
         } catch (e: Exception) {
-            logXp(e)
+            LogUtil.log(e)
         }
         // change main ActionBar elevation = 0
 //        val actionBarLayout = ViewUtils.getParentView(tabView, 3) as ViewGroup
@@ -171,7 +170,7 @@ object TabLayoutHook {
                 cb(0)
             }
         }
-        LogUtil.log("add tableyout success")
+        LogUtil.log("add table layout success")
         Objects.Main.LauncherUI_mTabLayout = tabLayout
         // change main ActionBar elevation = 0
         val actionBarLayout = ViewUtils.getParentView(viewPagerLinearLayout, 3) as ViewGroup

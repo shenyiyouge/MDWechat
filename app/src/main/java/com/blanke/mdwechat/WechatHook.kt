@@ -7,7 +7,6 @@ import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil.log
-import com.blanke.mdwechat.util.LogUtil.logXp
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
@@ -60,7 +59,7 @@ class WechatHook : IXposedHookLoadPackage {
 //                hookers.add(0, DebugHooker)
 //            }
             hookMain(lpparam, hookers)
-            logXp("模块加载成功")
+            log("模块加载成功")
         } catch (e: Throwable) {
             log(e)
         }

@@ -84,7 +84,7 @@ object ActionBarHooker : HookerProvider {
                 })
             }
         } catch (e: Exception) {
-            LogUtil.logXp(e)
+            LogUtil.log(e)
         }
     }
 }

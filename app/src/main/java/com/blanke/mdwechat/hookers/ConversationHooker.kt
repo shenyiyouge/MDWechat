@@ -3,18 +3,20 @@ package com.blanke.mdwechat.hookers
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.ListView
-import com.blanke.mdwechat.*
+import com.blanke.mdwechat.CC
+import com.blanke.mdwechat.Classes
 import com.blanke.mdwechat.Classes.ConversationListView
 import com.blanke.mdwechat.Classes.ConversationWithAppBrandListView
 import com.blanke.mdwechat.Fields.ConversationFragment_mListView
-import com.blanke.mdwechat.Methods.ConversationWithAppBrandListView_isAppBrandHeaderEnable
+import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
+import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.*
+import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.NightModeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -137,6 +139,7 @@ object ConversationHooker : HookerProvider {
                         val view = param?.args!![0] as View
 //                        LogUtil.log("ConversationWithAppBrandListView addHeadView = ${view}")
                         if (view is ViewGroup && view.getChildAt(0) != null) {
+                            LogUtil.logOnlyOnce("addHeaderView", "Hook Start")
                             view.getChildAt(0).viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                                 override fun onGlobalLayout() {
                                     val oldBackground = view.getChildAt(0).background
@@ -147,6 +150,7 @@ object ConversationHooker : HookerProvider {
                                     }
                                 }
                             })
+                            LogUtil.logOnlyOnce("addHeaderView")
                         }
                     }
                 })

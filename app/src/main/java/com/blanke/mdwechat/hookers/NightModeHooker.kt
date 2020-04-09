@@ -2,7 +2,7 @@ package com.blanke.mdwechat.hookers
 
 import android.content.res.Configuration
 import android.content.res.Resources
-import com.blanke.mdwechat.Classes.findClass
+import com.blanke.mdwechat.Classes
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
@@ -32,7 +32,7 @@ object NightModeHooker : HookerProvider {
     }
     private val getNightModeConfiguration1 = Hooker {
         try {
-            XposedHelpers.findAndHookMethod(findClass("com.tencent.mm.ui.base.CustomViewPager"), "isGutterDrag", object : XC_MethodHook() {
+            XposedHelpers.findAndHookMethod(Classes.CustomViewPager, "isGutterDrag", object : XC_MethodHook() {
                 @Throws(Throwable::class)
                 override fun beforeHookedMethod(param: MethodHookParam) {
 //                    val configuration = param.result as Configuration
@@ -40,7 +40,7 @@ object NightModeHooker : HookerProvider {
                 }
             })
         } catch (e: Exception) {
-            LogUtil.logXp(e)
+            LogUtil.log(e)
         }
     }
 //    private val Hook5 = Hooker {

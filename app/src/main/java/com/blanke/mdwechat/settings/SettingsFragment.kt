@@ -20,7 +20,7 @@ import com.blanke.mdwechat.auto_search.bean.LogEvent
 import com.blanke.mdwechat.markdown.MarkDownActivity
 import com.blanke.mdwechat.settings.view.DownloadWechatDialog
 import com.blanke.mdwechat.util.FileUtils
-import com.blanke.mdwechat.util.LogUtil.clearLogs
+import com.blanke.mdwechat.util.LogUtil.clearFileLogs
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import org.greenrobot.eventbus.EventBus
@@ -182,7 +182,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     }
 
     private fun _clearLogs() {
-        clearLogs()
+        clearFileLogs()
         Toast.makeText(activity, getString(R.string.msg_clear_ok), Toast.LENGTH_SHORT).show()
     }
 

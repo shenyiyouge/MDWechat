@@ -6,12 +6,9 @@
         android:layout="@layout/preference_info"
         android:summary="@string/summary"
         android:title="@string/app_name_version" />
-    <EditTextPreference
-        android:key="debugConfigText"
-        android:title="debugConfigText" />
-    <Preference
-        android:key="clearLogs"
-        android:title="清空日志" />
+    <!--    <EditTextPreference-->
+    <!--        android:key="debugConfigText"-->
+    <!--        android:title="debugConfigText" />-->
     <!--    <EditTextPreference-->
     <!--        android:key="debugConfigText1"-->
     <!--        android:title="debugConfigText1" />-->
@@ -327,6 +324,9 @@
                     android:summary="@string/text_hook_log_info"
                     android:title="@string/text_hook_log" />
 
+                <Preference
+                    android:key="clearLogs"
+                    android:title="清空日志" />
             </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/text_about_settings">

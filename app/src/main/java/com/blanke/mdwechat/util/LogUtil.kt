@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import java.io.File
@@ -17,28 +18,53 @@ import java.util.*
  */
 
 object LogUtil {
+    private object STATIC {
+        var logged = mutableSetOf<String>()
+        var wxVersion: String = "-"
+    }
+
     private val dateStr
         get() = SimpleDateFormat("yyyy-MM-dd").format(Date())
 
-    fun printLog(log: String) {
+    fun printLog2File(log: String) {
         val logFile = File(AppCustomConfig.getLogFile(dateStr))
         logFile.parentFile.mkdirs()
         val time = SimpleDateFormat("HH:mm:ss").format(Date())
         FileUtils.write(logFile.absolutePath, "$time $log\n", true)
     }
 
-    fun clearLogs() {
+    fun clearFileLogs() {
         val logFile = File(AppCustomConfig.getLogFile("MDWechat_log")).parentFile
         FileUtils.deleteDirectoryFiles(logFile, "MDWechat_log_")
 //        val result = logFile.delete()
         logFile.mkdirs()
-        printLog("------- beginning of log -------")
+        printLog2File("------- beginning of log -------")
+        STATIC.logged.clear()
+    }
+
+    @JvmStatic
+    fun logOnlyOnce(key: String, value: String = "Hooked") {
+        try {
+            if (!HookConfig.is_hook_log) return
+        } catch (e: RuntimeException) {
+        }
+
+        if (STATIC.wxVersion != WechatGlobal.wxVersion.toString()) {
+            log("version changed from ${STATIC.wxVersion} to ${WechatGlobal.wxVersion.toString()}")
+            STATIC.logged.clear()
+            STATIC.wxVersion = WechatGlobal.wxVersion.toString()
+        }
+        if (STATIC.logged.indexOf(key) > -1) {
+            return
+        }
+        STATIC.logged.add(key)
+        log("$key $value")
     }
 
     @JvmStatic
     fun log(msg: String) {
         try {
-            if (HookConfig.is_hook_log) printLog("LogUtil: " + msg)
+            if (HookConfig.is_hook_log) printLog2File("LogUtil: " + msg)
         } catch (e: RuntimeException) {
         }
         Log.i("MDWechatModule", "MDWechat $msg")
@@ -47,60 +73,14 @@ object LogUtil {
     @JvmStatic
     fun log(t: Throwable) {
         try {
-            if (HookConfig.is_hook_log) printLog("LogUtil: " + Log.getStackTraceString(t))
+            if (HookConfig.is_hook_log) printLog2File("LogUtil: " + Log.getStackTraceString(t))
         } catch (e: RuntimeException) {
         }
         Log.e("MDWechatModule", "MDWechat " + Log.getStackTraceString(t))
     }
 
-    // region log记录到xposed中
-    @JvmStatic
-    fun logXp(msg: String) {
-        log(msg)
-//        XposedBridge.log("MDWechatModule: " + msg)
-    }
-
-    @JvmStatic
-    fun logXp(t: Throwable) {
-        log(t)
-//        XposedBridge.log("MDWechatModule: " + Log.getStackTraceString(t))
-    }
-
-    fun logViewStackTracesXp(view: View, level: Int = 0) {
-        val sb = StringBuffer()
-        for (i in 0..level) {
-            sb.append("\t")
-        }
-        sb.append(getViewLogInfo(view))
-        logXp(sb.toString())
-        try {
-            val viewGroup = view as ViewGroup
-            for (i in 0 until viewGroup.childCount) {
-                logViewStackTracesXp(viewGroup.getChildAt(i), level + 1)
-            }
-        } catch (e: ClassCastException) {
-        }
-    }
-
-    fun logParentViewXp(view: View, level: Int = 5) {
-        logXp("---------logParentView start----------")
-        var currentView = view
-        for (i in 0 until level) {
-            val v = currentView.parent
-            if (v != null && v is View) {
-                logViewXp(v)
-                currentView = v
-            }
-        }
-        logXp("---------logParentView end----------")
-    }
-
-    fun logViewXp(view: View) {
-        logXp(getViewLogInfo(view))
-    }
-
-    fun logStackTraceXp(find: String = ""): Boolean {
-        logXp("Dump Stack: --------------start----------------")
+    fun logStackTrace(find: String = ""): Boolean {
+        log("Dump Stack: --------------start----------------")
         var ret = false
         val ex = Throwable()
         val stackElements = ex.stackTrace
@@ -113,13 +93,12 @@ object LogUtil {
                 if (s.contains(find)) {
                     ret = true
                 }
-                logXp("Dump Stack$i: " + s)
+                log("Dump Stack$i: " + s)
             }
         }
-        logXp("Dump Stack: --------------over----------------")
+        log("Dump Stack: --------------over----------------")
         return ret
     }
-    // endregion
 
     fun bundleToString(bundle: Bundle?): String? {
         val str = bundle?.keySet()?.joinToString(", ") {
@@ -202,10 +181,13 @@ object LogUtil {
         }
         sb.append(getViewLogInfo(view))
         log(sb.toString())
-        if (view is ViewGroup) {
-            for (i in 0 until view.childCount) {
-                logViewStackTraces(view.getChildAt(i), level + 1)
+        try {
+//            替换 if (view is ViewGroup)
+            val viewGroup = view as ViewGroup
+            for (i in 0 until viewGroup.childCount) {
+                logViewStackTraces(viewGroup.getChildAt(i), level + 1)
             }
+        } catch (e: ClassCastException) {
         }
     }
 

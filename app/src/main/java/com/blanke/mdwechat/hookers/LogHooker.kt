@@ -4,7 +4,7 @@ import android.util.Log
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.LogUtil.printLog
+import com.blanke.mdwechat.util.LogUtil.printLog2File
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 
@@ -22,7 +22,7 @@ object LogHooker : HookerProvider {
                 }
                 val msg = param.args[1] as String
                 if (msg.contains("mdwechat", true)) {
-                    printLog(msg)
+                    printLog2File(msg)
                 }
             }
         })
@@ -36,13 +36,13 @@ object LogHooker : HookerProvider {
                 }
                 val msg = param.args[1] as String
                 if (msg.contains("mdwechat", true)) {
-                    printLog(msg)
+                    printLog2File(msg)
                 }
                 val tr = param.args[param.args.size - 1]
                 if (tr is Throwable) {
-                    val msg = Log.getStackTraceString(tr)
-                    if (msg.contains("mdwechat", true)) {
-                        printLog(msg)
+                    val msg1 = Log.getStackTraceString(tr)
+                    if (msg1.contains("mdwechat", true)) {
+                        printLog2File(msg1)
                     }
                 }
             }

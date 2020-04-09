@@ -1,6 +1,5 @@
 package com.blanke.mdwechat.hookers
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,7 +7,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.blanke.mdwechat.Classes
 import com.blanke.mdwechat.Fields.ContactFragment_mListView
-import com.blanke.mdwechat.Methods.HomeFragment_lifecycles
+import com.blanke.mdwechat.Methods
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WeChatHelper.drawableTransparent
@@ -27,16 +26,16 @@ import de.robv.android.xposed.XposedHelpers.getObjectField
 object ContactHooker : HookerProvider {
     const val keyInit = "key_init"
 
-    private val headTextColor:Int
+    private val headTextColor: Int
         get() {
             return NightModeUtils.getContentTextColor()
         }
 
-    private val titleTextColor:Int
+    private val titleTextColor: Int
         get() {
             return NightModeUtils.getTitleTextColor()
         }
-    private val isHookTextColor:Boolean
+    private val isHookTextColor: Boolean
         get() {
             return HookConfig.is_hook_main_textcolor || NightModeUtils.isNightMode()
         }
@@ -46,7 +45,7 @@ object ContactHooker : HookerProvider {
     }
 
     private val resumeHook = Hooker {
-        HomeFragment_lifecycles.forEach {
+        Methods.HomeFragment_lifecycles.forEach {
             XposedHelpers.findAndHookMethod(Classes.ContactFragment, it.name, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam?) {
                     val fragment = param?.thisObject ?: return
@@ -62,6 +61,7 @@ object ContactHooker : HookerProvider {
                 private fun init(fragment: Any) {
                     val listView = ContactFragment_mListView.get(fragment)
                     if (listView != null && listView is ListView) {
+                        LogUtil.logOnlyOnce("ContactFragment", "Hook Start")
                         XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
                         if (HookConfig.is_hook_tab_bg) {
                             val background = AppCustomConfig.getTabBg(1)
@@ -69,9 +69,9 @@ object ContactHooker : HookerProvider {
                         }
 //                        LogUtil.log("ContactFragment listview= $listView, ${listView.javaClass.name}")
                         if (listView.headerViewsCount > 0) {
-                            val mHeaderViewInfos = getObjectField(listView, "mHeaderViewInfos") as ArrayList<ListView.FixedViewInfo>
+                            val mHeaderViewInfos = getObjectField(listView, "mHeaderViewInfos") as ArrayList<*>
                             for (j in 0 until mHeaderViewInfos.size) {
-                                val header = mHeaderViewInfos[j].view
+                                val header = (mHeaderViewInfos[j] as ListView.FixedViewInfo).view
                                 if (header != null) {
 //                                        printViewTree(header, 0)
                                     if (header is ViewGroup) {
@@ -158,8 +158,7 @@ object ContactHooker : HookerProvider {
                                 }
                             }
                         }
-
-
+                        LogUtil.logOnlyOnce("ContactFragment")
                     }
                 }
             })

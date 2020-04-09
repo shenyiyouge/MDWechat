@@ -3,26 +3,26 @@ package com.blanke.mdwechat.hookers
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.opengl.Visibility
-import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.blanke.mdwechat.*
+import com.blanke.mdwechat.CC
+import com.blanke.mdwechat.Version
+import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WeChatHelper.drawableTransparent
+import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.config.ViewTreeConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.*
+import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.NightModeUtils
+import com.blanke.mdwechat.util.ViewTreeUtils
+import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.ViewUtils.findLastChildView
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
-import java.lang.ClassCastException
-import java.lang.Exception
-import  com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
+import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 object ListViewHooker : HookerProvider {
     private val excludeContext = arrayOf("com.tencent.mm.plugin.mall.ui.MallIndexUI")
@@ -67,18 +67,19 @@ object ListViewHooker : HookerProvider {
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
 
-//                    LogUtil.logXp("----------抓取view start----------")
-//                    LogUtil.logXp(WechatGlobal.wxVersion.toString())
-//                    LogUtil.logXp("context=" + view.context)
-//                    LogUtil.logViewStackTracesXp(view)
-//                    LogUtil.logParentViewXp(view, 10)
-//                    LogUtil.logXp("--------------------")
+//                    LogUtil.log("----------抓取view start----------")
+//                    LogUtil.log(WechatGlobal.wxVersion.toString())
+//                    LogUtil.log("context=" + view.context)
+//                    LogUtil.logViewStackTraces(view)
+//                    LogUtil.logParentView(view, 10)
+//                    LogUtil.log("--------------------")
 
                     // 按照使用频率重排序
                     //气泡
                     if ((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) {
                         // 聊天消息 item
                         if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
+                            LogUtil.logOnlyOnce("ChatRightMessageItem")
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightMessageItem.treeStacks.get("msgView")!!) as View
 //                    log("msgView=$msgView")
@@ -95,6 +96,7 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftMessageItem.item, view)) {
+                            LogUtil.logOnlyOnce("ChatLeftMessageItem")
                             val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftMessageItem.treeStacks.get("msgView")!!) as View
 //                    LogUtil.logXp("=======start=========")
@@ -119,6 +121,7 @@ object ListViewHooker : HookerProvider {
                         }
                         // 聊天消息 audio
                         else if (ViewTreeUtils.equals(VTTV.ChatRightAudioMessageItem.item, view)) {
+                            LogUtil.logOnlyOnce("ChatRightAudioMessageItem")
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgView")!!) as View
                             val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             if (HookConfig.is_hook_bubble) {
@@ -133,6 +136,7 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftAudioMessageItem.item, view)) {
+                            LogUtil.logOnlyOnce("ChatLeftAudioMessageItem")
                             if (HookConfig.is_hook_bubble) {
                                 val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
                                 val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
@@ -149,6 +153,7 @@ object ListViewHooker : HookerProvider {
                         }
                         // 通话消息
                         else if (ViewTreeUtils.equals(VTTV.ChatRightCallMessageItem.item, view)) {
+                            LogUtil.logOnlyOnce("ChatRightCallMessageItem")
                             if (HookConfig.is_hook_bubble) {
                                 val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")!!) as View
                                 val bubble = WeChatHelper.getRightBubble(msgView.resources)
@@ -158,6 +163,7 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftCallMessageItem.item, view)) {
+                            LogUtil.logOnlyOnce("ChatLeftCallMessageItem")
                             if (HookConfig.is_hook_bubble) {
                                 val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")!!) as View
                                 val bubble = WeChatHelper.getLeftBubble(msgView.resources)
@@ -171,6 +177,7 @@ object ListViewHooker : HookerProvider {
 
                     // ConversationFragment 聊天列表 item sum
                     if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
+                        LogUtil.logOnlyOnce("ConversationListViewItem")
                         try {
                             view.background.alpha = HookConfig.get_hook_conversation_background_alpha
                         } catch (e: Exception) {
@@ -196,6 +203,7 @@ object ListViewHooker : HookerProvider {
                     view.background = defaultImageRippleDrawable
                     // 联系人列表 sum
                     if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
+                        LogUtil.logOnlyOnce("ContactListViewItem")
                         // 标题下面的线
                         if (VTTV.ContactListViewItem.treeStacks.get("headerView") != null) {
                             ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headerView")!!)
@@ -219,6 +227,7 @@ object ListViewHooker : HookerProvider {
 
                     // 发现 设置 item sum
                     else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
+                        LogUtil.logOnlyOnce("DiscoverViewItem")
                         val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("iconImageView")!!) as View
                         if (iconImageView.visibility == View.VISIBLE) {
                             val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("titleView")!!) as TextView
@@ -235,6 +244,7 @@ object ListViewHooker : HookerProvider {
 
                     // 设置 头像 sum
                     else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
+                        LogUtil.logOnlyOnce("SettingAvatarView")
                         val nickNameView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("nickNameView")!!)
                         val wechatTextView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("wechatTextView")!!) as TextView
                         if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
@@ -247,6 +257,7 @@ object ListViewHooker : HookerProvider {
 
                     // (7.0.7 以上) 下拉小程序框
                     else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
+                        LogUtil.logOnlyOnce("ActionBarItem")
                         try {
                             val miniProgramPage = ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage")!!) as RelativeLayout
                             miniProgramPage.visibility
@@ -285,13 +296,13 @@ object ListViewHooker : HookerProvider {
 //                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
 
                         } catch (e: ClassCastException) {
-                            LogUtil.logXp(e)
-                            LogUtil.logViewStackTracesXp(view)
+                            LogUtil.log(e)
+                            LogUtil.logViewStackTraces(view)
                             return
                         }
                     }
                 } catch (e: Exception) {
-                    LogUtil.logXp(e)
+                    LogUtil.log(e)
                 }
             }
         })
