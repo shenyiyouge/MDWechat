@@ -43,7 +43,7 @@ object LogUtil {
     }
 
     @JvmStatic
-    fun logOnlyOnce(key: String, value: String = "Hooked") {
+    fun logOnlyOnce(key: String, value: String = "Hook") {
         try {
             if (!HookConfig.is_hook_log) return
         } catch (e: RuntimeException) {

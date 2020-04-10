@@ -139,7 +139,7 @@ object ConversationHooker : HookerProvider {
                         val view = param?.args!![0] as View
 //                        LogUtil.log("ConversationWithAppBrandListView addHeadView = ${view}")
                         if (view is ViewGroup && view.getChildAt(0) != null) {
-                            LogUtil.logOnlyOnce("addHeaderView", "Hook Start")
+                            LogUtil.logOnlyOnce("addHeaderView Done")
                             view.getChildAt(0).viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                                 override fun onGlobalLayout() {
                                     val oldBackground = view.getChildAt(0).background
