@@ -73,7 +73,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
 //        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
 //        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
-        findPreference("clearLogs")?.onPreferenceClickListener = this
+        findPreference("key_clear_logs")?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
@@ -159,7 +159,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference.key) {
-            "clearLogs" -> _clearLogs()
+            "key_clear_logs" -> _clearLogs()
             getString(R.string.key_donate) -> donate()
             getString(R.string.key_feedback) -> feedback()
             getString(R.string.key_reset_wechat_config) -> copyWechatConfig()
