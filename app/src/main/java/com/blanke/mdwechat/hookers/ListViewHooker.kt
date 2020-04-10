@@ -79,7 +79,7 @@ object ListViewHooker : HookerProvider {
                     if ((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) {
                         // 聊天消息 item
                         if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
-                            LogUtil.logOnlyOnce("ChatRightMessageItem")
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightMessageItem")
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightMessageItem.treeStacks.get("msgView")!!) as View
 //                    log("msgView=$msgView")
@@ -96,7 +96,7 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftMessageItem.item, view)) {
-                            LogUtil.logOnlyOnce("ChatLeftMessageItem")
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
                             val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftMessageItem.treeStacks.get("msgView")!!) as View
 //                    LogUtil.logXp("=======start=========")
@@ -121,7 +121,7 @@ object ListViewHooker : HookerProvider {
                         }
                         // 聊天消息 audio
                         else if (ViewTreeUtils.equals(VTTV.ChatRightAudioMessageItem.item, view)) {
-                            LogUtil.logOnlyOnce("ChatRightAudioMessageItem")
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightAudioMessageItem")
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgView")!!) as View
                             val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             if (HookConfig.is_hook_bubble) {
@@ -136,7 +136,7 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftAudioMessageItem.item, view)) {
-                            LogUtil.logOnlyOnce("ChatLeftAudioMessageItem")
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftAudioMessageItem")
                             if (HookConfig.is_hook_bubble) {
                                 val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
                                 val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
@@ -153,7 +153,7 @@ object ListViewHooker : HookerProvider {
                         }
                         // 通话消息
                         else if (ViewTreeUtils.equals(VTTV.ChatRightCallMessageItem.item, view)) {
-                            LogUtil.logOnlyOnce("ChatRightCallMessageItem")
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightCallMessageItem")
                             if (HookConfig.is_hook_bubble) {
                                 val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")!!) as View
                                 val bubble = WeChatHelper.getRightBubble(msgView.resources)
@@ -163,7 +163,7 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftCallMessageItem.item, view)) {
-                            LogUtil.logOnlyOnce("ChatLeftCallMessageItem")
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftCallMessageItem")
                             if (HookConfig.is_hook_bubble) {
                                 val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")!!) as View
                                 val bubble = WeChatHelper.getLeftBubble(msgView.resources)
@@ -177,7 +177,7 @@ object ListViewHooker : HookerProvider {
 
                     // ConversationFragment 聊天列表 item sum
                     if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
-                        LogUtil.logOnlyOnce("ConversationListViewItem")
+                        LogUtil.logOnlyOnce("ListViewHooker.ConversationListViewItem")
                         try {
                             view.background.alpha = HookConfig.get_hook_conversation_background_alpha
                         } catch (e: Exception) {
@@ -203,7 +203,7 @@ object ListViewHooker : HookerProvider {
                     view.background = defaultImageRippleDrawable
                     // 联系人列表 sum
                     if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
-                        LogUtil.logOnlyOnce("ContactListViewItem")
+                        LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
                         // 标题下面的线
                         if (VTTV.ContactListViewItem.treeStacks.get("headerView") != null) {
                             ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headerView")!!)
@@ -227,7 +227,7 @@ object ListViewHooker : HookerProvider {
 
                     // 发现 设置 item sum
                     else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
-                        LogUtil.logOnlyOnce("DiscoverViewItem")
+                        LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
                         val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("iconImageView")!!) as View
                         if (iconImageView.visibility == View.VISIBLE) {
                             val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("titleView")!!) as TextView
@@ -244,7 +244,7 @@ object ListViewHooker : HookerProvider {
 
                     // 设置 头像 sum
                     else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
-                        LogUtil.logOnlyOnce("SettingAvatarView")
+                        LogUtil.logOnlyOnce("ListViewHooker.SettingAvatarView")
                         val nickNameView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("nickNameView")!!)
                         val wechatTextView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("wechatTextView")!!) as TextView
                         if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
@@ -257,7 +257,7 @@ object ListViewHooker : HookerProvider {
 
                     // (7.0.7 以上) 下拉小程序框
                     else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
-                        LogUtil.logOnlyOnce("ActionBarItem")
+                        LogUtil.logOnlyOnce("ListViewHooker.ActionBarItem")
                         try {
                             val miniProgramPage = ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage")!!) as RelativeLayout
                             miniProgramPage.visibility
