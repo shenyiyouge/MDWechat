@@ -11,9 +11,9 @@
     <string name="text_color_primary">主色</string>
     <string name="summary_color_primary">标题栏背景色、悬浮按钮背景色等</string>
     <string name="text_color_secondary">副色1</string>
-    <string name="summary_color_secondary">(如果着色)TabLayout当前页图标颜色、悬浮按钮文字颜色等</string>
+    <string name="summary_color_secondary">(如果着色)自定义导航当前页图标颜色、悬浮按钮文字颜色等</string>
     <string name="text_color_tertiary">副色2</string>
-    <string name="summary_color_tertiary">(如果着色)TabLayout其他页页图标前景色等</string>
+    <string name="summary_color_tertiary">(如果着色)自定义导航其他页页图标前景色等</string>
     <string name="text_color_tip">消息提示颜色</string>
     <string name="text_settings_info">修改之后停止微信重启生效.</string>
     <string name="text_donate">捐赠(支付宝)</string>
@@ -33,7 +33,7 @@
     <string name="key_hide_tab">key_hide_tab</string>
     <string name="text_hide_tab">隐藏微信底栏</string>
     <string name="key_hook_tab">key_hook_tab</string>
-    <string name="text_hook_tab">TabLayout</string>
+    <string name="text_hook_tab">TabLayout (自定义导航)</string>
     <string name="key_hook_menu_game">key_hook_menu_game</string>
     <string name="text_hook_menu_game">隐藏游戏</string>
     <string name="key_hook_menu_shop">key_hook_menu_shop</string>
@@ -66,10 +66,10 @@
     <string name="key_main_settings">key_main_settings</string>
     <string name="text_main_settings">主界面</string>
     <string name="key_hook__actionbar_color">key_hook__actionbar_color</string>
-    <string name="text_hook__actionbar_color">ActionBar字体颜色(实验性)</string>
+    <string name="text_hook__actionbar_color">顶栏字体颜色修改</string>
     <string name="summary_hook__actionbar_color">将使用副色1.</string>
     <string name="key_hook_hide_actionbar">key_hook_hide_actionbar</string>
-    <string name="text_hook_hide_actionbar">隐藏 ActionBar</string>
+    <string name="text_hook_hide_actionbar">隐藏顶栏</string>
     <string name="key_tab_layout_offset">key_tab_layout_offset</string>
     <string name="text_tab_layout_offset">(顶端的)TabLayout 高度校正</string>
     <string name="summary_key_tab_layout_offset">如果微信首页小程序下滑恢复后出现部分难以消除的深色遮罩，可尝试设置此项为适当的负值......或者隐藏Action Bar (主界面->导航)。</string>
@@ -199,7 +199,7 @@
     <string name="text_brief">简要设置</string>
     <string name="text_wechat_config_settings">微信适配文件</string>
     <string name="text_feedback_donate_settings">反馈和捐赠</string>
-    <string name="text_about_settings">关于</string>
+    <string name="text_about_settings">关于 MDWechat</string>
     <string name="key_feedback_wechat">key_feedback_wechat</string>
     <string name="text_feedback_wechat">微信交流群</string>
     <string name="text_feedback_group">加入交流群</string>
@@ -227,11 +227,13 @@
     <string name="text_clear_logs">清空日志</string>
     <string name="navigate">导航</string>
     <!--    <string name="instruction">教程</string>-->
+    <string name="help">帮助</string>
     <string name="help_info">帮助/关于</string>
     <string name="reset">重置图标/配置文件</string>
+    <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
     <string name="app_name_version">MDWechat 3.6.0_beta~7</string>
-    <string name="summary">此为测试版。暂无法在太极上使用，可在 virtual xposed 和 edxposed 下使用 (xposed未测试)</string>
+    <string name="summary">此为测试版。暂无法在太极上使用，可在xposed, virtual xposed 和 edxposed 下使用。</string>
     <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将作者在 github 上开源的代码进行二次开发，使其能够适配较新的微信(7.0.10 – 7.0.13)。保留原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
 </resources>

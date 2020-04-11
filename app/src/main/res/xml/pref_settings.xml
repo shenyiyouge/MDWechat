@@ -278,106 +278,107 @@
                 android:title="@string/text_tab_layout_offset"
                 tools:ignore="Deprecated" />
         </PreferenceScreen>
-        <!--调试-->
-        <PreferenceScreen
-            android:dependency="@string/key_hook_switch"
-            android:title="@string/text_settings_debug">
-
-            <SwitchPreference
-                android:defaultValue="false"
-                android:key="@string/key_hook_log"
-                android:summary="@string/text_hook_log_info"
-                android:title="@string/text_hook_log" />
-
-            <Preference
-                android:key="@string/key_clear_logs"
-                android:title="@string/text_clear_logs" />
-        </PreferenceScreen>
         <!--帮助和教程-->
         <PreferenceScreen android:title="@string/help_info">
-            <Preference
-                android:key="@string/key_help_float_button"
-                android:title="@string/text_help_float_button" />
-            <Preference
-                android:key="@string/key_help_icon"
-                android:title="@string/text_help_icon" />
-            <Preference
-                android:key="@string/key_help_bubble"
-                android:title="@string/text_help_bubble" />
-            <PreferenceScreen
-                android:dependency="@string/key_hook_switch"
-                android:title="@string/reset">
-                <PreferenceCategory
-                    android:dependency="@string/key_hook_switch"
-                    android:summary="@string/text_reset">
-                    <Preference
-                        android:key="@string/key_reset_config"
-                        android:summary="@string/text_reset_config_info"
-                        android:title="@string/text_reset_config" />
-                    <Preference
-                        android:key="@string/key_reset_float_bottom_config"
-                        android:summary="@string/text_reset_float_bottom_config_info"
-                        android:title="@string/text_reset_float_bottom_config" />
-                    <Preference
-                        android:key="@string/key_reset_icon_config"
-                        android:summary="@string/text_reset_icon_config_info"
-                        android:title="@string/text_reset_icon_config" />
-                </PreferenceCategory>
-            </PreferenceScreen>
             <!--关于-->
-            <PreferenceCategory>
-                <PreferenceScreen android:title="@string/text_about_settings">
+            <PreferenceScreen android:title="@string/text_about_settings">
+                <Preference
+                    android:summary="@string/josh_cai_info"
+                    android:title="@string/app_name_version" />
+                <PreferenceCategory />
+                <Preference
+                    android:key="@string/key_donate"
+                    android:title="@string/text_donate" />
+
+                <Preference
+                    android:key="@string/key_donate_wechat"
+                    android:title="@string/text_donate_wechat" />
+
+                <!--<Preference-->
+                <!--android:key="@string/key_feedback"-->
+                <!--android:title="@string/text_feedback" />-->
+
+                <Preference
+                    android:key="@string/key_feedback_group"
+                    android:summary="@string/text_feedback_group_info"
+                    android:title="@string/text_feedback_group" />
+
+                <PreferenceScreen
+                    android:key="@string/key_feedback_email"
+                    android:summary="@string/text_feedback_email_info"
+                    android:title="@string/text_feedback_email">
                     <Preference
-                        android:summary="@string/josh_cai_info"
-                        android:title="@string/app_name_version" />
-                    <PreferenceCategory />
+                        android:key="@string/key_feedback_email_josh_cai"
+                        android:summary="@string/text_feedback_email_josh_cai_info"
+                        android:title="@string/text_feedback_email_josh_cai" />
                     <Preference
-                        android:key="@string/key_donate"
-                        android:title="@string/text_donate" />
-
-                    <Preference
-                        android:key="@string/key_donate_wechat"
-                        android:title="@string/text_donate_wechat" />
-
-                    <!--<Preference-->
-                    <!--android:key="@string/key_feedback"-->
-                    <!--android:title="@string/text_feedback" />-->
-
-                    <Preference
-                        android:key="@string/key_feedback_group"
-                        android:summary="@string/text_feedback_group_info"
-                        android:title="@string/text_feedback_group" />
-
-                    <PreferenceScreen
-                        android:key="@string/key_feedback_email"
-                        android:summary="@string/text_feedback_email_info"
-                        android:title="@string/text_feedback_email">
-                        <Preference
-                            android:key="@string/key_feedback_email_josh_cai"
-                            android:summary="@string/text_feedback_email_josh_cai_info"
-                            android:title="@string/text_feedback_email_josh_cai" />
-                        <Preference
-                            android:key="@string/key_feedback_email_blanke"
-                            android:summary="@string/text_feedback_email_blanke_info"
-                            android:title="@string/text_feedback_email_blanke" />
-                    </PreferenceScreen>
-
-                    <PreferenceScreen
-                        android:key="@string/key_github_screen"
-                        android:summary="@string/text_github_screen_info"
-                        android:title="@string/text_github_screen">
-                        <Preference
-                            android:key="@string/key_github_blanke"
-                            android:title="@string/text_github_blanke" />
-                        <Preference
-                            android:key="@string/key_github_joshcai"
-                            android:title="@string/text_github_joshcai" />
-
-                    </PreferenceScreen>
-                    <Preference
-                        android:summary="@string/text_app_thank_content"
-                        android:title="@string/text_app_thank" />
+                        android:key="@string/key_feedback_email_blanke"
+                        android:summary="@string/text_feedback_email_blanke_info"
+                        android:title="@string/text_feedback_email_blanke" />
                 </PreferenceScreen>
+
+                <PreferenceScreen
+                    android:key="@string/key_github_screen"
+                    android:summary="@string/text_github_screen_info"
+                    android:title="@string/text_github_screen">
+                    <Preference
+                        android:key="@string/key_github_blanke"
+                        android:title="@string/text_github_blanke" />
+                    <Preference
+                        android:key="@string/key_github_joshcai"
+                        android:title="@string/text_github_joshcai" />
+
+                </PreferenceScreen>
+                <Preference
+                    android:summary="@string/text_app_thank_content"
+                    android:title="@string/text_app_thank" />
+            </PreferenceScreen>
+            <PreferenceCategory android:title="@string/help">
+                <Preference
+                    android:key="@string/key_help_float_button"
+                    android:title="@string/text_help_float_button" />
+                <Preference
+                    android:key="@string/key_help_icon"
+                    android:title="@string/text_help_icon" />
+                <Preference
+                    android:key="@string/key_help_bubble"
+                    android:title="@string/text_help_bubble" />
+                <PreferenceScreen
+                    android:dependency="@string/key_hook_switch"
+                    android:summary="@string/sum_reset"
+                    android:title="@string/reset">
+                    <PreferenceCategory
+                        android:dependency="@string/key_hook_switch"
+                        android:summary="@string/text_reset">
+                        <Preference
+                            android:key="@string/key_reset_config"
+                            android:summary="@string/text_reset_config_info"
+                            android:title="@string/text_reset_config" />
+                        <Preference
+                            android:key="@string/key_reset_float_bottom_config"
+                            android:summary="@string/text_reset_float_bottom_config_info"
+                            android:title="@string/text_reset_float_bottom_config" />
+                        <Preference
+                            android:key="@string/key_reset_icon_config"
+                            android:summary="@string/text_reset_icon_config_info"
+                            android:title="@string/text_reset_icon_config" />
+                    </PreferenceCategory>
+                </PreferenceScreen>
+            </PreferenceCategory>
+            <!--调试-->
+            <PreferenceCategory
+                android:dependency="@string/key_hook_switch"
+                android:title="@string/text_settings_debug">
+
+                <SwitchPreference
+                    android:defaultValue="false"
+                    android:key="@string/key_hook_log"
+                    android:summary="@string/text_hook_log_info"
+                    android:title="@string/text_hook_log" />
+
+                <Preference
+                    android:key="@string/key_clear_logs"
+                    android:title="@string/text_clear_logs" />
             </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
