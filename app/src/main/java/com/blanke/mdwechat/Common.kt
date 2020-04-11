@@ -29,15 +29,17 @@ object Common {
     val FILE_NAME_TAB_BG_PREFIX = "tab_bg"
     val FILE_NAME_FLOAT_BUTTON = "floatbutton.txt"
 
-    // change link to opendrive
-    val URL_HELP_FLOAT_BUTTON = "https://od.lk/s/NTZfMTQxODc1MTNf/float_button.md"
-    val URL_HELP_ICON = "https://od.lk/s/NTZfMTQxODc1MTRf/icon.md"
-    val URL_HELP_BUBBLE = "https://od.lk/s/NTZfMTQxODc1MTJf/bubble.md"
-    val URL_JOIN_GROUP = "https://od.lk/s/NTZfMTQxODc1MTVf/join_group.md"
-//    val URL_HELP_FLOAT_BUTTON = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/float_button.md"
-//    val URL_HELP_ICON = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/icon.md"
-//    val URL_HELP_BUBBLE = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/bubble.md"
-//    val URL_JOIN_GROUP = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/join_group.md"
+    // primary
+    val URL_HELP_FLOAT_BUTTON = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/float_button.md"
+    val URL_HELP_ICON = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/icon.md"
+    val URL_HELP_BUBBLE = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/bubble.md"
+    val URL_JOIN_GROUP = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/join_group.md"
+
+    //  opendrive backup
+    val URL_HELP_FLOAT_BUTTON_1 = "https://od.lk/s/NTZfMTQxODc1MTNf/float_button.md"
+    val URL_HELP_ICON_1 = "https://od.lk/s/NTZfMTQxODc1MTRf/icon.md"
+    val URL_HELP_BUBBLE_1 = "https://od.lk/s/NTZfMTQxODc1MTJf/bubble.md"
+    val URL_JOIN_GROUP_1 = "https://od.lk/s/NTZfMTQxODc1MTVf/join_group.md"
 
     val isVXPEnv: Boolean by lazy {
         VXPUtils.isVXPEnv()
