@@ -1,7 +1,7 @@
 MDWechat
 ====
 # 简介
- Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信7.0.12.
+ Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信7.0.13.
 
 # 功能
 实现的功能有:
@@ -20,11 +20,11 @@ MDWechat
 13. ~~移除会话列表下拉小程序,最低支持微信 6.6.2~~(3.6暂时舍弃)
 14. 识别微X模块入口,移动到悬浮按钮(2.0新增)
 15. 主界面字体颜色修改(2.0新增)
-16. 自动识别微信深色模式调整MDwechat配色方案, 需要用其他xposed模块开启微信自带的深色模式(3.6新增)
+16. 自动识别微信深色模式调整MDwechat配色方案(3.6新增)
 
 # 版本支持
 1. ~~支持的微信版本: [酷安渠道版](https://www.coolapk.com/apk/com.tencent.mm)(6.5.19 6.5.22 6.5.23 6.6.0 6.6.1 6.6.2 6.6.3 6.6.5), [play 版](https://play.google.com/store/apps/details?id=com.tencent.mm)(6.5.16 6.5.23 6.6.1 6.6.2)(2.0理论上支持任何微信版本,只测试了6.6.7,其他未测)~~(3.6只测试了7.0.12,其他未测)
-2. ~~只支持 Android 5.0 以上~~(3.6在某些框架(原生xposed等)上存在未知bug,无法运行)
+2. 只支持 Android 5.0 以上
 
 # 效果预览
 ![main01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main01.png)
@@ -40,7 +40,6 @@ MDWechat
 # 存在的问题
 1. 导致微信变卡,这是无法避免的
 2. 悬浮按钮在某些机型(魅族/中兴)上显示异常,在聊天页面会显示
-3. 在某些框架(原生xposed等)上存在未知bug,无法运行
 
 # 感谢
 1. [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat)
