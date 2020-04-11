@@ -10,7 +10,6 @@ import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.waitInvoke
 import de.robv.android.xposed.XposedHelpers
-import org.jooq.tools.reflect.Reflect.on
 
 object HomeActionBarHook {
     fun fix(viewPagerLinearLayout: ViewGroup) {
@@ -42,8 +41,11 @@ object HomeActionBarHook {
             if (HookConfig.is_hook_hide_actionbar) {
                 LogUtil.log("隐藏 actionBar $mActionBar")
                 XposedHelpers.callMethod(mActionBar, "hide")
-                val actionView = on(mActionBar).call("getCustomView").get<View>()
+
+                val actionView = XposedHelpers.callMethod(mActionBar, "getCustomView") as View
+//                val actionView = on(mActionBar).call("getCustomView").get<View>()
                 ViewUtils.getParentView(actionView, 1)?.visibility = View.GONE
+                LogUtil.log("隐藏 actionBar 成功")
             }
         })
     }

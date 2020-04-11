@@ -11,7 +11,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 37
-        versionName "3.6.0-beta~6"
+        versionName "3.6.0-beta~7"
     }
     buildTypes {
         release {
@@ -33,7 +33,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
 //    implementation 'com.android.support:appcompat-v7:23.0.0'
 
     compileOnly 'de.robv.android.xposed:api:53'
@@ -55,7 +55,7 @@ dependencies {
 
     implementation 'ru.noties:markwon:1.1.0'
     implementation 'ru.noties:markwon-image-loader:1.1.0'
-    implementation 'org.jooq:jooq:3.12.4'
+//    implementation 'org.jooq:jooq:3.12.4'
 }
 
 
