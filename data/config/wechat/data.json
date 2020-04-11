@@ -1,5 +1,15 @@
 [
   {
+    "name": "7.0.13.config",
+    "desc": "7.0.13 国内版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.13/7.0.13.config"
+  },
+  {
+    "name": "7.0.12.config",
+    "desc": "7.0.12 play版",
+    "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.12-play/7.0.12.config"
+  },
+  {
     "name": "7.0.12.config",
     "desc": "7.0.12 国内版",
     "url": "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/config/wechat/7.0.12/7.0.12.config"
