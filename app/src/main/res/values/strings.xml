@@ -70,7 +70,7 @@
     <string name="summary_hook__actionbar_color">将使用副色1.</string>
     <string name="key_hook_hide_actionbar">key_hook_hide_actionbar</string>
     <string name="text_hook_hide_actionbar">隐藏顶栏</string>
-    <string name="key_main_text_offset">key_action_bar_offset</string>
+    <string name="key_main_text_offset">key_main_text_offset</string>
     <string name="text_main_text_offset">主界面正文高度补正</string>
     <string name="summary_main_text_offset">默认值为0。</string>
     <string name="key_tab_layout_offset">key_tab_layout_offset</string>
