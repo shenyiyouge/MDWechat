@@ -2,7 +2,6 @@ package com.blanke.mdwechat.config
 
 import android.graphics.Color
 import com.blanke.mdwechat.BuildConfig
-
 import com.blanke.mdwechat.WeChatHelper
 
 /**
@@ -87,19 +86,19 @@ object HookConfig {
 
     val get_color_primary: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getInt(key_color_primary, Color.WHITE)
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_primary, -1184275)
         }
     val get_color_secondary: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getInt(key_color_secondary, Color.BLUE)
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_secondary, -16537100)
         }
     val get_color_tertiary: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getInt(key_color_tertiary, Color.GRAY)
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_tertiary, -1249295)
         }
     val get_color_tip: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getInt(key_color_tip, Color.RED)
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_tip, -16537100)
         }
     val get_float_button_color: Int
         get() {
@@ -114,7 +113,7 @@ object HookConfig {
         }
     val is_hook_actionbar_color: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook__actionbar_color, true)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook__actionbar_color, false)
         }
     val is_hook_actionbar: Boolean
         get() {
@@ -164,7 +163,7 @@ object HookConfig {
         }
     val is_tab_layout_on_top: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_on_top, true)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_on_top, false)
         }
     val is_hook_tab_elevation: Boolean
         get() {
@@ -216,7 +215,7 @@ object HookConfig {
         }
     val is_hook_hide_actionbar: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_hide_actionbar, true)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_hide_actionbar, false)
         }
     val is_hook_float_button_move: Boolean
         get() {
@@ -253,7 +252,7 @@ object HookConfig {
         }
     val is_hook_statusbar_transparent: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_statusbar_transparent, false)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_statusbar_transparent, true)
         }
     val get_hook_bubble_tint_left: Int
         get() {
@@ -277,7 +276,7 @@ object HookConfig {
         }
     val is_hook_main_textcolor: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_main_textcolor, false)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_main_textcolor, true)
         }
     val get_main_text_color_title: Int
         get() {
@@ -293,7 +292,7 @@ object HookConfig {
         }
     val is_hook_night_mode: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, false)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, true)
         }
 //    val value_mini_program_title: String
 //        get() {
