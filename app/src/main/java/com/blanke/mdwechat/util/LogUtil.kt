@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import java.io.File
@@ -20,7 +19,6 @@ import java.util.*
 object LogUtil {
     private object STATIC {
         var logged = mutableSetOf<String>()
-        var wxVersion: String = "-"
     }
 
     private val dateStr
@@ -47,12 +45,6 @@ object LogUtil {
         try {
             if (!HookConfig.is_hook_log) return
         } catch (e: RuntimeException) {
-        }
-
-        if (STATIC.wxVersion != WechatGlobal.wxVersion.toString()) {
-            log("version changed from ${STATIC.wxVersion} to ${WechatGlobal.wxVersion.toString()}")
-            STATIC.logged.clear()
-            STATIC.wxVersion = WechatGlobal.wxVersion.toString()
         }
         if (STATIC.logged.indexOf(key) > -1) {
             return
