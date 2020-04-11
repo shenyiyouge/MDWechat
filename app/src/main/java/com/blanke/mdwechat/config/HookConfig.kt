@@ -11,6 +11,7 @@ import com.blanke.mdwechat.WeChatHelper
 object HookConfig {
 //    private val debugConfigText = "debugConfigText"
 //    private val debugConfigText1 = "debugConfigText1"
+private val key_main_text_offset = "key_main_text_offset"
     private val key_tab_layout_offset = "key_tab_layout_offset"
     private val key_hook_switch = "hookSwitch"
     private val key_color_primary = "key_color_primary"
@@ -75,6 +76,10 @@ object HookConfig {
 //        get() {
 //            return WeChatHelper.XMOD_PREFS.getString(debugConfigText1, "")
 //        }
+val value_main_text_offset: Int
+    get() {
+        return WeChatHelper.XMOD_PREFS.getString(key_main_text_offset, "0")!!.toInt()
+    }
     val value_tab_layout_offset: Int
         get() {
             return if (is_tab_layout_on_top) WeChatHelper.XMOD_PREFS.getString(key_tab_layout_offset, "0")!!.toInt() else 0

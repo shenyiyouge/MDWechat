@@ -70,9 +70,12 @@
     <string name="summary_hook__actionbar_color">将使用副色1.</string>
     <string name="key_hook_hide_actionbar">key_hook_hide_actionbar</string>
     <string name="text_hook_hide_actionbar">隐藏顶栏</string>
+    <string name="key_main_text_offset">key_action_bar_offset</string>
+    <string name="text_main_text_offset">主界面正文高度补正</string>
+    <string name="summary_main_text_offset">默认值为0。</string>
     <string name="key_tab_layout_offset">key_tab_layout_offset</string>
     <string name="text_tab_layout_offset">(顶端的)TabLayout 高度校正</string>
-    <string name="summary_key_tab_layout_offset">如果微信首页小程序下滑恢复后出现部分难以消除的深色遮罩，可尝试设置此项为适当的负值......或者隐藏Action Bar (主界面->导航)。</string>
+    <string name="summary_tab_layout_offset">如果微信首页小程序下滑恢复后出现部分难以消除的深色遮罩，可尝试设置此项为适当的负值......或者隐藏微信顶栏 (主界面->导航)。默认值为-24。</string>
     <string name="key_hook_float_button_color_up">key_hook_float_button_color_up</string>
     <string name="text_hook_float_button_color_up">悬浮按钮图标着色</string>
     <string name="key_hook_float_button_color_is_secondary">key_hook_float_button_color_is_secondary</string>

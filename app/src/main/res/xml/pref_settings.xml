@@ -270,11 +270,19 @@
             android:dependency="@string/key_hook_switch"
             android:title="@string/test">
             <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="@string/key_hook_tab"
+                android:key="@string/key_main_text_offset"
+                android:numeric="signed"
+                android:summary="@string/summary_main_text_offset"
+                android:title="@string/text_main_text_offset"
+                tools:ignore="Deprecated" />
+            <EditTextPreference
                 android:defaultValue="-24"
                 android:dependency="@string/key_hook_tab"
                 android:key="@string/key_tab_layout_offset"
                 android:numeric="signed"
-                android:summary="@string/summary_key_tab_layout_offset"
+                android:summary="@string/summary_tab_layout_offset"
                 android:title="@string/text_tab_layout_offset"
                 tools:ignore="Deprecated" />
         </PreferenceScreen>
