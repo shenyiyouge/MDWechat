@@ -56,7 +56,7 @@ object LogUtil {
     @JvmStatic
     fun log(msg: String) {
         try {
-            if (HookConfig.is_hook_log) printLog2File("LogUtil: " + msg)
+            if (HookConfig.is_hook_log) printLog2File("MDwechat Log: " + msg)
         } catch (e: RuntimeException) {
         }
         Log.i("MDWechatModule", "MDWechat $msg")
