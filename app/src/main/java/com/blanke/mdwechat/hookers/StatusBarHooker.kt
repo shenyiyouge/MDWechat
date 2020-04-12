@@ -2,13 +2,13 @@ package com.blanke.mdwechat.hookers
 
 import android.app.Activity
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.PhoneWindow
+import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
@@ -52,7 +52,7 @@ object StatusBarHooker : HookerProvider {
                     val activity = param.thisObject as Activity
 //                    LogUtil.log("activity onCreate " + activity)
                     val statusView = View(activity)
-                    statusView.background = ColorDrawable(getStatusBarColor())
+                    statusView.background = NightModeUtils.getBackgroundDrawable(AppCustomConfig.getStatusBarBitmap())
                     statusView.elevation = 1F
 //                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 //                        statusParam.topMargin = 0

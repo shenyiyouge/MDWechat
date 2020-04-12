@@ -8,7 +8,6 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
-import com.blanke.mdwechat.util.NightModeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 
@@ -40,8 +39,9 @@ object DiscoverHooker : HookerProvider {
             private fun init(fragment: Any) {
                 val listView = PreferenceFragment_mListView.get(fragment)
                 if (listView != null && listView is View) {
-                    val background = AppCustomConfig.getTabBg(2)
-                    listView.background = NightModeUtils.getBackgroundDrawable(background)
+//                    val background = AppCustomConfig.getTabBg(2)
+//                    listView.background = NightModeUtils.getBackgroundDrawable(background)
+                    AppCustomConfig.setDiscoverBitmap(listView)
                 }
             }
         })

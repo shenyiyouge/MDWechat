@@ -24,7 +24,6 @@ import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
-import com.blanke.mdwechat.hookers.main.TabLayoutHook.addTabLayoutAtBottom
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.ViewUtils
@@ -127,7 +126,7 @@ object LauncherUIHooker : HookerProvider {
                         } else if (isTabLayoutOnBottom) {
                             try {
                                 log("添加底栏")
-                                addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
+                                TabLayoutHook.addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
                                 log("添加底栏成功")
                             } catch (e: Throwable) {
                                 log("添加底栏 报错")

@@ -11,12 +11,11 @@ import com.blanke.mdwechat.Fields.ConversationFragment_mListView
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WechatGlobal
-import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.config.AppCustomConfig.setConversationBitmap
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
-import com.blanke.mdwechat.util.NightModeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -55,8 +54,7 @@ object ConversationHooker : HookerProvider {
             private fun init(fragment: Any) {
                 val listView = ConversationFragment_mListView.get(fragment)
                 if (listView != null && listView is View) {
-                    val background = AppCustomConfig.getTabBg(0)
-                    listView.background = NightModeUtils.getBackgroundDrawable(background)
+                    setConversationBitmap(listView)
                 }
             }
         })
@@ -69,10 +67,6 @@ object ConversationHooker : HookerProvider {
 //                    LogUtil.logStackTraceXp()
 //                    LogUtil.logXp("=====================")
                 when (clazz) {
-                    //action bar
-                    Classes.ActionBarContainer.name -> {
-                        param.result = NightModeUtils.colorPrimary
-                    }
                     ConversationListView.name -> if (WechatGlobal.wxVersion!! >= Version("7.0.3") && HookConfig.is_hook_tab_bg) {
                         param.result = 0
                     }

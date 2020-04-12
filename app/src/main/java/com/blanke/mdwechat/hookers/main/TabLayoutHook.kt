@@ -13,6 +13,8 @@ import android.widget.LinearLayout
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.config.AppCustomConfig.getTabLayoutBitmap
+import com.blanke.mdwechat.config.AppCustomConfig.getTabLayoutBitmapAtBottom
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
@@ -32,7 +34,6 @@ object TabLayoutHook {
         val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewGroup.context
         val tabLayout = CommonTabLayout(context)
-        tabLayout.setBackgroundColor(primaryColor)
         tabLayout.textSelectColor = Color.WHITE
         val dp2 = ConvertUtils.dp2px(resContext, 1f)
         tabLayout.indicatorHeight = dp2.toFloat()
@@ -86,7 +87,9 @@ object TabLayoutHook {
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val viewChild = tabView.getChildAt(0) as ViewGroup
         params.height = height
-
+        mainThread(0) {
+            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmapAtBottom(params.height)))
+        }
         viewChild.addView(tabLayout, 4, params)
         try {
             LogUtil.log("add table layout success")
@@ -97,10 +100,6 @@ object TabLayoutHook {
         } catch (e: Exception) {
             LogUtil.log(e)
         }
-        // change main ActionBar elevation = 0
-//        val actionBarLayout = ViewUtils.getParentView(tabView, 3) as ViewGroup
-//        val actionBar = actionBarLayout.getChildAt(1)
-//        actionBar.elevation = 0F
     }
 
     fun addTabLayout(viewPagerLinearLayout: ViewGroup) {
@@ -117,6 +116,9 @@ object TabLayoutHook {
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
+        mainThread(0) {
+            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmap(params.height)))
+        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
         } else if (WechatGlobal.wxVersion!! < Version("7.0.0")) {// 672 wx布局更改
@@ -133,7 +135,7 @@ object TabLayoutHook {
             viewPagerLinearLayout.addView(mockLayout, 0)
         } else {
             val cb = { actionHeight: Int ->
-                params.topMargin = actionHeight + BarUtils.getStatusBarHeight() - 2
+                params.topMargin = actionHeight + BarUtils.getStatusBarHeight()
                 if (WechatGlobal.wxVersion!! == Version("7.0.0")) {
                     // mock status bar
                     val statusView = View(context)
@@ -148,27 +150,32 @@ object TabLayoutHook {
                 viewPagerLinearLayout.setPadding(0, 0, 0, 0)
                 viewPagerLinearLayout.requestLayout()
                 //小程序下拉之后的填空
-                if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)) {
+                if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (!HookConfig.is_hook_hide_actionbar)) {
                     val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     paramsAddedOnTop.height = px48
-                    paramsAddedOnTop.topMargin = actionHeight + BarUtils.getStatusBarHeight() - 2 - px48
+                    paramsAddedOnTop.topMargin = actionHeight + BarUtils.getStatusBarHeight() - px48
                     val view = FrameLayout(context)
-                    view.setBackgroundColor(primaryColor)
+                    view.setBackground(NightModeUtils.getBackgroundDrawable(AppCustomConfig.getActionBarBitmap(view)))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)
             }
-            if (!HookConfig.is_hook_hide_actionbar) {
-                val mActionBar = Objects.Main.HomeUI_mActionBar!!
-                waitInvoke(100, true, {
-                    XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
-                }, {
-                    val actionHeight = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
+            val mActionBar = Objects.Main.HomeUI_mActionBar!!
+            waitInvoke(100, true, {
+                XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
+            }, {
+                val actionHeight = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
+
+
+//                LogUtil.log("=================1")
+//                if (actionHeight > 0) AppCustomConfig.actionBarHeight = actionHeight
+
+                if (!HookConfig.is_hook_hide_actionbar) {
                     cb(actionHeight)
-                })
-            } else {
-                cb(0)
-            }
+                } else {
+                    cb(0)
+                }
+            })
         }
         LogUtil.log("add table layout success")
         Objects.Main.LauncherUI_mTabLayout = tabLayout

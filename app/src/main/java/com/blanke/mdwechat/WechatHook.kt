@@ -28,9 +28,9 @@ class WechatHook : IXposedHookLoadPackage {
             }
             log("模块加载中...")
             val hookers = mutableListOf(
-                    LauncherUIHooker,
-                    ActionBarHooker,
                     StatusBarHooker,
+                    ActionBarHooker,
+                    LauncherUIHooker,
                     AvatarHooker,
                     ListViewHooker,
                     ConversationHooker,

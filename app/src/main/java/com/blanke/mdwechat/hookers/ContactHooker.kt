@@ -64,8 +64,7 @@ object ContactHooker : HookerProvider {
                         LogUtil.logOnlyOnce("ContactFragment Done")
                         XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
                         if (HookConfig.is_hook_tab_bg) {
-                            val background = AppCustomConfig.getTabBg(1)
-                            listView.background = NightModeUtils.getBackgroundDrawable(background)
+                            AppCustomConfig.setContactBitmap(listView)
                         }
 //                        LogUtil.log("ContactFragment listview= $listView, ${listView.javaClass.name}")
                         if (listView.headerViewsCount > 0) {

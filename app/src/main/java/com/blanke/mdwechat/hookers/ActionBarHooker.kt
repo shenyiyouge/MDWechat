@@ -3,40 +3,43 @@ package com.blanke.mdwechat.hookers
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.view.ViewGroup
-import com.blanke.mdwechat.Classes
+import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.ActionBarContainer
-import com.blanke.mdwechat.Methods
-import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.colorPrimaryDrawable
-import com.blanke.mdwechat.WechatGlobal
+import com.blanke.mdwechat.config.AppCustomConfig.getActionBarBitmap
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import de.robv.android.xposed.XC_MethodHook
+import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
 
 object ActionBarHooker : HookerProvider {
 
     override fun provideStaticHookers(): List<Hooker>? {
         val list = mutableListOf(actionBarHooker)
-        if (HookConfig.is_hook_actionbar_color) list.add(actionBarTitleTextColor)
+        if (!HookConfig.is_hook_hide_actionbar) {
+            list.add(mainPageActionBarHooker)
+            if (HookConfig.is_hook_actionbar_color) list.add(mainPageActionBarTitleTextColor)
+        }
         return list
     }
 
     private val actionBarHooker = Hooker {
         XposedHelpers.findAndHookMethod(ActionBarContainer, "setPrimaryBackground", Drawable::class.java, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam) {
+//                return
                 val drawable = param.args[0]
                 var needHook = true
                 val actionBar = param.thisObject as ViewGroup
-//                LogUtil.logXp("====================")
-//                LogUtil.logViewXp(actionBar)
-//                LogUtil.logStackTraceXp()
-//                LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(actionBar,111))
-//                LogUtil.logXp("====================")
+//                LogUtil.log("====================")
+//                LogUtil.logView(actionBar)
+//                LogUtil.logViewStackTraces(actionBar)
+//                LogUtil.log("====================")
                 if (drawable is ColorDrawable) {
                     if (drawable.color == Color.parseColor("#F2F2F2")
                             || drawable.color == Color.parseColor("#FFFAFAFA")
@@ -63,10 +66,28 @@ object ActionBarHooker : HookerProvider {
             }
 
             override fun afterHookedMethod(param: MethodHookParam) {
+                val actionBar = param.thisObject as View
+                if (!HookConfig.is_hook_hide_actionbar)
+                    actionBar.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(actionBar))
             }
         })
     }
-    private val actionBarTitleTextColor = Hooker {
+
+    //主界面下滑之后需要保持ActionBar不变
+    private val mainPageActionBarHooker = Hooker {
+        XposedBridge.hookAllMethods(CC.View, "setBackgroundColor", object : XC_MethodHook() {
+            override fun afterHookedMethod(param: MethodHookParam) {
+                val view = param.thisObject as View
+                val clazz = view::class.java.name
+                if (clazz == ActionBarContainer.name) {
+//                    param.result = NightModeUtils.colorPrimary
+                    view.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(view))
+                }
+            }
+        })
+    }
+
+    private val mainPageActionBarTitleTextColor = Hooker {
         try {
 //            LogUtil.logXp("\n\n\n\n\nactionBarTitleTextColor")
             val methods = Methods.HomeUI_setActionBarColor
