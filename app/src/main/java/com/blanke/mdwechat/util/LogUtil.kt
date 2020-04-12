@@ -71,27 +71,6 @@ object LogUtil {
         Log.e("MDWechatModule", "MDWechat " + Log.getStackTraceString(t))
     }
 
-    fun logStackTrace(find: String = ""): Boolean {
-        log("Dump Stack: --------------start----------------")
-        var ret = false
-        val ex = Throwable()
-        val stackElements = ex.stackTrace
-        if (stackElements != null) {
-            for (i in stackElements.indices) {
-                val s: String = stackElements[i].className + "----" +
-                        stackElements[i].methodName + "----" +
-                        stackElements[i].fileName + "----" +
-                        stackElements[i].lineNumber
-                if (s.contains(find)) {
-                    ret = true
-                }
-                log("Dump Stack$i: " + s)
-            }
-        }
-        log("Dump Stack: --------------over----------------")
-        return ret
-    }
-
     fun bundleToString(bundle: Bundle?): String? {
         val str = bundle?.keySet()?.joinToString(", ") {
             "$it = ${bundle[it]}"
