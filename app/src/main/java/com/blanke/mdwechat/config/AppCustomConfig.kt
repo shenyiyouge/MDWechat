@@ -24,7 +24,7 @@ object AppCustomConfig {
     var bitmapScale = 1F
 
     fun getWxVersionConfig(version: String): WxVersionConfig {
-        var configName = version + ".config"
+        val configName = version + ".config"
 //        if (HookConfig.is_play) {
 //            configName = version + "-play.config"
 //        }
@@ -85,51 +85,60 @@ object AppCustomConfig {
     }
 
 
-    var _statusBarBitmap: Bitmap? = null
-    var _actionBarBitmap: Bitmap? = null
-    var _tabLayoutBitmap: Bitmap? = null
+    var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
 
-    var _mainPageBitmapSet: Boolean = false
 
     var actionBarHeight: Int = 0
-    var tabLayoutHeight: Int = 0
+    var tabLayoutHeight: Int = -1
 
-    fun getStatusBarBitmap(): Bitmap {
-        if (_statusBarBitmap != null) return _statusBarBitmap!!
-        val bg = getTabBg(0)!!
+    fun setGuideBarBitmaps(page: Int) {
+        Objects.Main.statusView!!.background = NightModeUtils.getBackgroundDrawable(getStatusBarBitmap(page))
+        Objects.Main.actionBar!!.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(actionBarHeight, page))
+        if (HookConfig.is_tab_layout_on_top) {
+            Objects.Main.tabLayout!!.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmap(tabLayoutHeight, page)))
+        } else {
+            Objects.Main.tabLayout!!.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmapAtBottom(tabLayoutHeight, page)))
+        }
+    }
+
+    fun getStatusBarBitmap(page: Int): Bitmap {
+        if (_statusBarBitmap[page] != null) return _statusBarBitmap[page]!!
+        val bg = getTabBg(page)!!
         val height = BarUtils.getStatusBarHeight()
-        _statusBarBitmap = cutBitmap(bg, 0, height)
-        return _statusBarBitmap!!
+        _statusBarBitmap[page] = cutBitmap(bg, 0, height)
+        return _statusBarBitmap[page]!!
     }
 
-    fun getActionBarBitmap(actionBar: View): Bitmap {
-        if (_actionBarBitmap != null) return _actionBarBitmap!!
-        val bg = getTabBg(0)!!
-        actionBarHeight = actionBar.measuredHeight
-        _actionBarBitmap = cutBitmap(bg, BarUtils.getStatusBarHeight(), actionBarHeight)
-        return _actionBarBitmap!!
+    fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap {
+        if (_actionBarBitmap[page] != null) return _actionBarBitmap[page]!!
+        val bg = getTabBg(page)!!
+        if (this.actionBarHeight == 0) this.actionBarHeight = actionBarHeight
+        _actionBarBitmap[page] = cutBitmap(bg, BarUtils.getStatusBarHeight(), this.actionBarHeight)
+        return _actionBarBitmap[page]!!
     }
 
-    fun getTabLayoutBitmap(height: Int): Bitmap {
-        if (_tabLayoutBitmap != null) return _tabLayoutBitmap!!
-        val bg = getTabBg(0)!!
+    fun getTabLayoutBitmap(tabLayoutHeight: Int, page: Int): Bitmap {
+        if (_tabLayoutBitmap[page] != null) return _tabLayoutBitmap[page]!!
+        val bg = getTabBg(page)!!
         //todo
         if (!HookConfig.is_hook_hide_actionbar) {
             while (actionBarHeight == 0) {
                 Thread.sleep(100)
             }
         }
-        tabLayoutHeight = height
-        _tabLayoutBitmap = cutBitmap(bg, BarUtils.getStatusBarHeight() + actionBarHeight, height)
-        return _tabLayoutBitmap!!
+        this.tabLayoutHeight = tabLayoutHeight
+        _tabLayoutBitmap[page] = cutBitmap(bg, BarUtils.getStatusBarHeight() + actionBarHeight, tabLayoutHeight)
+        return _tabLayoutBitmap[page]!!
     }
 
-    fun getTabLayoutBitmapAtBottom(height: Int): Bitmap {
-        if (_tabLayoutBitmap != null) return _tabLayoutBitmap!!
-        val bg = getTabBg(0)!!
-        tabLayoutHeight = height
-        _tabLayoutBitmap = cutBitmap(bg, bg.height - height, height)
-        return _tabLayoutBitmap!!
+    fun getTabLayoutBitmapAtBottom(tabLayoutHeight: Int, page: Int): Bitmap {
+        if (_tabLayoutBitmap[page] != null) return _tabLayoutBitmap[page]!!
+        val bg = getTabBg(page)!!
+        this.tabLayoutHeight = tabLayoutHeight
+        _tabLayoutBitmap[page] = cutBitmap(bg, bg.height - tabLayoutHeight, tabLayoutHeight)
+        return _tabLayoutBitmap[page]!!
     }
 
     fun setConversationBitmap(view: View) {
@@ -162,7 +171,7 @@ object AppCustomConfig {
             val mActionBar = Objects.Main.HomeUI_mActionBar
             if (mActionBar != null) height = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
             if (height > 0) actionBarHeight = height
-            (tabLayoutHeight != 0) && (mActionBar != null) && (actionBarHeight > 0)
+            (tabLayoutHeight >= 0) && (mActionBar != null) && (actionBarHeight > 0)
         }, {
             setBitmap(view, bg, cutActionBarHeight, addTablayoutHeight, cutStatusBarHeight, actionBarHeight)
         })
@@ -175,7 +184,7 @@ object AppCustomConfig {
         if (cutActionBarHeight) y += actionBarHeight
         if (cutStatusBarHeight) y += BarUtils.getStatusBarHeight()
         if (HookConfig.is_hook_hide_actionbar) y -= actionBarHeight
-        if (addTablayoutHeight) heightPlus = tabLayoutHeight
+        if (addTablayoutHeight && !HookConfig.is_tab_layout_on_top) heightPlus = tabLayoutHeight
 
         val _mainPageBitmap: Bitmap
         if (HookConfig.is_tab_layout_on_top) {
@@ -194,12 +203,7 @@ object AppCustomConfig {
         if ((y < 0) || (y + height > source.height)) {
             val fixedBitmap = Bitmap.createBitmap(source.width, height, source.getConfig())
             val canvas = Canvas(fixedBitmap)
-            if (y < 0) {
-                canvas.drawBitmap(source, 0.0F, -y.toFloat(), null)
-            }
-//            if (y + height > source.height) {
-//                canvas.drawBitmap(source, 0.0F, 0.0F, null)
-//            }
+            canvas.drawBitmap(source, 0.0F, -y.toFloat(), null)
 //            LogUtil.log("===================fixedBitmap:${height}  ${fixedBitmap.height}")
             return Bitmap.createBitmap(fixedBitmap, 0, 0, source.width, height)
         }

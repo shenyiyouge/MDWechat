@@ -88,7 +88,8 @@ object TabLayoutHook {
         val viewChild = tabView.getChildAt(0) as ViewGroup
         params.height = height
         mainThread(0) {
-            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmapAtBottom(params.height)))
+            Objects.Main.tabLayout = tabLayout
+            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmapAtBottom(params.height, 0)))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -103,8 +104,6 @@ object TabLayoutHook {
     }
 
     fun addTabLayout(viewPagerLinearLayout: ViewGroup) {
-        val primaryColor = NightModeUtils.colorPrimary
-
         val context = viewPagerLinearLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewPagerLinearLayout.context
         // 7.0.7(?) 之后小程序下拉相关
@@ -117,7 +116,8 @@ object TabLayoutHook {
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
         mainThread(0) {
-            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmap(params.height)))
+            Objects.Main.tabLayout = tabLayout
+            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmap(params.height, 0)))
         }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
@@ -155,7 +155,8 @@ object TabLayoutHook {
                     paramsAddedOnTop.height = px48
                     paramsAddedOnTop.topMargin = actionHeight + BarUtils.getStatusBarHeight() - px48
                     val view = FrameLayout(context)
-                    view.setBackground(NightModeUtils.getBackgroundDrawable(AppCustomConfig.getActionBarBitmap(view)))
+                    Objects.Main.actionBar = view
+                    view.setBackground(NightModeUtils.getBackgroundDrawable(AppCustomConfig.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition)))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)

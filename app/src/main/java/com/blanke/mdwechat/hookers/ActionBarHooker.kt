@@ -67,8 +67,10 @@ object ActionBarHooker : HookerProvider {
 
             override fun afterHookedMethod(param: MethodHookParam) {
                 val actionBar = param.thisObject as View
-                if (!HookConfig.is_hook_hide_actionbar)
-                    actionBar.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(actionBar))
+                if (!HookConfig.is_hook_hide_actionbar) {
+                    Objects.Main.actionBar = actionBar
+                    actionBar.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
+                }
             }
         })
     }
@@ -80,8 +82,8 @@ object ActionBarHooker : HookerProvider {
                 val view = param.thisObject as View
                 val clazz = view::class.java.name
                 if (clazz == ActionBarContainer.name) {
-//                    param.result = NightModeUtils.colorPrimary
-                    view.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(view))
+                    Objects.Main.actionBar = view
+                    view.background = NightModeUtils.getBackgroundDrawable(getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                 }
             }
         })

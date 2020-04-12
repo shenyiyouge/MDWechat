@@ -52,7 +52,8 @@ object StatusBarHooker : HookerProvider {
                     val activity = param.thisObject as Activity
 //                    LogUtil.log("activity onCreate " + activity)
                     val statusView = View(activity)
-                    statusView.background = NightModeUtils.getBackgroundDrawable(AppCustomConfig.getStatusBarBitmap())
+                    Objects.Main.statusView = statusView
+                    statusView.background = NightModeUtils.getBackgroundDrawable(AppCustomConfig.getStatusBarBitmap(0))
                     statusView.elevation = 1F
 //                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 //                        statusParam.topMargin = 0
@@ -87,8 +88,8 @@ object StatusBarHooker : HookerProvider {
     }
 
     fun setColor(window: Window, color: Int) {
-        window?.statusBarColor = color
-        window?.navigationBarColor = color
+        window.statusBarColor = color
+        window.navigationBarColor = color
     }
 
     fun getStatusBarColor(): Int {

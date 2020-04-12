@@ -95,7 +95,7 @@ object LauncherUIHooker : HookerProvider {
                         val isTabLayoutOnBottom = HookConfig.is_hook_tab && !HookConfig.is_tab_layout_on_top
                         val isTabLayoutOnTop = HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
                         val isKeyHideTab = isTabLayoutOnTop || (!isTabLayoutOnBottom && HookConfig.is_key_hide_tab)
-                        val shouldFix = isTabLayoutOnTop ||  HookConfig.is_hook_hide_actionbar
+                        val shouldFix = isTabLayoutOnTop || HookConfig.is_hook_hide_actionbar
                         val floatButtonMarginBottom = if (isTabLayoutOnBottom || (!isKeyHideTab)) 1 else 0
 
                         val tabView = linearViewGroup.getChildAt(1) as ViewGroup
@@ -132,6 +132,8 @@ object LauncherUIHooker : HookerProvider {
                                 log("添加底栏 报错")
                                 log(e)
                             }
+                        } else {
+                            AppCustomConfig.tabLayoutHeight = 0
                         }
                         if (shouldFix) {
                             // 隐藏 action bar 测试
@@ -163,6 +165,8 @@ object LauncherUIHooker : HookerProvider {
                     val position = param?.args!![0] as Int
 //                    log("WxViewPager_selectedPage position = $position , arg[1] =${param?.args!![1]}")
                     LauncherUI_mTabLayout?.currentTab = position
+                    Objects.Main.pagePosition = position
+                    AppCustomConfig.setGuideBarBitmaps(position)
                 }
             }
         })
@@ -178,6 +182,8 @@ object LauncherUIHooker : HookerProvider {
                 LauncherUI_mTabLayout?.apply {
                     startScrollPosition = position as Int
                     indicatorOffset = positionOffset
+                    Objects.Main.pagePosition = startScrollPosition
+                    AppCustomConfig.setGuideBarBitmaps(startScrollPosition)
                 }
             }
         })

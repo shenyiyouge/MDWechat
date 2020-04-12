@@ -4,16 +4,19 @@ import android.app.Activity
 import android.view.MenuItem
 import android.view.View
 import com.flyco.tablayout.CommonTabLayout
-import java.lang.ref.WeakReference
 
 object Objects {
     object Main {
-        var LauncherUI : Activity? =null
-        var LauncherUI_mContentLayout :View?=null
-        var HomeUI_mActionBar :Any?=null
-        var LauncherUI_mViewPager :View?=null
-        var LauncherUI_mTabLayout :CommonTabLayout?=null
-        var LauncherUI_mWechatXMenuItem :MenuItem?=null
+        var LauncherUI: Activity? = null
+        var LauncherUI_mContentLayout: View? = null
+        var HomeUI_mActionBar: Any? = null
+        var LauncherUI_mViewPager: View? = null
+        var LauncherUI_mTabLayout: CommonTabLayout? = null
+        var LauncherUI_mWechatXMenuItem: MenuItem? = null
+        var statusView: View? = null
+        var actionBar: View? = null
+        var tabLayout: CommonTabLayout? = null
+        var pagePosition = 0
     }
 
 //    fun clear() {
