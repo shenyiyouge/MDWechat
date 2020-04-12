@@ -12,7 +12,6 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
-import com.blanke.mdwechat.util.NightModeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -45,8 +44,7 @@ object SettingsHooker : HookerProvider {
             private fun init(fragment: Any) {
                 val listView = PreferenceFragment_mListView.get(fragment)
                 if (listView != null && listView is View) {
-                    val background = AppCustomConfig.getTabBg(3)
-                    listView.background = NightModeUtils.getBackgroundDrawable(background)
+                    AppCustomConfig.setSettingsBitmap(listView)
                 }
             }
         })

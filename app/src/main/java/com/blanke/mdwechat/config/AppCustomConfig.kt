@@ -2,6 +2,7 @@ package com.blanke.mdwechat.config
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.view.View
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Objects
@@ -97,7 +98,7 @@ object AppCustomConfig {
         if (_statusBarBitmap != null) return _statusBarBitmap!!
         val bg = getTabBg(0)!!
         val height = BarUtils.getStatusBarHeight()
-        _statusBarBitmap = cutBitmap(bg, 0, 0, bg.width, height)
+        _statusBarBitmap = cutBitmap(bg, 0, height)
         return _statusBarBitmap!!
     }
 
@@ -105,7 +106,7 @@ object AppCustomConfig {
         if (_actionBarBitmap != null) return _actionBarBitmap!!
         val bg = getTabBg(0)!!
         actionBarHeight = actionBar.measuredHeight
-        _actionBarBitmap = cutBitmap(bg, 0, BarUtils.getStatusBarHeight(), bg.width, actionBarHeight)
+        _actionBarBitmap = cutBitmap(bg, BarUtils.getStatusBarHeight(), actionBarHeight)
         return _actionBarBitmap!!
     }
 
@@ -119,7 +120,7 @@ object AppCustomConfig {
             }
         }
         tabLayoutHeight = height
-        _tabLayoutBitmap = cutBitmap(bg, 0, BarUtils.getStatusBarHeight() + actionBarHeight, bg.width, height)
+        _tabLayoutBitmap = cutBitmap(bg, BarUtils.getStatusBarHeight() + actionBarHeight, height)
         return _tabLayoutBitmap!!
     }
 
@@ -127,14 +128,14 @@ object AppCustomConfig {
         if (_tabLayoutBitmap != null) return _tabLayoutBitmap!!
         val bg = getTabBg(0)!!
         tabLayoutHeight = height
-        _tabLayoutBitmap = cutBitmap(bg, 0, bg.height - height, bg.width, height)
+        _tabLayoutBitmap = cutBitmap(bg, bg.height - height, height)
         return _tabLayoutBitmap!!
     }
 
     fun setConversationBitmap(view: View) {
         val bg = getTabBg(0)
 //        val cutTop = BarUtils.getStatusBarHeight() + HookConfig.value_main_text_offset
-        setMainPageBitmap(view, bg!!, false)
+        setMainPageBitmap(view, bg!!, false, true)
     }
 
     fun setContactBitmap(view: View) {
@@ -145,11 +146,17 @@ object AppCustomConfig {
     fun setDiscoverBitmap(view: View) {
         val bg = getTabBg(2)
         setMainPageBitmap(view, bg!!, true)
-//        LogUtil.log("===========actionBarHeight=====$actionBarHeight")
-//        setBitmap(view, bg!!, true, actionBarHeight)
     }
 
-    fun setMainPageBitmap(view: View, bg: Bitmap, cutActionBarHeight: Boolean) {
+    fun setSettingsBitmap(view: View) {
+        val bg = getTabBg(3)
+        setMainPageBitmap(view, bg!!, false, true, false)
+    }
+
+    fun setMainPageBitmap(view: View, bg: Bitmap,
+                          cutActionBarHeight: Boolean,
+                          addTablayoutHeight: Boolean = false,
+                          cutStatusBarHeight: Boolean = true) {
         var height = 0
         waitInvoke(100, true, {
             val mActionBar = Objects.Main.HomeUI_mActionBar
@@ -157,30 +164,45 @@ object AppCustomConfig {
             if (height > 0) actionBarHeight = height
             (tabLayoutHeight != 0) && (mActionBar != null) && (actionBarHeight > 0)
         }, {
-            setBitmap(view, bg, cutActionBarHeight, actionBarHeight)
+            setBitmap(view, bg, cutActionBarHeight, addTablayoutHeight, cutStatusBarHeight, actionBarHeight)
         })
     }
 
     //actionBarHeight确定之后再执行
-    fun setBitmap(view: View, bg: Bitmap, cutActionBarHeight: Boolean, actionBarHeight: Int) {
-        var y = BarUtils.getStatusBarHeight() + HookConfig.value_main_text_offset
+    fun setBitmap(view: View, bg: Bitmap, cutActionBarHeight: Boolean, addTablayoutHeight: Boolean, cutStatusBarHeight: Boolean, actionBarHeight: Int) {
+        var y = HookConfig.value_main_text_offset
+        var heightPlus = 0
         if (cutActionBarHeight) y += actionBarHeight
+        if (cutStatusBarHeight) y += BarUtils.getStatusBarHeight()
         if (HookConfig.is_hook_hide_actionbar) y -= actionBarHeight
+        if (addTablayoutHeight) heightPlus = tabLayoutHeight
 
         val _mainPageBitmap: Bitmap
         if (HookConfig.is_tab_layout_on_top) {
             y = y + tabLayoutHeight
-            _mainPageBitmap = cutBitmap(bg, 0, y, bg.width, bg.height - y)
+            _mainPageBitmap = cutBitmap(bg, y, bg.height - y + heightPlus)
         } else {
-            _mainPageBitmap = cutBitmap(bg, 0, y, bg.width, bg.height - y - tabLayoutHeight)
+            _mainPageBitmap = cutBitmap(bg, y, bg.height - y - tabLayoutHeight + heightPlus)
         }
 
         view.background = NightModeUtils.getBackgroundDrawable(_mainPageBitmap)
 
     }
 
-    fun cutBitmap(source: Bitmap, x: Int, y: Int, width: Int, height: Int): Bitmap {
-//        LogUtil.log("cutBitmap:${source.width} ${source.height} $x $y ${x + width} ${y + height}")
-        return Bitmap.createBitmap(source, x, y, width, height)
+    fun cutBitmap(source: Bitmap, y: Int, height: Int): Bitmap {
+//        LogUtil.log("===================cutBitmap:${source.height}  $y ${y + height}")
+        if ((y < 0) || (y + height > source.height)) {
+            val fixedBitmap = Bitmap.createBitmap(source.width, height, source.getConfig())
+            val canvas = Canvas(fixedBitmap)
+            if (y < 0) {
+                canvas.drawBitmap(source, 0.0F, -y.toFloat(), null)
+            }
+//            if (y + height > source.height) {
+//                canvas.drawBitmap(source, 0.0F, 0.0F, null)
+//            }
+//            LogUtil.log("===================fixedBitmap:${height}  ${fixedBitmap.height}")
+            return Bitmap.createBitmap(fixedBitmap, 0, 0, source.width, height)
+        }
+        return Bitmap.createBitmap(source, 0, y, source.width, height)
     }
 }
