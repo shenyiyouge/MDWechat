@@ -78,7 +78,8 @@ private val key_main_text_offset = "key_main_text_offset"
 //        }
 val value_main_text_offset: Int
     get() {
-        return WeChatHelper.XMOD_PREFS.getString(key_main_text_offset, "0")!!.toInt()
+        return 0
+//        return WeChatHelper.XMOD_PREFS.getString(key_main_text_offset, "0")!!.toInt()
     }
     val value_tab_layout_offset: Int
         get() {
