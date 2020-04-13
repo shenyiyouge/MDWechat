@@ -182,11 +182,11 @@ object ListViewHooker : HookerProvider {
                             view.background.alpha = HookConfig.get_hook_conversation_background_alpha
                         } catch (e: Exception) {
                         }
-                        val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView")!!)
-                        val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView")!!)
-                        val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView")!!)
-                        val unreadCountView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadCountView")!!) as TextView
-                        val unreadView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadView")!!) as ImageView
+                        val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView"))
+                        val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView"))
+                        val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView"))
+                        val unreadCountView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadCountView")) as TextView
+                        val unreadView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadView")) as ImageView
 //                    LogUtil.logXp("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
                         if (isHookTextColor) {
                             XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
@@ -206,20 +206,20 @@ object ListViewHooker : HookerProvider {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
                         // 标题下面的线
                         if (VTTV.ContactListViewItem.treeStacks.get("headerView") != null) {
-                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headerView")!!)
+                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headerView"))
                                     ?.background = drawableTransparent
                         }
                         //内容下面的线 innerView
-                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("innerView")!!)
+                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("innerView"))
                                 ?.background = drawableTransparent
 
-                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("contentView")!!)
+                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("contentView"))
                                 ?.background = drawableTransparent
 
-                        val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("titleView")!!)
+                        val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("titleView"))
                         titleView?.background = drawableTransparent
                         if (isHookTextColor) {
-                            val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headTextView")!!) as TextView
+                            val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headTextView")) as TextView
                             headTextView.setTextColor(summaryTextColor)
                             XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
                         }
@@ -228,17 +228,33 @@ object ListViewHooker : HookerProvider {
                     // 发现 设置 item sum
                     else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
-                        val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("iconImageView")!!) as View
+                        val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("iconImageView")) as View
                         if (iconImageView.visibility == View.VISIBLE) {
-                            val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("titleView")!!) as TextView
+                            val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("titleView")) as TextView
                             if (isHookTextColor) {
                                 titleView.setTextColor(titleTextColor)
                             }
                         }
+//                        LogUtil.logViewStackTraces(view)
+                        //group顶部横线
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("groupBorderTop"))
+                                ?.background = drawableTransparent
+                        //内容分割线
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("contentBorder"))
+                                ?.background = drawableTransparent
 
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadPointView")!!)
+                        //group底部横线
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("groupBorderBottom"))
+                                ?.background = drawableTransparent
+
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("borderRight"))
+                                ?.background = drawableTransparent
+
+
+
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadPointView"))
                                 ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadCountView")!!)
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadCountView"))
                                 ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                     }
 

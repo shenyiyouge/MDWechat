@@ -401,7 +401,12 @@ object ViewTreeRepo {
                 mapOf("iconImageView" to intArrayOf(0, 0, 0, 0),
                         "titleView" to intArrayOf(0, 0, 0, 1, 0, 0, 0),
                         "unreadPointView" to intArrayOf(0, 0, 0, 1, 2, 1),
-                        "unreadCountView" to intArrayOf(0, 0, 0, 1, 0, 0, 1)
+                        "unreadCountView" to intArrayOf(0, 0, 0, 1, 0, 0, 1),
+
+                        "groupBorderTop" to intArrayOf(0),
+                        "contentBorder" to intArrayOf(0),
+                        "groupBorderBottom" to intArrayOf(0, 0, 0, 1),
+                        "borderRight" to intArrayOf(1)
                 ),
                 ViewTreeItem(
                         CC.LinearLayout.name,
@@ -448,7 +453,13 @@ object ViewTreeRepo {
                 mapOf("iconImageView" to intArrayOf(1, 0, 0, 0, 0),
                         "titleView" to intArrayOf(1, 0, 0, 0, 1, 0, 0, 0),
                         "unreadPointView" to intArrayOf(1, 0, 0, 0, 1, 2, 1),
-                        "unreadCountView" to intArrayOf(1, 0, 0, 0, 1, 0, 0, 1)
+                        "unreadCountView" to intArrayOf(1, 0, 0, 0, 1, 0, 0, 1),
+
+                        "groupBorderTop" to intArrayOf(0),
+                        "contentBorder" to intArrayOf(1, 0),
+                        "groupBorderBottom" to intArrayOf(1, 0, 0, 0, 1),
+                        "borderRight" to intArrayOf(1, 1)
+
                 ),
                 ViewTreeItem(
                         CC.LinearLayout.name,
