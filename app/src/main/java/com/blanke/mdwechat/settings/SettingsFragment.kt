@@ -163,7 +163,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_donate) -> donate()
             getString(R.string.key_feedback) -> feedback()
             getString(R.string.key_reset_wechat_config) -> copyWechatConfig()
-            getString(R.string.key_reset_config) -> copyConfig()
+            getString(R.string.key_reset_config) -> deleteConfig()
             getString(R.string.key_reset_float_bottom_config) -> copyFloatBottomConfig()
             getString(R.string.key_reset_icon_config) -> copyIcons()
             getString(R.string.key_feedback_email_blanke) -> sendEmail()
@@ -231,7 +231,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         Toast.makeText(activity, R.string.msg_reset_ok, Toast.LENGTH_SHORT).show()
     }
 
-    private fun copyConfig() {
+    private fun deleteConfig() {
         var success = true
         if (STATIC.sharedPrefsFile.exists()) {
             success = success && STATIC.sharedPrefsFile.delete()
