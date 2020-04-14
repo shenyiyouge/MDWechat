@@ -34,6 +34,14 @@ object NightModeUtils {
         }
     }
 
+    fun getForegroundDrawable(defaultDrawable: Bitmap?): Drawable {
+        return when {
+            isNightMode() -> WeChatHelper.colorPrimaryDrawableDark
+            defaultDrawable != null -> BitmapDrawable(defaultDrawable)
+            else -> WeChatHelper.colorPrimaryDrawable
+        }
+    }
+
     fun getContentTextColor(): Int {
         return getTextColor(HookConfig.get_main_text_color_content)
     }

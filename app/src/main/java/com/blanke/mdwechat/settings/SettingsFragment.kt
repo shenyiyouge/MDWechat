@@ -56,6 +56,8 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         preferenceManager.sharedPreferencesName = Common.MOD_PREFS
         addPreferencesFromResource(R.xml.pref_settings)
         setLayoutResource(getPreferenceScreen())
+        setResolution()
+        _clearLogs()
 
 //        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
 //        //隐藏主界面部分选项
@@ -257,7 +259,6 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         Toast.makeText(activity, R.string.msg_reset_ok, Toast.LENGTH_SHORT).show()
     }
 
-
     private fun copyIcons() {
         thread {
             FileUtils.copyAssets(activity, Common.APP_DIR_PATH, Common.ICON_DIR, true)
@@ -352,7 +353,6 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
 
-
     private fun showAppInfoDialog() {
         val lastLaunchTime = preferenceManager.sharedPreferences.getLong("last_launch_time", -1)
         preferenceManager.sharedPreferences.edit().putLong("last_launch_time", System.currentTimeMillis()).apply()
@@ -379,10 +379,26 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         EventBus.getDefault().unregister(this)
     }
 
-//    private val weChatVersion: String
+    //    private val weChatVersion: String
 //        get() = "unKnow"
 //
 //    private val isSupportWechat: Boolean
 //        get() = false
+    fun setResolution() {
+        val textPreference = findPreference(getString(R.string.key_resolution)) as EditTextPreference
+        val resolution = textPreference.text
+                .replace(" ", "")
+                .replace("，", ",")
+                .split(",")
+        try {
+            if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) return
+        } catch (e: java.lang.Exception) {
+        }
+        val dm = resources.displayMetrics
+        val screenWidth = dm.widthPixels
+        val screenHeight = dm.heightPixels
+
+        textPreference.text = "$screenWidth,$screenHeight"
+    }
 
 }

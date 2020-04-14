@@ -3,6 +3,8 @@ package com.blanke.mdwechat.config
 import android.graphics.Color
 import com.blanke.mdwechat.BuildConfig
 import com.blanke.mdwechat.WeChatHelper
+import com.blanke.mdwechat.util.LogUtil
+import com.blankj.utilcode.util.BarUtils
 
 /**
  * Created by blanke on 2017/8/25.
@@ -13,6 +15,8 @@ object HookConfig {
 //    private val debugConfigText1 = "debugConfigText1"
 private val key_main_text_offset = "key_main_text_offset"
     private val key_tab_layout_offset = "key_tab_layout_offset"
+    private val key_resolution = "key_resolution"
+
     private val key_hook_switch = "hookSwitch"
     private val key_color_primary = "key_color_primary"
     private val key_color_secondary = "key_color_secondary"
@@ -85,6 +89,25 @@ val value_main_text_offset: Int
         get() {
             return if (is_tab_layout_on_top) WeChatHelper.XMOD_PREFS.getString(key_tab_layout_offset, "0")!!.toInt() else 0
         }
+    val value_resolution: List<Int> by lazy {
+        val text = WeChatHelper.XMOD_PREFS.getString(key_resolution, "-1,-1")!!
+        val resolution = text
+                .replace(" ", "")
+                .replace("，", ",")
+                .split(",")
+        var out = mutableListOf(-1, -1)
+        try {
+            if (resolution.count() == 2) {
+                out[0] = resolution[0].toInt()
+                out[1] = resolution[1].toInt()
+            }
+        } catch (e: java.lang.Exception) {
+            out = mutableListOf(-1, -1)
+        }
+        out
+    }
+
+
     val is_hook_switch: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_switch, true)
@@ -300,7 +323,8 @@ val value_main_text_offset: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, true)
         }
-//    val value_mini_program_title: String
+
+    //    val value_mini_program_title: String
 //        get() {
 //            return WeChatHelper.XMOD_PREFS.getString(key_mini_program_title, "点击收起")
 //        }

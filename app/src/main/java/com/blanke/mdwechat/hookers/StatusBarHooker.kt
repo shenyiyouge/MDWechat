@@ -15,7 +15,6 @@ import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.ColorUtils
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.mainThread
-import com.blankj.utilcode.util.BarUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers.findAndHookMethod
 
@@ -53,14 +52,14 @@ object StatusBarHooker : HookerProvider {
 //                    LogUtil.log("activity onCreate " + activity)
                     val statusView = View(activity)
                     Objects.Main.statusView = statusView
-                    statusView.background = NightModeUtils.getBackgroundDrawable(AppCustomConfig.getStatusBarBitmap(0))
+                    statusView.background = NightModeUtils.getForegroundDrawable(AppCustomConfig.getStatusBarBitmap(0))
                     statusView.elevation = 1F
 //                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 //                        statusParam.topMargin = 0
-//                        statusParam.height = BarUtils.getStatusBarHeight()
+//                        statusParam.height = HookConfig.statusBarHeight
 
                     statusView.layoutParams = LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT, BarUtils.getStatusBarHeight())
+                            ViewGroup.LayoutParams.MATCH_PARENT, HookConfig.statusBarHeight)
                     val window = activity.window
                     val rootView = window.decorView as ViewGroup
                     val clazz = activity::class.java.name

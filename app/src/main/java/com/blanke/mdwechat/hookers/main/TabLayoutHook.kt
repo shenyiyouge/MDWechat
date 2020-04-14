@@ -18,7 +18,6 @@ import com.blanke.mdwechat.config.AppCustomConfig.getTabLayoutBitmapAtBottom
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
-import com.blankj.utilcode.util.BarUtils
 import com.flyco.tablayout.CommonTabLayout
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -87,9 +86,9 @@ object TabLayoutHook {
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val viewChild = tabView.getChildAt(0) as ViewGroup
         params.height = height
-        mainThread(0) {
+        mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmapAtBottom(params.height, 0)))
+            tabLayout.setBackground(NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(params.height, 0)))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -115,9 +114,9 @@ object TabLayoutHook {
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
-        mainThread(0) {
+        mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.setBackground(NightModeUtils.getBackgroundDrawable(getTabLayoutBitmap(params.height, 0)))
+            tabLayout.setBackground(NightModeUtils.getForegroundDrawable(getTabLayoutBitmap(params.height, 0)))
         }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
@@ -135,7 +134,7 @@ object TabLayoutHook {
             viewPagerLinearLayout.addView(mockLayout, 0)
         } else {
             val cb = { actionHeight: Int ->
-                params.topMargin = actionHeight + BarUtils.getStatusBarHeight()
+                params.topMargin = actionHeight + HookConfig.statusBarHeight
                 if (WechatGlobal.wxVersion!! == Version("7.0.0")) {
                     // mock status bar
                     val statusView = View(context)
@@ -143,7 +142,7 @@ object TabLayoutHook {
                     statusView.elevation = 1F
                     val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     statusParam.topMargin = 0
-                    statusParam.height = BarUtils.getStatusBarHeight()
+                    statusParam.height = HookConfig.statusBarHeight
                     viewPagerLinearLayout.addView(statusView, 0, statusParam)
                 }
 //                viewPagerLinearLayout.height
@@ -153,10 +152,10 @@ object TabLayoutHook {
                 if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (!HookConfig.is_hook_hide_actionbar)) {
                     val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     paramsAddedOnTop.height = px48
-                    paramsAddedOnTop.topMargin = actionHeight + BarUtils.getStatusBarHeight() - px48
+                    paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
                     val view = FrameLayout(context)
                     Objects.Main.actionBar = view
-                    view.setBackground(NightModeUtils.getBackgroundDrawable(AppCustomConfig.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition)))
+                    view.setBackground(NightModeUtils.getForegroundDrawable(AppCustomConfig.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition)))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)

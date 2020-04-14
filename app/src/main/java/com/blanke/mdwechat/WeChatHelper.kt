@@ -48,6 +48,8 @@ object WeChatHelper {
             colorDrawable.color = colorPrimary
             return colorDrawable
         }
+    val colorPrimaryDrawableDark: ColorDrawable
+        get() = ColorDrawable(colorDarkPrimary)
 
     val defaultImageRippleDrawable: Drawable?
         get() {
