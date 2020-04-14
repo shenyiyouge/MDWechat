@@ -7,7 +7,6 @@ import android.view.View
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.bean.FloatButtonConfig
-import com.blanke.mdwechat.config.HookConfig.debug_config_text_1
 import com.blanke.mdwechat.util.BitmapUtil
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
@@ -114,14 +113,13 @@ object AppCustomConfig {
         Objects.Main.statusView!!.background = NightModeUtils.getForegroundDrawable(getStatusBarBitmap(page))
         Objects.Main.actionBar!!.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(actionBarHeight, page))
         if (HookConfig.is_tab_layout_on_top) {
-            Objects.Main.tabLayout!!.setBackground(NightModeUtils.getForegroundDrawable(getTabLayoutBitmap(tabLayoutHeight, page)))
+            Objects.Main.tabLayout!!.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmap(tabLayoutHeight, page))
         } else {
-            Objects.Main.tabLayout!!.setBackground(NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(tabLayoutHeight, page)))
+            Objects.Main.tabLayout!!.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(tabLayoutHeight, page))
         }
     }
 
     fun getStatusBarBitmap(page: Int): Bitmap? {
-        if (debug_config_text_1.split(" ")[0].equals("0")) return null
         if (!HookConfig.is_hook_tab_bg) return null
         if (_statusBarBitmap[page] != null) return _statusBarBitmap[page]!!
         LogUtil.log("Getting StatusBarBitmap, $page")
@@ -133,7 +131,6 @@ object AppCustomConfig {
     }
 
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
-        if (debug_config_text_1.split(" ")[1].equals("0")) return null
         if (!HookConfig.is_hook_tab_bg) return null
 //        return null
         if (_actionBarBitmap[page] != null) return _actionBarBitmap[page]!!
@@ -148,7 +145,6 @@ object AppCustomConfig {
     }
 
     fun getTabLayoutBitmap(tabLayoutHeight: Int, page: Int): Bitmap? {
-        if (debug_config_text_1.split(" ")[2].equals("0")) return null
         if (!HookConfig.is_hook_tab_bg) return null
         LogUtil.log("Getting TabLayoutBitmap, $page")
 //        return null
@@ -167,7 +163,6 @@ object AppCustomConfig {
     }
 
     fun getTabLayoutBitmapAtBottom(tabLayoutHeight: Int, page: Int): Bitmap? {
-        if (debug_config_text_1.split(" ")[2].equals("0")) return null
         if (!HookConfig.is_hook_tab_bg) return null
         LogUtil.log("Getting TabLayoutBitmapAtBottom, $page")
         if (_tabLayoutBitmap[page] != null) return _tabLayoutBitmap[page]!!
@@ -247,7 +242,7 @@ object AppCustomConfig {
             }, {
                 val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
-                view.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
+                view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
 //                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
                 view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, location[1], view.height))
                 if (logHead.equals("setContactBitmap")) {
@@ -278,9 +273,9 @@ object AppCustomConfig {
     }
 
     fun cutBitmap(logHead: String, source: Bitmap, y: Int, height: Int): Bitmap {
-        LogUtil.logOnlyOnce("=================$logHead:" + " ${y} ${y + height}")
+        LogUtil.logOnlyOnce("图片高度 of $logHead:" + " y=${y} height=${y + height}")
         if ((y < 0) || (y + height > source.height)) {
-            val fixedBitmap = Bitmap.createBitmap(source.width, height, source.getConfig())
+            val fixedBitmap = Bitmap.createBitmap(source.width, height, source.config)
             val canvas = Canvas(fixedBitmap)
             canvas.drawBitmap(source, 0.0F, -y.toFloat(), null)
 //            LogUtil.log("===================fixedBitmap:${height}  ${fixedBitmap.height}")

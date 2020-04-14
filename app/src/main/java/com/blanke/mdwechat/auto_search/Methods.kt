@@ -1,5 +1,7 @@
 package com.blanke.mdwechat.auto_search
 
+//import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabViewItem
+//import com.blanke.mdwechat.auto_search.Classes.NightModeClass
 import android.graphics.Bitmap
 import com.blanke.mdwechat.CC
 import com.blanke.mdwechat.CC.voidd
@@ -7,10 +9,7 @@ import com.blanke.mdwechat.auto_search.Classes.AvatarUtils
 import com.blanke.mdwechat.auto_search.Classes.ContactFragment
 import com.blanke.mdwechat.auto_search.Classes.ConversationWithAppBrandListView
 import com.blanke.mdwechat.auto_search.Classes.HomeUI
-import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabView
-import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabViewItem
 import com.blanke.mdwechat.auto_search.Classes.MainTabUIPageAdapter
-//import com.blanke.mdwechat.auto_search.Classes.NightModeClass
 import com.blanke.mdwechat.auto_search.Classes.WXCustomSchemeEntryActivity
 import com.blanke.mdwechat.auto_search.Classes.WxViewPager
 import com.blanke.mdwechat.util.ReflectionUtil.findMethodsByExactParameters
@@ -36,11 +35,11 @@ object Methods {
                     .firstOrNull()?.apply { isAccessible = true }
         }
 
-    val LauncherUIBottomTabView_getTabItemView: Method?
-        get() {
-            return findMethodsByExactParameters(LauncherUIBottomTabView!!, LauncherUIBottomTabViewItem!!, CC.Int)
-                    .firstOrNull()?.apply { isAccessible = true }
-        }
+//    val LauncherUIBottomTabView_getTabItemView: Method?
+//        get() {
+//            return findMethodsByExactParameters(LauncherUIBottomTabView!!, LauncherUIBottomTabViewItem!!, CC.Int)
+//                    .firstOrNull()?.apply { isAccessible = true }
+//        }
 
     val AvatarUtils_getDefaultAvatarBitmap: Method?
         get() {

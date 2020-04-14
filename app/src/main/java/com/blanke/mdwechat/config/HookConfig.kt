@@ -3,7 +3,6 @@ package com.blanke.mdwechat.config
 import android.graphics.Color
 import com.blanke.mdwechat.BuildConfig
 import com.blanke.mdwechat.WeChatHelper
-import com.blanke.mdwechat.util.LogUtil
 import com.blankj.utilcode.util.BarUtils
 
 /**
@@ -11,9 +10,9 @@ import com.blankj.utilcode.util.BarUtils
  */
 
 object HookConfig {
-//    private val debugConfigText = "debugConfigText"
+    //    private val debugConfigText = "debugConfigText"
 //    private val debugConfigText1 = "debugConfigText1"
-private val key_main_text_offset = "key_main_text_offset"
+    private val key_main_text_offset = "key_main_text_offset"
     private val key_tab_layout_offset = "key_tab_layout_offset"
     private val key_resolution = "key_resolution"
 
@@ -72,7 +71,7 @@ private val key_main_text_offset = "key_main_text_offset"
     //    private val key_mini_program_title = "key_mini_program_title"
     private val key_hook_night_mode = "key_hook_night_mode"
 
-//    val debug_config_text: String
+    //    val debug_config_text: String
 //        get() {
 //            return WeChatHelper.XMOD_PREFS.getString(debugConfigText, "")
 //        }
@@ -80,11 +79,11 @@ private val key_main_text_offset = "key_main_text_offset"
 //        get() {
 //            return WeChatHelper.XMOD_PREFS.getString(debugConfigText1, "")
 //        }
-val value_main_text_offset: Int
-    get() {
-        return 0
+    val value_main_text_offset: Int
+        get() {
+            return 0
 //        return WeChatHelper.XMOD_PREFS.getString(key_main_text_offset, "0")!!.toInt()
-    }
+        }
     val value_tab_layout_offset: Int
         get() {
             return if (is_tab_layout_on_top) WeChatHelper.XMOD_PREFS.getString(key_tab_layout_offset, "0")!!.toInt() else 0
@@ -328,4 +327,7 @@ val value_main_text_offset: Int
 //        get() {
 //            return WeChatHelper.XMOD_PREFS.getString(key_mini_program_title, "点击收起")
 //        }
+    val statusBarHeight: Int by lazy {
+        BarUtils.getStatusBarHeight()
+    }
 }
