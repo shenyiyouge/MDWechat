@@ -312,8 +312,8 @@ object ListViewHooker : HookerProvider {
 //                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
 
                         } catch (e: ClassCastException) {
-                            LogUtil.log(e)
-                            LogUtil.logViewStackTraces(view)
+//                            LogUtil.log(e)
+//                            LogUtil.logViewStackTraces(view)
                             return
                         }
                     }
