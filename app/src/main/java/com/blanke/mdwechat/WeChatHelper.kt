@@ -58,7 +58,7 @@ object WeChatHelper {
             val ta = context.obtainStyledAttributes(attrs)
             val imageRippleDrawable = ta.getDrawable(0)
             ta.recycle()
-            return imageRippleDrawable!!
+            return imageRippleDrawable
         }
 
     val defaultImageRippleBorderDrawable: Drawable?
@@ -68,7 +68,7 @@ object WeChatHelper {
             val ta = context.obtainStyledAttributes(attrs)
             val imageRippleDrawable = ta.getDrawable(0)
             ta.recycle()
-            return imageRippleDrawable!!
+            return imageRippleDrawable
         }
 
     fun getLeftBubble(resources: Resources,

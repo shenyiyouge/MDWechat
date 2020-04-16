@@ -144,11 +144,13 @@
                     android:summary="@string/summary_hook_tab_bg"
                     android:title="@string/text_hook_tab_bg" />
                 <SwitchPreference
+                    android:layout="@layout/preference_hidden"
                     android:dependency="@string/key_hook_tab_bg"
                     android:key="@string/key_change_resolution"
                     android:summary="@string/summary_change_resolution"
                     android:title="@string/text_change_resolution" />
                 <EditTextPreference
+                    android:layout="@layout/preference_hidden"
                     android:defaultValue="-1,-1"
                     android:dependency="@string/key_change_resolution"
                     android:key="@string/key_resolution"

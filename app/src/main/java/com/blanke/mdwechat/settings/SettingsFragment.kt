@@ -55,7 +55,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
         preferenceManager.sharedPreferencesName = Common.MOD_PREFS
         addPreferencesFromResource(R.xml.pref_settings)
-        setLayoutResource(getPreferenceScreen())
+        setLayoutResource(preferenceScreen)
         setResolution()
         _clearLogs()
 
@@ -386,14 +386,14 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 //        get() = false
     fun setResolution() {
         val textPreference = findPreference(getString(R.string.key_resolution)) as EditTextPreference
-        val resolution = textPreference.text
-                .replace(" ", "")
-                .replace("，", ",")
-                .split(",")
-        try {
-            if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) return
-        } catch (e: java.lang.Exception) {
-        }
+//        val resolution = textPreference.text
+//                .replace(" ", "")
+//                .replace("，", ",")
+//                .split(",")
+//        try {
+//            if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) return
+//        } catch (e: java.lang.Exception) {
+//        }
         val dm = resources.displayMetrics
         val screenWidth = dm.widthPixels
         val screenHeight = dm.heightPixels
