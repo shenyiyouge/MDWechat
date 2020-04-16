@@ -13,8 +13,6 @@ import android.widget.LinearLayout
 import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.AppCustomConfig
-import com.blanke.mdwechat.config.AppCustomConfig.getTabLayoutBitmap
-import com.blanke.mdwechat.config.AppCustomConfig.getTabLayoutBitmapAtBottom
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
@@ -77,7 +75,7 @@ object TabLayoutHook {
     fun measureHeight(view: ViewGroup): Int {
         val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
         view.measure(w, w)
-        return view.getMeasuredHeight()
+        return view.measuredHeight
     }
 
     fun addTabLayoutAtBottom(tabView: ViewGroup, height: Int) {
@@ -88,7 +86,7 @@ object TabLayoutHook {
         params.height = height
         mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.setBackground(NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(params.height, 0)))
+            tabLayout.background = NightModeUtils.getForegroundDrawable(AppCustomConfig.getTabLayoutBitmapAtBottom(params.height, 0))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -116,7 +114,7 @@ object TabLayoutHook {
         params.height = px48 + HookConfig.value_tab_layout_offset
         mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.setBackground(NightModeUtils.getForegroundDrawable(getTabLayoutBitmap(params.height, 0)))
+            AppCustomConfig.setTabLayoutBitmap(params.height, 0)
         }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
@@ -155,7 +153,7 @@ object TabLayoutHook {
                     paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
                     val view = FrameLayout(context)
                     Objects.Main.actionBar = view
-                    view.setBackground(NightModeUtils.getForegroundDrawable(AppCustomConfig.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition)))
+                    view.background = NightModeUtils.getForegroundDrawable(AppCustomConfig.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)

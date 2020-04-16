@@ -133,7 +133,7 @@ object LauncherUIHooker : HookerProvider {
                                 log(e)
                             }
                         } else {
-                            AppCustomConfig.tabLayoutHeight = 0
+                            AppCustomConfig._tabLayoutLocation[1] = 0
                         }
                         if (shouldFix) {
                             // 隐藏 action bar 测试

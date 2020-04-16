@@ -1,13 +1,13 @@
 package com.blanke.mdwechat.hookers
 
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.ViewGroup
-import com.blanke.mdwechat.*
+import com.blanke.mdwechat.CC
+import com.blanke.mdwechat.Classes
 import com.blanke.mdwechat.Classes.ActionBarContainer
-import com.blanke.mdwechat.WeChatHelper.colorPrimaryDrawable
+import com.blanke.mdwechat.Methods
+import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.AppCustomConfig.getActionBarBitmap
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
@@ -31,45 +31,47 @@ object ActionBarHooker : HookerProvider {
 
     private val actionBarHooker = Hooker {
         XposedHelpers.findAndHookMethod(ActionBarContainer, "setPrimaryBackground", Drawable::class.java, object : XC_MethodHook() {
-            override fun beforeHookedMethod(param: MethodHookParam) {
-//                return
-                val drawable = param.args[0]
-                var needHook = true
-                val actionBar = param.thisObject as ViewGroup
-//                LogUtil.log("====================")
-//                LogUtil.logView(actionBar)
-//                LogUtil.logViewStackTraces(actionBar)
-//                LogUtil.log("====================")
-                if (drawable is ColorDrawable) {
-                    if (drawable.color == Color.parseColor("#F2F2F2")
-                            || drawable.color == Color.parseColor("#FFFAFAFA")
-                            || drawable.color == Color.TRANSPARENT) {
-                        needHook = false
-                    }
-                    if (WechatGlobal.wxVersion!! >= Version("7.0.0")) {
-                        if (actionBar.context::class.java.name == Classes.LauncherUI.name) {
-                            needHook = true
-                        }
-                    }
-                    if (drawable.color == colorPrimaryDrawable.color) {
-                        needHook = false
-                    }
-                    if (needHook) {
-                        param.args[0] = colorPrimaryDrawable
-                    }
-                }
-                val init_elevation = XposedHelpers.getAdditionalInstanceField(actionBar, "init_elevation")
-                if (init_elevation == null) {
-                    actionBar.elevation = 5F
-                    XposedHelpers.setAdditionalInstanceField(actionBar, "init_elevation", true)
-                }
-            }
+//            override fun beforeHookedMethod(param: MethodHookParam) {
+////                return
+//                val drawable = param.args[0]
+//                var needHook = true
+//                val actionBar = param.thisObject as ViewGroup
+////                LogUtil.log("====================")
+////                LogUtil.logView(actionBar)
+////                LogUtil.logViewStackTraces(actionBar)
+////                LogUtil.log("====================")
+//                if (drawable is ColorDrawable) {
+//                    if (drawable.color == Color.parseColor("#F2F2F2")
+//                            || drawable.color == Color.parseColor("#FFFAFAFA")
+//                            || drawable.color == Color.TRANSPARENT) {
+//                        needHook = false
+//                    }
+//                    if (WechatGlobal.wxVersion!! >= Version("7.0.0")) {
+//                        if (actionBar.context::class.java.name == Classes.LauncherUI.name) {
+//                            needHook = true
+//                        }
+//                    }
+//                    if (drawable.color == colorPrimaryDrawable.color) {
+//                        needHook = false
+//                    }
+//                    if (needHook) {
+//                        param.args[0] = colorPrimaryDrawable
+//                    }
+//                }
+//                val init_elevation = XposedHelpers.getAdditionalInstanceField(actionBar, "init_elevation")
+//                if (init_elevation == null) {
+//                    actionBar.elevation = 5F
+//                    XposedHelpers.setAdditionalInstanceField(actionBar, "init_elevation", true)
+//                }
+//            }
 
             override fun afterHookedMethod(param: MethodHookParam) {
                 val actionBar = param.thisObject as View
                 Objects.Main.actionBar = actionBar
                 if (!HookConfig.is_hook_hide_actionbar) {
                     actionBar.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
+                } else {
+                    actionBar.background = ColorDrawable(HookConfig.get_color_primary)
                 }
             }
         })
@@ -83,7 +85,12 @@ object ActionBarHooker : HookerProvider {
                 val clazz = view::class.java.name
                 if (clazz == ActionBarContainer.name) {
                     Objects.Main.actionBar = view
-                    view.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                    if (!HookConfig.is_hook_hide_actionbar) {
+                        view.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                    } else {
+                        view.background = ColorDrawable(HookConfig.get_color_primary)
+                    }
+//                    view.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                 }
             }
         })
