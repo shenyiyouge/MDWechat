@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
+import de.robv.android.xposed.XposedBridge
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,11 +25,19 @@ object LogUtil {
     private val dateStr
         get() = SimpleDateFormat("yyyy-MM-dd").format(Date())
 
-    fun printLog2File(log: String) {
+    fun exportLog(log: String) {
+        try {
+            if (HookConfig.is_hook_log_xposed) {
+                XposedBridge.log("MDWechatModule: " + log)
+                return
+            }
+        } catch (e: Exception) {
+        }
         val logFile = File(AppCustomConfig.getLogFile(dateStr))
         logFile.parentFile.mkdirs()
         val time = SimpleDateFormat("HH:mm:ss").format(Date())
         FileUtils.write(logFile.absolutePath, "$time $log\n", true)
+
     }
 
     fun clearFileLogs() {
@@ -36,7 +45,7 @@ object LogUtil {
         FileUtils.deleteDirectoryFiles(logFile, "MDWechat_log_")
 //        val result = logFile.delete()
         logFile.mkdirs()
-        printLog2File("------- beginning of log -------")
+        exportLog("------- beginning of log -------")
         STATIC.logged.clear()
     }
 
@@ -56,7 +65,7 @@ object LogUtil {
     @JvmStatic
     fun log(msg: String) {
         try {
-            if (HookConfig.is_hook_log) printLog2File("MDwechat Log: " + msg)
+            if (HookConfig.is_hook_log) exportLog("MDwechat Log: " + msg)
         } catch (e: RuntimeException) {
         }
         Log.i("MDWechatModule", "MDWechat $msg")
@@ -65,7 +74,7 @@ object LogUtil {
     @JvmStatic
     fun log(t: Throwable) {
         try {
-            if (HookConfig.is_hook_log) printLog2File("LogUtil: " + Log.getStackTraceString(t))
+            if (HookConfig.is_hook_log) exportLog("LogUtil: " + Log.getStackTraceString(t))
         } catch (e: RuntimeException) {
         }
         Log.e("MDWechatModule", "MDWechat " + Log.getStackTraceString(t))

@@ -6,6 +6,7 @@ import com.blanke.mdwechat.config.ViewTreeConfig
 import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -38,22 +39,23 @@ class WechatHook : IXposedHookLoadPackage {
                     DiscoverHooker,
                     SettingsHooker,
                     SchemeHooker,
-//                    LogHooker,
+                    LogHooker,
                     NightModeHooker
             )
 //            region test
-//            logXp(hookers.count().toString())
-//            val asd = HookConfig.debug_config_text.split(" ")
-//            for (i in asd[3].toInt() downTo asd[2].toInt()) {
-//                hookers.removeAt(i)
-//            }
-//            for (i in asd[1].toInt() downTo asd[0].toInt()) {
-//                hookers.removeAt(i)
-//            }
-//            logXp(hookers.count().toString())
-//            hookers.forEach {
-//                log(it::class.java.name)
-//            }
+            log("Hookers 总数: ${hookers.count()}")
+            val asd = HookConfig.debug_config_text.split(" ")
+            for (i in asd[3].toInt() downTo asd[2].toInt()) {
+                hookers.removeAt(i)
+            }
+            for (i in asd[1].toInt() downTo asd[0].toInt()) {
+                hookers.removeAt(i)
+            }
+            log("激活的 Hookers 数量: ${hookers.count()}，分别为：")
+            hookers.forEach {
+                log(it::class.java.name)
+            }
+            LogUtil.logStackTraces()
 //            //endregion
 
 //            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
