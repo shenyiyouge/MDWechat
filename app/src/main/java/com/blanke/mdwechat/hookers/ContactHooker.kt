@@ -11,10 +11,10 @@ import com.blanke.mdwechat.Methods
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WeChatHelper.drawableTransparent
-import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.ViewUtils
@@ -64,7 +64,7 @@ object ContactHooker : HookerProvider {
                         LogUtil.logOnlyOnce("ContactFragment Done")
                         XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
                         if (HookConfig.is_hook_tab_bg) {
-                            AppCustomConfig.setContactBitmap(listView)
+                            BackgroundImageUtils.setContactBitmap(listView)
                         }
 //                        LogUtil.log("ContactFragment listview= $listView, ${listView.javaClass.name}")
                         if (listView.headerViewsCount > 0) {

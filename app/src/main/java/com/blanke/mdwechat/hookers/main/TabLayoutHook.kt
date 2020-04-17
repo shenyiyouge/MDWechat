@@ -86,7 +86,7 @@ object TabLayoutHook {
         params.height = height
         mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.background = NightModeUtils.getForegroundDrawable(AppCustomConfig.getTabLayoutBitmapAtBottom(params.height, 0))
+            tabLayout.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getTabLayoutBitmapAtBottom(params.height, 0))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -112,10 +112,10 @@ object TabLayoutHook {
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
-        mainThread {
+//        mainThread {
             Objects.Main.tabLayout = tabLayout
-            AppCustomConfig.setTabLayoutBitmap(params.height, 0)
-        }
+        BackgroundImageUtils.setTabLayoutBitmap(params.height, 0)
+//        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
         } else if (WechatGlobal.wxVersion!! < Version("7.0.0")) {// 672 wx布局更改
@@ -153,7 +153,7 @@ object TabLayoutHook {
                     paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
                     val view = FrameLayout(context)
                     Objects.Main.actionBar = view
-                    view.background = NightModeUtils.getForegroundDrawable(AppCustomConfig.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                    view.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)

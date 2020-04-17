@@ -11,10 +11,10 @@ import com.blanke.mdwechat.Fields.ConversationFragment_mListView
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WechatGlobal
-import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.LogUtil
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -54,7 +54,7 @@ object ConversationHooker : HookerProvider {
             private fun init(fragment: Any) {
                 val listView = ConversationFragment_mListView.get(fragment)
                 if (listView != null && listView is View) {
-                    AppCustomConfig.setConversationBitmap(listView)
+                    BackgroundImageUtils.setConversationBitmap(listView)
                 }
             }
         })

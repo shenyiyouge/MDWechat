@@ -10,8 +10,8 @@ import com.blankj.utilcode.util.BarUtils
  */
 
 object HookConfig {
-    //    private val debugConfigText = "debugConfigText"
-//    private val debugConfigText1 = "debugConfigText1"
+    private val debugConfigText = "debugConfigText"
+    private val debugConfigText1 = "debugConfigText1"
     private val key_main_text_offset = "key_main_text_offset"
     private val key_tab_layout_offset = "key_tab_layout_offset"
     private val key_resolution = "key_resolution"
@@ -27,6 +27,7 @@ object HookConfig {
     private val key_hook_avatar = "key_hook_avatar"
     private val key_hook_ripple = "key_hook_ripple"
     private val key_hook_float_button = "key_hook_float_button"
+    private val key_hook_float_button_angle = "key_hook_float_button_angle"
     private val key_hook_float_button_color_up = "key_hook_float_button_color_up"
     private val key_hook_float_button_color_is_secondary = "key_hook_float_button_color_is_secondary"
     private val key_hook_search = "key_hook_search"
@@ -63,6 +64,7 @@ object HookConfig {
     private val key_hook_chat_text_color_right = "key_hook_chat_text_color_right"
     private val key_hook_statusbar_transparent = "key_hook_statusbar_transparent"
     private val key_hook_log = "key_hook_log"
+    private val key_hook_log_xposed = "key_hook_log_xposed"
     private val key_hook_main_textcolor = "key_hook_main_textcolor"
     private val key_main_textcolor_title = "key_main_textcolor_title"
     private val key_main_textcolor_content = "key_main_textcolor_content"
@@ -71,14 +73,14 @@ object HookConfig {
     //    private val key_mini_program_title = "key_mini_program_title"
     private val key_hook_night_mode = "key_hook_night_mode"
 
-    //    val debug_config_text: String
-//        get() {
-//            return WeChatHelper.XMOD_PREFS.getString(debugConfigText, "")
-//        }
-//    val debug_config_text_1: String
-//        get() {
-//            return WeChatHelper.XMOD_PREFS.getString(debugConfigText1, "")
-//        }
+    val debug_config_text: String
+        get() {
+            return WeChatHelper.XMOD_PREFS.getString(debugConfigText, "")
+        }
+    val debug_config_text_1: String
+        get() {
+            return WeChatHelper.XMOD_PREFS.getString(debugConfigText1, "")
+        }
     val value_main_text_offset: Int
         get() {
             return 0
@@ -305,6 +307,10 @@ object HookConfig {
     val is_hook_log: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_log, BuildConfig.DEBUG)
+        }
+    val is_hook_log_xposed: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_log_xposed, false)
         }
     val is_hook_main_textcolor: Boolean
         get() {

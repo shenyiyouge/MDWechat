@@ -25,6 +25,7 @@ import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
+import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
@@ -133,7 +134,7 @@ object LauncherUIHooker : HookerProvider {
                                 log(e)
                             }
                         } else {
-                            AppCustomConfig._tabLayoutLocation[1] = 0
+                            BackgroundImageUtils._tabLayoutLocation[1] = 0
                         }
                         if (shouldFix) {
                             // 隐藏 action bar 测试
@@ -166,7 +167,7 @@ object LauncherUIHooker : HookerProvider {
 //                    log("WxViewPager_selectedPage position = $position , arg[1] =${param?.args!![1]}")
                     LauncherUI_mTabLayout?.currentTab = position
                     Objects.Main.pagePosition = position
-                    AppCustomConfig.setGuideBarBitmaps(position)
+                    BackgroundImageUtils.setGuideBarBitmaps(position)
                 }
             }
         })
@@ -183,7 +184,7 @@ object LauncherUIHooker : HookerProvider {
                     startScrollPosition = position as Int
                     indicatorOffset = positionOffset
                     Objects.Main.pagePosition = startScrollPosition
-                    AppCustomConfig.setGuideBarBitmaps(startScrollPosition)
+                    BackgroundImageUtils.setGuideBarBitmaps(startScrollPosition)
                 }
             }
         })
