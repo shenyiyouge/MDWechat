@@ -87,6 +87,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         findPreference(getString(R.string.key_reset_icon_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback_email_blanke))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback_email_josh_cai))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_gitee_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_github_blanke))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_github_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_bg))?.onPreferenceClickListener = this
@@ -170,6 +171,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_reset_icon_config) -> copyIcons()
             getString(R.string.key_feedback_email_blanke) -> sendEmail()
             getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
+            getString(R.string.key_gitee_joshcai) -> gotoGiteeCai()
             getString(R.string.key_github_blanke) -> gotoGithub()
             getString(R.string.key_github_joshcai) -> gotoGithubCai()
             getString(R.string.key_generate_wechat_config) -> generateWechatFile()
@@ -341,6 +343,11 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         } catch (e: Exception) {
 
         }
+    }
+
+    private fun gotoGiteeCai() {
+        val uri = Uri.parse("https://gitee.com/JoshCai/MDWechat")
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
 
     private fun gotoGithub() {

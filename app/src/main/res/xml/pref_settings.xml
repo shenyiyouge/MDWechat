@@ -157,6 +157,7 @@
                     android:layout="@layout/preference_hidden"
                     android:dependency="@string/key_hook_tab_bg"
                     android:key="@string/key_change_resolution"
+                    android:layout="@layout/preference_hidden"
                     android:summary="@string/summary_change_resolution"
                     android:title="@string/text_change_resolution" />
                 <EditTextPreference
@@ -164,6 +165,7 @@
                     android:defaultValue="-1,-1"
                     android:dependency="@string/key_change_resolution"
                     android:key="@string/key_resolution"
+                    android:layout="@layout/preference_hidden"
                     android:summary="@string/summary_resolution"
                     android:title="@string/text_resolution" />
                 <EditTextPreference
@@ -352,12 +354,19 @@
                     android:key="@string/key_github_screen"
                     android:summary="@string/text_github_screen_info"
                     android:title="@string/text_github_screen">
-                    <Preference
-                        android:key="@string/key_github_blanke"
-                        android:title="@string/text_github_blanke" />
-                    <Preference
-                        android:key="@string/key_github_joshcai"
-                        android:title="@string/text_github_joshcai" />
+                    <PreferenceCategory android:title="@string/text_gitee">
+                        <Preference
+                            android:key="@string/key_gitee_joshcai"
+                            android:title="@string/text_gitee_joshcai" />
+                    </PreferenceCategory>
+                    <PreferenceCategory android:title="@string/text_github">
+                        <Preference
+                            android:key="@string/key_github_blanke"
+                            android:title="@string/text_github_blanke" />
+                        <Preference
+                            android:key="@string/key_github_joshcai"
+                            android:title="@string/text_github_joshcai" />
+                    </PreferenceCategory>
 
                 </PreferenceScreen>
                 <Preference
