@@ -27,6 +27,7 @@ import de.robv.android.xposed.XposedHelpers
 object FloatMenuHook {
 
     fun addFloatMenu(contentLayout: ViewGroup, bottomMargin: Int = 0) {
+        FloatingActionMenu.OPENED_PLUS_ROTATION_LEFT = HookConfig.value_hook_float_button_angle.toFloat()
         val context = contentLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val floatConfig = AppCustomConfig.getFloatButtonConfig()
         if (floatConfig?.items == null || floatConfig.menu?.icon == null) {
@@ -77,9 +78,9 @@ object FloatMenuHook {
         params.gravity = Gravity.END or Gravity.BOTTOM
         if (HookConfig.is_hook_float_button_move) {
             actionMenu.menuButton.setOnTouchListener(object : View.OnTouchListener {
-                internal var lastX: Float = 0.toFloat()
-                internal var lastY: Float = 0.toFloat()
-                internal var downTime: Long = 0
+                var lastX: Float = 0.toFloat()
+                var lastY: Float = 0.toFloat()
+                var downTime: Long = 0
 
                 override fun onTouch(v: View, event: MotionEvent): Boolean {
                     if (event.action == MotionEvent.ACTION_DOWN) {

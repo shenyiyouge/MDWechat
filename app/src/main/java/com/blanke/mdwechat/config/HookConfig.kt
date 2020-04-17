@@ -163,6 +163,10 @@ object HookConfig {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_float_button, true)
         }
 
+    val value_hook_float_button_angle: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getString(key_hook_float_button_angle, "-135")!!.toInt()
+        }
     val is_hook_float_button_color_up: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_float_button_color_up, true)

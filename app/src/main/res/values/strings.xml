@@ -81,6 +81,11 @@
     <string name="key_hook_float_button_color_is_secondary">key_hook_float_button_color_is_secondary</string>
     <string name="text_hook_float_button_color_is_secondary">是否使用副色1作为文字颜色</string>
     <string name="summary_hook_float_button__color_is_secondary">关闭则使用副色2.</string>
+    <string name="key_hook_float_button_angle">key_hook_float_button_angle</string>
+    <string name="text_hook_float_button_angle">悬浮按钮旋转角度</string>
+    <string name="summary_hook_float_button_angle">调整点击悬浮按钮之后主按钮的旋转角度.</string>
+    <string name="dialog_title_hook_float_button_angle">范围：-360 ~ 360.</string>
+    <string name="key_hook_float_button_move">key_hook_float_button_move</string>
     <string name="text_hook_float_button_move">我想移动悬浮按钮</string>
     <string name="key_hook_float_button_move">key_hook_float_button_move</string>
     <string name="text_hook_float_button_move_info">在某些机型上(魅族等),悬浮按钮,显示异常,可以打开移动选项.</string>

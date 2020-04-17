@@ -129,6 +129,16 @@
                     android:dependency="@string/key_hook_float_button"
                     android:key="@string/key_hook_float_button_color_up"
                     android:title="@string/text_hook_float_button_color_up" />
+                <EditTextPreference
+                    android:defaultValue="-135"
+                    android:dependency="@string/key_hook_float_button"
+                    android:key="@string/key_hook_float_button_angle"
+                    android:numeric="signed"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:summary="@string/summary_hook_float_button_angle"
+                    android:title="@string/text_hook_float_button_angle"
+                    tools:ignore="Deprecated" />
                 <SwitchPreference
                     android:defaultValue="false"
                     android:dependency="@string/key_hook_float_button"

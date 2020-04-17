@@ -7,7 +7,7 @@ MDWechat
 实现的功能有:
 1. 主界面 TabLayout Material 化,支持自定义图标
 2. ~~主界面搜索 Material 化~~(2.0未加入)
-3. 主界面添加悬浮按钮(FloatingActionButton),支持自定义按钮文本/图标/入口
+3. 主界面添加悬浮按钮(FloatingActionButton),支持自定义按钮文本/图标/入口, 4.0支持自定义悬浮按钮点击之后的旋转角度
 4. 全局头像圆角
 5. 全局 ActionBar 颜色修改
 6. 全局状态栏颜色修改,支持半透明/全透明(沉浸)
