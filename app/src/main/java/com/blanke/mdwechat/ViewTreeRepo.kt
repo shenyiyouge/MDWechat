@@ -37,10 +37,12 @@ object ViewTreeRepoThisVersion {
     val ChatLeftCallMessageItem: ViewTree by lazy {
         ViewTreeConfig.get().chatLeftCallMessageItem.invoke(ViewTreeRepo) as ViewTree
     }
+
     //    小程序上方的action bar
     val ActionBarItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarItem.invoke(ViewTreeRepo) as ViewTree
     }
+
     // 聊天界面的action bar
     val ActionBarInConversationItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarInConversationItem.invoke(ViewTreeRepo) as ViewTree
@@ -50,10 +52,12 @@ object ViewTreeRepoThisVersion {
     val ChattingUILayoutItem: ViewTree by lazy {
         ViewTreeConfig.get().chattingUILayoutItem.invoke(ViewTreeRepo) as ViewTree
     }
+
     // 主界面的action bar
     val ActionBarContainerItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarContainerItem.invoke(ViewTreeRepo) as ViewTree
     }
+
     // 朋友圈的action bar
     val ActionBarInFriendsgroupItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarInFriendsgroupItem.invoke(ViewTreeRepo) as ViewTree
@@ -1103,8 +1107,58 @@ object ViewTreeRepo {
                         )))
     }
 
-    //_7_0_13
     val ChattingUILayoutItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("chatFooterChild2" to intArrayOf(2, 1, 0),
+                        "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
+                        "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0),
+                        "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
+                        "chatFooterChild2_faceButton" to intArrayOf(0, 1, 3, 0),
+                        "chatFooterChild2_addButton" to intArrayOf(0, 1, 4, 1, 0),
+                        "chatFooterChild2_sendButton" to intArrayOf(0, 1, 4, 1, 2)
+                ),
+                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout", arrayOf(
+                        ViewTreeRepoThisVersion.ActionBarInConversationItem.item,
+                        ViewTreeItem("android.view.ViewStub"),
+                        ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingScrollLayout", arrayOf(
+                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingContent"),
+                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChatFooter", arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                ViewTreeItem(CC.WeImageView),
+                                                                ViewTreeItem(CC.WeImageView),
+                                                                ViewTreeItem(CC.ImageView.name))),
+                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                ViewTreeItem(CC.WeImageButton),
+                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                        ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.MaxHeightScrollView", arrayOf(
+                                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMEditText")
+                                                                        )),
+                                                                        ViewTreeItem(CC.RelativeLayout.name)
+                                                                )),
+                                                                ViewTreeItem(CC.Button.name),
+                                                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                                        ViewTreeItem(CC.WeImageButton)
+                                                                )),
+                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                        ViewTreeItem(CC.TextView.name),
+                                                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                                                ViewTreeItem(CC.WeImageButton),
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem(CC.Button.name)
+                                                                        ))
+                                                                ))
+                                                        ))
+                                                ))
+                                        ))
+                                ))
+                        ))
+                ))
+        )
+    }
+
+    val ChattingUILayoutItem_7_0_13: ViewTree by lazy {
         ViewTree(
                 mapOf("chatFooterChild2" to intArrayOf(2, 1, 0, 1),
                         "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
@@ -1147,16 +1201,11 @@ object ViewTreeRepo {
                                                                         ))
                                                                 ))
                                                         ))
-                                                )
-                                                )
+                                                ))
                                         ))
-                                )
-                                )
-
+                                ))
                         ))
-
-                )
-                )
+                ))
         )
     }
 
