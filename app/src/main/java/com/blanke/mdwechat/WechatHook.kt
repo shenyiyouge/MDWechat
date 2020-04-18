@@ -43,23 +43,23 @@ class WechatHook : IXposedHookLoadPackage {
                     NightModeHooker
             )
 //            region test
-            log("Hookers 总数: ${hookers.count()}")
-            val asd = HookConfig.debug_config_text.split(" ")
-            for (i in asd[3].toInt() downTo asd[2].toInt()) {
-                hookers.removeAt(i)
-            }
-            for (i in asd[1].toInt() downTo asd[0].toInt()) {
-                hookers.removeAt(i)
-            }
-            log("激活的 Hookers 数量: ${hookers.count()}，分别为：")
-            hookers.forEach {
-                log(it::class.java.name)
-            }
+//            log("Hookers 总数: ${hookers.count()}")
+//            val asd = HookConfig.debug_config_text.split(" ")
+//            for (i in asd[3].toInt() downTo asd[2].toInt()) {
+//                hookers.removeAt(i)
+//            }
+//            for (i in asd[1].toInt() downTo asd[0].toInt()) {
+//                hookers.removeAt(i)
+//            }
+//            log("激活的 Hookers 数量: ${hookers.count()}，分别为：")
+//            hookers.forEach {
+//                log(it::class.java.name)
+//            }
             LogUtil.logStackTraces()
 //            //endregion
 
-//            if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
-//                hookers.add(0, DebugHooker)
+//           if ((!isVXPEnv)&&(BuildConfig.DEBUG)) {
+//               hookers.add(0, DebugHooker)
 //            }
             hookMain(lpparam, hookers)
             log("模块加载成功")

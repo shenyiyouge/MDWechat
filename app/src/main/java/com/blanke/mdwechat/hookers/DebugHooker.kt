@@ -1,12 +1,15 @@
 package com.blanke.mdwechat.hookers
 
+import android.graphics.drawable.ColorDrawable
 import android.view.MotionEvent
 import android.view.View
 import com.blanke.mdwechat.CC
 import com.blanke.mdwechat.WechatGlobal
+import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.LogUtil.logView
+import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -23,7 +26,12 @@ object DebugHooker : HookerProvider {
                 val view = param.thisObject as View
                 val event = param.args[0] as MotionEvent
                 if (event.action == MotionEvent.ACTION_DOWN) {
-                    logView(view)
+                    LogUtil.log("===============")
+                    view.background = ColorDrawable(HookConfig.get_color_primary)
+                    LogUtil.log("点击操作")
+                    LogUtil.logViewStackTraces(view)
+                    LogUtil.log("-------------------")
+                    LogUtil.logViewStackTraces(ViewUtils.getParentViewSafe(view, 5))
                 }
             }
         })
