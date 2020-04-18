@@ -17,7 +17,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="（非官方）适配至微信7.0.13" />
+            android:value="（非官方）适配至微信7.0.13(国内版,32位)" />
         <meta-data
             android:name="xposedminversion"
             android:value="42" />

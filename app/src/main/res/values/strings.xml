@@ -128,7 +128,7 @@
     <string name="text_reset_wechat_config">重置微信版本适配文件</string>
     <string name="key_reset_config">key_reset_config</string>
     <string name="text_reset_config">重置配置文件</string>
-    <string name="text_reset_config_info">还原默认设置（不包括图标和悬浮按钮, 需重启本程序）,配置文件为/sdcard/mdwechat/config/md_wechat_settings.xml</string>
+    <string name="text_reset_config_info">还原默认设置（不包括图标和悬浮按钮, 需重启本程序）,配置文件为/sdcard/mdwechat/config/md_wechat_settings_4_0.xml</string>
     <string name="key_reset_float_bottom_config">key_reset_float_bottom_config</string>
     <string name="text_reset_float_bottom_config">重置悬浮按钮配置文件</string>
     <string name="text_reset_float_bottom_config_info">如果你改坏了/不生效,请重置,配置文件在/sdcard/mdwechat/config/view/目录下</string>
@@ -255,5 +255,5 @@
     <string name="test">试验</string>
     <string name="app_name_version">MDWechat 4.0.0_beta~1</string>
     <string name="summary">此为测试版。暂无法在太极上使用，可在xposed, virtual xposed 和 edxposed 下使用。</string>
-    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将作者在 github 上开源的代码进行二次开发，使其能够适配较新的微信(7.0.10 – 7.0.13)。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
+    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将作者在 github 上开源的代码进行二次开发，使其能够适配较新的微信(7.0.10 – 7.0.13)(国内版,32位)。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
 </resources>

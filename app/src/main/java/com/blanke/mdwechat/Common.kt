@@ -11,7 +11,7 @@ import java.io.File
 object Common {
     val MY_APPLICATION_PACKAGE = "com.blanke.mdwechat"
     val WECHAT_PACKAGENAME = "com.tencent.mm"
-    val MOD_PREFS = "md_wechat_settings"
+    val MOD_PREFS = "md_wechat_settings_4_0"
     val APP_DIR = "mdwechat"
     val APP_VXP_DIR = "mdwechat_vxp_debug"
     val CONFIG_DIR = "config"
