@@ -41,7 +41,7 @@ object BackgroundImageUtils {
     }
 
     fun getStatusBarBitmap(page: Int): Bitmap? {
-        if (!HookConfig.is_hook_tab_bg) return null
+        if (!HookConfig.is_hook_bg_immersion) return null
         if (_statusBarBitmap[page] != null) return _statusBarBitmap[page]!!
         LogUtil.log("Getting StatusBarBitmap, $page")
         val bg = AppCustomConfig.getTabBg(page)
@@ -52,7 +52,7 @@ object BackgroundImageUtils {
     }
 
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
-        if (!HookConfig.is_hook_tab_bg) {
+        if (!HookConfig.is_hook_bg_immersion) {
             _actionBarLocation[1] = -1
 //        todo change         _tabLayoutLocation[1] = -1             TO               _actionBarLocation[1] = -1
             return null
@@ -80,7 +80,7 @@ object BackgroundImageUtils {
     }
 
     fun setActionBarBitmapInConversations(actionBar: View) {
-        if (!HookConfig.is_hook_tab_bg) {
+        if (!HookConfig.is_hook_bg_immersion) {
             actionBar.background = NightModeUtils.getForegroundDrawable(null)
             return
         }
@@ -121,7 +121,7 @@ object BackgroundImageUtils {
     }
 
     fun setTabLayoutBitmap(page: Int) {
-        if (!HookConfig.is_hook_tab_bg) return
+        if (!HookConfig.is_hook_bg_immersion) return
         LogUtil.log("Getting TabLayoutBitmap, $page")
 //        return null
         if (_tabLayoutBitmap[page] != null) {
@@ -157,7 +157,7 @@ object BackgroundImageUtils {
     }
 
     fun getTabLayoutBitmapAtBottom(tabLayoutHeight: Int, page: Int): Bitmap? {
-        if (!HookConfig.is_hook_tab_bg) return null
+        if (!HookConfig.is_hook_bg_immersion) return null
         if (_tabLayoutBitmap[page] != null) return _tabLayoutBitmap[page]
         LogUtil.log("Getting TabLayoutBitmapAtBottom, $page")
         val bg = AppCustomConfig.getTabBg(page)

@@ -154,6 +154,11 @@
                     android:summary="@string/summary_hook_tab_bg"
                     android:title="@string/text_hook_tab_bg" />
                 <SwitchPreference
+                    android:defaultValue="true"
+                    android:dependency="@string/key_hook_tab_bg"
+                    android:key="@string/key_hook_bg_immersion"
+                    android:title="@string/text_hook_bg_immersion" />
+                <SwitchPreference
                     android:layout="@layout/preference_hidden"
                     android:dependency="@string/key_hook_tab_bg"
                     android:key="@string/key_change_resolution"
