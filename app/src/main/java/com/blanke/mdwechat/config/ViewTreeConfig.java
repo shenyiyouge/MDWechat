@@ -5,6 +5,14 @@ import com.blanke.mdwechat.ViewTreeRepo;
 
 import java.lang.reflect.Method;
 
+//Created by JoshCai.
+//usage:
+//        1. add Method
+//        2. add getter
+//        3. add init code [private void init()]
+//
+//        4. add com.blanke.mdwechat.ViewTreeRepoThisVersion
+//        5. add com.blanke.mdwechat.ViewTreeRepo
 public class ViewTreeConfig {
     private Version versionName = new Version("0");
     private static ViewTreeConfig viewTreeConfig = null;
@@ -20,6 +28,9 @@ public class ViewTreeConfig {
     private Method ChatRightCallMessageItem = null;
     private Method ChatLeftCallMessageItem = null;
     private Method ActionBarItem = null;
+    private Method ActionBarContainerItem = null;
+    private Method ActionBarInFriendsgroupItem = null;
+    private Method ActionBarInConversationItem = null;
 
     //region getters
     public Method getConversationListViewItem() {
@@ -53,6 +64,7 @@ public class ViewTreeConfig {
     public Method getChatLeftAudioMessageItem() {
         return ChatLeftAudioMessageItem;
     }
+
     public Method getChatRightCallMessageItem() {
         return ChatRightCallMessageItem;
     }
@@ -63,6 +75,18 @@ public class ViewTreeConfig {
 
     public Method getActionBarItem() {
         return ActionBarItem;
+    }
+
+    public Method getActionBarContainerItem() {
+        return ActionBarContainerItem;
+    }
+
+    public Method getActionBarInFriendsgroupItem() {
+        return ActionBarInFriendsgroupItem;
+    }
+
+    public Method getActionBarInConversationItem() {
+        return ActionBarInConversationItem;
     }
     //endregion
 
@@ -97,6 +121,9 @@ public class ViewTreeConfig {
         ChatRightCallMessageItem = findViewTreeMethod("ChatRightCallMessageItem", versionName);
         ChatLeftCallMessageItem = findViewTreeMethod("ChatLeftCallMessageItem", versionName);
         ActionBarItem = findViewTreeMethod("ActionBarItem", versionName);
+        ActionBarContainerItem = findViewTreeMethod("ActionBarContainerItem", versionName);
+        ActionBarInConversationItem = findViewTreeMethod("ActionBarInConversationItem", versionName);
+        ActionBarInFriendsgroupItem = findViewTreeMethod("ActionBarInFriendsgroupItem", versionName);
     }
 
     private static Method findViewTreeMethod(String name, Version versionName) {

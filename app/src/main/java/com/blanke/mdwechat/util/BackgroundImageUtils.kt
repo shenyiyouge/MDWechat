@@ -5,8 +5,10 @@ import android.graphics.Canvas
 import android.view.View
 import com.blanke.mdwechat.Methods
 import com.blanke.mdwechat.Objects
+import com.blanke.mdwechat.ViewTreeRepoThisVersion
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
+import com.blanke.mdwechat.hookers.main.TitleColorHook
 import de.robv.android.xposed.XposedHelpers
 
 object BackgroundImageUtils {
@@ -15,6 +17,8 @@ object BackgroundImageUtils {
     var _tabLayoutLocation = mutableListOf(0, 0)
     var _contactPageLocation = mutableListOf(0, 0)
 
+    var _actionBarBitmapInConversations: Bitmap? = null
+    var _actionBarBitmapInFriendsgroup: Bitmap? = null
     var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
@@ -49,7 +53,8 @@ object BackgroundImageUtils {
 
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
         if (!HookConfig.is_hook_tab_bg) {
-            _tabLayoutLocation[1] = -1
+            _actionBarLocation[1] = -1
+//        todo change         _tabLayoutLocation[1] = -1             TO               _actionBarLocation[1] = -1
             return null
         }
         if (_actionBarBitmap[page] != null) return _actionBarBitmap[page]!!
@@ -72,6 +77,49 @@ object BackgroundImageUtils {
         }
         LogUtil.log("Got ActionBarBitmap, $page")
         return _actionBarBitmap[page]
+    }
+
+    fun setActionBarBitmapInConversations(actionBar: View) {
+        if (!HookConfig.is_hook_tab_bg) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(null)
+            return
+        }
+        //todo 是否要去掉朋友圈判断
+        if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
+            TitleColorHook.setConversationColor()
+            return
+        } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar) && (_actionBarBitmapInFriendsgroup != null)) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInFriendsgroup)
+            return
+        }
+        waitInvoke(2000, true, {
+            LogUtil.log("actionBarInConversations 继续等待, view.height  = ${actionBar.height}")
+            actionBar.height > 0
+        }, {
+            val bg = AppCustomConfig.getTabBg(0)
+            val location = IntArray(2)
+//            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
+            actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
+            val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
+            actionBar.background = NightModeUtils.getForegroundDrawable(background)
+
+
+            if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
+                LogUtil.log("已找到聊天界面")
+                Objects.Main.actionBarInConversations = actionBar
+                _actionBarBitmapInConversations = background
+                TitleColorHook.setConversationColor()
+
+
+            } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
+                LogUtil.log("已找到朋友圈界面")
+                _actionBarBitmapInFriendsgroup = background
+            } else {
+                LogUtil.logViewStackTraces(actionBar)
+            }
+        })
     }
 
     fun setTabLayoutBitmap(tabLayoutHeight: Int, page: Int) {
@@ -256,5 +304,19 @@ object BackgroundImageUtils {
             return Bitmap.createBitmap(fixedBitmap, 0, 0, source.width, height)
         }
         return Bitmap.createBitmap(source, 0, y, source.width, height)
+    }
+
+
+    /////////////////////////////////////////////////////
+//TODO 可整合代码
+//根据绝对位置来设置view 的背景图片
+    fun setBackgroundBitmap(logHead: String, view: View, screenImage: Bitmap, cache: Bitmap?) {
+        if (cache != null) {
+            view.background = NightModeUtils.getBackgroundDrawable(cache)
+            return
+        }
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+        view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap(logHead, screenImage, location[1], view.height))
     }
 }

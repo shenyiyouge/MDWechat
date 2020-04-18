@@ -1,19 +1,16 @@
 package com.blanke.mdwechat.hookers
 
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
-import com.blanke.mdwechat.CC
-import com.blanke.mdwechat.Classes
+import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Classes.ActionBarContainer
-import com.blanke.mdwechat.Methods
-import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
+import com.blanke.mdwechat.util.ViewTreeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -67,11 +64,13 @@ object ActionBarHooker : HookerProvider {
 
             override fun afterHookedMethod(param: MethodHookParam) {
                 val actionBar = param.thisObject as View
-                Objects.Main.actionBar = actionBar
-                if (!HookConfig.is_hook_hide_actionbar) {
-                    actionBar.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
+                if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, actionBar)) {
+                    Objects.Main.actionBar = actionBar
+                    if (!HookConfig.is_hook_hide_actionbar) {
+                        actionBar.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
+                    }
                 } else {
-                    actionBar.background = ColorDrawable(HookConfig.get_color_primary)
+                    BackgroundImageUtils.setActionBarBitmapInConversations(actionBar)
                 }
             }
         })
@@ -84,13 +83,15 @@ object ActionBarHooker : HookerProvider {
                 val view = param.thisObject as View
                 val clazz = view::class.java.name
                 if (clazz == ActionBarContainer.name) {
+//                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, view)) {
                     Objects.Main.actionBar = view
                     if (!HookConfig.is_hook_hide_actionbar) {
                         view.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
-                    } else {
-                        view.background = ColorDrawable(HookConfig.get_color_primary)
                     }
-//                    view.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+//                    } else {
+//                        LogUtil.log("#############################################")
+//                        view.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(view.measuredHeight, 0))
+//                    }
                 }
             }
         })

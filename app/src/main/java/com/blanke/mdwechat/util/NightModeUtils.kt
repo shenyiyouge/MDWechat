@@ -21,10 +21,10 @@ object NightModeUtils {
         return HookConfig.is_hook_main_textcolor
     }
 
-    fun getBackgroundDrawable(defaultDrawable: Drawable?): Drawable {
-        return if (isNightMode()) WeChatHelper.drawableDark else defaultDrawable
-                ?: WeChatHelper.drawableWhite
-    }
+//    fun getBackgroundDrawable(defaultDrawable: Drawable?): Drawable {
+//        return if (isNightMode()) WeChatHelper.drawableDark else defaultDrawable
+//                ?: WeChatHelper.drawableWhite
+//    }
 
     fun getBackgroundDrawable(defaultDrawable: Bitmap?): Drawable {
         return when {

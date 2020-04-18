@@ -37,8 +37,25 @@ object ViewTreeRepoThisVersion {
     val ChatLeftCallMessageItem: ViewTree by lazy {
         ViewTreeConfig.get().chatLeftCallMessageItem.invoke(ViewTreeRepo) as ViewTree
     }
+
+    //    小程序上方的action bar
     val ActionBarItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarItem.invoke(ViewTreeRepo) as ViewTree
+    }
+
+    // 聊天界面的action bar
+    val ActionBarInConversationItem: ViewTree by lazy {
+        ViewTreeConfig.get().actionBarInConversationItem.invoke(ViewTreeRepo) as ViewTree
+    }
+
+    // 主界面的action bar
+    val ActionBarContainerItem: ViewTree by lazy {
+        ViewTreeConfig.get().actionBarContainerItem.invoke(ViewTreeRepo) as ViewTree
+    }
+
+    // 朋友圈的action bar
+    val ActionBarInFriendsgroupItem: ViewTree by lazy {
+        ViewTreeConfig.get().actionBarInFriendsgroupItem.invoke(ViewTreeRepo) as ViewTree
     }
 }
 
@@ -155,7 +172,7 @@ object ViewTreeRepo {
                                                                         CC.LinearLayout.name,
                                                                         arrayOf(
                                                                                 ViewTreeItem(CC.ImageView.name),
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView"),
+                                                                                ViewTreeItem(CC.WeImageView),
                                                                                 ViewTreeItem(CC.ImageView.name),
                                                                                 ViewTreeItem(CC.ImageView.name)
                                                                         )
@@ -216,9 +233,9 @@ object ViewTreeRepo {
                                                                         CC.LinearLayout.name,
                                                                         arrayOf(
                                                                                 ViewTreeItem(CC.ImageView.name),
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView"),
+                                                                                ViewTreeItem(CC.WeImageView),
                                                                                 ViewTreeItem(CC.ImageView.name),
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView")
+                                                                                ViewTreeItem(CC.WeImageView)
                                                                         )
                                                                 )
 
@@ -276,10 +293,10 @@ object ViewTreeRepo {
                                                                 ViewTreeItem(
                                                                         CC.LinearLayout.name,
                                                                         arrayOf(
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView"),
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView"),
+                                                                                ViewTreeItem(CC.WeImageView),
+                                                                                ViewTreeItem(CC.WeImageView),
                                                                                 ViewTreeItem(CC.ImageView.name),
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.imageview.WeImageView")
+                                                                                ViewTreeItem(CC.WeImageView)
                                                                         )
                                                                 )
 
@@ -969,46 +986,122 @@ object ViewTreeRepo {
                 ))
     }
 
-    //region //ActionBarContainerItem
-//    val ActionBarContainerItem: ViewTreeItem by lazy {
-//        ViewTreeItem(
-//                "android.support.v7.widget.ActionBarContainer",
-//                arrayOf(
-//                        ViewTreeItem(
-//                                "android.support.v7.widget.Toolbar",
-//                                arrayOf(
-//                                        ViewTreeItem(
-//                                                "android.support.v7.widget.ActionMenuView",
-//                                                arrayOf(
-//                                                        ViewTreeItem(
-//                                                                CC.RelativeLayout.name,
-//                                                                arrayOf(
-//                                                                        ViewTreeItem(CC.ImageView.name),
-//                                                                        ViewTreeItem(CC.ImageView.name))),
-//                                                        ViewTreeItem(
-//                                                                CC.RelativeLayout.name,
-//                                                                arrayOf(
-//                                                                        ViewTreeItem(CC.ImageView.name),
-//                                                                        ViewTreeItem(CC.ImageView.name)))
-//                                                )),
-//                                        ViewTreeItem(
-//                                                CC.LinearLayout.name,
-//                                                arrayOf(
-//                                                        ViewTreeItem(
-//                                                                CC.LinearLayout.name,
-//                                                                arrayOf(
-//                                                                        ViewTreeItem(CC.ImageView.name))),
-//                                                        ViewTreeItem(
-//                                                                CC.LinearLayout.name,
-//                                                                arrayOf(
-//                                                                        ViewTreeItem(
-//                                                                                CC.RelativeLayout.name,
-//                                                                                arrayOf(
-//                                                                                        ViewTreeItem(CC.ImageView.name),
-//                                                                                        ViewTreeItem(CC.TextView.name))),
-//                                                                        ViewTreeItem(CC.TextView.name)))))))))
-//    }
-//endregion
+    val ActionBarContainerItem: ViewTree by lazy {
+        ViewTree(
+                mapOf(),
+                ViewTreeItem(
+                        "android.support.v7.widget.ActionBarContainer",
+                        arrayOf(
+                                ViewTreeItem(
+                                        "android.support.v7.widget.Toolbar",
+                                        arrayOf(
+                                                ViewTreeItem(
+                                                        "android.support.v7.widget.ActionMenuView",
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.RelativeLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem(CC.ImageView.name))),
+                                                                ViewTreeItem(
+                                                                        CC.RelativeLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem(CC.ImageView.name)))
+                                                        )),
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageView.name))),
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(
+                                                                                        CC.RelativeLayout.name,
+                                                                                        arrayOf(
+                                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                                ViewTreeItem(CC.TextView.name))),
+                                                                                ViewTreeItem(CC.TextView.name))))))))))
+    }
+    val ActionBarInConversationItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("title" to intArrayOf(0, 1, 1, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0),
+                        "infoButton" to intArrayOf(0, 0, 0, 4, 0)
+                ),
+                ViewTreeItem(
+                        "android.support.v7.widget.ActionBarContainer",
+                        arrayOf(
+                                ViewTreeItem(
+                                        "android.support.v7.widget.Toolbar",
+                                        arrayOf(
+                                                ViewTreeItem(
+                                                        "android.support.v7.widget.ActionMenuView",
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageButton.name),
+                                                                                ViewTreeItem(CC.TextView.name),
+                                                                                ViewTreeItem(
+                                                                                        CC.LinearLayout.name,
+                                                                                        arrayOf(
+                                                                                                ViewTreeItem(CC.ImageView.name))),
+                                                                                ViewTreeItem(CC.Button.name),
+                                                                                ViewTreeItem(
+                                                                                        CC.RelativeLayout.name,
+                                                                                        arrayOf(
+                                                                                                ViewTreeItem(CC.ImageButton.name),
+                                                                                                ViewTreeItem(CC.ImageView.name)))
+                                                                        )))),
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.WeImageView))),
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.TextView.name),
+                                                                                ViewTreeItem(CC.TextView.name))),
+                                                                ViewTreeItem(CC.WeImageView),
+                                                                ViewTreeItem(CC.WeImageView),
+                                                                ViewTreeItem(CC.ImageView.name),
+                                                                ViewTreeItem(CC.ImageView.name),
+                                                                ViewTreeItem(CC.ImageView.name)
+                                                        ))
+                                        )),
+                                ViewTreeItem("android.support.v7.widget.ActionBarContextView")
+                        )))
+    }
+    val ActionBarInFriendsgroupItem: ViewTree by lazy {
+        ViewTree(
+                mapOf(),
+                ViewTreeItem(
+                        "android.support.v7.widget.ActionBarContainer",
+                        arrayOf(
+                                ViewTreeItem(
+                                        "android.support.v7.widget.Toolbar",
+                                        arrayOf(
+                                                ViewTreeItem(
+                                                        CC.LinearLayout.name,
+                                                        arrayOf(
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem(CC.ImageView.name))),
+                                                                ViewTreeItem(
+                                                                        CC.LinearLayout.name,
+                                                                        arrayOf(
+                                                                                ViewTreeItem("com.tencent.mm.ui.widget.AlbumChooserView")
+                                                                        )))))))))
+    }
+
     val ActionBarItem: ViewTree by lazy {
         ViewTree(
                 mapOf("miniProgramPage" to intArrayOf(0),
