@@ -31,6 +31,7 @@ public class ViewTreeConfig {
     private Method ActionBarContainerItem = null;
     private Method ActionBarInFriendsgroupItem = null;
     private Method ActionBarInConversationItem = null;
+    private Method ChattingUILayoutItem = null;
 
     //region getters
     public Method getConversationListViewItem() {
@@ -88,6 +89,10 @@ public class ViewTreeConfig {
     public Method getActionBarInConversationItem() {
         return ActionBarInConversationItem;
     }
+
+    public Method getChattingUILayoutItem() {
+        return ChattingUILayoutItem;
+    }
     //endregion
 
     public static ViewTreeConfig get() {
@@ -123,6 +128,7 @@ public class ViewTreeConfig {
         ActionBarItem = findViewTreeMethod("ActionBarItem", versionName);
         ActionBarContainerItem = findViewTreeMethod("ActionBarContainerItem", versionName);
         ActionBarInConversationItem = findViewTreeMethod("ActionBarInConversationItem", versionName);
+        ChattingUILayoutItem = findViewTreeMethod("ChattingUILayoutItem", versionName);
         ActionBarInFriendsgroupItem = findViewTreeMethod("ActionBarInFriendsgroupItem", versionName);
     }
 

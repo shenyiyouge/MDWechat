@@ -28,6 +28,7 @@ public class CC {
 
 
     public static final String WeImageView = "com.tencent.mm.ui.widget.imageview.WeImageView";
+    public static final String WeImageButton = "com.tencent.mm.ui.widget.imageview.WeImageButton";
 
 
 }
