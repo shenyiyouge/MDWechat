@@ -7,10 +7,7 @@ import com.blanke.mdwechat.Classes.ActionBarContainer
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.BackgroundImageUtils
-import com.blanke.mdwechat.util.LogUtil
-import com.blanke.mdwechat.util.NightModeUtils
-import com.blanke.mdwechat.util.ViewTreeUtils
+import com.blanke.mdwechat.util.*
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -21,7 +18,7 @@ object ActionBarHooker : HookerProvider {
         val list = mutableListOf(actionBarHooker)
         if (!HookConfig.is_hook_hide_actionbar) {
             list.add(mainPageActionBarHooker)
-            if (HookConfig.is_hook_actionbar_color) list.add(mainPageActionBarTitleTextColor)
+            if (HookConfig.is_hook_actionbar_color && !VXPUtils.isVXPEnv()) list.add(mainPageActionBarTitleTextColor)
         }
         return list
     }
@@ -98,20 +95,16 @@ object ActionBarHooker : HookerProvider {
     }
 
     private val mainPageActionBarTitleTextColor = Hooker {
-        return@Hooker
         try {
 //            LogUtil.logXp("\n\n\n\n\nactionBarTitleTextColor")
             val methods = Methods.HomeUI_setActionBarColor
 //            LogUtil.logXp("\n\n\n\n\nmethods$methods")
             methods.forEach {
-                LogUtil.log("查找 方法中: ${Classes.HomeUI.name}.${it}")
-                XposedBridge.hookAllMethods(Classes.HomeUI, it, object : XC_MethodHook() {
+                XposedHelpers.findAndHookMethod(Classes.HomeUI, it,
+                        Float::class.java, Int::class.java, Int::class.java, object : XC_MethodHook() {
                     @Throws(Throwable::class)
                     override fun beforeHookedMethod(param: MethodHookParam) {
-                        val r0 = param.args[0] as Float
-//                        if (!r0.isNaN()) {
-//                        }
-                        LogUtil.log("顶栏字体颜色修改===========\n${Classes.HomeUI.name}.${it}(\"${param.args[0]}\"\"${param.args[1]}\"\"${param.args[2]}\") called.")
+//                        LogUtil.logXp("${Classes.HomeUI.name}.${it}(\"$ param.args[0]\"\"$ param.args[1]\"\"$param.args[2]\") called.")
                         param.args[1] = NightModeUtils.colorSecondary
                         param.args[2] = NightModeUtils.colorSecondary
 //                        LogUtil.logStackTraceXp()

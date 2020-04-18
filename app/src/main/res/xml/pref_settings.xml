@@ -130,7 +130,7 @@
                     android:key="@string/key_hook_float_button_color_up"
                     android:title="@string/text_hook_float_button_color_up" />
                 <EditTextPreference
-                    android:defaultValue="-135"
+                    android:defaultValue="-90"
                     android:dependency="@string/key_hook_float_button"
                     android:key="@string/key_hook_float_button_angle"
                     android:numeric="signed"
