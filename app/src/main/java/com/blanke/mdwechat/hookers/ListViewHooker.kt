@@ -196,7 +196,7 @@ object ListViewHooker : HookerProvider {
                         unreadCountView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                         unreadView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                         val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
-                        contentView.background = drawableTransparent
+                        contentView.background = defaultImageRippleDrawable
                         return
                     }
 
