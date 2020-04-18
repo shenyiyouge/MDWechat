@@ -114,7 +114,7 @@ object TabLayoutHook {
         params.height = px48 + HookConfig.value_tab_layout_offset
 //        mainThread {
             Objects.Main.tabLayout = tabLayout
-        BackgroundImageUtils.setTabLayoutBitmap(params.height, 0)
+        BackgroundImageUtils.setTabLayoutBitmap(0)
 //        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)

@@ -34,7 +34,7 @@ object BackgroundImageUtils {
             Objects.Main.actionBar?.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(_actionBarLocation[1], page))
         }
         if (HookConfig.is_tab_layout_on_top) {
-            setTabLayoutBitmap(_tabLayoutLocation[1], page)
+            setTabLayoutBitmap(page)
         } else {
             Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(_tabLayoutLocation[1], page))
         }
@@ -116,13 +116,11 @@ object BackgroundImageUtils {
             } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
                 LogUtil.log("已找到朋友圈界面")
                 _actionBarBitmapInFriendsgroup = background
-            } else {
-                LogUtil.logViewStackTraces(actionBar)
             }
         })
     }
 
-    fun setTabLayoutBitmap(tabLayoutHeight: Int, page: Int) {
+    fun setTabLayoutBitmap(page: Int) {
         if (!HookConfig.is_hook_tab_bg) return
         LogUtil.log("Getting TabLayoutBitmap, $page")
 //        return null
@@ -186,7 +184,6 @@ object BackgroundImageUtils {
 
     fun setDiscoverBitmap(view: View) {
 //        LogUtil.log("============2================")
-        val bg = AppCustomConfig.getTabBg(2)
         DiscoverPage = view
         //先跳转至联系人界面
         Objects.Main.LauncherUI_mViewPager?.apply {
@@ -317,6 +314,6 @@ object BackgroundImageUtils {
         }
         val location = IntArray(2)
         view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-        view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap(logHead, screenImage, location[1], view.height))
+        view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, screenImage, location[1], view.height))
     }
 }
