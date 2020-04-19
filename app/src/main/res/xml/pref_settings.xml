@@ -426,5 +426,26 @@
                     android:title="@string/text_clear_logs" />
             </PreferenceCategory>
         </PreferenceScreen>
+        <!--调试-->
+        <PreferenceScreen
+            android:dependency="@string/key_hook_switch"
+            android:title="@string/text_settings_debug">
+
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/key_hook_log"
+                android:summary="@string/text_hook_log_info"
+                android:title="@string/text_hook_log" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:dependency="@string/key_hook_log"
+                android:key="@string/key_hook_log_xposed"
+                android:summary="@string/text_hook_log_xposed_info"
+                android:title="@string/text_hook_log_xposed" />
+
+            <Preference
+                android:key="@string/key_clear_logs"
+                android:title="@string/text_clear_logs" />
+        </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>
