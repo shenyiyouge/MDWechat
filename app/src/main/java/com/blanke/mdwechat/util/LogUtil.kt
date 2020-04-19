@@ -40,12 +40,16 @@ object LogUtil {
 
     }
 
-    fun clearFileLogs() {
+    fun clearFileLogs(isLogFile: Boolean = false) {
         val logFile = File(AppCustomConfig.getLogFile("MDWechat_log")).parentFile
         FileUtils.deleteDirectoryFiles(logFile, "MDWechat_log_")
 //        val result = logFile.delete()
         logFile.mkdirs()
-        exportLog("------- beginning of log -------")
+        if (isLogFile) {
+            exportLog("------- beginning of log -------")
+        } else {
+            exportLog("------- 设置中未打开日志记录开关. -------")
+        }
         STATIC.logged.clear()
     }
 
