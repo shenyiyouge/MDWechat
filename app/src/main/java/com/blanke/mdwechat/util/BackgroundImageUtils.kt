@@ -24,6 +24,7 @@ object BackgroundImageUtils {
     var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var DiscoverPage: View? = null
 
+    //region 导航
     fun setGuideBarBitmaps(page: Int) {
         LogUtil.logOnlyOnce("翻页操作: $page", "")
         LogUtil.logOnlyOnce("Objects.Main.statusView=${Objects.Main.statusView}", "")
@@ -49,6 +50,50 @@ object BackgroundImageUtils {
         _statusBarBitmap[page] = cutBitmap("StatusBarBitmap", bg, 0, height)
         LogUtil.log("Got StatusBarBitmap, $page")
         return _statusBarBitmap[page]
+    }
+
+
+    //    var isSettingMap = false//避免重复设置
+    fun setActionBarBitmapInConversations(actionBar: View) {
+        if (!HookConfig.is_hook_bg_immersion) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(null)
+            return
+        }
+        //todo 是否要去掉朋友圈判断
+        if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
+            TitleColorHook.setConversationColor()
+            return
+        } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar) && (_actionBarBitmapInFriendsgroup != null)) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInFriendsgroup)
+            return
+        }
+
+        waitInvoke(2000, true, {
+            LogUtil.log("actionBarInConversations 继续等待, view.height  = ${actionBar.height}")
+            actionBar.height > 0
+        }, {
+            val bg = AppCustomConfig.getTabBg(0)
+            val location = IntArray(2)
+//            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
+            actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
+            val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
+            actionBar.background = NightModeUtils.getForegroundDrawable(background)
+
+
+            if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
+                LogUtil.log("已找到聊天界面")
+                Objects.Main.actionBarInConversations = actionBar
+                _actionBarBitmapInConversations = background
+                TitleColorHook.setConversationColor()
+
+
+            } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
+                LogUtil.log("已找到朋友圈界面")
+                _actionBarBitmapInFriendsgroup = background
+            }
+        })
     }
 
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
@@ -79,47 +124,6 @@ object BackgroundImageUtils {
         return _actionBarBitmap[page]
     }
 
-    fun setActionBarBitmapInConversations(actionBar: View) {
-        if (!HookConfig.is_hook_bg_immersion) {
-            actionBar.background = NightModeUtils.getForegroundDrawable(null)
-            return
-        }
-        //todo 是否要去掉朋友圈判断
-        if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
-            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
-            TitleColorHook.setConversationColor()
-            return
-        } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar) && (_actionBarBitmapInFriendsgroup != null)) {
-            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInFriendsgroup)
-            return
-        }
-        waitInvoke(2000, true, {
-            LogUtil.log("actionBarInConversations 继续等待, view.height  = ${actionBar.height}")
-            actionBar.height > 0
-        }, {
-            val bg = AppCustomConfig.getTabBg(0)
-            val location = IntArray(2)
-//            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
-            actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
-            val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
-            actionBar.background = NightModeUtils.getForegroundDrawable(background)
-
-
-            if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
-                LogUtil.log("已找到聊天界面")
-                Objects.Main.actionBarInConversations = actionBar
-                _actionBarBitmapInConversations = background
-                TitleColorHook.setConversationColor()
-
-
-            } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
-                LogUtil.log("已找到朋友圈界面")
-                _actionBarBitmapInFriendsgroup = background
-            }
-        })
-    }
-
     fun setTabLayoutBitmap(page: Int) {
         if (!HookConfig.is_hook_bg_immersion) {
             Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(null)
@@ -130,15 +134,21 @@ object BackgroundImageUtils {
             Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(_tabLayoutBitmap[page])
             return
         }
-        val bg = AppCustomConfig.getTabBg(page)
-
-
-        waitInvoke(100, false, {
-
-            LogUtil.log("setTabLayoutBitmap 继续等待, tabLayout.height = ${Objects.Main.tabLayout?.height}")
+        LogUtil.log("Getting TabLayoutBitmap, $page")
+        waitInvoke(500, true, {
+            LogUtil.log("setTabLayoutBitmap[$page] 继续等待, tabLayout.height = ${Objects.Main.tabLayout?.height}")
             (Objects.Main.tabLayout != null) && (Objects.Main.tabLayout!!.height > 0)
 //            _actionBarLocation[1] > 0
-        },
+        }, {
+            val location = IntArray(2)
+            val bg = AppCustomConfig.getTabBg(page)
+//            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
+            Objects.Main.tabLayout!!.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
+            _tabLayoutBitmap[page] = cutBitmap("TabLayoutBitmap", bg, location[1], Objects.Main.tabLayout!!.height)
+            Objects.Main.tabLayout!!.background = NightModeUtils.getForegroundDrawable(_tabLayoutBitmap[page])
+
+        }
 //                {
 ////        if (this._tabLayoutLocation[1] < 0) {
 //            this._tabLayoutLocation[0] = HookConfig.statusBarHeight + _actionBarLocation[0]
@@ -148,13 +158,7 @@ object BackgroundImageUtils {
 //            LogUtil.log("Got TabLayoutBitmap, $page")
 //            Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(_tabLayoutBitmap[page])
 //        })
-                {
-                    val location = IntArray(2)
-//            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
-                    Objects.Main.tabLayout!!.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
-                    Objects.Main.tabLayout!!.background = NightModeUtils.getBackgroundDrawable(cutBitmap("TabLayoutBitmap", bg, location[1], Objects.Main.tabLayout!!.height))
-                })
+        )
 
     }
 
@@ -171,7 +175,9 @@ object BackgroundImageUtils {
         LogUtil.log("Got TabLayoutBitmapAtBottom, $page")
         return _tabLayoutBitmap[page]
     }
+    //endregion
 
+    //region 背景
     fun setConversationBitmap(view: View) {
 //        LogUtil.log("=============0===============")
         val bg = AppCustomConfig.getTabBg(0)
@@ -199,13 +205,14 @@ object BackgroundImageUtils {
         val bg = AppCustomConfig.getTabBg(3)
         setMainPageBitmap("setSettingsBitmap", view, bg, false, true, false)
     }
+    //endregion
 
     fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap,
                           cutActionBarHeight: Boolean,
                           addTablayoutHeight: Boolean = false,
                           cutStatusBarHeight: Boolean = true) {
         var height = 0
-        waitInvoke(100, true, {
+        waitInvoke(800, true, {
             val mActionBar = Objects.Main.HomeUI_mActionBar
             LogUtil.log("$logHead 继续等待, _tabLayoutLocation[1] = ${_tabLayoutLocation[1]}, " +
                     "mActionBar==null = ${mActionBar == null}, _actionBarLocation[1]=${_actionBarLocation[1]}")
@@ -247,30 +254,34 @@ object BackgroundImageUtils {
         //以上内容不可删除
 
         //由于未知因素, 需要对非1080*1920分辨率屏幕作调整
-        if (!logHead.equals("setDiscoverBitmap")) {
-            waitInvoke(100, true, {
-                LogUtil.log("$logHead 继续等待, view.height  = ${view.height}")
-                view.height > 0
-            }, {
-                val location = IntArray(2)
+//        if (!logHead.equals("setDiscoverBitmap")) {
+        waitInvoke(500, true, {
+            LogUtil.log("$logHead 继续等待, view.height  = ${view.height}")
+            view.height > 0
+        }, {
+            val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
-                view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+            view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
 //                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
-                view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, location[1], view.height))
-                if (logHead.equals("setContactBitmap")) {
-                    _contactPageLocation[0] = location[1]
-                    _contactPageLocation[1] = view.height
-                    //联系人界面和发现界面长宽比一样，故联系人界面可作发现界面的参考
-                    DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, _contactPageLocation[0], _contactPageLocation[1]))
-                    //回到最近对话界面
-                    Objects.Main.LauncherUI_mViewPager?.apply {
-                        Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
-                    }
+            view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, location[1], view.height))
+            if (logHead.equals("setContactBitmap")) {
+                _contactPageLocation[0] = location[1]
+                _contactPageLocation[1] = view.height
+                //联系人界面和发现界面长宽比一样，故联系人界面可作发现界面的参考
+                DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(
+                        cutBitmap(logHead, AppCustomConfig.getTabBg(2),
+                                _contactPageLocation[0], _contactPageLocation[1]))
+                //回到最近对话界面
+                Objects.Main.LauncherUI_mViewPager?.apply {
+                    Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
                 }
-            })
-        } else if (_contactPageLocation[1] > 0) {
-            view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, _contactPageLocation[0], _contactPageLocation[1]))
-        }
+            }
+        })
+//        } else if (_contactPageLocation[1] > 0) {
+//            view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, AppCustomConfig.getTabBg(2), _contactPageLocation[0], _contactPageLocation[1]))
+//        }
+
+
 //        else {
 //            var height = view.height
 //            var locationOld = IntArray(2)
