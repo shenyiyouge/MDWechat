@@ -55,19 +55,34 @@ object BackgroundImageUtils {
 
     //    var isSettingMap = false//避免重复设置
     fun setActionBarBitmapInConversations(actionBar: View) {
+//        if (isSettingMap) {
+//            LogUtil.log("actionBarInConversations is being set, skipping")
+//            return
+//        } else {
+//            isSettingMap = true
+//        }
         if (!HookConfig.is_hook_bg_immersion) {
             actionBar.background = NightModeUtils.getForegroundDrawable(null)
             return
         }
-        //todo 是否要去掉朋友圈判断
+
+        // TODO 只修改聊天页面
+        val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as View
+        if (!chattingUILayout::class.java.name.equals("com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout")) return
+//        if (!ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)){
+//            LogUtil.log()
+//            return
+//        }
+
         if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
             actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
             TitleColorHook.setConversationColor()
             return
-        } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar) && (_actionBarBitmapInFriendsgroup != null)) {
-            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInFriendsgroup)
-            return
         }
+//        else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar) && (_actionBarBitmapInFriendsgroup != null)) {
+//            actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInFriendsgroup)
+//            return
+//        }
 
         waitInvoke(2000, true, {
             LogUtil.log("actionBarInConversations 继续等待, view.height  = ${actionBar.height}")
@@ -77,10 +92,8 @@ object BackgroundImageUtils {
             val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
             actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
             val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
             actionBar.background = NightModeUtils.getForegroundDrawable(background)
-
 
             if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
                 LogUtil.log("已找到聊天界面")
@@ -88,11 +101,11 @@ object BackgroundImageUtils {
                 _actionBarBitmapInConversations = background
                 TitleColorHook.setConversationColor()
 
-
             } else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
                 LogUtil.log("已找到朋友圈界面")
                 _actionBarBitmapInFriendsgroup = background
             }
+//            isSettingMap = false
         })
     }
 
