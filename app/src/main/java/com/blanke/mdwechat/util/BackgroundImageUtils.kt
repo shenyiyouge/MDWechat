@@ -121,8 +121,10 @@ object BackgroundImageUtils {
     }
 
     fun setTabLayoutBitmap(page: Int) {
-        if (!HookConfig.is_hook_bg_immersion) return
-        LogUtil.log("Getting TabLayoutBitmap, $page")
+        if (!HookConfig.is_hook_bg_immersion) {
+            Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(null)
+            return
+        }
 //        return null
         if (_tabLayoutBitmap[page] != null) {
             Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(_tabLayoutBitmap[page])
