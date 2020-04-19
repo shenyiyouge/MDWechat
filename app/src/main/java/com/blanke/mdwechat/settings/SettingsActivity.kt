@@ -15,6 +15,7 @@ import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.R
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.util.FileUtils
+import com.blanke.mdwechat.util.LogUtil
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -26,13 +27,13 @@ import kotlin.concurrent.thread
  */
 
 class SettingsActivity : Activity() {
-    var a: Activity? = null
-    fun get(): Activity? {
-        if (a == null) {
-            a = SettingsActivity()
-        }
-        return a
-    }
+//    var a: Activity? = null
+//    fun get(): Activity? {
+//        if (a == null) {
+//            a = SettingsActivity()
+//        }
+//        return a
+//    }
 
     private lateinit var fab: View
 
@@ -44,8 +45,14 @@ class SettingsActivity : Activity() {
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
             copyConfig()
+            _clearLogs()
             goToWechatSettingPage()
         }
+    }
+
+    private fun _clearLogs() {
+        LogUtil.clearFileLogs(SettingsFragment.STATIC.isLogFile)
+        Toast.makeText(this, getString(R.string.msg_clear_ok), Toast.LENGTH_SHORT).show()
     }
 
     private fun showSettingsFragment() {

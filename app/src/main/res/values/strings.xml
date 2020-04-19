@@ -137,7 +137,7 @@
     <string name="key_reset_icon_config">key_reset_icon_config</string>
     <string name="text_reset_icon_config">重置图标资源</string>
     <string name="text_reset_icon_config_info">如果你替换图标效果不理想/无效,请重置,目录在/sdcard/mdwechat/icon/目录下,替换图标尽量保证尺寸一致,否则可能显示会有问题</string>
-    <string name="msg_clear_ok">清空成功</string>
+    <string name="msg_clear_ok">日志清空成功</string>
     <string name="msg_reset_ok">重置成功,请重启微信</string>
     <string name="msg_reset_mdwechat_ok">重置成功,请手动重启本程序</string>
     <string name="msg_reset_failed">重置失败,请检查/sdcard/mdwechat目录的权限</string>

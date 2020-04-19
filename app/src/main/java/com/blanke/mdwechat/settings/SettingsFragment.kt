@@ -41,6 +41,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     object STATIC {
         lateinit var sharedPrefsFile: File
         lateinit var sdSPFile: File
+        var isLogFile: Boolean = false
     }
 
     private fun getWechatPath(): String {
@@ -50,6 +51,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val _this = this
         super.onCreate(savedInstanceState)
         EventBus.getDefault().register(this)
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
@@ -57,7 +59,6 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         addPreferencesFromResource(R.xml.pref_settings)
         setLayoutResource(preferenceScreen)
         setResolution()
-        _clearLogs()
 
 //        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
 //        //隐藏主界面部分选项
@@ -75,6 +76,11 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
 //        findPreference(getString(R.string.key_tab_layout_on_top))?.onPreferenceChangeListener = this
 //        findPreference(getString(R.string.key_mini_program_title))?.onPreferenceChangeListener = this
+
+        findPreference(getString(R.string.key_hook_log))?.apply {
+            onPreferenceChangeListener = _this
+            STATIC.isLogFile = (this as SwitchPreference).isChecked
+        }
         findPreference("key_clear_logs")?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
 
@@ -136,6 +142,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
     override fun onPreferenceChange(preference: Preference, o: Any): Boolean {
         when (preference.key) {
+            getString(R.string.key_hook_log) -> STATIC.isLogFile = (findPreference(getString(R.string.key_hook_log)) as SwitchPreference).isChecked
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
 //            getString(R.string.key_mini_program_title) -> setSummary(o as String)
@@ -186,7 +193,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     }
 
     private fun _clearLogs() {
-        clearFileLogs()
+        clearFileLogs(STATIC.isLogFile)
         Toast.makeText(activity, getString(R.string.msg_clear_ok), Toast.LENGTH_SHORT).show()
     }
 
