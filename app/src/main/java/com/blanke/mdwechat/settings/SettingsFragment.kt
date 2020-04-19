@@ -399,15 +399,18 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 //    private val isSupportWechat: Boolean
 //        get() = false
     fun setResolution() {
+        val setManually = findPreference(getString(R.string.key_change_resolution)) as SwitchPreference
         val textPreference = findPreference(getString(R.string.key_resolution)) as EditTextPreference
-//        val resolution = textPreference.text
-//                .replace(" ", "")
-//                .replace("，", ",")
-//                .split(",")
-//        try {
-//            if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) return
-//        } catch (e: java.lang.Exception) {
-//        }
+        if (!setManually.isChecked) {
+            val resolution = textPreference.text
+                    .replace(" ", "")
+                    .replace("，", ",")
+                    .split(",")
+            try {
+                if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) return
+            } catch (e: java.lang.Exception) {
+            }
+        }
         val dm = resources.displayMetrics
         val screenWidth = dm.widthPixels
         val screenHeight = dm.heightPixels
