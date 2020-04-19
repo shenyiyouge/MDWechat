@@ -401,7 +401,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     fun setResolution() {
         val setManually = findPreference(getString(R.string.key_change_resolution)) as SwitchPreference
         val textPreference = findPreference(getString(R.string.key_resolution)) as EditTextPreference
-        if (!setManually.isChecked) {
+        if (setManually.isChecked) {
             val resolution = textPreference.text
                     .replace(" ", "")
                     .replace("，", ",")
