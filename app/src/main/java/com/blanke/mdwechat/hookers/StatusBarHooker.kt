@@ -51,7 +51,9 @@ object StatusBarHooker : HookerProvider {
                     val activity = param.thisObject as Activity
 //                    LogUtil.log("activity onCreate " + activity)
                     val statusView = View(activity)
-                    Objects.Main.statusView = statusView
+                    if (activity::class.java.equals(Classes.LauncherUI)) {
+                        Objects.Main.statusView = statusView
+                    }
                     statusView.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getStatusBarBitmap(0))
                     statusView.elevation = 1F
 //                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
