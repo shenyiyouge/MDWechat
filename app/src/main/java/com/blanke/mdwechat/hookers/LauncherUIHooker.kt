@@ -134,7 +134,7 @@ object LauncherUIHooker : HookerProvider {
                                 log(e)
                             }
                         } else {
-                            BackgroundImageUtils._tabLayoutLocation[1] = 0
+                            BackgroundImageUtils._tabLayoutLocation[1] = -1
                         }
                         if (shouldFix) {
                             // 隐藏 action bar 测试

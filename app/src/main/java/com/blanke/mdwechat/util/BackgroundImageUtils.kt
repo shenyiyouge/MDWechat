@@ -25,11 +25,16 @@ object BackgroundImageUtils {
     var DiscoverPage: View? = null
 
     //region 导航
+    var position = 0
     fun setGuideBarBitmaps(page: Int) {
-        LogUtil.logOnlyOnce("翻页操作: $page", "")
-        LogUtil.logOnlyOnce("Objects.Main.statusView=${Objects.Main.statusView}", "")
-        LogUtil.logOnlyOnce("Objects.Main.actionBar=${Objects.Main.actionBar}", "")
-        LogUtil.logOnlyOnce("Objects.Main.tabLayout=${Objects.Main.tabLayout}", "")
+        if (position == page) {
+            return
+        }
+        position = page
+        LogUtil.log("翻页操作: $page")
+//        LogUtil.logOnlyOnce("Objects.Main.statusView=${Objects.Main.statusView}", "")
+//        LogUtil.logOnlyOnce("Objects.Main.actionBar=${Objects.Main.actionBar}", "")
+//        LogUtil.logOnlyOnce("Objects.Main.tabLayout=${Objects.Main.tabLayout}", "")
         Objects.Main.statusView?.background = NightModeUtils.getForegroundDrawable(getStatusBarBitmap(page))
         if (!HookConfig.is_hook_hide_actionbar) {
             Objects.Main.actionBar?.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(_actionBarLocation[1], page))
@@ -84,7 +89,7 @@ object BackgroundImageUtils {
 //            return
 //        }
 
-        waitInvoke(2000, true, {
+        waitInvoke(200, true, {
             LogUtil.log("actionBarInConversations 继续等待, view.height  = ${actionBar.height}")
             actionBar.height > 0
         }, {
@@ -110,14 +115,14 @@ object BackgroundImageUtils {
     }
 
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
-        if (!HookConfig.is_hook_bg_immersion) {
+        if (!HookConfig.is_hook_bg_immersion || (HookConfig.is_hook_hide_actionbar)) {
             _actionBarLocation[1] = -1
 //        todo change         _tabLayoutLocation[1] = -1             TO               _actionBarLocation[1] = -1
             return null
         }
         if (_actionBarBitmap[page] != null) return _actionBarBitmap[page]!!
         LogUtil.log("Getting ActionBarBitmap, $page")
-        _actionBarBitmap[page] = if ((actionBarHeight == 0) || (HookConfig.is_hook_hide_actionbar)) {
+        _actionBarBitmap[page] = if (actionBarHeight == 0) {
             null
         } else {
             val bg = AppCustomConfig.getTabBg(page)
@@ -160,7 +165,8 @@ object BackgroundImageUtils {
 //                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
             _tabLayoutBitmap[page] = cutBitmap("TabLayoutBitmap", bg, location[1], Objects.Main.tabLayout!!.height)
             Objects.Main.tabLayout!!.background = NightModeUtils.getForegroundDrawable(_tabLayoutBitmap[page])
-
+            _tabLayoutLocation[0] = location[1]
+            _tabLayoutLocation[1] = Objects.Main.tabLayout!!.height
         }
 //                {
 ////        if (this._tabLayoutLocation[1] < 0) {
@@ -224,6 +230,9 @@ object BackgroundImageUtils {
                           cutActionBarHeight: Boolean,
                           addTablayoutHeight: Boolean = false,
                           cutStatusBarHeight: Boolean = true) {
+        setBitmap(logHead, view, bg, cutActionBarHeight, addTablayoutHeight, cutStatusBarHeight, 0)
+        return
+
         var height = 0
         waitInvoke(800, true, {
             val mActionBar = Objects.Main.HomeUI_mActionBar
@@ -234,7 +243,7 @@ object BackgroundImageUtils {
             if (_actionBarLocation[1] == 0 && height > 0) _actionBarLocation[1] = height
 //            LogUtil.log("${_tabLayoutLocation[1]} ${(mActionBar != null)} ${_actionBarLocation[1]}")
 //            LogUtil.log("${(_tabLayoutLocation[1] >= 0)} ${mActionBar != null} ${_actionBarLocation[1] != 0}")
-            (_tabLayoutLocation[1] >= 0) && (mActionBar != null) && (_actionBarLocation[1] != 0)
+            (_tabLayoutLocation[1] != 0) && (mActionBar != null) && (_actionBarLocation[1] != 0)
         }, {
             setBitmap(logHead, view, bg, cutActionBarHeight, addTablayoutHeight, cutStatusBarHeight, height)
         })
@@ -248,23 +257,24 @@ object BackgroundImageUtils {
                   addTablayoutHeight: Boolean,
                   cutStatusBarHeight: Boolean,
                   actionBarHeight: Int) {
-        var y = HookConfig.value_main_text_offset
-        var heightPlus = 0
-        if (cutActionBarHeight) y += actionBarHeight
-        if (cutStatusBarHeight) y += HookConfig.statusBarHeight
-        if (HookConfig.is_hook_hide_actionbar) y -= actionBarHeight
-        if (addTablayoutHeight && !HookConfig.is_tab_layout_on_top) heightPlus = _tabLayoutLocation[1]
-
-        val _mainPageBitmap: Bitmap
-        if (HookConfig.is_tab_layout_on_top) {
-            y = y + _tabLayoutLocation[1]
-            _mainPageBitmap = cutBitmap(logHead, bg, y, bg.height - y + heightPlus)
-        } else {
-            _mainPageBitmap = cutBitmap(logHead, bg, y, bg.height - y - _tabLayoutLocation[1] + heightPlus)
-        }
-
-        view.background = NightModeUtils.getBackgroundDrawable(_mainPageBitmap)
-        //以上内容不可删除
+        //region todo
+//        var y = HookConfig.value_main_text_offset
+//        var heightPlus = 0
+//        if (cutActionBarHeight) y += actionBarHeight
+//        if (cutStatusBarHeight) y += HookConfig.statusBarHeight
+//        if (HookConfig.is_hook_hide_actionbar) y -= actionBarHeight
+//        if (addTablayoutHeight && !HookConfig.is_tab_layout_on_top) heightPlus = _tabLayoutLocation[1]
+//
+//        val _mainPageBitmap: Bitmap
+//        if (HookConfig.is_tab_layout_on_top) {
+//            y = y + _tabLayoutLocation[1]
+//            _mainPageBitmap = cutBitmap(logHead, bg, y, bg.height - y + heightPlus)
+//        } else {
+//            _mainPageBitmap = cutBitmap(logHead, bg, y, bg.height - y - _tabLayoutLocation[1] + heightPlus)
+//        }
+//
+//        view.background = NightModeUtils.getBackgroundDrawable(_mainPageBitmap)
+        //endregion 以上内容不可删除
 
         //由于未知因素, 需要对非1080*1920分辨率屏幕作调整
 //        if (!logHead.equals("setDiscoverBitmap")) {
