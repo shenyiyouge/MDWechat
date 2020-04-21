@@ -3,11 +3,13 @@ package com.blanke.mdwechat.hookers
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.ListView
 import com.blanke.mdwechat.CC
 import com.blanke.mdwechat.Classes
 import com.blanke.mdwechat.Classes.ConversationListView
 import com.blanke.mdwechat.Classes.ConversationWithAppBrandListView
 import com.blanke.mdwechat.Fields.ConversationFragment_mListView
+import com.blanke.mdwechat.Methods.ConversationWithAppBrandListView_isAppBrandHeaderEnable
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WechatGlobal
@@ -26,7 +28,7 @@ object ConversationHooker : HookerProvider {
     override fun provideStaticHookers(): List<Hooker>? {
         return listOf(
                 resumeHook,
-//                disableAppBrand,
+                disableAppBrand,
                 headViewHook
         )
     }
@@ -87,34 +89,34 @@ object ConversationHooker : HookerProvider {
     }
 
 //7.0.3以上无法使用
-//    private val disableAppBrand = Hooker {
-//        if (WechatGlobal.wxVersion!! <= Version("7.0.3")) {
-//            XposedHelpers.findAndHookMethod(ConversationWithAppBrandListView,
-//                    ConversationWithAppBrandListView_isAppBrandHeaderEnable.name, CC.Boolean, object : XC_MethodHook() {
-//                override fun beforeHookedMethod(param: MethodHookParam) {
-//                    if (HookConfig.is_hook_remove_appbrand) {
-//                        try {
-//                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-//                                val listView = param.thisObject as ListView
-//                                val mHeaderViewInfos = XposedHelpers.getObjectField(listView, "mHeaderViewInfos") as List<*>
-//                                if (mHeaderViewInfos.isNotEmpty()) {
-//                                    val firstHeadView = mHeaderViewInfos[0] as ListView.FixedViewInfo
-//                                    val mAppBrandDesktopHalfContainer = firstHeadView.view as ViewGroup
-////                                LogUtil.log("firstHeadView=${firstHeadView.view}")
-//                                    if (mAppBrandDesktopHalfContainer::class.java.name.contains("AppBrandDesktopHalfContainer")) {
-//                                        mAppBrandDesktopHalfContainer.getChildAt(1)?.visibility = View.GONE
-//                                    }
-//                                }
-//                            }
-//                        } catch (t: Throwable) {
-//                            LogUtil.log(t)
-//                        }
-//                        param.result = false
-//                    }
-//                }
-//            })
-//        }
-//    }
+private val disableAppBrand = Hooker {
+    if (WechatGlobal.wxVersion!! <= Version("7.0.3")) {
+        XposedHelpers.findAndHookMethod(ConversationWithAppBrandListView,
+                ConversationWithAppBrandListView_isAppBrandHeaderEnable.name, CC.Boolean, object : XC_MethodHook() {
+            override fun beforeHookedMethod(param: MethodHookParam) {
+                if (HookConfig.is_hook_remove_appbrand) {
+                    try {
+                        if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                            val listView = param.thisObject as ListView
+                            val mHeaderViewInfos = XposedHelpers.getObjectField(listView, "mHeaderViewInfos") as List<*>
+                            if (mHeaderViewInfos.isNotEmpty()) {
+                                val firstHeadView = mHeaderViewInfos[0] as ListView.FixedViewInfo
+                                val mAppBrandDesktopHalfContainer = firstHeadView.view as ViewGroup
+//                                LogUtil.log("firstHeadView=${firstHeadView.view}")
+                                if (mAppBrandDesktopHalfContainer::class.java.name.contains("AppBrandDesktopHalfContainer")) {
+                                    mAppBrandDesktopHalfContainer.getChildAt(1)?.visibility = View.GONE
+                                }
+                            }
+                        }
+                    } catch (t: Throwable) {
+                        LogUtil.log(t)
+                    }
+                    param.result = false
+                }
+            }
+        })
+    }
+}
 
     private val headViewHook = Hooker {
         XposedHelpers.findAndHookMethod(CC.ListView, "addHeaderView", CC.View, CC.Object, CC.Boolean,

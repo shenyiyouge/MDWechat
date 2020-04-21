@@ -222,15 +222,15 @@
             </PreferenceCategory>
 
             <!--聊天列表页-->
-            <!--        <PreferenceCategory-->
-            <!--            android:dependency="@string/key_hook_switch"-->
-            <!--            android:key="@string/key_conversation_settings"-->
-            <!--            android:title="@string/text_conversation_settings">-->
-            <!--            <SwitchPreference-->
-            <!--                android:defaultValue="false"-->
-            <!--                android:key="@string/key_hook_remove_appbrand"-->
-            <!--                android:summary="@string/key_hook_remove_appbrand_summary"-->
-            <!--                android:title="@string/text_hook_remove_appbrand" />-->
+            <PreferenceCategory
+                android:dependency="@string/key_hook_switch"
+                android:key="@string/key_conversation_settings"
+                android:title="@string/text_conversation_settings">
+                <SwitchPreference
+                    android:defaultValue="false"
+                    android:key="@string/key_hook_remove_appbrand"
+                    android:summary="@string/key_hook_remove_appbrand_summary"
+                    android:title="@string/text_hook_remove_appbrand" />
             <!--            <EditTextPreference-->
             <!--                android:defaultValue="@string/value_mini_program_title"-->
             <!--                android:key="@string/key_mini_program_title"-->
@@ -239,7 +239,7 @@
             <!--                android:summary="@string/summary_mini_program_title"-->
             <!--                android:title="@string/text_mini_program_title" />-->
 
-            <!--        </PreferenceCategory>-->
+            </PreferenceCategory>
         </PreferenceScreen>
         <!--聊天页设置-->
         <PreferenceScreen
