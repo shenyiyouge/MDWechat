@@ -267,8 +267,9 @@ object ListViewHooker : HookerProvider {
                             wechatTextView.setTextColor(titleTextColor)
                             XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
                         }
-                        ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("headView")!!)
-                                ?.background = defaultImageRippleDrawable
+                        VTTV.SettingAvatarView.treeStacks.get("headView")?.apply {
+                            ViewUtils.getChildView1(view, this)?.background = defaultImageRippleDrawable
+                        }
                     }
 
                     // (7.0.7 以上) 下拉小程序框
