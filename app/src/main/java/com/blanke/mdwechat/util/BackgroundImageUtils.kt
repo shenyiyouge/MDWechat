@@ -9,7 +9,6 @@ import com.blanke.mdwechat.ViewTreeRepoThisVersion
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.main.TitleColorHook
-import de.robv.android.xposed.XposedHelpers
 
 object BackgroundImageUtils {
     //  (y,height)
@@ -200,13 +199,13 @@ object BackgroundImageUtils {
     fun setConversationBitmap(view: View) {
 //        LogUtil.log("=============0===============")
         val bg = AppCustomConfig.getTabBg(0)
-        setMainPageBitmap("setConversationBitmap", view, bg, false, true)
+        setMainPageBitmap("setConversationBitmap", view, bg)
     }
 
     fun setContactBitmap(view: View) {
 //        LogUtil.log("=============1===============")
         val bg = AppCustomConfig.getTabBg(1)
-        setMainPageBitmap("setContactBitmap", view, bg, true)
+        setMainPageBitmap("setContactBitmap", view, bg)
     }
 
     fun setDiscoverBitmap(view: View) {
@@ -222,62 +221,11 @@ object BackgroundImageUtils {
     fun setSettingsBitmap(view: View) {
 //        LogUtil.log("============3================")
         val bg = AppCustomConfig.getTabBg(3)
-        setMainPageBitmap("setSettingsBitmap", view, bg, false, true, false)
+        setMainPageBitmap("setSettingsBitmap", view, bg)
     }
     //endregion
 
-    fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap,
-                          cutActionBarHeight: Boolean,
-                          addTablayoutHeight: Boolean = false,
-                          cutStatusBarHeight: Boolean = true) {
-        setBitmap(logHead, view, bg, cutActionBarHeight, addTablayoutHeight, cutStatusBarHeight, 0)
-        return
-
-        var height = 0
-        waitInvoke(800, true, {
-            val mActionBar = Objects.Main.HomeUI_mActionBar
-            LogUtil.log("$logHead 继续等待, _tabLayoutLocation[1] = ${_tabLayoutLocation[1]}, " +
-                    "mActionBar==null = ${mActionBar == null}, _actionBarLocation[1]=${_actionBarLocation[1]}")
-            if (mActionBar != null) height = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
-            //todo action bar height
-            if (_actionBarLocation[1] == 0 && height > 0) _actionBarLocation[1] = height
-//            LogUtil.log("${_tabLayoutLocation[1]} ${(mActionBar != null)} ${_actionBarLocation[1]}")
-//            LogUtil.log("${(_tabLayoutLocation[1] >= 0)} ${mActionBar != null} ${_actionBarLocation[1] != 0}")
-            (_tabLayoutLocation[1] != 0) && (mActionBar != null) && (_actionBarLocation[1] != 0)
-        }, {
-            setBitmap(logHead, view, bg, cutActionBarHeight, addTablayoutHeight, cutStatusBarHeight, height)
-        })
-    }
-
-    //actionBarHeight确定之后再执行
-    fun setBitmap(logHead: String,
-                  view: View,
-                  bg: Bitmap,
-                  cutActionBarHeight: Boolean,
-                  addTablayoutHeight: Boolean,
-                  cutStatusBarHeight: Boolean,
-                  actionBarHeight: Int) {
-        //region todo
-//        var y = HookConfig.value_main_text_offset
-//        var heightPlus = 0
-//        if (cutActionBarHeight) y += actionBarHeight
-//        if (cutStatusBarHeight) y += HookConfig.statusBarHeight
-//        if (HookConfig.is_hook_hide_actionbar) y -= actionBarHeight
-//        if (addTablayoutHeight && !HookConfig.is_tab_layout_on_top) heightPlus = _tabLayoutLocation[1]
-//
-//        val _mainPageBitmap: Bitmap
-//        if (HookConfig.is_tab_layout_on_top) {
-//            y = y + _tabLayoutLocation[1]
-//            _mainPageBitmap = cutBitmap(logHead, bg, y, bg.height - y + heightPlus)
-//        } else {
-//            _mainPageBitmap = cutBitmap(logHead, bg, y, bg.height - y - _tabLayoutLocation[1] + heightPlus)
-//        }
-//
-//        view.background = NightModeUtils.getBackgroundDrawable(_mainPageBitmap)
-        //endregion 以上内容不可删除
-
-        //由于未知因素, 需要对非1080*1920分辨率屏幕作调整
-//        if (!logHead.equals("setDiscoverBitmap")) {
+    fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap) {
         waitInvoke(500, true, {
             LogUtil.log("$logHead 继续等待, view.height  = ${view.height}")
             view.height > 0
@@ -285,7 +233,6 @@ object BackgroundImageUtils {
             val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
             view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-//                LogUtil.log("=================$logHead TRULY: ${location[1]} ${location[1] + view.height}")
             view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, location[1], view.height))
             if (logHead.equals("setContactBitmap")) {
                 _contactPageLocation[0] = location[1]
@@ -300,26 +247,6 @@ object BackgroundImageUtils {
                 }
             }
         })
-//        } else if (_contactPageLocation[1] > 0) {
-//            view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, AppCustomConfig.getTabBg(2), _contactPageLocation[0], _contactPageLocation[1]))
-//        }
-
-
-//        else {
-//            var height = view.height
-//            var locationOld = IntArray(2)
-//            val location = IntArray(2)
-//            view.getLocationOnScreen(locationOld);//获取在整个屏幕内的绝对坐标
-//            waitInvoke(1000, true, { true }, {
-//                view.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
-//                if ((view.height != height) || (!locationOld.contentEquals(location))) {
-//                    height = view.height
-//                    locationOld = location
-//                    LogUtil.log("============@@@@@@@@@=====$logHead 变化: ${location[1]} ${view.height}")
-//                    view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, location[1], view.height))
-//                }
-//            })
-//        }
     }
 
     fun cutBitmap(logHead: String, source: Bitmap, y: Int, height: Int): Bitmap {
