@@ -37,6 +37,10 @@ object TitleColorHook {
             return
         }
 
+        val chattingBgShade = ViewUtils.getChildView1(chattingUILayout,
+                VTTV.ChattingUILayoutItem.treeStacks.get("chattingBgShade")!!) as View
+        chattingBgShade.setBackgroundColor(0)
+
         val chatFooterChild2 = ViewUtils.getChildView1(chattingUILayout,
                 VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2")!!) as View
 //        chatFooterChild2.background= ColorDrawable(Color.parseColor("#00000000"))

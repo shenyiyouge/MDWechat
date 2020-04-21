@@ -1109,7 +1109,8 @@ object ViewTreeRepo {
 
     val ChattingUILayoutItem: ViewTree by lazy {
         ViewTree(
-                mapOf("chatFooterChild2" to intArrayOf(2, 1, 0),
+                mapOf("chattingBgShade" to intArrayOf(2, 0, 0, 1),
+                        "chatFooterChild2" to intArrayOf(2, 1, 0),
                         "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
                         "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0),
                         "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
@@ -1121,7 +1122,10 @@ object ViewTreeRepo {
                         ViewTreeRepoThisVersion.ActionBarInConversationItem.item,
                         ViewTreeItem("android.view.ViewStub"),
                         ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingScrollLayout", arrayOf(
-                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingContent"),
+                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingContent", arrayOf(
+                                        ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                ViewTreeItem("com.tencent.mm.ui.chatting.ChattingImageBGView"),
+                                                ViewTreeItem(CC.ImageView.name))))),
                                 ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChatFooter", arrayOf(
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
@@ -1160,7 +1164,8 @@ object ViewTreeRepo {
 
     val ChattingUILayoutItem_7_0_13: ViewTree by lazy {
         ViewTree(
-                mapOf("chatFooterChild2" to intArrayOf(2, 1, 0, 1),
+                mapOf("chattingBgShade" to intArrayOf(2, 0, 0, 1),
+                        "chatFooterChild2" to intArrayOf(2, 1, 0, 1),
                         "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
                         "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0),
                         "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
@@ -1172,7 +1177,10 @@ object ViewTreeRepo {
                         ViewTreeRepoThisVersion.ActionBarInConversationItem.item,
                         ViewTreeItem("android.view.ViewStub"),
                         ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingScrollLayout", arrayOf(
-                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingContent"),
+                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingContent", arrayOf(
+                                        ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                ViewTreeItem("com.tencent.mm.ui.chatting.ChattingImageBGView"),
+                                                ViewTreeItem(CC.ImageView.name))))),
                                 ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChatFooter", arrayOf(
                                         ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                                 ViewTreeItem(CC.RelativeLayout.name),
