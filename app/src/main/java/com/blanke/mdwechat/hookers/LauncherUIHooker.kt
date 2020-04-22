@@ -26,6 +26,7 @@ import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
 import com.blanke.mdwechat.util.BackgroundImageUtils
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
@@ -134,12 +135,14 @@ object LauncherUIHooker : HookerProvider {
                                 log(e)
                             }
                         } else {
+                            log("不用添加 TabLayout")
                             BackgroundImageUtils._tabLayoutLocation[1] = -1
                         }
                         if (shouldFix) {
                             // 隐藏 action bar 测试
                             HomeActionBarHook.fix(linearViewGroup)
                         }
+                        log("fix completed")
                         //endregion
 
                         // float menu
@@ -153,6 +156,7 @@ object LauncherUIHooker : HookerProvider {
                             }
                         }
                         XposedHelpers.setAdditionalInstanceField(activity, keyInit, true)
+                        LogUtil.log("LaunchUI Hook Completed.")
                     }
                 })
     }

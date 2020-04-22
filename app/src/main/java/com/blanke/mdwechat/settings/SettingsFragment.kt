@@ -60,6 +60,10 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         setLayoutResource(preferenceScreen)
         setResolution()
 
+        // 禁用 详细日志
+        findPreference(getString(R.string.key_hook_debug))?.apply {
+            (this as SwitchPreference).isChecked = false
+        }
 //        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
 //        //隐藏主界面部分选项
 //        val main_settings=findPreference(getString(R.string.key_main_settings))as PreferenceScreen

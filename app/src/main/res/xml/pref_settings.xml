@@ -7,6 +7,7 @@
         android:summary="@string/summary"
         android:title="@string/app_name_version" />
     <!--    <EditTextPreference-->
+    <!--        android:defaultValue="0 -1 0 -1"-->
     <!--        android:key="debugConfigText"-->
     <!--        android:title="debugConfigText" />-->
     <!--    <EditTextPreference-->
@@ -157,6 +158,7 @@
                     android:defaultValue="true"
                     android:dependency="@string/key_hook_tab_bg"
                     android:key="@string/key_hook_bg_immersion"
+                    android:summary="@string/summary_hook_bg_immersion"
                     android:title="@string/text_hook_bg_immersion" />
                 <SwitchPreference
                     android:layout="@layout/preference_hidden"
@@ -231,13 +233,13 @@
                     android:key="@string/key_hook_remove_appbrand"
                     android:summary="@string/key_hook_remove_appbrand_summary"
                     android:title="@string/text_hook_remove_appbrand" />
-            <!--            <EditTextPreference-->
-            <!--                android:defaultValue="@string/value_mini_program_title"-->
-            <!--                android:key="@string/key_mini_program_title"-->
-            <!--                android:selectAllOnFocus="true"-->
-            <!--                android:singleLine="true"-->
-            <!--                android:summary="@string/summary_mini_program_title"-->
-            <!--                android:title="@string/text_mini_program_title" />-->
+                <!--            <EditTextPreference-->
+                <!--                android:defaultValue="@string/value_mini_program_title"-->
+                <!--                android:key="@string/key_mini_program_title"-->
+                <!--                android:selectAllOnFocus="true"-->
+                <!--                android:singleLine="true"-->
+                <!--                android:summary="@string/summary_mini_program_title"-->
+                <!--                android:title="@string/text_mini_program_title" />-->
 
             </PreferenceCategory>
         </PreferenceScreen>
@@ -444,6 +446,14 @@
             <Preference
                 android:key="@string/key_clear_logs"
                 android:title="@string/text_clear_logs" />
+            <PreferenceCategory>
+                <SwitchPreference
+                    android:defaultValue="false"
+                    android:dependency="@string/key_hook_log"
+                    android:key="@string/key_hook_debug"
+                    android:summary="@string/text_hook_debug_info"
+                    android:title="@string/text_hook_debug" />
+            </PreferenceCategory>
         </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>
