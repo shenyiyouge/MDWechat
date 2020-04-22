@@ -2,7 +2,9 @@ package com.blanke.mdwechat.config
 
 import android.graphics.Color
 import com.blanke.mdwechat.BuildConfig
+import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper
+import com.blanke.mdwechat.WechatGlobal
 import com.blankj.utilcode.util.BarUtils
 
 /**
@@ -10,6 +12,7 @@ import com.blankj.utilcode.util.BarUtils
  */
 
 object HookConfig {
+    private val key_hook_debug = "key_hook_debug"
     private val debugConfigText = "debugConfigText"
     private val debugConfigText1 = "debugConfigText1"
     private val key_main_text_offset = "key_main_text_offset"
@@ -74,6 +77,10 @@ object HookConfig {
     //    private val key_mini_program_title = "key_mini_program_title"
     private val key_hook_night_mode = "key_hook_night_mode"
 
+    val is_hook_debug: Boolean
+        get() {
+            return is_hook_log && WeChatHelper.XMOD_PREFS.getBoolean(key_hook_debug, false)
+        }
     val debug_config_text: String
         get() {
             return WeChatHelper.XMOD_PREFS.getString(debugConfigText, "")!!
@@ -188,10 +195,11 @@ object HookConfig {
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab_bg, true)
         }
-    val is_hook_bg_immersion: Boolean
-        get() {
-            return is_hook_tab_bg && WeChatHelper.XMOD_PREFS.getBoolean(key_hook_bg_immersion, true)
-        }
+    val is_hook_bg_immersion: Boolean by lazy {
+        val version = WechatGlobal.wxVersion!! >= Version("7.0.10")
+        version && is_hook_tab_bg && WeChatHelper.XMOD_PREFS.getBoolean(key_hook_bg_immersion, true)
+    }
+
     val is_hook_tab: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab, true)

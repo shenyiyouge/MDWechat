@@ -105,7 +105,8 @@
     <string name="text_hook_bubble_in_night_mode">深色模式下启用自定义气泡</string>
     <string name="summary_hook_bubble_in_night_mode">依赖于「通用 -> 自适应微信深色模式」</string>
     <string name="key_hook_bg_immersion">key_hook_bg_immersion</string>
-    <string name="text_hook_bg_immersion">背景沉浸(测试)(7.0.13)</string>
+    <string name="text_hook_bg_immersion">背景沉浸</string>
+    <string name="summary_hook_bg_immersion">微信7.0.10以上生效，包含主界面和聊天界面</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
     <string name="summary_hook_tab_bg">自定义配置参见/sdcard/mdwechat/config/view/icon_readme.txt</string>
