@@ -69,8 +69,7 @@ object StatusBarHooker : HookerProvider {
                         if ((!clazz.equals("com.tencent.mm.ui.chatting.gallery.ImageGalleryUI"))
                                 && (!clazz.equals("com.tencent.mm.plugin.recordvideo.activity.MMRecordUI"))
                                 && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsBrowseUI"))
-                                && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity"))
-                        ) {
+                                && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity"))) {
                             rootView.addView(statusView)
                         }
                         setColor(window, color)
@@ -79,9 +78,6 @@ object StatusBarHooker : HookerProvider {
                         mainThread(1000) {
                             setColor(window, color)
                         }
-//                        val mThread = CustomThread()
-//                        mThread.init(activity.window, color)
-//                        mThread.start()
                     }
                 }
             })
@@ -96,25 +92,4 @@ object StatusBarHooker : HookerProvider {
     fun getStatusBarColor(): Int {
         return if (HookConfig.is_hook_statusbar_transparent) NightModeUtils.colorPrimary else ColorUtils.getDarkerColor(NightModeUtils.colorPrimary, 0.85f)
     }
-    //    class CustomThread : Thread() {
-//        lateinit var window: Window
-//        var color: Int = 0
-//        fun init(window: Window, color: Int) {
-//            this.window = window
-//            this.color = color
-//        }
-//
-//        override fun run() {
-//            super.run()
-//            sleep(1000)
-////            try {
-//            setColor(window, color)
-////                window?.setStatusBarColor(color)
-////            } catch (e: Exception) {
-////                logXp(e)
-////                log(e)
-////            }
-//        }
-//    }
-
 }

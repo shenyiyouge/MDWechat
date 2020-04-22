@@ -27,6 +27,8 @@ public class ViewTreeConfig {
     private Method ChatLeftAudioMessageItem = null;
     private Method ChatRightCallMessageItem = null;
     private Method ChatLeftCallMessageItem = null;
+    private Method RefRightMessageItem = null;
+    private Method RefLeftMessageItem = null;
     private Method ActionBarItem = null;
     private Method ActionBarContainerItem = null;
     private Method ActionBarInFriendsgroupItem = null;
@@ -72,6 +74,14 @@ public class ViewTreeConfig {
 
     public Method getChatLeftCallMessageItem() {
         return ChatLeftCallMessageItem;
+    }
+
+    public Method getRefRightMessageItem() {
+        return RefRightMessageItem;
+    }
+
+    public Method getRefLeftMessageItem() {
+        return RefLeftMessageItem;
     }
 
     public Method getActionBarItem() {
@@ -125,6 +135,8 @@ public class ViewTreeConfig {
         ChatLeftAudioMessageItem = findViewTreeMethod("ChatLeftAudioMessageItem", versionName);
         ChatRightCallMessageItem = findViewTreeMethod("ChatRightCallMessageItem", versionName);
         ChatLeftCallMessageItem = findViewTreeMethod("ChatLeftCallMessageItem", versionName);
+        RefRightMessageItem = findViewTreeMethod("RefRightMessageItem", versionName);
+        RefLeftMessageItem = findViewTreeMethod("RefLeftMessageItem", versionName);
         ActionBarItem = findViewTreeMethod("ActionBarItem", versionName);
         ActionBarContainerItem = findViewTreeMethod("ActionBarContainerItem", versionName);
         ActionBarInConversationItem = findViewTreeMethod("ActionBarInConversationItem", versionName);
