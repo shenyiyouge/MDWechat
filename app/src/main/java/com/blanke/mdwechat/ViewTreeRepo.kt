@@ -481,7 +481,6 @@ object ViewTreeRepo {
                         "contentBorder" to intArrayOf(1, 0),
                         "groupBorderBottom" to intArrayOf(1, 0, 0, 0, 1),
                         "borderRight" to intArrayOf(1, 1)
-
                 ),
                 ViewTreeItem(
                         CC.LinearLayout.name,
@@ -1116,8 +1115,7 @@ object ViewTreeRepo {
                         "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
                         "chatFooterChild2_faceButton" to intArrayOf(0, 1, 3, 0),
                         "chatFooterChild2_addButton" to intArrayOf(0, 1, 4, 1, 0),
-                        "chatFooterChild2_sendButton" to intArrayOf(0, 1, 4, 1, 2)
-                ),
+                        "chatFooterChild2_sendButton" to intArrayOf(0, 1, 4, 1, 2)),
                 ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout", arrayOf(
                         ViewTreeRepoThisVersion.ActionBarInConversationItem.item,
                         ViewTreeItem("android.view.ViewStub"),
@@ -1137,29 +1135,17 @@ object ViewTreeRepo {
                                                                 ViewTreeItem(CC.WeImageButton),
                                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                                         ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.MaxHeightScrollView", arrayOf(
-                                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMEditText")
-                                                                        )),
-                                                                        ViewTreeItem(CC.RelativeLayout.name)
-                                                                )),
+                                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMEditText"))),
+                                                                        ViewTreeItem(CC.RelativeLayout.name))),
                                                                 ViewTreeItem(CC.Button.name),
                                                                 ViewTreeItem(CC.RelativeLayout.name, arrayOf(
-                                                                        ViewTreeItem(CC.WeImageButton)
-                                                                )),
+                                                                        ViewTreeItem(CC.WeImageButton))),
                                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                                         ViewTreeItem(CC.TextView.name),
                                                                         ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                                                                 ViewTreeItem(CC.WeImageButton),
                                                                                 ViewTreeItem(CC.ImageView.name),
-                                                                                ViewTreeItem(CC.Button.name)
-                                                                        ))
-                                                                ))
-                                                        ))
-                                                ))
-                                        ))
-                                ))
-                        ))
-                ))
-        )
+                                                                                ViewTreeItem(CC.Button.name))))))))))))))))))
     }
 
     val ChattingUILayoutItem_7_0_13: ViewTree by lazy {
@@ -1171,8 +1157,7 @@ object ViewTreeRepo {
                         "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
                         "chatFooterChild2_faceButton" to intArrayOf(0, 1, 3, 0),
                         "chatFooterChild2_addButton" to intArrayOf(0, 1, 4, 1, 0),
-                        "chatFooterChild2_sendButton" to intArrayOf(0, 1, 4, 1, 2)
-                ),
+                        "chatFooterChild2_sendButton" to intArrayOf(0, 1, 4, 1, 2)),
                 ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout", arrayOf(
                         ViewTreeRepoThisVersion.ActionBarInConversationItem.item,
                         ViewTreeItem("android.view.ViewStub"),
@@ -1191,30 +1176,17 @@ object ViewTreeRepo {
                                                                         ViewTreeItem(CC.WeImageButton),
                                                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                                                 ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.MaxHeightScrollView", arrayOf(
-                                                                                        ViewTreeItem("com.tencent.mm.ui.widget.MMEditText")
-                                                                                )),
-                                                                                ViewTreeItem(CC.RelativeLayout.name)
-                                                                        )),
+                                                                                        ViewTreeItem("com.tencent.mm.ui.widget.MMEditText"))),
+                                                                                ViewTreeItem(CC.RelativeLayout.name))),
                                                                         ViewTreeItem(CC.Button.name),
                                                                         ViewTreeItem(CC.RelativeLayout.name, arrayOf(
-                                                                                ViewTreeItem(CC.WeImageButton)
-                                                                        )),
+                                                                                ViewTreeItem(CC.WeImageButton))),
                                                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                                                 ViewTreeItem(CC.TextView.name),
                                                                                 ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                                                                         ViewTreeItem(CC.WeImageButton),
                                                                                         ViewTreeItem(CC.ImageView.name),
-                                                                                        ViewTreeItem(CC.Button.name)
-                                                                                ))
-                                                                        ))
-                                                                ))
-                                                        ))
-                                                ))
-                                        ))
-                                ))
-                        ))
-                ))
-        )
+                                                                                        ViewTreeItem(CC.Button.name))))))))))))))))))))
     }
 
     val ActionBarItem: ViewTree by lazy {
