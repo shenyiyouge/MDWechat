@@ -199,21 +199,33 @@ object BackgroundImageUtils {
     fun setConversationBitmap(view: View) {
 //        LogUtil.log("=============0===============")
         val bg = AppCustomConfig.getTabBg(0)
-        setMainPageBitmap("setConversationBitmap", view, bg)
+        if (!HookConfig.is_hook_bg_immersion) {
+            view.background = NightModeUtils.getBackgroundDrawable(bg)
+        } else {
+            setMainPageBitmap("setConversationBitmap", view, bg)
+        }
     }
 
     fun setContactBitmap(view: View) {
 //        LogUtil.log("=============1===============")
         val bg = AppCustomConfig.getTabBg(1)
-        setMainPageBitmap("setContactBitmap", view, bg)
+        if (!HookConfig.is_hook_bg_immersion) {
+            view.background = NightModeUtils.getBackgroundDrawable(bg)
+        } else {
+            setMainPageBitmap("setContactBitmap", view, bg)
+        }
     }
 
     fun setDiscoverBitmap(view: View) {
 //        LogUtil.log("============2================")
-        DiscoverPage = view
-        //先跳转至联系人界面
-        Objects.Main.LauncherUI_mViewPager?.apply {
-            Methods.WxViewPager_selectedPage.invoke(this, 1, false, false, 0)
+        if (!HookConfig.is_hook_bg_immersion) {
+            view.background = NightModeUtils.getBackgroundDrawable(AppCustomConfig.getTabBg(2))
+        } else {
+            DiscoverPage = view
+            //先跳转至联系人界面
+            Objects.Main.LauncherUI_mViewPager?.apply {
+                Methods.WxViewPager_selectedPage.invoke(this, 1, false, false, 0)
+            }
         }
 //        setMainPageBitmap("setDiscoverBitmap", view, bg, true)
     }
@@ -221,7 +233,11 @@ object BackgroundImageUtils {
     fun setSettingsBitmap(view: View) {
 //        LogUtil.log("============3================")
         val bg = AppCustomConfig.getTabBg(3)
-        setMainPageBitmap("setSettingsBitmap", view, bg)
+        if (!HookConfig.is_hook_bg_immersion) {
+            view.background = NightModeUtils.getBackgroundDrawable(bg)
+        } else {
+            setMainPageBitmap("setSettingsBitmap", view, bg)
+        }
     }
     //endregion
 
