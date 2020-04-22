@@ -26,7 +26,6 @@ import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook.measureHeight
 import com.blanke.mdwechat.util.BackgroundImageUtils
-import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.ViewUtils
 import de.robv.android.xposed.XC_MethodHook
@@ -117,26 +116,30 @@ object LauncherUIHooker : HookerProvider {
                             //endregion
                         }
 
-                        if (isTabLayoutOnTop) {
-                            try {
-                                log("添加 TabLayout")
-                                TabLayoutHook.addTabLayout(linearViewGroup)
-                            } catch (e: Throwable) {
-                                log("添加 TabLayout 报错")
-                                log(e)
+                        when {
+                            isTabLayoutOnTop -> {
+                                try {
+                                    log("添加 TabLayout")
+                                    TabLayoutHook.addTabLayout(linearViewGroup)
+                                } catch (e: Throwable) {
+                                    log("添加 TabLayout 报错")
+                                    log(e)
+                                }
                             }
-                        } else if (isTabLayoutOnBottom) {
-                            try {
-                                log("添加底栏")
-                                TabLayoutHook.addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
-                                log("添加底栏成功")
-                            } catch (e: Throwable) {
-                                log("添加底栏 报错")
-                                log(e)
+                            isTabLayoutOnBottom -> {
+                                try {
+                                    log("添加底栏")
+                                    TabLayoutHook.addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
+                                    log("添加底栏成功")
+                                } catch (e: Throwable) {
+                                    log("添加底栏 报错")
+                                    log(e)
+                                }
                             }
-                        } else {
-                            log("不用添加 TabLayout")
-                            BackgroundImageUtils._tabLayoutLocation[1] = -1
+                            else -> {
+                                log("不用添加 TabLayout")
+                                BackgroundImageUtils._tabLayoutLocation[1] = -1
+                            }
                         }
                         if (shouldFix) {
                             // 隐藏 action bar 测试
@@ -156,7 +159,7 @@ object LauncherUIHooker : HookerProvider {
                             }
                         }
                         XposedHelpers.setAdditionalInstanceField(activity, keyInit, true)
-                        LogUtil.log("LaunchUI Hook Completed.")
+                        log("LaunchUI Hook Completed.")
                     }
                 })
     }
