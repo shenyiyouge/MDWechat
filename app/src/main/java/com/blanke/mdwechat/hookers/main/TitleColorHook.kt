@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
@@ -20,64 +19,68 @@ import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 
 object TitleColorHook {
-    fun setConversationColor() {
-        val titleBar = Objects.Main.actionBarInConversations
-        if (titleBar == null) return
-
-        val title = ViewUtils.getChildView1(titleBar, VTTV.ActionBarInConversationItem.treeStacks.get("title")!!) as TextView
+    fun setConversationColor(actionBar: View) {
+        val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("title")) as TextView
         title.setTextColor(HookConfig.get_color_secondary)
-        val infoButton = ViewUtils.getChildView1(titleBar, VTTV.ActionBarInConversationItem.treeStacks.get("infoButton")!!) as ImageButton
+        val infoButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("infoButton")) as ImageButton
         infoButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
-
-        val goBackButton = ViewUtils.getChildView1(titleBar, VTTV.ActionBarInConversationItem.treeStacks.get("goBackButton")!!) as ImageView
+        val goBackButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("goBackButton")) as ImageView
         goBackButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
 
-        val chattingUILayout = ViewUtils.getParentView(titleBar, 1) as ViewGroup
-        if (!ViewTreeUtils.equals(VTTV.ChattingUILayoutItem.item, chattingUILayout)) {
-            return
+        val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as ViewGroup
+        if (ViewTreeUtils.equals(VTTV.ChattingUILayoutItem.item, chattingUILayout)) {
+            val chattingScrollLayoutItem = ViewUtils.getChildView1(chattingUILayout,
+                    VTTV.ChattingUILayoutItem.treeStacks.getValue("ChattingScrollLayoutItem")) as ViewGroup
+            setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
         }
+    }
 
-        val chattingBgShade = ViewUtils.getChildView1(chattingUILayout,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chattingBgShade")!!) as View
+    fun setConversationInSearchColor(actionBar: View) {
+        val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("title")) as TextView
+        title.setTextColor(HookConfig.get_color_secondary)
+        val infoButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("infoButton")) as ImageButton
+        infoButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
+        val goBackButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("goBackButton")) as ImageView
+        goBackButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
+
+        val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as ViewGroup
+        if (ViewTreeUtils.equals(VTTV.ChattingUILayoutInSearchItem.item, chattingUILayout)) {
+            val chattingScrollLayoutItem = ViewUtils.getChildView1(chattingUILayout,
+                    VTTV.ChattingUILayoutInSearchItem.treeStacks.getValue("ChattingScrollLayoutItem")) as ViewGroup
+            setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
+        }
+    }
+
+    private fun setConversationFooterColor(ChattingScrollLayoutItem: ViewGroup, treeStacks: Map<String, IntArray>) {
+        val chattingBgShade = ViewUtils.getChildView1(ChattingScrollLayoutItem,
+                treeStacks.getValue("chattingBgShade")) as View
         chattingBgShade.setBackgroundColor(0)
-
-        val chatFooterChild2 = ViewUtils.getChildView1(chattingUILayout,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2")!!) as View
+        val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
+                treeStacks.getValue("chatFooterChild2")) as View
 //        chatFooterChild2.background= ColorDrawable(Color.parseColor("#00000000"))
         BackgroundImageUtils.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, AppCustomConfig.getTabBg(0), null)
 
         val switchButton = ViewUtils.getChildView1(chatFooterChild2,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2_switchButton")!!) as ImageButton
+                treeStacks.getValue("chatFooterChild2_switchButton")) as ImageButton
         switchButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
 
         val editText = ViewUtils.getChildView1(chatFooterChild2,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2_editText")!!) as EditText
+                treeStacks.getValue("chatFooterChild2_editText")) as EditText
         editText.background = ColorDrawable(Color.parseColor("#30000000"))
         editText.setTextColor(WeChatHelper.colorWhite)
         val talkButton = ViewUtils.getChildView1(chatFooterChild2,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2_talkButton")!!) as View
+                treeStacks.getValue("chatFooterChild2_talkButton")) as View
         talkButton.background = ColorDrawable(Color.parseColor("#30000000"))
 
         val faceButton = ViewUtils.getChildView1(chatFooterChild2,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2_faceButton")!!) as ImageButton
+                treeStacks.getValue("chatFooterChild2_faceButton")) as ImageButton
         faceButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
         val addButton = ViewUtils.getChildView1(chatFooterChild2,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2_addButton")!!) as ImageButton
+                treeStacks.getValue("chatFooterChild2_addButton")) as ImageButton
         addButton.setColorFilter(HookConfig.get_color_secondary, PorterDuff.Mode.SRC_ATOP)
         val sendButton = ViewUtils.getChildView1(chatFooterChild2,
-                VTTV.ChattingUILayoutItem.treeStacks.get("chatFooterChild2_sendButton")!!) as View
+                treeStacks.getValue("chatFooterChild2_sendButton")) as View
         sendButton.setBackgroundColor(Color.parseColor("#30000000"))
-
-//        talkButton.setOnTouchListener(OnTouchListener { v, event ->
-//            if (event.action == MotionEvent.ACTION_DOWN) {
-//                talkButton.background= ColorDrawable(Color.parseColor("#44AA00AA"))
-//            } else if (event.action == MotionEvent.ACTION_UP) {
-//                talkButton.background= ColorDrawable(Color.BLUE)
-//            }
-//            false
-//        })
-
-
     }
 
 }

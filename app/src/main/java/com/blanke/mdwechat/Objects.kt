@@ -15,7 +15,8 @@ object Objects {
         var LauncherUI_mWechatXMenuItem: MenuItem? = null
         var statusView: View? = null
         var actionBar: View? = null
-        var actionBarInConversations: View? = null
+
+        //        var actionBarInConversations: View? = null
         var tabLayout: CommonTabLayout? = null
         var pagePosition = 0
     }
