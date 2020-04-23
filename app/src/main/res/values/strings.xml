@@ -50,7 +50,7 @@
     <string name="text_chat_group">群聊</string>
     <string name="text_friend_add">添加好友</string>
     <string name="text_app_thank">感谢</string>
-    <string name="text_app_thank_content">感谢 Blankeer@github 开源的 MDwechat, 感谢 hzknm@coolapk 设计的 Logo, 感谢 Gh0u1L5@github 开源的微信巫师, 感谢 weishu 对代码的贡献, 感谢 @装睡 提供的精神支持</string>
+    <string name="text_app_thank_content">感谢 Blankeer@github 开源的 MDwechat, 感谢 hzknm@coolapk 设计的 Logo, 感谢 Gh0u1L5@github 开源的微信巫师, 感谢 weishu 对代码的贡献, 感谢 chouqibao@github 开源的微信深色主题, 感谢 @装睡 提供的精神支持</string>
     <string name="key_hook_bubble_tint">key_hook_bubble_tint</string>
     <string name="text_hook_bubble_tint">气泡着色</string>
     <string name="text_hook_menu_qrcode">隐藏扫一扫</string>
@@ -249,7 +249,7 @@
 
     <string name="key_hook_theme_dark">key_hook_theme_dark</string>
     <string name="text_hook_theme_dark">暗色系主题</string>
-    <string name="summary_hook_theme_dark">强制微信使用暗色系主题(需要微信7.0.10以上)</string>
+    <string name="summary_hook_theme_dark">开启后强制微信使用暗色系主题(需要微信7.0.10以上)</string>
     <string name="key_hook_night_mode">key_hook_night_mode</string>
     <string name="text_hook_night_mode">自动切换色系</string>
     <string name="summary_hook_night_mode">当主题设置为亮色系且微信开启深色模式时，自动切换主题为暗色系。（需要微信7.0.10以上）</string>
