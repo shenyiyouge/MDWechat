@@ -74,92 +74,97 @@ object LauncherUIHooker : HookerProvider {
                     }
 
                     private fun initHookLauncherUI(activity: Activity) {
-                        val density = activity.resources.displayMetrics.density
-                        AppCustomConfig.bitmapScale = density / 3F
+                        try {
+                            val density = activity.resources.displayMetrics.density
+                            AppCustomConfig.bitmapScale = density / 3F
 
-                        Objects.Main.LauncherUI = activity
-                        val homeUI = LauncherUI_mHomeUI.get(activity)
-                        val mainTabUI = HomeUI_mMainTabUI.get(homeUI)
-                        val viewPager = MainTabUI_mCustomViewPager.get(mainTabUI)
-                        if (viewPager == null || viewPager !is View) {
-                            log("MainTabUI_mCustomViewPager == null return;")
-                            return
-                        }
-
-                        val linearViewGroup = viewPager.parent as ViewGroup
-                        val contentViewGroup = linearViewGroup.parent as ViewGroup
-                        Objects.Main.LauncherUI_mContentLayout = contentViewGroup
-                        Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
-                        Objects.Main.LauncherUI_mViewPager = viewPager
-
-                        // region 微信底栏 & action bar
-                        val isTabLayoutOnBottom = HookConfig.is_hook_tab && !HookConfig.is_tab_layout_on_top
-                        val isTabLayoutOnTop = HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
-                        val isKeyHideTab = isTabLayoutOnTop || (!isTabLayoutOnBottom && HookConfig.is_key_hide_tab)
-                        val shouldFix = isTabLayoutOnTop || HookConfig.is_hook_hide_actionbar
-                        val floatButtonMarginBottom = if (isTabLayoutOnBottom || (!isKeyHideTab)) 1 else 0
-
-                        val tabView = linearViewGroup.getChildAt(1) as ViewGroup
-                        val tabViewUnderneathHeight = measureHeight(tabView)
-
-                        if (isKeyHideTab) {
-                            // region 隐藏底栏
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                // 672报错
-                                val bottomLine = tabView.getChildAt(0)
-                                bottomLine.visibility = View.GONE
-                                bottomLine.layoutParams.height = 0
-                            } else {
-                                linearViewGroup.removeView(tabView)
+                            Objects.Main.LauncherUI = activity
+                            val homeUI = LauncherUI_mHomeUI.get(activity)
+                            val mainTabUI = HomeUI_mMainTabUI.get(homeUI)
+                            val viewPager = MainTabUI_mCustomViewPager.get(mainTabUI)
+                            if (viewPager == null || viewPager !is View) {
+                                log("MainTabUI_mCustomViewPager == null return;")
+                                return
                             }
-                            log("移除 tabView $tabView")
+
+                            val linearViewGroup = viewPager.parent as ViewGroup
+                            val contentViewGroup = linearViewGroup.parent as ViewGroup
+                            Objects.Main.LauncherUI_mContentLayout = contentViewGroup
+                            Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
+                            Objects.Main.LauncherUI_mViewPager = viewPager
+
+                            // region 微信底栏 & action bar
+                            val is_hook_tab = !HookConfig.is_key_hide_tab && HookConfig.is_hook_tab
+                            val isTabLayoutOnBottom = is_hook_tab && !HookConfig.is_tab_layout_on_top
+                            val isTabLayoutOnTop = is_hook_tab && HookConfig.is_tab_layout_on_top
+                            val isKeyHideTab = isTabLayoutOnTop || (!is_hook_tab && HookConfig.is_key_hide_tab)
+                            val shouldFix = isTabLayoutOnTop || HookConfig.is_hook_hide_actionbar
+                            val floatButtonMarginBottom = if (isTabLayoutOnBottom || (!isKeyHideTab)) 1 else 0
+
+                            val tabView = linearViewGroup.getChildAt(1) as ViewGroup
+                            val tabViewUnderneathHeight = measureHeight(tabView)
+
+                            if (isKeyHideTab) {
+                                // region 隐藏底栏
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    // 672报错
+                                    val bottomLine = tabView.getChildAt(0)
+                                    bottomLine.visibility = View.GONE
+                                    bottomLine.layoutParams.height = 0
+                                } else {
+                                    linearViewGroup.removeView(tabView)
+                                }
+                                log("移除 tabView $tabView")
+                                //endregion
+                            }
+
+                            when {
+                                isTabLayoutOnTop -> {
+                                    try {
+                                        log("添加 TabLayout")
+                                        TabLayoutHook.addTabLayout(linearViewGroup)
+                                    } catch (e: Throwable) {
+                                        log("添加 TabLayout 报错")
+                                        log(e)
+                                    }
+                                }
+                                isTabLayoutOnBottom -> {
+                                    try {
+                                        log("添加底栏")
+                                        TabLayoutHook.addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
+                                        log("添加底栏成功")
+                                    } catch (e: Throwable) {
+                                        log("添加底栏 报错")
+                                        log(e)
+                                    }
+                                }
+                                else -> {
+                                    log("不用添加 TabLayout")
+                                    BackgroundImageUtils._tabLayoutLocation[1] = -1
+                                }
+                            }
+                            if (shouldFix) {
+                                // 隐藏 action bar 测试
+                                HomeActionBarHook.fix(linearViewGroup)
+                            }
+                            log("fix completed")
                             //endregion
-                        }
 
-                        when {
-                            isTabLayoutOnTop -> {
+                            // float menu
+                            if (HookConfig.is_hook_float_button) {
                                 try {
-                                    log("添加 TabLayout")
-                                    TabLayoutHook.addTabLayout(linearViewGroup)
+                                    log("添加 FloatMenu")
+                                    FloatMenuHook.addFloatMenu(contentViewGroup, floatButtonMarginBottom * tabViewUnderneathHeight)
                                 } catch (e: Throwable) {
-                                    log("添加 TabLayout 报错")
+                                    log("添加 FloatMenu 报错")
                                     log(e)
                                 }
                             }
-                            isTabLayoutOnBottom -> {
-                                try {
-                                    log("添加底栏")
-                                    TabLayoutHook.addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
-                                    log("添加底栏成功")
-                                } catch (e: Throwable) {
-                                    log("添加底栏 报错")
-                                    log(e)
-                                }
-                            }
-                            else -> {
-                                log("不用添加 TabLayout")
-                                BackgroundImageUtils._tabLayoutLocation[1] = -1
-                            }
+                            XposedHelpers.setAdditionalInstanceField(activity, keyInit, true)
+                            log("LaunchUI Hook Completed.")
+                        } catch (e: Exception) {
+                            log(e)
                         }
-                        if (shouldFix) {
-                            // 隐藏 action bar 测试
-                            HomeActionBarHook.fix(linearViewGroup)
-                        }
-                        log("fix completed")
-                        //endregion
-
-                        // float menu
-                        if (HookConfig.is_hook_float_button) {
-                            try {
-                                log("添加 FloatMenu")
-                                FloatMenuHook.addFloatMenu(contentViewGroup, floatButtonMarginBottom * tabViewUnderneathHeight)
-                            } catch (e: Throwable) {
-                                log("添加 FloatMenu 报错")
-                                log(e)
-                            }
-                        }
-                        XposedHelpers.setAdditionalInstanceField(activity, keyInit, true)
-                        log("LaunchUI Hook Completed.")
                     }
                 })
     }

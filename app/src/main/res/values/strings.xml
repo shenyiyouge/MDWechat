@@ -5,16 +5,14 @@
     <string name="key_color_primary">key_color_primary</string>
     <string name="key_color_secondary">key_color_secondary</string>
     <string name="key_color_tertiary">key_color_tertiary</string>
-    <string name="key_color_tip">key_color_tip</string>
     <string name="text_hook_switch">总开关</string>
     <string name="text_settings">设置</string>
     <string name="text_color_primary">主色</string>
     <string name="summary_color_primary">标题栏背景色、悬浮按钮背景色等</string>
     <string name="text_color_secondary">副色1</string>
-    <string name="summary_color_secondary">(如果着色)自定义导航当前页图标颜色、悬浮按钮文字颜色等</string>
+    <string name="summary_color_secondary">(如果着色)自定义导航当前页图标颜色、悬浮按钮文字颜色、(沉浸主题时)聊天页的一些配色等</string>
     <string name="text_color_tertiary">副色2</string>
     <string name="summary_color_tertiary">(如果着色)自定义导航其他页页图标前景色等</string>
-    <string name="text_color_tip">消息提示颜色</string>
     <string name="text_settings_info">修改之后停止微信重启生效.</string>
     <string name="text_donate">捐赠(支付宝)</string>
     <string name="text_donate_wechat">捐赠(微信)</string>
@@ -31,9 +29,10 @@
     <string name="key_hook_search">key_hook_search</string>
     <string name="text_hook_search">搜索</string>
     <string name="key_hide_tab">key_hide_tab</string>
-    <string name="text_hide_tab">隐藏微信底栏</string>
+    <string name="text_hide_tab">隐藏导航栏</string>
     <string name="key_hook_tab">key_hook_tab</string>
     <string name="text_hook_tab">TabLayout (自定义导航)</string>
+    <string name="summary_hook_tab">替代微信默认导航以便于变更UI.</string>
     <string name="key_hook_menu_game">key_hook_menu_game</string>
     <string name="text_hook_menu_game">隐藏游戏</string>
     <string name="key_hook_menu_shop">key_hook_menu_shop</string>
@@ -67,14 +66,14 @@
     <string name="text_main_settings">主界面</string>
     <string name="key_hook__actionbar_color">key_hook__actionbar_color</string>
     <string name="text_hook__actionbar_color">顶栏字体颜色修改</string>
-    <string name="summary_hook__actionbar_color">将使用副色1。visual xposed环境下不会生效。</string>
+    <string name="summary_hook__actionbar_color">将使用副色1。Visual xposed环境下不会生效。</string>
     <string name="key_hook_hide_actionbar">key_hook_hide_actionbar</string>
-    <string name="text_hook_hide_actionbar">隐藏顶栏</string>
+    <string name="text_hook_hide_actionbar">隐藏Action Bar(顶栏)</string>
     <string name="key_main_text_offset">key_main_text_offset</string>
     <string name="text_main_text_offset">主界面正文高度补正</string>
     <string name="summary_main_text_offset">默认值为0。</string>
     <string name="key_tab_layout_offset">key_tab_layout_offset</string>
-    <string name="text_tab_layout_offset">(顶端的)TabLayout 高度校正</string>
+    <string name="text_tab_layout_offset">(顶端的)TabLayout 高度设置</string>
     <string name="summary_tab_layout_offset">如果微信首页小程序下滑恢复后出现部分难以消除的深色遮罩，可尝试设置此项为适当的负值......或者隐藏微信顶栏 (主界面->导航)。</string>
     <string name="key_hook_float_button_color_up">key_hook_float_button_color_up</string>
     <string name="text_hook_float_button_color_up">悬浮按钮图标着色</string>
@@ -99,20 +98,21 @@
     <string name="key_hook_menu_appbrand">key_hook_menu_appbrand</string>
     <string name="text_hook_menu_appbrand">隐藏小程序</string>
     <string name="text_chat_settings">聊天气泡</string>
+    <string name="summary_chat_settings">一些设置依赖于上级菜单的「聊天气泡」</string>
     <string name="key_hook_bubble">key_hook_bubble</string>
     <string name="text_hook_bubble">自定义气泡背景</string>
     <string name="key_hook_bubble_in_night_mode">key_hook_bubble_in_night_mode</string>
     <string name="text_hook_bubble_in_night_mode">深色模式下启用自定义气泡</string>
-    <string name="summary_hook_bubble_in_night_mode">依赖于「通用 -> 自适应微信深色模式」</string>
+    <string name="summary_hook_bubble_in_night_mode">当色系为亮色系且开启深色模式时也启用自定义气泡。依赖于「配色方案 -> 自动切换色系」</string>
     <string name="key_hook_bg_immersion">key_hook_bg_immersion</string>
-    <string name="text_hook_bg_immersion">背景沉浸</string>
-    <string name="summary_hook_bg_immersion">微信7.0.10以上生效，包含主界面和聊天界面</string>
+    <string name="text_hook_bg_immersion">沉浸主题</string>
+    <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
     <string name="summary_hook_tab_bg">自定义配置参见/sdcard/mdwechat/config/view/icon_readme.txt</string>
     <string name="key_change_resolution">key_change_resolution</string>
     <string name="text_change_resolution">调整背景图分辨率</string>
-    <string name="summary_change_resolution">如果打开背景沉浸后贴图错误，则需要手动设置分辨率。</string>
+    <string name="summary_change_resolution">如果打开主题沉浸后贴图错误，则需要手动设置分辨率。</string>
     <string name="key_resolution">key_resolution</string>
     <string name="text_resolution">背景图分辨率</string>
     <string name="summary_resolution">自定义背景图片分辨率，格式为"宽,高",单位为像素(整数)。</string>
@@ -143,6 +143,7 @@
     <string name="msg_reset_mdwechat_ok">重置成功,请手动重启本程序</string>
     <string name="msg_reset_failed">重置失败,请检查/sdcard/mdwechat目录的权限</string>
     <string name="key_hook_statusbar_transparent">key_hook_statusbar_transparent</string>
+    <string name="summary_hook_statusbar_transparent">仅限于非沉浸主题</string>
     <string name="text_hook_statusbar_transparent">状态栏全透明</string>
     <string name="msg_kill_wechat">请手动强行停止微信,再打开微信看效果.</string>
     <string name="key_hook_tab_elevation">key_hook_tab_elevation</string>
@@ -192,7 +193,7 @@
     <string name="text_hook_main_textcolor">字体颜色</string>
     <string name="key_main_textcolor_title">key_main_textcolor_title</string>
     <string name="text_main_textcolor_title">标题颜色</string>
-    <string name="summary_main_textcolor_title">小程序标题着色(实验性)支持的最低微信版本为7.0.5</string>
+    <string name="summary_main_textcolor_title">包含小程序标题着色(实验性,支持的最低微信版本为7.0.5)</string>
     <string name="key_main_textcolor_content">key_main_textcolor_content</string>
     <string name="text_main_textcolor_content">内容颜色</string>
     <string name="key_hook_conversation_background_alpha">key_hook_conversation_background_alpha</string>
@@ -239,15 +240,32 @@
     <string name="key_help_float_button">key_help_float_button</string>
     <string name="key_help_icon">key_help_icon</string>
     <string name="key_help_bubble">key_help_bubble</string>
-    <string name="key_hook_night_mode">key_hook_night_mode</string>
-    <string name="text_hook_night_mode">自适应微信深色模式</string>
-    <string name="summary_hook_night_mode">（需要微信版本不低于7.0.10）当微信开启深色模式时自动开启MDWechat深色模式。7.0.13以下的微信需先用插件（微x、微信深色主题等）开启深色模式。</string>
     <string name="text_app_tips">软件使用提示</string>
     <string name="text_app_desc">本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件！</string>
     <string name="text_app_donate">你已使用「MDWechat」%s，在使用过程中有任何问题欢迎加入微信群讨论。\n如果你觉得「MDWechat」很好用，是否愿意支持下作者，让我更有动力完善维护这个软件呢？</string>
     <string name="text_app_know">我已知晓</string>
     <string name="key_feedback_group">key_feedback_group</string>
 
+
+    <string name="key_hook_theme_dark">key_hook_theme_dark</string>
+    <string name="text_hook_theme_dark">暗色系主题</string>
+    <string name="summary_hook_theme_dark">强制微信使用暗色系主题(需要微信7.0.10以上)</string>
+    <string name="key_hook_night_mode">key_hook_night_mode</string>
+    <string name="text_hook_night_mode">自动切换色系</string>
+    <string name="summary_hook_night_mode">当主题设置为亮色系且微信开启深色模式时，自动切换主题为暗色系。（需要微信7.0.10以上）</string>
+    <string name="text_main_page_color">主界面内容字体颜色</string>
+    <string name="other_bubble_settings">其他设置请前往「配色方案 -> 聊天气泡」</string>
+
+    <string name="key_color_tip">key_color_tip</string>
+    <string name="text_color_tip">消息提示颜色</string>
+    <string name="key_color_tip_num">key_color_tip_num</string>
+    <string name="text_color_tip_num">消息提示中的数字颜色</string>
+    <string name="key_change_guide_tip_color">key_change_guide_tip_color</string>
+    <string name="text_change_guide_tip_color">在自定义导航中单独配色</string>
+    <string name="key_color_tip_in_guide">key_color_tip_in_guide</string>
+    <string name="text_color_tip_in_guide">消息提示颜色</string>
+    <string name="key_color_tip_num_in_guide">key_color_tip_num_in_guide</string>
+    <string name="text_color_tip_num_in_guide">消息提示中的数字颜色</string>
 
     <string name="key_clear_logs">key_clear_logs</string>
     <string name="text_clear_logs">清空日志</string>
@@ -259,7 +277,7 @@
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
-    <string name="app_name_version">MDWechat 4.0.0_beta-1</string>
+    <string name="app_name_version">MDWechat 4.0.0_beta-2</string>
     <string name="summary">此为测试版。暂无法在太极上使用，可在xposed, virtual xposed 和 edxposed 下使用。</string>
     <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将作者在 github 上开源的代码进行二次开发，使其能够适配较新的微信(7.0.10 – 7.0.13)(国内版)。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
 </resources>

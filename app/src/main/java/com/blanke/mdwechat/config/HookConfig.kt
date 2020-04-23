@@ -24,6 +24,10 @@ object HookConfig {
     private val key_color_secondary = "key_color_secondary"
     private val key_color_tertiary = "key_color_tertiary"
     private val key_color_tip = "key_color_tip"
+    private val key_color_tip_num = "key_color_tip_num"
+    private val key_change_guide_tip_color = "key_change_guide_tip_color"
+    private val key_color_tip_in_guide = "key_color_tip_in_guide"
+    private val key_color_tip_num_in_guide = "key_color_tip_num_in_guide"
     private val key_hook_conversation_background_alpha = "key_hook_conversation_background_alpha"
     private val key_hook__actionbar_color = "key_hook__actionbar_color"
     private val key_hook_actionbar = "key_hook_actionbar"
@@ -75,6 +79,7 @@ object HookConfig {
     private val key_hook_mini_program = "key_hook_mini_program"
 
     //    private val key_mini_program_title = "key_mini_program_title"
+    private val key_hook_theme_dark = "key_hook_theme_dark"
     private val key_hook_night_mode = "key_hook_night_mode"
 
     val is_hook_debug: Boolean
@@ -137,6 +142,22 @@ object HookConfig {
     val get_color_tip: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_color_tip, -16537100)
+        }
+    val get_color_tip_num: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getInt(key_color_tip_num, Color.WHITE)
+        }
+    val is_change_guide_tip_color: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_change_guide_tip_color, false)
+        }
+    val get_color_tip_in_guide: Int
+        get() {
+            return if (is_change_guide_tip_color) WeChatHelper.XMOD_PREFS.getInt(key_color_tip_in_guide, -16537100) else get_color_tip
+        }
+    val get_color_tip_num_in_guide: Int
+        get() {
+            return if (is_change_guide_tip_color) WeChatHelper.XMOD_PREFS.getInt(key_color_tip_num_in_guide, -16537100) else get_color_tip_num
         }
     val get_float_button_color: Int
         get() {
@@ -340,6 +361,10 @@ object HookConfig {
     val is_hook_mini_program: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_mini_program, false)
+        }
+    val is_hook_theme_dark: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_theme_dark, true)
         }
     val is_hook_night_mode: Boolean
         get() {
