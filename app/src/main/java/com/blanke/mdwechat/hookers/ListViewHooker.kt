@@ -224,6 +224,7 @@ object ListViewHooker : HookerProvider {
                             XposedHelpers.callMethod(recentMsgView, "setTextColor", summaryTextColor)
                         }
                         unreadCountView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                        unreadCountView.setTextColor(HookConfig.get_color_tip_num)
                         unreadView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                         val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
                         contentView.background = defaultImageRippleDrawable
