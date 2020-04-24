@@ -109,14 +109,14 @@
     <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
-    <string name="summary_hook_tab_bg">自定义配置参见/sdcard/mdwechat/config/view/icon_readme.txt</string>
+    <string name="summary_hook_tab_bg">自定义配置参见/sdcard/mdwechat/config/readme/icon_readme.txt</string>
     <string name="key_change_resolution">key_change_resolution</string>
     <string name="text_change_resolution">调整背景图分辨率</string>
     <string name="summary_change_resolution">如果打开主题沉浸后贴图错误，则需要手动设置分辨率。</string>
     <string name="key_resolution">key_resolution</string>
     <string name="text_resolution">背景图分辨率</string>
     <string name="summary_resolution">自定义背景图片分辨率，格式为"宽,高",单位为像素(整数)。</string>
-    <string name="text_hook_bubble_info">必须是.9图,自定义配置参见/sdcard/mdwechat/config/view/bubble_readme.txt</string>
+    <string name="text_hook_bubble_info">必须是.9图,自定义配置参见/sdcard/mdwechat/config/readme/bubble_readme.txt</string>
     <string name="text_hook_bubble_tint_info">可以修改气泡颜色</string>
     <string name="key_hook_bubble_tint_left">key_hook_bubble_tint_left</string>
     <string name="text_hook_bubble_tint_left">左边气泡颜色</string>

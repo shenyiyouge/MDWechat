@@ -91,6 +91,7 @@ class SettingsActivity : Activity() {
         thread {
             FileUtils.copyAssets(this, Common.APP_DIR_PATH, Common.CONFIG_WECHAT_DIR)
             FileUtils.copyAssets(this, Common.APP_DIR_PATH, Common.CONFIG_VIEW_DIR)
+            FileUtils.copyAssets(this, Common.APP_DIR_PATH, Common.CONFIG_readme_DIR)
             FileUtils.copyAssets(this, Common.APP_DIR_PATH, Common.ICON_DIR)
             copySharedPrefences()
             Handler(Looper.getMainLooper()).post {

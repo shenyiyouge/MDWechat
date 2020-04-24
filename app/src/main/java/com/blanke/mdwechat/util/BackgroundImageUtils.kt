@@ -73,7 +73,7 @@ object BackgroundImageUtils {
                     return
                 }
                 waitInvoke(200, true, {
-                    LogUtil.log("actionBarInConversations 继续等待, view.height  = ${actionBar.height}")
+                    LogUtil.log("等待点击聊天界面以显示聊天界面的沉浸背景.....")
                     actionBar.height > 0
                 }, {
                     val bg = AppCustomConfig.getTabBg(0)
