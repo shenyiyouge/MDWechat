@@ -260,6 +260,9 @@
     <string name="text_main_page_color">主界面内容字体颜色</string>
     <string name="other_bubble_settings">其他设置请前往「配色方案 -> 聊天气泡」</string>
 
+    <string name="text_pre_inst">预设方案</string>
+    <string name="key_pre_inst_color_schemes">key_pre_inst_color_schemes</string>
+    <string name="text_pre_inst_color_schemes">使用预设方案</string>
     <string name="key_color_tip">key_color_tip</string>
     <string name="text_color_tip">消息提示颜色</string>
     <string name="key_color_tip_num">key_color_tip_num</string>

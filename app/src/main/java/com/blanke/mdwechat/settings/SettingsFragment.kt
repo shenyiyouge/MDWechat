@@ -1,5 +1,6 @@
 package com.blanke.mdwechat.settings
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ComponentName
 import android.content.Intent
@@ -7,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.preference.*
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
@@ -23,6 +25,7 @@ import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil.clearFileLogs
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.jaredrummler.android.colorpicker.ColorPreference
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -87,6 +90,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         }
         findPreference("key_clear_logs")?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_pre_inst_color_schemes))?.onPreferenceChangeListener = this
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
@@ -149,12 +153,130 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_hook_log) -> STATIC.isLogFile = (findPreference(getString(R.string.key_hook_log)) as SwitchPreference).isChecked
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
+            getString(R.string.key_pre_inst_color_schemes) -> changeColorScheme(o as String)
 //            getString(R.string.key_mini_program_title) -> setSummary(o as String)
 //            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
         }
         return true
     }
 
+    @SuppressLint("ResourceAsColor")
+    private fun changeColorScheme(s: String) {
+//        try {
+        when (s) {
+            "immersion" -> {
+                //深色模式
+                findPreference(getString(R.string.key_hook_scheme_dark))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_night_mode))?.apply { (this as SwitchPreference).isChecked = false }
+                //三色
+                findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTransparent)) }
+                findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //提示颜色
+                findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTip)) }
+                findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                findPreference(getString(R.string.key_change_guide_tip_color))?.apply { (this as SwitchPreference).isChecked = false }
+                findPreference(getString(R.string.key_color_tip_in_guide))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTip)) }
+                findPreference(getString(R.string.key_color_tip_num_in_guide))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                //主界面字体
+                findPreference(getString(R.string.key_hook_main_textcolor))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_main_textcolor_title))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                findPreference(getString(R.string.key_main_textcolor_content))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //气泡文字
+                findPreference(getString(R.string.key_hook_chat_text_color_left))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                findPreference(getString(R.string.key_hook_chat_text_color_right))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //气泡着色
+                findPreference(getString(R.string.key_hook_bubble))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_bubble_tint))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_bubble_tint_left))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.transparentDark)) }
+                findPreference(getString(R.string.key_hook_bubble_tint_right))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.transparentDark)) }
+                //背景
+                findPreference(getString(R.string.key_hook_tab_bg))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_conversation_background_alpha))?.apply { (this as EditTextPreference).text = "0" }
+                //悬浮按钮
+                findPreference(getString(R.string.key_hook_float_button_color_is_secondary))?.apply { (this as SwitchPreference).isChecked = true }
+                //tablayout 阴影
+                findPreference(getString(R.string.key_hook_tab_elevation))?.apply { (this as SwitchPreference).isChecked = true }
+                //tablayout 着色
+                findPreference(getString(R.string.key_tab_layout_filtered))?.apply { (this as SwitchPreference).isChecked = true }
+            }
+            "white" -> {
+                //深色模式
+                findPreference(getString(R.string.key_hook_scheme_dark))?.apply { (this as SwitchPreference).isChecked = false }
+                findPreference(getString(R.string.key_hook_night_mode))?.apply { (this as SwitchPreference).isChecked = true }
+                //三色
+                findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorSecondary)) }
+                findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTertiary)) }
+                //提示颜色
+                findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTip)) }
+                findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                findPreference(getString(R.string.key_change_guide_tip_color))?.apply { (this as SwitchPreference).isChecked = false }
+                findPreference(getString(R.string.key_color_tip_in_guide))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTip)) }
+                findPreference(getString(R.string.key_color_tip_num_in_guide))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                //主界面字体
+                findPreference(getString(R.string.key_hook_main_textcolor))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_main_textcolor_title))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_black)) }
+                findPreference(getString(R.string.key_main_textcolor_content))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_black)) }
+                //气泡文字
+                findPreference(getString(R.string.key_hook_chat_text_color_left))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorSecondary)) }
+                findPreference(getString(R.string.key_hook_chat_text_color_right))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTertiary)) }
+                //气泡着色
+                findPreference(getString(R.string.key_hook_bubble))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_bubble_tint))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_bubble_tint_left))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                findPreference(getString(R.string.key_hook_bubble_tint_right))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorSecondary)) }
+                //背景
+                findPreference(getString(R.string.key_hook_tab_bg))?.apply { (this as SwitchPreference).isChecked = false }
+                findPreference(getString(R.string.key_hook_conversation_background_alpha))?.apply { (this as EditTextPreference).text = "255" }
+                //悬浮按钮
+                findPreference(getString(R.string.key_hook_float_button_color_is_secondary))?.apply { (this as SwitchPreference).isChecked = true }
+                //tablayout 阴影
+                findPreference(getString(R.string.key_hook_tab_elevation))?.apply { (this as SwitchPreference).isChecked = false }
+                //tablayout 着色
+                findPreference(getString(R.string.key_tab_layout_filtered))?.apply { (this as SwitchPreference).isChecked = false }
+            }
+            "khaki" -> {
+                //深色模式
+                findPreference(getString(R.string.key_hook_scheme_dark))?.apply { (this as SwitchPreference).isChecked = false }
+                findPreference(getString(R.string.key_hook_night_mode))?.apply { (this as SwitchPreference).isChecked = true }
+                //三色
+                findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khaki)) }
+                findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //提示颜色
+                findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khaki)) }
+                findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                findPreference(getString(R.string.key_change_guide_tip_color))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_color_tip_in_guide))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
+                findPreference(getString(R.string.key_color_tip_num_in_guide))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khaki)) }
+                //主界面字体
+                findPreference(getString(R.string.key_hook_main_textcolor))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_main_textcolor_title))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khakiDark)) }
+                findPreference(getString(R.string.key_main_textcolor_content))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khakiDark)) }
+                //气泡文字
+                findPreference(getString(R.string.key_hook_chat_text_color_left))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khakiDark)) }
+                findPreference(getString(R.string.key_hook_chat_text_color_right))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //气泡着色
+                findPreference(getString(R.string.key_hook_bubble))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_bubble_tint))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_hook_bubble_tint_left))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                findPreference(getString(R.string.key_hook_bubble_tint_right))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khakiDark)) }
+                //背景
+                findPreference(getString(R.string.key_hook_tab_bg))?.apply { (this as SwitchPreference).isChecked = false }
+                findPreference(getString(R.string.key_hook_conversation_background_alpha))?.apply { (this as EditTextPreference).text = "120" }
+                //悬浮按钮
+                findPreference(getString(R.string.key_hook_float_button_color_is_secondary))?.apply { (this as SwitchPreference).isChecked = true }
+                //tablayout 阴影
+                findPreference(getString(R.string.key_hook_tab_elevation))?.apply { (this as SwitchPreference).isChecked = true }
+                //tablayout 着色
+                findPreference(getString(R.string.key_tab_layout_filtered))?.apply { (this as SwitchPreference).isChecked = true }
+            }
+        }
+//        } catch (e: java.lang.Exception) {
+//            e.printStackTrace()
+//        }
+    }
 
     private fun verifyAlpha(s: String) {
         val alpha = s.toInt()

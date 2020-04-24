@@ -48,4 +48,14 @@
         <item>@color/material_yellow</item>
         <item>@color/material_yellow_700</item>
     </array>
+    <string-array name="color_schemes">
+        <item>沉浸主题</item>
+        <item>白色</item>
+        <item>卡其</item>
+    </string-array>
+    <string-array name="color_schemes_value">
+        <item>immersion</item>
+        <item>white</item>
+        <item>khaki</item>
+    </string-array>
 </resources>

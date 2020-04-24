@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorTransparent">#00000000</color>
+    <color name="transparentDark">#30000000</color>
+    <color name="transparentLight">#30EEEEEE</color>
+
+    <color name="khaki">#D3B494</color>
+    <color name="khakiDark">#aa9075</color>
+
     <color name="colorPrimary">#ededed</color>
     <color name="colorSecondary">#03A9F4</color>
     <color name="colorTertiary">#ECEFF1</color>
