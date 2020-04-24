@@ -286,7 +286,10 @@ object ListViewHooker : HookerProvider {
                         ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadPointView"))
                                 ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                         ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadCountView"))
-                                ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                                ?.apply {
+                                    this.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                                    if (this is TextView) this.setTextColor(HookConfig.get_color_tip_num)
+                                }
                     }
 
                     // 设置 头像 sum
