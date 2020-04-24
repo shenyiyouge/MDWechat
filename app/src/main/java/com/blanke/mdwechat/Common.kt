@@ -30,22 +30,9 @@ object Common {
     val FILE_NAME_TAB_BG_PREFIX = "tab_bg"
     val FILE_NAME_FLOAT_BUTTON = "floatbutton.txt"
 
-    // primary
-    val URL_HELP_FLOAT_BUTTON = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/float_button.md"
-    val URL_HELP_ICON = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/icon.md"
-    val URL_HELP_BUBBLE = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/bubble.md"
-    val URL_JOIN_GROUP = "https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/data/help/join_group.md"
-
-    //  opendrive backup
-    val URL_HELP_FLOAT_BUTTON_1 = "https://od.lk/s/NTZfMTQxODc1MTNf/float_button.md"
-    val URL_HELP_ICON_1 = "https://od.lk/s/NTZfMTQxODc1MTRf/icon.md"
-    val URL_HELP_BUBBLE_1 = "https://od.lk/s/NTZfMTQxODc1MTJf/bubble.md"
-    val URL_JOIN_GROUP_1 = "https://od.lk/s/NTZfMTQxODc1MTVf/join_group.md"
-
     val isVXPEnv: Boolean by lazy {
         VXPUtils.isVXPEnv()
     }
-
     val APP_DIR_PATH: String by lazy {
         //         debug VXP 环境下，区分目录
         val appDir = if (isVXPEnv && BuildConfig.DEBUG) APP_VXP_DIR else APP_DIR
@@ -54,4 +41,10 @@ object Common {
 //            LogUtil.log("app dir = $appDir")
         Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
     }
+
+    val URL_HELP_FLOAT_BUTTON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "floatbutton_readme.txt"
+    val URL_HELP_ICON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "icon_readme.txt"
+    val URL_HELP_BUBBLE = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "bubble_readme.txt"
+    val URL_JOIN_GROUP = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "join_group_readme.txt"
+
 }

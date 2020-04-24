@@ -2,10 +2,66 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <Preference
-        android:layout="@layout/preference_info"
-        android:summary="@string/summary"
-        android:title="@string/app_name_version" />
+    <!--关于-->
+    <PreferenceScreen android:title="@string/text_about_settings">
+        <Preference
+            android:summary="@string/josh_cai_info"
+            android:title="@string/app_name_version" />
+        <PreferenceCategory />
+        <Preference
+            android:key="@string/key_donate"
+            android:title="@string/text_donate" />
+
+        <Preference
+            android:key="@string/key_donate_wechat"
+            android:title="@string/text_donate_wechat" />
+
+        <!--<Preference-->
+        <!--android:key="@string/key_feedback"-->
+        <!--android:title="@string/text_feedback" />-->
+
+        <Preference
+            android:key="@string/key_feedback_group"
+            android:summary="@string/text_feedback_group_info"
+            android:title="@string/text_feedback_group" />
+
+        <PreferenceScreen
+            android:key="@string/key_feedback_email"
+            android:summary="@string/text_feedback_email_info"
+            android:title="@string/text_feedback_email">
+            <Preference
+                android:key="@string/key_feedback_email_josh_cai"
+                android:summary="@string/text_feedback_email_josh_cai_info"
+                android:title="@string/text_feedback_email_josh_cai" />
+            <Preference
+                android:key="@string/key_feedback_email_blanke"
+                android:summary="@string/text_feedback_email_blanke_info"
+                android:title="@string/text_feedback_email_blanke" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="@string/key_github_screen"
+            android:summary="@string/text_github_screen_info"
+            android:title="@string/text_github_screen">
+            <PreferenceCategory android:title="@string/text_gitee">
+                <Preference
+                    android:key="@string/key_gitee_joshcai"
+                    android:title="@string/text_gitee_joshcai" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/text_github">
+                <Preference
+                    android:key="@string/key_github_blanke"
+                    android:title="@string/text_github_blanke" />
+                <Preference
+                    android:key="@string/key_github_joshcai"
+                    android:title="@string/text_github_joshcai" />
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+        <Preference
+            android:summary="@string/text_app_thank_content"
+            android:title="@string/text_app_thank" />
+    </PreferenceScreen>
     <!--    <EditTextPreference-->
     <!--        android:defaultValue="0 -1 0 -1"-->
     <!--        android:key="debugConfigText"-->
@@ -44,75 +100,87 @@
         <PreferenceScreen
             android:dependency="@string/key_hook_switch"
             android:title="配色方案">
-            <SwitchPreference
-                android:defaultValue="false"
-                android:disableDependentsState="true"
-                android:key="@string/key_hook_theme_dark"
-                android:summary="@string/summary_hook_theme_dark"
-                android:title="@string/text_hook_theme_dark" />
-            <SwitchPreference
-                android:defaultValue="true"
-                android:dependency="@string/key_hook_theme_dark"
-                android:key="@string/key_hook_night_mode"
-                android:summary="@string/summary_hook_night_mode"
-                android:title="@string/text_hook_night_mode" />
-            <!--主色+副色-->
-            <com.jaredrummler.android.colorpicker.ColorPreference
-                android:defaultValue="@color/colorPrimary"
-                android:key="@string/key_color_primary"
-                android:summary="@string/summary_color_primary"
-                android:title="@string/text_color_primary"
-                app:cpv_colorPresets="@array/colors"
-                app:cpv_showAlphaSlider="true" />
-            <com.jaredrummler.android.colorpicker.ColorPreference
-                android:defaultValue="@color/colorSecondary"
-                android:key="@string/key_color_secondary"
-                android:summary="@string/summary_color_secondary"
-                android:title="@string/text_color_secondary"
-                app:cpv_colorPresets="@array/colors"
-                app:cpv_showAlphaSlider="true" />
-            <com.jaredrummler.android.colorpicker.ColorPreference
-                android:defaultValue="@color/colorTertiary"
-                android:key="@string/key_color_tertiary"
-                android:summary="@string/summary_color_tertiary"
-                android:title="@string/text_color_tertiary"
-                app:cpv_colorPresets="@array/colors"
-                app:cpv_showAlphaSlider="true" />
-            <!--消息提示颜色-->
-            <PreferenceScreen android:title="@string/text_color_tip">
-                <com.jaredrummler.android.colorpicker.ColorPreference
-                    android:defaultValue="@color/colorTip"
-                    android:key="@string/key_color_tip"
-                    android:title="@string/text_color_tip"
-                    app:cpv_colorPresets="@array/colors"
-                    app:cpv_showAlphaSlider="true" />
-                <com.jaredrummler.android.colorpicker.ColorPreference
-                    android:defaultValue="@color/material_white"
-                    android:key="@string/key_color_tip_num"
-                    android:title="@string/text_color_tip_num"
-                    app:cpv_colorPresets="@array/colors"
-                    app:cpv_showAlphaSlider="true" />
-                <PreferenceCategory />
-                <!--在自定义导航中单独配色-->
+
+
+            <!--            <ListPreference-->
+            <!--                android:key="myListPreference"-->
+            <!--                android:title="预设方案"-->
+            <!--                android:entries="@array/color_themes"-->
+            <!--                android:entryValues="@array/color_themes_value"-->
+            <!--                android:dialogTitle="预设方案">-->
+            <!--            </ListPreference>-->
+            <!--通用-->
+            <PreferenceCategory android:title="@string/text_common_settings">
                 <SwitchPreference
                     android:defaultValue="false"
-                    android:key="@string/key_change_guide_tip_color"
-                    android:title="@string/text_change_guide_tip_color" />
+                    android:disableDependentsState="true"
+                    android:key="@string/key_hook_theme_dark"
+                    android:summary="@string/summary_hook_theme_dark"
+                    android:title="@string/text_hook_theme_dark" />
+                <SwitchPreference
+                    android:defaultValue="true"
+                    android:dependency="@string/key_hook_theme_dark"
+                    android:key="@string/key_hook_night_mode"
+                    android:summary="@string/summary_hook_night_mode"
+                    android:title="@string/text_hook_night_mode" />
+                <!--主色+副色-->
                 <com.jaredrummler.android.colorpicker.ColorPreference
-                    android:defaultValue="@color/colorTip"
-                    android:dependency="@string/key_change_guide_tip_color"
-                    android:key="@string/key_color_tip_in_guide"
-                    android:title="@string/text_color_tip_in_guide"
+                    android:defaultValue="@color/colorPrimary"
+                    android:key="@string/key_color_primary"
+                    android:summary="@string/summary_color_primary"
+                    android:title="@string/text_color_primary"
                     app:cpv_colorPresets="@array/colors"
                     app:cpv_showAlphaSlider="true" />
                 <com.jaredrummler.android.colorpicker.ColorPreference
-                    android:defaultValue="@color/material_white"
-                    android:dependency="@string/key_change_guide_tip_color"
-                    android:key="@string/key_color_tip_num_in_guide"
-                    android:title="@string/text_color_tip_num_in_guide"
+                    android:defaultValue="@color/colorSecondary"
+                    android:key="@string/key_color_secondary"
+                    android:summary="@string/summary_color_secondary"
+                    android:title="@string/text_color_secondary"
                     app:cpv_colorPresets="@array/colors"
                     app:cpv_showAlphaSlider="true" />
-            </PreferenceScreen>
+                <com.jaredrummler.android.colorpicker.ColorPreference
+                    android:defaultValue="@color/colorTertiary"
+                    android:key="@string/key_color_tertiary"
+                    android:summary="@string/summary_color_tertiary"
+                    android:title="@string/text_color_tertiary"
+                    app:cpv_colorPresets="@array/colors"
+                    app:cpv_showAlphaSlider="true" />
+                <!--消息提示颜色-->
+                <PreferenceScreen android:title="@string/text_color_tip">
+                    <com.jaredrummler.android.colorpicker.ColorPreference
+                        android:defaultValue="@color/colorTip"
+                        android:key="@string/key_color_tip"
+                        android:title="@string/text_color_tip"
+                        app:cpv_colorPresets="@array/colors"
+                        app:cpv_showAlphaSlider="true" />
+                    <com.jaredrummler.android.colorpicker.ColorPreference
+                        android:defaultValue="@color/material_white"
+                        android:key="@string/key_color_tip_num"
+                        android:title="@string/text_color_tip_num"
+                        app:cpv_colorPresets="@array/colors"
+                        app:cpv_showAlphaSlider="true" />
+                    <PreferenceCategory />
+                    <!--在自定义导航中单独配色-->
+                    <SwitchPreference
+                        android:defaultValue="false"
+                        android:key="@string/key_change_guide_tip_color"
+                        android:title="@string/text_change_guide_tip_color" />
+                    <com.jaredrummler.android.colorpicker.ColorPreference
+                        android:defaultValue="@color/colorTip"
+                        android:dependency="@string/key_change_guide_tip_color"
+                        android:key="@string/key_color_tip_in_guide"
+                        android:title="@string/text_color_tip_in_guide"
+                        app:cpv_colorPresets="@array/colors"
+                        app:cpv_showAlphaSlider="true" />
+                    <com.jaredrummler.android.colorpicker.ColorPreference
+                        android:defaultValue="@color/material_white"
+                        android:dependency="@string/key_change_guide_tip_color"
+                        android:key="@string/key_color_tip_num_in_guide"
+                        android:title="@string/text_color_tip_num_in_guide"
+                        app:cpv_colorPresets="@array/colors"
+                        app:cpv_showAlphaSlider="true" />
+                </PreferenceScreen>
+            </PreferenceCategory>
             <!--主界面内容字体颜色-->
             <PreferenceCategory android:title="@string/text_main_settings">
                 <SwitchPreference
@@ -353,68 +421,7 @@
         <!--                tools:ignore="Deprecated" />-->
         <!--        </PreferenceScreen>-->
         <!--帮助和教程-->
-        <PreferenceScreen android:title="@string/help_info">
-            <!--关于-->
-            <PreferenceScreen android:title="@string/text_about_settings">
-                <Preference
-                    android:summary="@string/josh_cai_info"
-                    android:title="@string/app_name_version" />
-                <PreferenceCategory />
-                <Preference
-                    android:key="@string/key_donate"
-                    android:title="@string/text_donate" />
-
-                <Preference
-                    android:key="@string/key_donate_wechat"
-                    android:title="@string/text_donate_wechat" />
-
-                <!--<Preference-->
-                <!--android:key="@string/key_feedback"-->
-                <!--android:title="@string/text_feedback" />-->
-
-                <Preference
-                    android:key="@string/key_feedback_group"
-                    android:summary="@string/text_feedback_group_info"
-                    android:title="@string/text_feedback_group" />
-
-                <PreferenceScreen
-                    android:key="@string/key_feedback_email"
-                    android:summary="@string/text_feedback_email_info"
-                    android:title="@string/text_feedback_email">
-                    <Preference
-                        android:key="@string/key_feedback_email_josh_cai"
-                        android:summary="@string/text_feedback_email_josh_cai_info"
-                        android:title="@string/text_feedback_email_josh_cai" />
-                    <Preference
-                        android:key="@string/key_feedback_email_blanke"
-                        android:summary="@string/text_feedback_email_blanke_info"
-                        android:title="@string/text_feedback_email_blanke" />
-                </PreferenceScreen>
-
-                <PreferenceScreen
-                    android:key="@string/key_github_screen"
-                    android:summary="@string/text_github_screen_info"
-                    android:title="@string/text_github_screen">
-                    <PreferenceCategory android:title="@string/text_gitee">
-                        <Preference
-                            android:key="@string/key_gitee_joshcai"
-                            android:title="@string/text_gitee_joshcai" />
-                    </PreferenceCategory>
-                    <PreferenceCategory android:title="@string/text_github">
-                        <Preference
-                            android:key="@string/key_github_blanke"
-                            android:title="@string/text_github_blanke" />
-                        <Preference
-                            android:key="@string/key_github_joshcai"
-                            android:title="@string/text_github_joshcai" />
-                    </PreferenceCategory>
-
-                </PreferenceScreen>
-                <Preference
-                    android:summary="@string/text_app_thank_content"
-                    android:title="@string/text_app_thank" />
-            </PreferenceScreen>
-            <PreferenceCategory android:title="@string/help">
+        <PreferenceScreen android:title="@string/help">
                 <Preference
                     android:key="@string/key_help_float_button"
                     android:title="@string/text_help_float_button" />

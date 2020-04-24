@@ -188,10 +188,10 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_generate_wechat_config) -> generateWechatFile()
             getString(R.string.key_donate_wechat) -> donateWechat()
             getString(R.string.key_download_wechat_config) -> downloadWechatConfig()
-            getString(R.string.key_feedback_group) -> gotoMarkDownAct(getString(R.string.text_feedback_group), Common.URL_JOIN_GROUP, Common.URL_JOIN_GROUP_1)
-            getString(R.string.key_help_float_button) -> gotoMarkDownAct(getString(R.string.text_help_float_button), Common.URL_HELP_FLOAT_BUTTON, Common.URL_HELP_FLOAT_BUTTON_1)
-            getString(R.string.key_help_bubble) -> gotoMarkDownAct(getString(R.string.text_help_bubble), Common.URL_HELP_BUBBLE, Common.URL_HELP_BUBBLE_1)
-            getString(R.string.key_help_icon) -> gotoMarkDownAct(getString(R.string.text_help_icon), Common.URL_HELP_ICON, Common.URL_HELP_ICON_1)
+            getString(R.string.key_feedback_group) -> gotoMarkDownAct(getString(R.string.text_feedback_group), Common.URL_JOIN_GROUP)
+            getString(R.string.key_help_float_button) -> gotoMarkDownAct(getString(R.string.text_help_float_button), Common.URL_HELP_FLOAT_BUTTON)
+            getString(R.string.key_help_bubble) -> gotoMarkDownAct(getString(R.string.text_help_bubble), Common.URL_HELP_BUBBLE)
+            getString(R.string.key_help_icon) -> gotoMarkDownAct(getString(R.string.text_help_icon), Common.URL_HELP_ICON)
         }
         return true
     }
@@ -201,8 +201,8 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         Toast.makeText(activity, getString(R.string.msg_clear_ok), Toast.LENGTH_SHORT).show()
     }
 
-    private fun gotoMarkDownAct(title: String, url: String, urlBak: String = "") {
-        MarkDownActivity.start(activity, title, url, urlBak)
+    private fun gotoMarkDownAct(title: String, url: String) {
+        MarkDownActivity.start(activity, title, url)
     }
 
     private fun downloadWechatConfig() {
