@@ -27,7 +27,7 @@ object TabLayoutHook {
         val primaryColor: Int = NightModeUtils.colorPrimary
         val secondaryColor: Int = NightModeUtils.colorSecondary
         val get_color_tertiary: Int = NightModeUtils.colorTeritary
-        val tipColor: Int = NightModeUtils.colorTip
+        val tipColor: Int = HookConfig.get_color_tip_in_guide
         val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewGroup.context
         val tabLayout = CommonTabLayout(context)
@@ -40,7 +40,7 @@ object TabLayoutHook {
         tabLayout.indicatorAnimDuration = 200
         tabLayout.elevation = tabElevation
         tabLayout.unreadBackground = tipColor
-        tabLayout.unreadTextColor = primaryColor
+        tabLayout.unreadTextColor = HookConfig.get_color_tip_num_in_guide
         tabLayout.selectIconColor = secondaryColor
 //        tabLayout.unSelectIconColor = Color.WHITE
 
@@ -108,7 +108,7 @@ object TabLayoutHook {
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
 //        mainThread {
-            Objects.Main.tabLayout = tabLayout
+        Objects.Main.tabLayout = tabLayout
         BackgroundImageUtils.setTabLayoutBitmap(0)
 //        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
