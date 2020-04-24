@@ -149,6 +149,9 @@
     <string name="key_hook_tab_elevation">key_hook_tab_elevation</string>
     <string name="text_hook_tab_elevation">TabLayout阴影</string>
     <string name="summary_hook_tab_elevation">阴影和TabLayout当前页的横杠</string>
+    <string name="key_small_tab_bar_size">key_small_tab_bar_size</string>
+    <string name="text_small_tab_bar_size">使用小号横杠</string>
+    <string name="summary_small_tab_bar_size">使TabLayout当前页的横杠大小变扁</string>
     <string name="key_tab_layout_on_top">key_tab_layout_on_top</string>
     <string name="text_tab_layout_on_top">将TabLayout置于上方</string>
     <string name="key_tab_layout_filtered">key_tab_layout_filtered</string>

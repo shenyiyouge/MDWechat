@@ -304,6 +304,12 @@
                     android:title="@string/text_hook_tab_elevation" />
                 <SwitchPreference
                     android:defaultValue="false"
+                    android:dependency="@string/key_hook_tab_elevation"
+                    android:key="@string/key_small_tab_bar_size"
+                    android:summary="@string/summary_small_tab_bar_size"
+                    android:title="@string/text_small_tab_bar_size" />
+                <SwitchPreference
+                    android:defaultValue="false"
                     android:dependency="@string/key_hook_tab"
                     android:key="@string/key_tab_layout_filtered"
                     android:summary="@string/summary_tab_layout_filtered"

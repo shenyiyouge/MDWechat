@@ -32,7 +32,8 @@ object TabLayoutHook {
         val resContext = viewGroup.context
         val tabLayout = CommonTabLayout(context)
         tabLayout.textSelectColor = Color.WHITE
-        val dp2 = ConvertUtils.dp2px(resContext, 1f)
+        val indicatorWeight = if (HookConfig.is_small_tab_bar_size) 0.5f else 1f
+        val dp2 = ConvertUtils.dp2px(resContext, indicatorWeight)
         tabLayout.indicatorHeight = dp2.toFloat()
         tabLayout.indicatorColor = if (NightModeUtils.is_hook_tab_elevation) secondaryColor else primaryColor
         tabLayout.setIndicatorGravity(indicatorGravity)
