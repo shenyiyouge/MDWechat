@@ -11,13 +11,8 @@ import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
 
 object NightModeHooker : HookerProvider {
-    const val keyInit = "key_init"
-
     override fun provideStaticHookers(): List<Hooker>? {
-        return listOf(
-//                getNightModeConfiguration1,
-                getNightModeConfiguration
-        )
+        return listOf(getNightModeConfiguration)
     }
 
     private val getNightModeConfiguration = Hooker {

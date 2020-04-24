@@ -63,7 +63,7 @@ object BackgroundImageUtils {
             return
         }
 
-        // TODO 只修改聊天页面
+        // 只修改聊天页面
         val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as View
         when (chattingUILayout::class.java.name) {
             "com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout" -> {
@@ -130,7 +130,6 @@ object BackgroundImageUtils {
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
         if (!HookConfig.is_hook_bg_immersion || (HookConfig.is_hook_hide_actionbar)) {
             _actionBarLocation[1] = -1
-//        todo change         _tabLayoutLocation[1] = -1             TO               _actionBarLocation[1] = -1
             return null
         }
         if (_actionBarBitmap[page] != null) return _actionBarBitmap[page]!!

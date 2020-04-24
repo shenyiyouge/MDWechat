@@ -40,10 +40,6 @@ object ListViewHooker : HookerProvider {
         get() {
             return HookConfig.is_hook_main_textcolor || NightModeUtils.isNightMode()
         }
-    private val isHookMiniProgram: Boolean
-        get() {
-            return HookConfig.is_hook_mini_program
-        }
 
     override fun provideStaticHookers(): List<Hooker>? {
         return listOf(listViewHook)
@@ -81,7 +77,7 @@ object ListViewHooker : HookerProvider {
                         if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightMessageItem")
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
-                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightMessageItem.treeStacks.get("msgView")!!) as View
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightMessageItem.treeStacks["msgView"]!!) as View
 //                    log("msgView=$msgView")
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgRightTextColor)
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgRightTextColor)
@@ -179,15 +175,11 @@ object ListViewHooker : HookerProvider {
                         // 引用消息 item
                         if (ViewTreeUtils.equals(VTTV.RefRightMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.RefRightMessageItem")
-                            //todo
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
                             val msgView = ViewUtils.getChildView1(view, VTTV.RefRightMessageItem.treeStacks.get("msgView")!!) as View
-//                    log("msgView=$msgView")
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgRightTextColor)
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgRightTextColor)
                             XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgRightTextColor)
-//                    val mText = XposedHelpers.getObjectField(msgView, "mText")
-//                    log("msg right text=$mText")
                             if (HookConfig.is_hook_bubble) {
                                 val bubble = WeChatHelper.getRightBubble(msgView.resources)
                                 msgView.background = bubble
@@ -199,14 +191,6 @@ object ListViewHooker : HookerProvider {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
                             val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                             val msgView = ViewUtils.getChildView1(view, VTTV.RefLeftMessageItem.treeStacks.get("msgView")!!) as View
-//                    LogUtil.logXp("=======start=========")
-//                    LogUtil.logXp("msgView=$msgView")
-//                    val mText = XposedHelpers.getObjectField(msgView, "mText")
-//                    LogUtil.logXp("msg left text=$mText")
-//                    LogUtil.logViewXp(view)
-//                    LogUtil.logStackTraceXp()
-//                    LogUtil.logViewStackTracesXp(ViewUtils.getParentViewSafe(view, 111))
-//                    LogUtil.logXp("=======end=========")
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgLeftTextColor)
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgLeftTextColor)
                             XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgLeftTextColor)
