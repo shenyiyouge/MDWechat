@@ -72,11 +72,6 @@ object TabLayoutHook {
         return tabLayout
     }
 
-    fun measureHeight(view: ViewGroup): Int {
-        val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-        view.measure(w, w)
-        return view.measuredHeight
-    }
 
     fun addTabLayoutAtBottom(tabView: ViewGroup, height: Int) {
         val tabLayout = newTabLayout(tabView, Gravity.TOP, 5f)

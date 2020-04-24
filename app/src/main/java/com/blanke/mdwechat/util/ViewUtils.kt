@@ -4,6 +4,13 @@ import android.view.View
 import android.view.ViewGroup
 
 object ViewUtils {
+
+    fun measureHeight(view: View): Int {
+        val w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        view.measure(w, w)
+        return view.measuredHeight
+    }
+
     fun getChildView(view: View, vararg indexs: Int): View? {
         var parentView: View = view
         var childView: View? = null
