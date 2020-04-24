@@ -20,7 +20,7 @@ object NightModeHooker : HookerProvider {
             override fun afterHookedMethod(param: MethodHookParam) {
                 val configuration = param.result as Configuration
                 val uiMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-                if (HookConfig.is_hook_theme_dark)
+                if (HookConfig.is_hook_scheme_dark)
                     configuration.uiMode = Configuration.UI_MODE_NIGHT_YES
                 else {
                     NightModeUtils.setNightMode(uiMode == Configuration.UI_MODE_NIGHT_YES)

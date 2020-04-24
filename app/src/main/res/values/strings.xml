@@ -109,14 +109,14 @@
     <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
-    <string name="summary_hook_tab_bg">自定义配置参见/sdcard/mdwechat/config/readme/icon_readme.txt</string>
+    <string name="summary_hook_tab_bg">自定义配置参见 手机存储/mdwechat/config/readme/icon_readme.txt</string>
     <string name="key_change_resolution">key_change_resolution</string>
     <string name="text_change_resolution">调整背景图分辨率</string>
     <string name="summary_change_resolution">如果打开主题沉浸后贴图错误，则需要手动设置分辨率。</string>
     <string name="key_resolution">key_resolution</string>
     <string name="text_resolution">背景图分辨率</string>
     <string name="summary_resolution">自定义背景图片分辨率，格式为"宽,高",单位为像素(整数)。</string>
-    <string name="text_hook_bubble_info">必须是.9图,自定义配置参见/sdcard/mdwechat/config/readme/bubble_readme.txt</string>
+    <string name="text_hook_bubble_info">必须是.9图,自定义配置参见 手机存储/mdwechat/config/readme/bubble_readme.txt</string>
     <string name="text_hook_bubble_tint_info">可以修改气泡颜色</string>
     <string name="key_hook_bubble_tint_left">key_hook_bubble_tint_left</string>
     <string name="text_hook_bubble_tint_left">左边气泡颜色</string>
@@ -127,21 +127,21 @@
     <string name="key_hook_chat_text_color_right">key_hook_chat_text_color_right</string>
     <string name="text_hook_chat_text_color_right">右边文字颜色</string>
     <string name="key_reset_wechat_config">key_reset_wechat_config</string>
-    <string name="text_reset_wechat_config_info">微信版本适配文件,更新版本或失败请重置,配置文件在/sdcard/mdwechat/config/wechat/目录下,谨慎修改</string>
+    <string name="text_reset_wechat_config_info">微信版本适配文件,更新版本或失败请重置,配置文件在 手机存储/mdwechat/config/wechat/目录下,谨慎修改</string>
     <string name="text_reset_wechat_config">重置微信版本适配文件</string>
     <string name="key_reset_config">key_reset_config</string>
     <string name="text_reset_config">重置配置文件</string>
-    <string name="text_reset_config_info">还原默认设置（不包括图标和悬浮按钮, 需重启本程序）,配置文件为/sdcard/mdwechat/config/md_wechat_settings_4_0.xml</string>
+    <string name="text_reset_config_info">还原默认设置（不包括图标和悬浮按钮, 需重启本程序）,配置文件为 手机存储/mdwechat/config/md_wechat_settings_4_0.xml</string>
     <string name="key_reset_float_bottom_config">key_reset_float_bottom_config</string>
     <string name="text_reset_float_bottom_config">重置悬浮按钮配置文件</string>
-    <string name="text_reset_float_bottom_config_info">如果你改坏了/不生效,请重置,配置文件在/sdcard/mdwechat/config/view/目录下</string>
+    <string name="text_reset_float_bottom_config_info">如果你改坏了/不生效,请重置,配置文件在 手机存储/mdwechat/config/view/目录下</string>
     <string name="key_reset_icon_config">key_reset_icon_config</string>
     <string name="text_reset_icon_config">重置图标资源</string>
-    <string name="text_reset_icon_config_info">如果你替换图标效果不理想/无效,请重置,目录在/sdcard/mdwechat/icon/目录下,替换图标尽量保证尺寸一致,否则可能显示会有问题</string>
+    <string name="text_reset_icon_config_info">如果你替换图标效果不理想/无效,请重置,目录在 手机存储/mdwechat/icon/目录下,替换图标尽量保证尺寸一致,否则可能显示会有问题</string>
     <string name="msg_clear_ok">日志清空成功</string>
     <string name="msg_reset_ok">重置成功,请重启微信</string>
     <string name="msg_reset_mdwechat_ok">重置成功,请手动重启本程序</string>
-    <string name="msg_reset_failed">重置失败,请检查/sdcard/mdwechat目录的权限</string>
+    <string name="msg_reset_failed">重置失败,请检查 手机存储/mdwechat目录的权限</string>
     <string name="key_hook_statusbar_transparent">key_hook_statusbar_transparent</string>
     <string name="summary_hook_statusbar_transparent">仅限于非沉浸主题</string>
     <string name="text_hook_statusbar_transparent">状态栏全透明</string>
@@ -188,7 +188,7 @@
     <string name="key_hook_remove_foot_view">key_hook_remove_foot_view</string>
     <string name="text_hook_remove_foot_view">修复消息列表背景图显示不完整(底部空白)</string>
     <string name="text_hook_remove_foot_view_summary">当消息列表显示不超过一屏时背景图会显示不完整,最低支持微信版本 6.6.1,如显示异常,尝试关闭此项</string>
-    <string name="msg_permission_fail">请授予必要的存储权限,存储目录在 /sdcard/mdwechat 下.</string>
+    <string name="msg_permission_fail">请授予必要的存储权限,存储目录在  手机存储/mdwechat 下.</string>
     <string name="key_hook_conversation_bg">key_hook_conversation_bg</string>
     <string name="title_hook_conversation_bg">背景图</string>
     <string name="key_hook_main_bg">key_hook_main_bg</string>
@@ -210,7 +210,7 @@
     <string name="text_settings_debug">调试</string>
     <string name="key_hook_log">key_hook_log</string>
     <string name="text_hook_log">日志记录</string>
-    <string name="text_hook_log_info">打开日志开关会在/sdcard/mdwechat/logs 下生成日志文件，谨慎打开，会导致运行变卡顿</string>
+    <string name="text_hook_log_info">打开日志开关会在 手机存储/mdwechat/logs 下生成日志文件，谨慎打开，会导致运行变卡顿</string>
     <string name="key_hook_log_xposed">key_hook_log_xposed</string>
     <string name="text_hook_log_xposed">记录到xposed日志中</string>
     <string name="text_hook_log_xposed_info">变更日志记录地点至xposed日志，如果上面的文件夹中日志为空可以打开此选项。</string>
@@ -229,7 +229,8 @@
     <string name="text_brief">简要设置</string>
     <string name="text_wechat_config_settings">微信适配文件</string>
     <string name="text_feedback_donate_settings">反馈和捐赠</string>
-    <string name="text_about_settings">关于 MDWechat</string>
+    <string name="text_about_settings">更多信息</string>
+    <string name="summary_about_settings">向原作者捐赠 / 查看交流群等</string>
     <string name="key_feedback_wechat">key_feedback_wechat</string>
     <string name="text_feedback_wechat">微信交流群</string>
     <string name="text_feedback_group">加入交流群</string>
@@ -250,9 +251,9 @@
     <string name="key_feedback_group">key_feedback_group</string>
 
 
-    <string name="key_hook_theme_dark">key_hook_theme_dark</string>
-    <string name="text_hook_theme_dark">暗色系主题</string>
-    <string name="summary_hook_theme_dark">开启后强制微信使用暗色系主题(需要微信7.0.10以上)</string>
+    <string name="key_hook_scheme_dark">key_hook_scheme_dark</string>
+    <string name="text_hook_scheme_dark">暗色系主题</string>
+    <string name="summary_hook_scheme_dark">开启后强制微信使用暗色系主题(需要微信7.0.10以上)</string>
     <string name="key_hook_night_mode">key_hook_night_mode</string>
     <string name="text_hook_night_mode">自动切换色系</string>
     <string name="summary_hook_night_mode">当主题设置为亮色系且微信开启深色模式时，自动切换主题为暗色系。（需要微信7.0.10以上）</string>
@@ -274,13 +275,13 @@
     <string name="text_clear_logs">清空日志</string>
     <string name="navigate">导航</string>
     <!--    <string name="instruction">教程</string>-->
-    <string name="help">帮助</string>
+    <string name="help">使用说明</string>
     <string name="help_info">帮助/关于</string>
     <string name="reset">重置图标/配置文件</string>
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
-    <string name="app_name_version">MDWechat 4.0.0_beta-2</string>
+    <string name="app_name_version">MDWechat 4.0.0.RC1</string>
     <string name="summary">此为测试版。暂无法在太极上使用，可在xposed, virtual xposed 和 edxposed 下使用。</string>
-    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将作者在 github 上开源的代码进行二次开发，使其能够适配较新的微信(7.0.10 – 7.0.13)(国内版)。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
+    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将原作者(Blanke)在 github 上开源的代码进行二次开发，使其能够适配较新的微信。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
 </resources>

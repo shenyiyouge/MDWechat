@@ -80,7 +80,7 @@ object HookConfig {
     private val key_hook_mini_program = "key_hook_mini_program"
 
     //    private val key_mini_program_title = "key_mini_program_title"
-    private val key_hook_theme_dark = "key_hook_theme_dark"
+    private val key_hook_scheme_dark = "key_hook_scheme_dark"
     private val key_hook_night_mode = "key_hook_night_mode"
 
     val is_hook_debug: Boolean
@@ -367,9 +367,9 @@ object HookConfig {
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_mini_program, false)
         }
-    val is_hook_theme_dark: Boolean
+    val is_hook_scheme_dark: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_theme_dark, true)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_scheme_dark, false)
         }
     val is_hook_night_mode: Boolean
         get() {

@@ -19,7 +19,7 @@ import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 object TitleColorHook {
     private val transparentDark = Color.parseColor("#30000000")
     private val transparentLight = Color.parseColor("#30EEEEEE")
-    private val isBgLight = !HookConfig.is_hook_theme_dark && !NightModeUtils.isNightMode()
+    private val isBgLight = !HookConfig.is_hook_scheme_dark && !NightModeUtils.isNightMode()
     private val transparentBackground = if (isBgLight) transparentLight else transparentDark
     private var footerLocation = mutableListOf(-1, -1)
 
@@ -73,7 +73,7 @@ object TitleColorHook {
         // 聊天背景
         val chattingBgShade = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chattingBgShade")) as View
-        if (HookConfig.is_hook_theme_dark || !HookConfig.is_hook_night_mode) chattingBgShade.setBackgroundColor(0)
+        if (HookConfig.is_hook_scheme_dark || !HookConfig.is_hook_night_mode) chattingBgShade.setBackgroundColor(0)
 
         //底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
