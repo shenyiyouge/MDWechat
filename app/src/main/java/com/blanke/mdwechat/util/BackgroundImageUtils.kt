@@ -300,13 +300,14 @@ object BackgroundImageUtils {
     /////////////////////////////////////////////////////
 //TODO 可整合代码
 //根据绝对位置来设置view 的背景图片
-    fun setBackgroundBitmap(logHead: String, view: View, screenImage: Bitmap, cache: Bitmap?) {
+    fun setBackgroundBitmap(logHead: String, view: View, screenImage: Bitmap, cache: Bitmap?): List<Int> {
         if (cache != null) {
             view.background = NightModeUtils.getBackgroundDrawable(cache)
-            return
+            return mutableListOf(-1, -1)
         }
         val location = IntArray(2)
         view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
         view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, screenImage, location[1], view.height))
+        return mutableListOf(location[1], view.height)
     }
 }
