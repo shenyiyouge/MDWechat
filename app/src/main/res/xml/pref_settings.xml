@@ -209,8 +209,12 @@
             <!--聊天气泡-->
             <PreferenceCategory>
                 <PreferenceScreen
-                    android:summary="@string/summary_chat_settings"
                     android:title="@string/text_chat_settings">
+                    <SwitchPreference
+                        android:defaultValue="true"
+                        android:key="@string/key_hook_bubble"
+                        android:summary="@string/text_hook_bubble_info"
+                        android:title="@string/text_hook_bubble" />
                     <!--深色模式-->
                     <SwitchPreference
                         android:defaultValue="false"
@@ -394,17 +398,6 @@
                     android:title="@string/text_tab_layout_on_top" />
             </PreferenceCategory>
 
-        </PreferenceScreen>
-        <!--聊天气泡-->
-        <PreferenceScreen
-            android:dependency="@string/key_hook_switch"
-            android:title="@string/text_chat_settings">
-            <SwitchPreference
-                android:defaultValue="true"
-                android:key="@string/key_hook_bubble"
-                android:summary="@string/text_hook_bubble_info"
-                android:title="@string/text_hook_bubble" />
-            <Preference android:title="@string/other_bubble_settings" />
         </PreferenceScreen>
         <!--        &lt;!&ndash;试验&ndash;&gt;-->
         <!--        <PreferenceScreen-->
