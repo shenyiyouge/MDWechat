@@ -72,8 +72,8 @@ object BackgroundImageUtils {
                     TitleColorHook.setConversationColor(actionBar)
                     return
                 }
+                LogUtil.log("等待点击聊天界面以显示聊天界面的沉浸背景.....")
                 waitInvoke(200, true, {
-                    LogUtil.log("等待点击聊天界面以显示聊天界面的沉浸背景.....")
                     actionBar.height > 0
                 }, {
                     val bg = AppCustomConfig.getTabBg(0)
