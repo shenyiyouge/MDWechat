@@ -7,11 +7,11 @@ android {
 //    aaptOptions.useNewCruncher = false
 
     defaultConfig {
-        applicationId "com.blanke.mdwechat"
+        applicationId "com.joshcai.mdwechat"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 37
-        versionName "4.0.0"
+        versionCode 42
+        versionName "4.0.1-RC1"
     }
     buildTypes {
         release {
