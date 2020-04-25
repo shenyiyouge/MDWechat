@@ -45,7 +45,7 @@ class SettingsActivity : Activity() {
         fab = findViewById(R.id.fab)
         fab.setOnClickListener {
             copyConfig()
-            _clearLogs()
+//            _clearLogs()
             goToWechatSettingPage()
         }
     }
