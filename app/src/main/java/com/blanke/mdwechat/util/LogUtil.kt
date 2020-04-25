@@ -47,8 +47,6 @@ object LogUtil {
         logFile.mkdirs()
         if (isLogFile) {
             exportLog("------- beginning of log -------")
-        } else {
-            exportLog("------- 设置中未打开日志记录开关. -------")
         }
         STATIC.logged.clear()
     }

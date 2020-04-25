@@ -88,6 +88,10 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             onPreferenceChangeListener = _this
             STATIC.isLogFile = (this as SwitchPreference).isChecked
         }
+        findPreference(getString(R.string.key_hook_log_xposed))?.apply {
+            onPreferenceChangeListener = _this
+            STATIC.isLogFile = !(this as SwitchPreference).isChecked && STATIC.isLogFile
+        }
         findPreference("key_clear_logs")?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_pre_inst_color_schemes))?.onPreferenceChangeListener = this
@@ -151,6 +155,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
     override fun onPreferenceChange(preference: Preference, o: Any): Boolean {
         when (preference.key) {
             getString(R.string.key_hook_log) -> STATIC.isLogFile = (findPreference(getString(R.string.key_hook_log)) as SwitchPreference).isChecked
+            getString(R.string.key_hook_log_xposed) -> STATIC.isLogFile = !((findPreference(getString(R.string.key_hook_log_xposed)) as SwitchPreference).isChecked)
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
             getString(R.string.key_pre_inst_color_schemes) -> changeColorScheme(o as String)
