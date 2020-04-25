@@ -104,6 +104,7 @@
             android:title="配色方案">
             <PreferenceCategory android:title="@string/text_pre_inst">
                 <ListPreference
+                    android:summary="重置配色方案为预设方案。(沉浸主题设置位于上级菜单的「背景」)"
                     android:dialogTitle="@string/text_pre_inst_color_schemes"
                     android:entries="@array/color_schemes"
                     android:entryValues="@array/color_schemes_value"
@@ -265,6 +266,17 @@
                 android:key="@string/key_hook_tab_bg"
                 android:summary="@string/summary_hook_tab_bg"
                 android:title="@string/text_hook_tab_bg" />
+            <EditTextPreference
+                android:defaultValue="0"
+                android:dependency="@string/key_hook_tab_bg"
+                android:dialogTitle="@string/dialog_title_hook_conversation_background_alpha"
+                android:key="@string/key_hook_conversation_background_alpha"
+                android:numeric="integer"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:summary="@string/summary_hook_conversation_background_alpha"
+                android:title="@string/text_hook_conversation_background_alpha"
+                tools:ignore="Deprecated" />
             <SwitchPreference
                 android:defaultValue="true"
                 android:key="@string/key_hook_statusbar_transparent"
@@ -287,16 +299,6 @@
                 android:key="@string/key_resolution"
                 android:summary="@string/summary_resolution"
                 android:title="@string/text_resolution" />
-            <EditTextPreference
-                android:defaultValue="0"
-                android:dialogTitle="@string/dialog_title_hook_conversation_background_alpha"
-                android:key="@string/key_hook_conversation_background_alpha"
-                android:numeric="integer"
-                android:selectAllOnFocus="true"
-                android:singleLine="true"
-                android:summary="@string/summary_hook_conversation_background_alpha"
-                android:title="@string/text_hook_conversation_background_alpha"
-                tools:ignore="Deprecated" />
         </PreferenceScreen>
         <!--主界面设置-->
         <PreferenceScreen

@@ -21,27 +21,32 @@ MDWechat
 13. ~~移除会话列表下拉小程序,最低支持微信 6.6.2~~(微信7.0.0以上失效)
 14. 识别微X模块入口,移动到悬浮按钮(2.0新增)
 15. 主界面字体颜色修改(2.0新增)
-1. 添加3个内置配色方案(4.0新增)
+1. 细化设置项并添加3个内置配色方案(4.0新增)
 
 # 版本支持
 1. ~~支持的微信版本: [酷安渠道版](https://www.coolapk.com/apk/com.tencent.mm)(6.5.19 6.5.22 6.5.23 6.6.0 6.6.1 6.6.2 6.6.3 6.6.5), [play 版](https://play.google.com/store/apps/details?id=com.tencent.mm)(6.5.16 6.5.23 6.6.1 6.6.2)(2.0理论上支持任何微信版本,只测试了6.6.7,其他未测)~~(4.0只测试了7.0.13,其他未测)Play版会有几率不适配,出现此情况可以选择装回国内版.
 2. 只支持 Android 5.0 以上
 
 # 效果预览
-![main01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main01.png)
-![main02](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main02.png)
-![main03](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main03.png)
-![main04](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main04.png)
-![main05](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/main05.png)
-![chat01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v3.6/image/chat01.png)
+![main00](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/main00.png)
+![chat00](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/chat00.png)
+![main01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/main01.png)
+![main02](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/main02.png)
+![main03](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/main03.png)
+![main04](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/main04.png)
+![main05](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/main05.png)
+![chat01](https://raw.githubusercontent.com/JoshCai233/MDWechat/v4.0/image/chat01.png)
 
 # 使用教程
 有待整理文档到 wiki
 
 # 存在的问题
-1. 导致微信变卡,这是无法避免的
-2. 悬浮按钮在某些机型(魅族/中兴)上显示异常,在聊天页面会显示
-3. 4.0版本对于一些高分辨率的机型可能存在闪退的情况
+1. 导致微信变卡,这是无法避免的.
+2. 悬浮按钮在某些机型(魅族/中兴)上显示异常,在聊天页面会显示.
+3. 4.0版本对于一些高分辨率的机型可能存在闪退的情况.
+4. 微信7.0.5之后进入首页可能产生黑色遮罩, 一般来说下滑即可消除.
+5. 点击最近聊天进入聊天页面后,返回主界面时有几率产生白条, 这时把白条移除屏幕外(比如下拉到小程序界面等)即可消除白条.
+6. 沉浸主题下,聊天页面背景图需要自己裁剪后去微信里设置; 默认使用 `tab_bg0.png` 作为聊天页面顶栏/底栏的背景图片.
 
 # 感谢
 1. [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat)

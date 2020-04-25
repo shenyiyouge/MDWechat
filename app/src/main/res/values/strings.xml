@@ -106,7 +106,7 @@
     <string name="summary_hook_bubble_in_night_mode">当色系为亮色系且开启深色模式时也启用自定义气泡。依赖于「配色方案 -> 自动切换色系」</string>
     <string name="key_hook_bg_immersion">key_hook_bg_immersion</string>
     <string name="text_hook_bg_immersion">沉浸主题</string>
-    <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面</string>
+    <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面(聊天背景需在微信中设置:「设置 -> 聊天 -> 聊天背景」; 默认使用最近聊天页的背景图作为聊天页的背景)。</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
     <string name="summary_hook_tab_bg">自定义配置参见 手机存储/mdwechat/config/readme/icon_readme.txt</string>
@@ -202,7 +202,7 @@
     <string name="key_hook_conversation_background_alpha">key_hook_conversation_background_alpha</string>
     <string name="text_hook_conversation_background_alpha">聊天列表页背景不透明度</string>
     <string name="dialog_title_hook_conversation_background_alpha">不透明度范围：0~255</string>
-    <string name="summary_hook_conversation_background_alpha">可用于区分置顶与非置顶项</string>
+    <string name="summary_hook_conversation_background_alpha">可用于区分置顶与非置顶项（设置非0值时,会在聊天列表页面背景上加一层遮罩）</string>
     <string name="key_mini_program_title">key_mini_program_title</string>
     <string name="text_mini_program_title">下拉小程序后底端显示文字</string>
     <string name="value_mini_program_title">点击收起列表</string>
