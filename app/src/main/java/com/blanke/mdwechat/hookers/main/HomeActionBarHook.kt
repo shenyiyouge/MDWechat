@@ -16,7 +16,7 @@ object HomeActionBarHook {
         if (WechatGlobal.wxVersion!! < Version("7.0.0")) {
             return
         }
-        val is_tab_layout_on_top = HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
+        val is_tab_layout_on_top = !HookConfig.is_key_hide_tab && HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top
         val cb = { actionHeight: Int ->
             val viewpager = viewPagerLinearLayout.getChildAt(0)
             val layoutParams = viewpager.layoutParams as ViewGroup.MarginLayoutParams
