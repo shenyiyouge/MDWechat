@@ -193,6 +193,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
                 //背景
                 findPreference(getString(R.string.key_hook_tab_bg))?.apply { (this as SwitchPreference).isChecked = true }
                 findPreference(getString(R.string.key_hook_conversation_background_alpha))?.apply { (this as EditTextPreference).text = "0" }
+                findPreference(getString(R.string.key_hook_bg_immersion))?.apply { (this as SwitchPreference).isChecked = true }
                 //悬浮按钮
                 findPreference(getString(R.string.key_hook_float_button_color_is_secondary))?.apply { (this as SwitchPreference).isChecked = true }
                 //tablayout 阴影
@@ -229,6 +230,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
                 //背景
                 findPreference(getString(R.string.key_hook_tab_bg))?.apply { (this as SwitchPreference).isChecked = false }
                 findPreference(getString(R.string.key_hook_conversation_background_alpha))?.apply { (this as EditTextPreference).text = "255" }
+                findPreference(getString(R.string.key_hook_bg_immersion))?.apply { (this as SwitchPreference).isChecked = false }
                 //悬浮按钮
                 findPreference(getString(R.string.key_hook_float_button_color_is_secondary))?.apply { (this as SwitchPreference).isChecked = true }
                 //tablayout 阴影
@@ -265,6 +267,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
                 //背景
                 findPreference(getString(R.string.key_hook_tab_bg))?.apply { (this as SwitchPreference).isChecked = false }
                 findPreference(getString(R.string.key_hook_conversation_background_alpha))?.apply { (this as EditTextPreference).text = "120" }
+                findPreference(getString(R.string.key_hook_bg_immersion))?.apply { (this as SwitchPreference).isChecked = false }
                 //悬浮按钮
                 findPreference(getString(R.string.key_hook_float_button_color_is_secondary))?.apply { (this as SwitchPreference).isChecked = true }
                 //tablayout 阴影
