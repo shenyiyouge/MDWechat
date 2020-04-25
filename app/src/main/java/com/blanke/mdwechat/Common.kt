@@ -2,6 +2,7 @@ package com.blanke.mdwechat
 
 import android.os.Environment
 import com.blanke.mdwechat.util.VXPUtils
+import com.joshcai.mdwechat.BuildConfig
 import java.io.File
 
 /**
@@ -9,7 +10,7 @@ import java.io.File
  */
 
 object Common {
-    val MY_APPLICATION_PACKAGE = "com.blanke.mdwechat"
+    val MY_APPLICATION_PACKAGE = "com.joshcai.mdwechat"
     val WECHAT_PACKAGENAME = "com.tencent.mm"
     val MOD_PREFS = "md_wechat_settings_4_0"
     val APP_DIR = "mdwechat"

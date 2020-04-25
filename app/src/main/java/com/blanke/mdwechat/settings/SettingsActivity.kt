@@ -12,10 +12,10 @@ import android.support.v4.app.ActivityCompat
 import android.view.View
 import android.widget.Toast
 import com.blanke.mdwechat.Common
-import com.blanke.mdwechat.R
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil
+import com.joshcai.mdwechat.R
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream

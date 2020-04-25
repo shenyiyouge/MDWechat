@@ -13,9 +13,7 @@ import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
-import com.blanke.mdwechat.BuildConfig
 import com.blanke.mdwechat.Common
-import com.blanke.mdwechat.R
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.Main
 import com.blanke.mdwechat.auto_search.bean.LogEvent
@@ -26,6 +24,8 @@ import com.blanke.mdwechat.util.LogUtil.clearFileLogs
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jaredrummler.android.colorpicker.ColorPreference
+import com.joshcai.mdwechat.BuildConfig
+import com.joshcai.mdwechat.R
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -415,7 +415,8 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
     private fun showHideLauncherIcon(show: Boolean) {
         val p = activity.packageManager
-        val componentName = ComponentName(activity, Common.MY_APPLICATION_PACKAGE + ".SettingsLauncher")
+        val componentName = ComponentName(activity, "com.blanke.mdwechat.SettingsLauncher")
+//        val componentName = ComponentName(activity, Common.MY_APPLICATION_PACKAGE + ".SettingsLauncher")
         p.setComponentEnabledSetting(componentName,
                 if (show) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP)

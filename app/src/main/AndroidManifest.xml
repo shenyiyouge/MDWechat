@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.blanke.mdwechat">
+    package="com.joshcai.mdwechat">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -22,7 +22,7 @@
             android:name="xposedminversion"
             android:value="42" />
 
-        <activity android:name=".settings.SettingsActivity">
+        <activity android:name="com.blanke.mdwechat.settings.SettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
@@ -32,14 +32,14 @@
         <activity-alias
             android:name="com.blanke.mdwechat.SettingsLauncher"
             android:enabled="true"
-            android:targetActivity=".settings.SettingsActivity">
+            android:targetActivity="com.blanke.mdwechat.settings.SettingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
 
-        <activity android:name=".markdown.MarkDownActivity" />
+        <activity android:name="com.blanke.mdwechat.markdown.MarkDownActivity" />
     </application>
 
 </manifest>

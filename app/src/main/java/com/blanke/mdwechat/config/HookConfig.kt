@@ -1,11 +1,11 @@
 package com.blanke.mdwechat.config
 
 import android.graphics.Color
-import com.blanke.mdwechat.BuildConfig
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.WechatGlobal
 import com.blankj.utilcode.util.BarUtils
+import com.joshcai.mdwechat.BuildConfig
 
 /**
  * Created by blanke on 2017/8/25.

@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.blanke.mdwechat.R
 import com.blankj.utilcode.util.ToastUtils
+import com.joshcai.mdwechat.R
 import ru.noties.markwon.Markwon
 import ru.noties.markwon.SpannableConfiguration
 import ru.noties.markwon.il.AsyncDrawableLoader
