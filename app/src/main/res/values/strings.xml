@@ -284,7 +284,7 @@
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
-    <string name="app_name_version">MDWechat 4.0.1-RC1</string>
+    <string name="app_name_version">MDWechat 4.0.1</string>
     <string name="summary">此为测试版。暂无法在太极上使用，可在xposed, virtual xposed 和 edxposed 下使用。</string>
     <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将原作者(Blanke)在 github 上开源的代码进行二次开发，使其能够适配较新的微信。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
 </resources>
