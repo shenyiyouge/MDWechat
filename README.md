@@ -26,7 +26,7 @@ MDWechat
 # 版本支持
 1. ~~支持的微信版本: [酷安渠道版](https://www.coolapk.com/apk/com.tencent.mm)(6.5.19 6.5.22 6.5.23 6.6.0 6.6.1 6.6.2 6.6.3 6.6.5), [play 版](https://play.google.com/store/apps/details?id=com.tencent.mm)(6.5.16 6.5.23 6.6.1 6.6.2)(2.0理论上支持任何微信版本,只测试了6.6.7,其他未测)~~(4.0只测试了7.0.13,其他未测)Play版会有几率不适配,出现此情况可以选择装回国内版.
 2. 只支持 Android 5.0 以上
-https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/color_scheme.png
+
 # 效果预览
 ![main00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main00.png)
 ![chat00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/chat00.png)
