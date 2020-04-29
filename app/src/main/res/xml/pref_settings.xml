@@ -266,7 +266,7 @@
             android:dependency="@string/key_hook_switch"
             android:title="背景">
             <SwitchPreference
-                android:defaultValue="true"
+                android:defaultValue="false"
                 android:key="@string/key_hook_tab_bg"
                 android:summary="@string/summary_hook_tab_bg"
                 android:title="@string/text_hook_tab_bg" />
