@@ -26,7 +26,7 @@ MDWechat
 # 版本支持
 - 只支持 Android 5.0 以上
 - 支持的微信版本: 6.7.3 - 7.0.13
-- MDWechat(官改) 4.0.1 对于微信版本7.0.12的适配性比较好，微信7.0.13在个别机型上会出现不适配的情况。如果出现不适配的情况请联系作者。
+- MDWechat(官改) 4.0.1 对于国内版的适配性比较好，play版微信在部分机型上会出现无法适配的状况。
 
 # 效果预览
 ![main00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main00.png)
