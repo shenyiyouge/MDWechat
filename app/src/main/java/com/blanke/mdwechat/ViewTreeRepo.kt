@@ -705,7 +705,8 @@ object ViewTreeRepo {
     //包含聊天内容和底部的部分
     val ChattingScrollLayoutItem: ViewTree by lazy {
         ViewTree(
-                mapOf("chattingBgShade" to intArrayOf(0, 0, 1),
+                mapOf("bgGroup" to intArrayOf(0, 0),
+                        "chattingBgShade" to intArrayOf(0, 0, 1),
                         "chatFooterChild2" to intArrayOf(1, 0),
                         "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
                         "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0),
@@ -744,7 +745,8 @@ object ViewTreeRepo {
     }
     val ChattingScrollLayoutItem_7_0_13: ViewTree by lazy {
         ViewTree(
-                mapOf("chattingBgShade" to intArrayOf(0, 0, 1),
+                mapOf("bgGroup" to intArrayOf(0, 0),
+                        "chattingBgShade" to intArrayOf(0, 0, 1),
                         "chatFooterChild2" to intArrayOf(1, 0, 1),
                         "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
                         "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0),

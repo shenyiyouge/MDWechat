@@ -1,11 +1,13 @@
 package com.blanke.mdwechat.hookers.main
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.util.BackgroundImageUtils
@@ -70,17 +72,28 @@ object TitleColorHook {
         }
 
 
-        // 聊天背景
+        // 去除默认聊天背景
+        val bgGroup = ViewUtils.getChildView1(ChattingScrollLayoutItem,
+                treeStacks.getValue("bgGroup")) as ViewGroup
         val chattingBgShade = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chattingBgShade")) as View
         if (HookConfig.is_hook_scheme_dark || !HookConfig.is_hook_night_mode) chattingBgShade.setBackgroundColor(0)
+
+//        自定义聊天背景
+        val context = bgGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
+        val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val view = FrameLayout(context)
+        params.height = HookConfig.value_resolution[1] - BackgroundImageUtils._actionBarLocation[0] - BackgroundImageUtils._actionBarLocation[1]
+        bgGroup.addView(view, 0, params)
+        view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("ChattingImageBGView",
+                AppCustomConfig.getTabBg(0), BackgroundImageUtils._actionBarLocation[0] + BackgroundImageUtils._actionBarLocation[1], params.height))
 
         //底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chatFooterChild2")) as View
         if (footerLocation[1] > 0) {
-            chatFooterChild2.background =
-                    NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("chatFooterChild2", AppCustomConfig.getTabBg(0), footerLocation[0], measureHeight(chatFooterChild2)))
+            chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("chatFooterChild2",
+                    AppCustomConfig.getTabBg(0), footerLocation[0], measureHeight(chatFooterChild2)))
         } else {
             BackgroundImageUtils.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, AppCustomConfig.getTabBg(0), null)
         }
@@ -112,5 +125,4 @@ object TitleColorHook {
         sendButton.setTextColor(NightModeUtils.colorSecondary)
 
     }
-
 }
