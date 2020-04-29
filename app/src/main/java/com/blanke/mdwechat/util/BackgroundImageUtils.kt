@@ -76,7 +76,7 @@ object BackgroundImageUtils {
                 waitInvoke(200, true, {
                     actionBar.height > 0
                 }, {
-                    val bg = AppCustomConfig.getTabBg(0)
+                    val bg = AppCustomConfig.getChatBg()
                     val location = IntArray(2)
                     actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
                     val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
@@ -108,7 +108,7 @@ object BackgroundImageUtils {
                     LogUtil.log("ActionBarInSearchConversation 继续等待, view.height  = ${actionBar.height}")
                     actionBar.height > 0
                 }, {
-                    val bg = AppCustomConfig.getTabBg(0)
+                    val bg = AppCustomConfig.getChatBg()
                     val location = IntArray(2)
                     actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
                     val background = cutBitmap("ActionBarInSearchConversation", bg, location[1], actionBar.height)

@@ -56,8 +56,21 @@ object AppCustomConfig {
 
     //自动适配屏幕分辨率
     fun getTabBg(index: Int): Bitmap {
-        var bg = getIcon(Common.FILE_NAME_TAB_BG_PREFIX + "$index.png")
-//        LogUtil.log("getBG $index =============== ${bg?.width}+${bg?.height}+${bg?.toString()}")
+        val bg = getIcon(Common.FILE_NAME_TAB_BG_PREFIX + "$index.png")
+        return resizeBg(bg)
+    }
+
+    //自动适配屏幕分辨率
+    fun getChatBg(): Bitmap {
+        var bg = getIcon(Common.FILE_NAME_CHAT_BG)
+        if (bg == null) {
+            bg = getTabBg(0)
+        }
+        return resizeBg(bg)
+    }
+
+    fun resizeBg(_bg: Bitmap?): Bitmap {
+        var bg = _bg
         if (bg == null) bg = Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888)
         val value_resolution = HookConfig.value_resolution
         if (value_resolution[0] > 0) {

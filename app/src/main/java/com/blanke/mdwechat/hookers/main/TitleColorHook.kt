@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.blanke.mdwechat.Common
-import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.config.AppCustomConfig.getChatBg
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.NightModeUtils
@@ -63,7 +63,7 @@ object TitleColorHook {
                 (ChattingScrollLayoutItem.getChildAt(2)::class.java.name == "com.tencent.mm.ui.chatting.ChatFooterCustom")) {
             //底栏
             val footer = ChattingScrollLayoutItem.getChildAt(2) as View
-            val location = BackgroundImageUtils.setBackgroundBitmap("公众号 footer", footer, AppCustomConfig.getTabBg(0), null)
+            val location = BackgroundImageUtils.setBackgroundBitmap("公众号 footer", footer, getChatBg(), null)
             if ((footerLocation[1] < 0) && (location[1] > 0)) {
                 footerLocation[0] = location[0]
                 footerLocation[1] = location[1]
@@ -84,18 +84,18 @@ object TitleColorHook {
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val view = FrameLayout(context)
         params.height = HookConfig.value_resolution[1] - BackgroundImageUtils._actionBarLocation[0] - BackgroundImageUtils._actionBarLocation[1]
-        bgGroup.addView(view, 0, params)
+        bgGroup.addView(view, 1, params)
         view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("ChattingImageBGView",
-                AppCustomConfig.getTabBg(0), BackgroundImageUtils._actionBarLocation[0] + BackgroundImageUtils._actionBarLocation[1], params.height))
+                getChatBg(), BackgroundImageUtils._actionBarLocation[0] + BackgroundImageUtils._actionBarLocation[1], params.height))
 
         //底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chatFooterChild2")) as View
         if (footerLocation[1] > 0) {
             chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("chatFooterChild2",
-                    AppCustomConfig.getTabBg(0), footerLocation[0], measureHeight(chatFooterChild2)))
+                    getChatBg(), footerLocation[0], measureHeight(chatFooterChild2)))
         } else {
-            BackgroundImageUtils.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, AppCustomConfig.getTabBg(0), null)
+            BackgroundImageUtils.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
         }
         //语音打字切换
         val switchButton = ViewUtils.getChildView1(chatFooterChild2,
