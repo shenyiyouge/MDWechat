@@ -18,7 +18,8 @@ object Common {
     val CONFIG_DIR = "config"
     val CONFIG_WECHAT_DIR = "config" + File.separator + "wechat"
     val CONFIG_VIEW_DIR = "config" + File.separator + "view"
-    val CONFIG_readme_DIR = "config" + File.separator + "readme"
+
+    //    val CONFIG_readme_DIR = "config" + File.separator + "readme"
     val LOGS_DIR = "logs"
     val ICON_DIR = "icon"
     val CONVERSATION_BACKGROUND_FILENAME = "conversation.png"
@@ -43,9 +44,9 @@ object Common {
         Environment.getExternalStorageDirectory().absolutePath + File.separator + appDir + File.separator
     }
 
-    val URL_HELP_FLOAT_BUTTON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "floatbutton_readme.txt"
-    val URL_HELP_ICON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "icon_readme.txt"
-    val URL_HELP_BUBBLE = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "bubble_readme.txt"
-    val URL_JOIN_GROUP = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "join_group_readme.txt"
+//    val URL_HELP_FLOAT_BUTTON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "floatbutton_readme.txt"
+//    val URL_HELP_ICON = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "icon_readme.txt"
+//    val URL_HELP_BUBBLE = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "bubble_readme.txt"
+//    val URL_JOIN_GROUP = APP_DIR_PATH + File.separator + CONFIG_readme_DIR + File.separator + "join_group_readme.txt"
 
 }

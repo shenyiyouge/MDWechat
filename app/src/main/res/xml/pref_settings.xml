@@ -7,9 +7,24 @@
         android:layout="@layout/preference_info"
         android:summary="@string/josh_cai_info"
         android:title="@string/app_name_version" />
+    <!--帮助和教程-->
+    <PreferenceScreen
+        android:summary="@string/summary_help"
+        android:title="@string/help">
+        <Preference
+            android:key="@string/key_start_use"
+            android:title="@string/text_start_use" />
+        <Preference
+            android:key="@string/key_Q_A"
+            android:title="@string/text_Q_A" />
+    </PreferenceScreen>
+    <!--更多信息-->
     <PreferenceScreen
         android:summary="@string/summary_about_settings"
         android:title="@string/text_about_settings">
+        <Preference
+            android:key="@string/key_releases"
+            android:title="@string/text_releases" />
         <Preference
             android:key="@string/key_donate"
             android:title="@string/text_donate" />
@@ -101,14 +116,17 @@
         <!--配色方案-->
         <PreferenceScreen
             android:dependency="@string/key_hook_switch"
-            android:title="配色方案">
+            android:title="@string/text_color_scheme">
+            <Preference
+                android:key="@string/key_color_scheme_help"
+                android:title="@string/text_info" />
             <PreferenceCategory android:title="@string/text_pre_inst">
                 <ListPreference
-                    android:summary="重置配色方案为预设方案。(沉浸主题设置位于上级菜单的「背景」)"
                     android:dialogTitle="@string/text_pre_inst_color_schemes"
                     android:entries="@array/color_schemes"
                     android:entryValues="@array/color_schemes_value"
                     android:key="@string/key_pre_inst_color_schemes"
+                    android:summary="重置配色方案为预设方案。(沉浸主题设置位于「背景」)"
                     android:title="@string/text_pre_inst_color_schemes" />
             </PreferenceCategory>
             <!--通用-->
@@ -208,8 +226,10 @@
             </PreferenceCategory>
             <!--聊天气泡-->
             <PreferenceCategory>
-                <PreferenceScreen
-                    android:title="@string/text_chat_settings">
+                <PreferenceScreen android:title="@string/text_chat_settings">
+                    <Preference
+                        android:key="@string/key_bubble_help"
+                        android:title="@string/text_info" />
                     <SwitchPreference
                         android:defaultValue="true"
                         android:key="@string/key_hook_bubble"
@@ -265,6 +285,9 @@
         <PreferenceScreen
             android:dependency="@string/key_hook_switch"
             android:title="背景">
+            <Preference
+                android:key="@string/key_background_help"
+                android:title="@string/text_info" />
             <SwitchPreference
                 android:defaultValue="false"
                 android:key="@string/key_hook_tab_bg"
@@ -319,6 +342,9 @@
                 android:key="@string/key_hook_avatar"
                 android:title="@string/text_hook_avatar" />
             <PreferenceCategory android:title="@string/text_help_float_button">
+                <Preference
+                    android:key="@string/key_float_button_help"
+                    android:title="@string/text_info" />
                 <SwitchPreference
                     android:defaultValue="true"
                     android:key="@string/key_hook_float_button"
@@ -420,38 +446,27 @@
         <!--                android:title="@string/text_tab_layout_offset"-->
         <!--                tools:ignore="Deprecated" />-->
         <!--        </PreferenceScreen>-->
-        <!--帮助和教程-->
-        <PreferenceScreen android:title="@string/help">
-            <Preference
-                android:key="@string/key_help_float_button"
-                android:title="@string/text_help_float_button" />
-            <Preference
-                android:key="@string/key_help_icon"
-                android:title="@string/text_help_icon" />
-            <Preference
-                android:key="@string/key_help_bubble"
-                android:title="@string/text_help_bubble" />
-            <PreferenceScreen
+        <!--重置配置文件-->
+        <PreferenceScreen
+            android:dependency="@string/key_hook_switch"
+            android:summary="@string/sum_reset"
+            android:title="@string/reset">
+            <PreferenceCategory
                 android:dependency="@string/key_hook_switch"
-                android:summary="@string/sum_reset"
-                android:title="@string/reset">
-                <PreferenceCategory
-                    android:dependency="@string/key_hook_switch"
-                    android:summary="@string/text_reset">
-                    <Preference
-                        android:key="@string/key_reset_config"
-                        android:summary="@string/text_reset_config_info"
-                        android:title="@string/text_reset_config" />
-                    <Preference
-                        android:key="@string/key_reset_float_bottom_config"
-                        android:summary="@string/text_reset_float_bottom_config_info"
-                        android:title="@string/text_reset_float_bottom_config" />
-                    <Preference
-                        android:key="@string/key_reset_icon_config"
-                        android:summary="@string/text_reset_icon_config_info"
-                        android:title="@string/text_reset_icon_config" />
-                </PreferenceCategory>
-            </PreferenceScreen>
+                android:summary="@string/text_reset">
+                <Preference
+                    android:key="@string/key_reset_config"
+                    android:summary="@string/text_reset_config_info"
+                    android:title="@string/text_reset_config" />
+                <Preference
+                    android:key="@string/key_reset_float_bottom_config"
+                    android:summary="@string/text_reset_float_bottom_config_info"
+                    android:title="@string/text_reset_float_bottom_config" />
+                <Preference
+                    android:key="@string/key_reset_icon_config"
+                    android:summary="@string/text_reset_icon_config_info"
+                    android:title="@string/text_reset_icon_config" />
+            </PreferenceCategory>
         </PreferenceScreen>
         <!--调试-->
         <PreferenceScreen

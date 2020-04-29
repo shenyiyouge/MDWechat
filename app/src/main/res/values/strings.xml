@@ -109,14 +109,14 @@
     <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面(聊天背景需在微信中设置:「设置 -> 聊天 -> 聊天背景」; 默认使用最近聊天页的背景图作为聊天页的背景)。</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
-    <string name="summary_hook_tab_bg">自定义配置参见 手机存储/mdwechat/config/readme/icon_readme.txt</string>
+    <string name="summary_hook_tab_bg">若开启沉浸主题，则聊天页沉浸主题将选用主界面首页的背景</string>
     <string name="key_change_resolution">key_change_resolution</string>
     <string name="text_change_resolution">调整背景图分辨率</string>
     <string name="summary_change_resolution">如果打开主题沉浸后贴图错误，则需要手动设置分辨率。</string>
     <string name="key_resolution">key_resolution</string>
     <string name="text_resolution">背景图分辨率</string>
     <string name="summary_resolution">自定义背景图片分辨率，格式为"宽,高",单位为像素(整数)。</string>
-    <string name="text_hook_bubble_info">必须是.9图,自定义配置参见 手机存储/mdwechat/config/readme/bubble_readme.txt</string>
+    <string name="text_hook_bubble_info">必须是.9图</string>
     <string name="text_hook_bubble_tint_info">可以修改气泡颜色</string>
     <string name="key_hook_bubble_tint_left">key_hook_bubble_tint_left</string>
     <string name="text_hook_bubble_tint_left">左边气泡颜色</string>
@@ -236,20 +236,19 @@
     <string name="text_feedback_group">加入交流群</string>
     <string name="text_feedback_wechat_info"> </string>
     <string name="text_feedback_group_info">点击查看交流群</string>
-    <string name="key_help_settings">key_help_settings</string>
-    <string name="text_help_settings">帮助和教程</string>
+    <!--    <string name="key_help_settings">key_help_settings</string>-->
+    <!--    <string name="text_help_settings">帮助和教程</string>-->
     <string name="text_help_float_button">悬浮按钮</string>
-    <string name="text_help_icon">图标和背景</string>
-    <string name="text_help_bubble">气泡</string>
-    <string name="key_help_float_button">key_help_float_button</string>
-    <string name="key_help_icon">key_help_icon</string>
-    <string name="key_help_bubble">key_help_bubble</string>
+    <!--    <string name="text_help_icon">图标和背景</string>-->
+    <!--    <string name="text_help_bubble">气泡</string>-->
+    <!--    <string name="key_help_float_button">key_help_float_button</string>-->
+    <!--    <string name="key_help_icon">key_help_icon</string>-->
+    <!--    <string name="key_help_bubble">key_help_bubble</string>-->
     <string name="text_app_tips">软件使用提示</string>
     <string name="text_app_desc">本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件！</string>
     <string name="text_app_donate">你已使用「MDWechat」%s，在使用过程中有任何问题欢迎加入微信群讨论。\n如果你觉得「MDWechat」很好用，是否愿意支持下作者，让我更有动力完善维护这个软件呢？</string>
     <string name="text_app_know">我已知晓</string>
     <string name="key_feedback_group">key_feedback_group</string>
-
 
     <string name="key_hook_scheme_dark">key_hook_scheme_dark</string>
     <string name="text_hook_scheme_dark">暗色系主题</string>
@@ -260,6 +259,12 @@
     <string name="text_main_page_color">主界面内容字体颜色</string>
     <string name="other_bubble_settings">其他设置请前往「配色方案 -> 聊天气泡」</string>
 
+    <string name="text_color_scheme">配色方案</string>
+    <string name="key_color_scheme_help">key_color_scheme_help</string>
+    <string name="key_bubble_help">key_bubble_help</string>
+    <string name="key_background_help">key_background_help</string>
+    <string name="key_float_button_help">key_float_button_help</string>
+    <string name="text_info">说明</string>
     <string name="text_pre_inst">预设方案</string>
     <string name="key_pre_inst_color_schemes">key_pre_inst_color_schemes</string>
     <string name="text_pre_inst_color_schemes">使用预设方案</string>
@@ -278,7 +283,15 @@
     <string name="text_clear_logs">清空日志</string>
     <string name="navigate">导航</string>
     <!--    <string name="instruction">教程</string>-->
-    <string name="help">使用说明</string>
+    <string name="help">使用指南</string>
+    <string name="summary_help">已更新链接地址，可正常访问</string>
+    <string name="key_start_use">key_start_use</string>
+    <string name="text_start_use">使用指南</string>
+    <string name="key_Q_A">key_Q_A</string>
+    <string name="text_Q_A">常见问题</string>
+    <string name="key_releases">key_releases</string>
+    <string name="text_releases">查看版本更新</string>
+
     <string name="help_info">帮助/关于</string>
     <string name="reset">重置图标/配置文件</string>
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>

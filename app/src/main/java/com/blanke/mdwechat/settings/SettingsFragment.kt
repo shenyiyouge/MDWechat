@@ -113,9 +113,13 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         findPreference(getString(R.string.key_donate_wechat))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_download_wechat_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback_group))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_help_float_button))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_help_bubble))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_help_icon))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_releases))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_start_use))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_Q_A))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_color_scheme_help))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_background_help))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_bubble_help))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_float_button_help))?.onPreferenceClickListener = this
         if (BuildConfig.VERSION_NAME.endsWith("Beta", true)) {
             AlertDialog.Builder(activity)
                     .setTitle("警告")
@@ -312,16 +316,20 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_reset_icon_config) -> copyIcons()
             getString(R.string.key_feedback_email_blanke) -> sendEmail()
             getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
-            getString(R.string.key_gitee_joshcai) -> gotoGiteeCai()
-            getString(R.string.key_github_blanke) -> gotoGithub()
-            getString(R.string.key_github_joshcai) -> gotoGithubCai()
+            getString(R.string.key_gitee_joshcai) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat")
+            getString(R.string.key_github_blanke) -> gotoWebsite("https://github.com/Blankeer/MDWechat")
+            getString(R.string.key_github_joshcai) -> gotoWebsite("https://github.com/JoshCai233/MDWechat")
             getString(R.string.key_generate_wechat_config) -> generateWechatFile()
             getString(R.string.key_donate_wechat) -> donateWechat()
             getString(R.string.key_download_wechat_config) -> downloadWechatConfig()
-            getString(R.string.key_feedback_group) -> gotoMarkDownAct(getString(R.string.text_feedback_group), Common.URL_JOIN_GROUP)
-            getString(R.string.key_help_float_button) -> gotoMarkDownAct(getString(R.string.text_help_float_button), Common.URL_HELP_FLOAT_BUTTON)
-            getString(R.string.key_help_bubble) -> gotoMarkDownAct(getString(R.string.text_help_bubble), Common.URL_HELP_BUBBLE)
-            getString(R.string.key_help_icon) -> gotoMarkDownAct(getString(R.string.text_help_icon), Common.URL_HELP_ICON)
+            getString(R.string.key_feedback_group) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161272")
+            getString(R.string.key_releases) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/releases")
+            getString(R.string.key_start_use) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2157245")
+            getString(R.string.key_Q_A) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2160333")
+            getString(R.string.key_color_scheme_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158297")
+            getString(R.string.key_background_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158305")
+            getString(R.string.key_bubble_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158251")
+            getString(R.string.key_float_button_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158249")
         }
         return true
     }
@@ -487,18 +495,8 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         }
     }
 
-    private fun gotoGiteeCai() {
-        val uri = Uri.parse("https://gitee.com/JoshCai/MDWechat")
-        startActivity(Intent(Intent.ACTION_VIEW, uri))
-    }
-
-    private fun gotoGithub() {
-        val uri = Uri.parse("https://github.com/Blankeer/MDWechat")
-        startActivity(Intent(Intent.ACTION_VIEW, uri))
-    }
-
-    private fun gotoGithubCai() {
-        val uri = Uri.parse("https://github.com/JoshCai233/MDWechat")
+    private fun gotoWebsite(url: String) {
+        val uri = Uri.parse(url)
         startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
 
@@ -549,6 +547,9 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         val dm = resources.displayMetrics
         val screenWidth = dm.widthPixels
         val screenHeight = dm.heightPixels
+
+
+
 
         textPreference.text = "$screenWidth,$screenHeight"
     }

@@ -39,7 +39,7 @@ MDWechat
 ![chat01](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/chat01.png)
 
 # 使用教程
-[查看使用教程](https://gitee.com/JoshCai/MDWechat/wikis/%E7%AE%80%E4%BB%8B?sort_id=2158198)
+[查看使用教程](https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158198)
 
 # 存在的问题
 1. 导致微信变卡,这是无法避免的.
