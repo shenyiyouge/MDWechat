@@ -55,7 +55,7 @@ MDWechat
 3. [WechatUI](https://www.coolapk.com/apk/ce.hesh.wechatUI)
 4. [群消息助手](https://github.om/zhudongya123/WechatChatroomHelper)
 5. [WechatMagician](https://github.com/Gh0u1L5/WechatMagician)
-
+6. [ForceWechatDarkMode](https://github.com/chouqibao/ForceWechatDarkMode)
 
 
 
