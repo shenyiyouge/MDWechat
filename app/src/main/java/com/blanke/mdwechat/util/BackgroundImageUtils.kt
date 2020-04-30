@@ -80,6 +80,7 @@ object BackgroundImageUtils {
                     val location = IntArray(2)
                     actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
                     val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
+                    TitleColorHook.actionBarBottom = location[1] + actionBar.height
                     actionBar.background = NightModeUtils.getForegroundDrawable(background)
 
                     if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
@@ -112,6 +113,7 @@ object BackgroundImageUtils {
                     val location = IntArray(2)
                     actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
                     val background = cutBitmap("ActionBarInSearchConversation", bg, location[1], actionBar.height)
+                    TitleColorHook.actionBarBottom = location[1] + actionBar.height
                     actionBar.background = NightModeUtils.getForegroundDrawable(background)
 
                     if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInSearchConversationItem.item, actionBar)) {

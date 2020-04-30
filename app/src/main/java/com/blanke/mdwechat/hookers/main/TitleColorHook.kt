@@ -19,6 +19,7 @@ import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 
 object TitleColorHook {
+    var actionBarBottom = 0
     private val transparentDark = Color.parseColor("#30000000")
     private val transparentLight = Color.parseColor("#30EEEEEE")
     private val isBgLight = !HookConfig.is_hook_scheme_dark && !NightModeUtils.isNightMode()
@@ -83,10 +84,10 @@ object TitleColorHook {
         val context = bgGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val view = FrameLayout(context)
-        params.height = HookConfig.value_resolution[1] - BackgroundImageUtils._actionBarLocation[0] - BackgroundImageUtils._actionBarLocation[1]
+        params.height = HookConfig.value_resolution[1] - actionBarBottom
         bgGroup.addView(view, 1, params)
         view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("ChattingImageBGView",
-                getChatBg(), BackgroundImageUtils._actionBarLocation[0] + BackgroundImageUtils._actionBarLocation[1], params.height))
+                getChatBg(), actionBarBottom, params.height))
 
         //底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
