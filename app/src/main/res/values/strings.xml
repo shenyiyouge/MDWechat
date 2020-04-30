@@ -285,12 +285,14 @@
     <!--    <string name="instruction">教程</string>-->
     <string name="help">使用指南</string>
     <string name="summary_help">已更新链接地址，可正常访问</string>
+    <string name="key_attention">key_attention</string>
+    <string name="text_attention">注意事项</string>
     <string name="key_start_use">key_start_use</string>
     <string name="text_start_use">使用指南</string>
     <string name="key_Q_A">key_Q_A</string>
     <string name="text_Q_A">常见问题</string>
     <string name="key_releases">key_releases</string>
-    <string name="text_releases">查看版本更新</string>
+    <string name="text_releases">查看最新版本</string>
 
     <string name="help_info">帮助/关于</string>
     <string name="reset">重置图标/配置文件</string>

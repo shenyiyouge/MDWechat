@@ -12,6 +12,9 @@
         android:summary="@string/summary_help"
         android:title="@string/help">
         <Preference
+            android:key="@string/key_attention"
+            android:title="@string/text_attention" />
+        <Preference
             android:key="@string/key_start_use"
             android:title="@string/text_start_use" />
         <Preference
