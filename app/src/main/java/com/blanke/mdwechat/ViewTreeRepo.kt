@@ -201,6 +201,33 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.WeImageView)))
                                 )))))))
     }
+    val ConversationListViewItem_7_0_14: ViewTree by lazy {
+        ViewTree(
+                mapOf("chatNameView" to intArrayOf(1, 0, 0, 0),
+                        "chatTimeView" to intArrayOf(1, 0, 1),
+                        "recentMsgView" to intArrayOf(1, 1, 0, 1),
+                        "unreadCountView" to intArrayOf(0, 1),
+                        "unreadView" to intArrayOf(0, 2)),
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                ViewTreeItem(CC.ImageView.name),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.ImageView.name))),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(Classes.NoMeasuredTextView.name))),
+                                        ViewTreeItem(Classes.NoMeasuredTextView.name))),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.ImageView.name),
+                                                ViewTreeItem(Classes.NoMeasuredTextView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.WeImageView),
+                                                ViewTreeItem(CC.WeImageView),
+                                                ViewTreeItem(CC.WeImageView)))
+                                )))))))
+    }
 
     val ContactListViewItem: ViewTree by lazy {
         ViewTree(
