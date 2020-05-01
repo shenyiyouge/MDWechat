@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.*
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.Main
 import com.blanke.mdwechat.auto_search.bean.LogEvent
+import com.blanke.mdwechat.config.AppCustomConfig.getIconPath
 import com.blanke.mdwechat.markdown.MarkDownActivity
 import com.blanke.mdwechat.settings.view.DownloadWechatDialog
 import com.blanke.mdwechat.util.FileUtils
@@ -26,6 +28,14 @@ import com.blankj.utilcode.util.ToastUtils
 import com.jaredrummler.android.colorpicker.ColorPreference
 import com.joshcai.mdwechat.BuildConfig
 import com.joshcai.mdwechat.R
+import org.devio.takephoto.app.TakePhoto
+import org.devio.takephoto.app.TakePhoto.TakeResultListener
+import org.devio.takephoto.app.TakePhotoImpl
+import org.devio.takephoto.model.*
+import org.devio.takephoto.permission.InvokeListener
+import org.devio.takephoto.permission.PermissionManager
+import org.devio.takephoto.permission.PermissionManager.TPermissionType
+import org.devio.takephoto.permission.TakePhotoInvocationHandler
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -38,8 +48,12 @@ import kotlin.concurrent.thread
  * Created by blanke on 2017/6/8.
  */
 
-class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListener, Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     lateinit var wxVersion: Version
+    var screenWidth = 0
+    var screenHeight = 0
+    val tab_icon_width = 150
+    val tab_icon_height = 150
 
     object STATIC {
         lateinit var sharedPrefsFile: File
@@ -55,6 +69,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val _this = this
+        takePhoto!!.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
         EventBus.getDefault().register(this)
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
@@ -112,6 +127,8 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         findPreference(getString(R.string.key_generate_wechat_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_donate_wechat))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_download_wechat_config))?.onPreferenceClickListener = this
+
+        findPreference(getString(R.string.key_joshcai_info))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_attention))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback_group))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_releases))?.onPreferenceClickListener = this
@@ -121,6 +138,12 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
         findPreference(getString(R.string.key_background_help))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_bubble_help))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_float_button_help))?.onPreferenceClickListener = this
+
+        findPreference(getString(R.string.key_select_bg_chat))?.onPreferenceClickListener = this
+        for (i in 0..4) {
+            findPreference("${getString(R.string.key_select_bg)}_$i")?.onPreferenceClickListener = this
+            findPreference("${getString(R.string.key_select_tab_icon)}_$i")?.onPreferenceClickListener = this
+        }
         if (BuildConfig.VERSION_NAME.endsWith("Beta", true)) {
             AlertDialog.Builder(activity)
                     .setTitle("警告")
@@ -360,6 +383,7 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_generate_wechat_config) -> generateWechatFile()
             getString(R.string.key_donate_wechat) -> donateWechat()
             getString(R.string.key_download_wechat_config) -> downloadWechatConfig()
+//            getString(R.string.key_joshcai_info) -> getImage()
             getString(R.string.key_attention) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161250")
             getString(R.string.key_feedback_group) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161272")
             getString(R.string.key_releases) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/releases")
@@ -369,6 +393,16 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
             getString(R.string.key_background_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158305")
             getString(R.string.key_bubble_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158251")
             getString(R.string.key_float_button_help) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158249")
+
+            getString(R.string.key_select_bg_chat) -> getImage("tab_bg_chat.png", screenWidth, screenHeight)
+            getString(R.string.key_select_bg_0) -> getImage("tab_bg0.png", screenWidth, screenHeight)
+            getString(R.string.key_select_bg_1) -> getImage("tab_bg1.png", screenWidth, screenHeight)
+            getString(R.string.key_select_bg_2) -> getImage("tab_bg2.png", screenWidth, screenHeight)
+            getString(R.string.key_select_bg_3) -> getImage("tab_bg3.png", screenWidth, screenHeight)
+            getString(R.string.key_select_tab_icon_0) -> getImage("tab_icon0.png", tab_icon_width, tab_icon_height)
+            getString(R.string.key_select_tab_icon_1) -> getImage("tab_icon1.png", tab_icon_width, tab_icon_height)
+            getString(R.string.key_select_tab_icon_2) -> getImage("tab_icon2.png", tab_icon_width, tab_icon_height)
+            getString(R.string.key_select_tab_icon_3) -> getImage("tab_icon3.png", tab_icon_width, tab_icon_height)
         }
         return true
     }
@@ -579,18 +613,87 @@ class SettingsFragment : PreferenceFragment(), Preference.OnPreferenceChangeList
                     .replace("，", ",")
                     .split(",")
             try {
-                if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) return
+                if ((resolution.count() == 2) && (resolution[0].toInt() > 0) && (resolution[1].toInt() > 0)) {
+                    screenWidth = resolution[0].toInt()
+                    screenHeight = resolution[1].toInt()
+                    return
+                }
             } catch (e: java.lang.Exception) {
             }
         }
         val dm = resources.displayMetrics
-        val screenWidth = dm.widthPixels
-        val screenHeight = dm.heightPixels
-
-
-
-
+        screenWidth = dm.widthPixels
+        screenHeight = dm.heightPixels
         textPreference.text = "$screenWidth,$screenHeight"
     }
 
+    //region 获取背景图片
+
+    val TAG = SettingsFragment::class.java.name
+    var invokeParam: InvokeParam? = null
+
+    //    var takePhoto: TakePhoto=TakePhotoInvocationHandler.of(this).bind(TakePhotoImpl(this, this)) as TakePhoto
+    var takePhoto: TakePhoto? = null
+        get() {
+            if (field == null) {
+                field = TakePhotoInvocationHandler.of(this).bind(TakePhotoImpl(this, this)) as TakePhoto
+            }
+            return field
+        }
+
+    private fun getImage(fileName: String, width: Int, height: Int) {
+        val file = File(getIconPath(fileName))
+        if (!file.parentFile.exists()) {
+            file.parentFile.mkdirs()
+        }
+        val imageUri = Uri.fromFile(file)
+        takePhoto!!.onEnableCompress(null, false)
+        takePhoto!!.setTakePhotoOptions(TakePhotoOptions.Builder().create())
+        takePhoto!!.onPickFromGalleryWithCrop(imageUri, getCropOptions(width, height))
+    }
+
+    fun getCropOptions(width: Int, height: Int): CropOptions? {
+        val builder = CropOptions.Builder()
+        builder.setOutputX(width).setOutputY(height)
+//        builder.setAspectY(width).setAspectY(height)
+        builder.setWithOwnCrop(true)//使用自带图片裁剪器
+        return builder.create()
+    }
+
+//    override fun onSaveInstanceState(outState: Bundle?) {
+//        takePhoto!!.onSaveInstanceState(outState)
+//        super.onSaveInstanceState(outState)
+//    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        takePhoto!!.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>?, grantResults: IntArray?) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PermissionManager.handlePermissionsResult(activity, type, invokeParam, this)
+    }
+
+    override fun takeSuccess(result: TResult) {
+        Log.i(TAG, "takeSuccess：" + result.image.compressPath)
+    }
+
+    override fun takeFail(result: TResult?, msg: String) {
+        Log.i(TAG, "takeFail:$msg")
+    }
+
+    override fun takeCancel() {
+        Log.i(TAG, resources.getString(org.devio.takephoto.R.string.msg_operation_canceled))
+    }
+
+    override fun invoke(invokeParam: InvokeParam): TPermissionType? {
+        val type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.method)
+        if (TPermissionType.WAIT == type) {
+            this.invokeParam = invokeParam
+        }
+        return type
+    }
+    //endregion
 }

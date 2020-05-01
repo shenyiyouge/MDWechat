@@ -90,8 +90,12 @@ object AppCustomConfig {
         }
     }
 
+    fun getIconPath(fileName: String): String {
+        return Common.APP_DIR_PATH + Common.ICON_DIR + File.separator + fileName
+    }
+
     fun getIcon(fileName: String): Bitmap? {
-        val filePath = Common.APP_DIR_PATH + Common.ICON_DIR + File.separator + fileName
+        val filePath = getIconPath(fileName)
         return BitmapFactory.decodeFile(filePath)
     }
 
