@@ -3,6 +3,7 @@ package org.devio.takephoto.permission;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -71,6 +72,10 @@ public class PermissionManager {
     public static void requestPermission(@NonNull TContextWrap contextWrap, @NonNull String[] permissions) {
         if (contextWrap.getFragment() != null) {
             contextWrap.getFragment().requestPermissions(permissions, TConstant.PERMISSION_REQUEST_TAKE_PHOTO);
+        } else if (contextWrap.getPreferenceFragment() != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                contextWrap.getPreferenceFragment().requestPermissions(permissions, TConstant.PERMISSION_REQUEST_TAKE_PHOTO);
+            }
         } else {
             ActivityCompat.requestPermissions(contextWrap.getActivity(), permissions, TConstant.PERMISSION_REQUEST_TAKE_PHOTO);
         }

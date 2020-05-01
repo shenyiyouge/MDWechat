@@ -1,6 +1,7 @@
 package org.devio.takephoto.model;
 
 import android.app.Activity;
+import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 
 /**
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 public class TContextWrap {
     private Activity activity;
     private Fragment fragment;
+    private PreferenceFragment preferenceFragment;
 
     private TContextWrap(Activity activity) {
         this.activity = activity;
@@ -20,11 +22,20 @@ public class TContextWrap {
         this.activity = fragment.getActivity();
     }
 
+    private TContextWrap(PreferenceFragment fragment) {
+        this.preferenceFragment = fragment;
+        this.activity = fragment.getActivity();
+    }
+
     public static TContextWrap of(Activity activity) {
         return new TContextWrap(activity);
     }
 
     public static TContextWrap of(Fragment fragment) {
+        return new TContextWrap(fragment);
+    }
+
+    public static TContextWrap of(PreferenceFragment fragment) {
         return new TContextWrap(fragment);
     }
 
@@ -38,6 +49,10 @@ public class TContextWrap {
 
     public Fragment getFragment() {
         return fragment;
+    }
+
+    public PreferenceFragment getPreferenceFragment() {
+        return preferenceFragment;
     }
 
     public void setFragment(Fragment fragment) {

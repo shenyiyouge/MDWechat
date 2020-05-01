@@ -85,6 +85,8 @@ public class TUtils {
     public static void startActivityForResult(TContextWrap contextWrap, TIntentWap intentWap) {
         if (contextWrap.getFragment() != null) {
             contextWrap.getFragment().startActivityForResult(intentWap.getIntent(), intentWap.getRequestCode());
+        } else if (contextWrap.getPreferenceFragment() != null) {
+            contextWrap.getPreferenceFragment().startActivityForResult(intentWap.getIntent(), intentWap.getRequestCode());
         } else {
             contextWrap.getActivity().startActivityForResult(intentWap.getIntent(), intentWap.getRequestCode());
         }
@@ -165,6 +167,10 @@ public class TUtils {
                 Crop.of(imageUri, outPutUri)
                         .withAspect(options.getAspectX(), options.getAspectY())
                         .start(contextWrap.getActivity(), contextWrap.getFragment());
+            } else if (contextWrap.getPreferenceFragment() != null) {
+                Crop.of(imageUri, outPutUri)
+                        .withAspect(options.getAspectX(), options.getAspectY())
+                        .start(contextWrap.getActivity(), contextWrap.getPreferenceFragment());
             } else {
                 Crop.of(imageUri, outPutUri).withAspect(options.getAspectX(), options.getAspectY()).start(contextWrap.getActivity());
             }
@@ -173,12 +179,18 @@ public class TUtils {
                 Crop.of(imageUri, outPutUri)
                         .withMaxSize(options.getOutputX(), options.getOutputY())
                         .start(contextWrap.getActivity(), contextWrap.getFragment());
+            } else if (contextWrap.getPreferenceFragment() != null) {
+                Crop.of(imageUri, outPutUri)
+                        .withMaxSize(options.getOutputX(), options.getOutputY())
+                        .start(contextWrap.getActivity(), contextWrap.getPreferenceFragment());
             } else {
                 Crop.of(imageUri, outPutUri).withMaxSize(options.getOutputX(), options.getOutputY()).start(contextWrap.getActivity());
             }
         } else {
             if (contextWrap.getFragment() != null) {
                 Crop.of(imageUri, outPutUri).asSquare().start(contextWrap.getActivity(), contextWrap.getFragment());
+            } else if (contextWrap.getPreferenceFragment() != null) {
+                Crop.of(imageUri, outPutUri).asSquare().start(contextWrap.getActivity(), contextWrap.getPreferenceFragment());
             } else {
                 Crop.of(imageUri, outPutUri).asSquare().start(contextWrap.getActivity());
             }
