@@ -103,15 +103,14 @@ class SettingsActivity : Activity() {
     private val REQUEST_EXTERNAL_STORAGE = 1
     private val PERMISSIONS_STORAGE = arrayOf(
             "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE",
-            "android.permission.CAMERA")
+            "android.permission.WRITE_EXTERNAL_STORAGE")
 
     fun verifyStoragePermissions(activity: Activity) {
         try {
             val permission = ActivityCompat.checkSelfPermission(activity,
                     "android.permission.WRITE_EXTERNAL_STORAGE") == PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(activity,
-                    "android.permission.CAMERA") == PackageManager.PERMISSION_GRANTED
+//                    && ActivityCompat.checkSelfPermission(activity,
+//                    "android.permission.CAMERA") == PackageManager.PERMISSION_GRANTED
             if (!permission) {
                 ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE)
             } else {
