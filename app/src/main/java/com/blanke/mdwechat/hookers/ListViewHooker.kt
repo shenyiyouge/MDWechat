@@ -72,7 +72,7 @@ object ListViewHooker : HookerProvider {
 
                     // 按照使用频率重排序
                     //气泡
-                    if ((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) {
+                    if (((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) && HookConfig.is_hook_bubble) {
                         // 聊天消息 item
                         if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightMessageItem")
@@ -84,12 +84,10 @@ object ListViewHooker : HookerProvider {
                             XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgRightTextColor)
 //                    val mText = XposedHelpers.getObjectField(msgView, "mText")
 //                    log("msg right text=$mText")
-                            if (HookConfig.is_hook_bubble) {
-                                val bubble = WeChatHelper.getRightBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(30, 25, 45, 25)
-                                }
+                            val bubble = WeChatHelper.getRightBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(30, 25, 45, 25)
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
@@ -107,12 +105,10 @@ object ListViewHooker : HookerProvider {
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgLeftTextColor)
                             XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgLeftTextColor)
                             // 聊天气泡
-                            if (HookConfig.is_hook_bubble) {
-                                val bubble = WeChatHelper.getLeftBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(45, 25, 30, 25)
-                                }
+                            val bubble = WeChatHelper.getLeftBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(45, 25, 30, 25)
                             }
                         }
 
@@ -121,54 +117,46 @@ object ListViewHooker : HookerProvider {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightAudioMessageItem")
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgView")!!) as View
                             val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
-                            if (HookConfig.is_hook_bubble) {
-                                val bubble = WeChatHelper.getRightBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(30, 25, 45, 25)
-                                }
-                                msgAnimView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgAnimView.setPadding(30, 25, 45, 25)
-                                }
+                            val bubble = WeChatHelper.getRightBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(30, 25, 45, 25)
+                            }
+                            msgAnimView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgAnimView.setPadding(30, 25, 45, 25)
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftAudioMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftAudioMessageItem")
-                            if (HookConfig.is_hook_bubble) {
-                                val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
-                                val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
-                                val bubble = WeChatHelper.getLeftBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(45, 25, 30, 25)
-                                }
-                                msgAnimView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgAnimView.setPadding(45, 25, 30, 25)
-                                }
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
+                            val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
+                            val bubble = WeChatHelper.getLeftBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(45, 25, 30, 25)
+                            }
+                            msgAnimView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgAnimView.setPadding(45, 25, 30, 25)
                             }
                         }
 
                         // 通话消息
                         else if (ViewTreeUtils.equals(VTTV.ChatRightCallMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightCallMessageItem")
-                            if (HookConfig.is_hook_bubble) {
-                                val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")!!) as View
-                                val bubble = WeChatHelper.getRightBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(30, 25, 45, 25)
-                                }
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")!!) as View
+                            val bubble = WeChatHelper.getRightBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(30, 25, 45, 25)
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftCallMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftCallMessageItem")
-                            if (HookConfig.is_hook_bubble) {
-                                val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")!!) as View
-                                val bubble = WeChatHelper.getLeftBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(45, 25, 30, 25)
-                                }
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")!!) as View
+                            val bubble = WeChatHelper.getLeftBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(45, 25, 30, 25)
                             }
                         }
 
@@ -180,12 +168,10 @@ object ListViewHooker : HookerProvider {
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgRightTextColor)
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgRightTextColor)
                             XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgRightTextColor)
-                            if (HookConfig.is_hook_bubble) {
-                                val bubble = WeChatHelper.getRightBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(30, 25, 45, 25)
-                                }
+                            val bubble = WeChatHelper.getRightBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(30, 25, 45, 25)
                             }
                         } else if (ViewTreeUtils.equals(VTTV.RefLeftMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
@@ -195,12 +181,10 @@ object ListViewHooker : HookerProvider {
                             XposedHelpers.callMethod(msgView, "setLinkTextColor", chatMsgLeftTextColor)
                             XposedHelpers.callMethod(msgView, "setHintTextColor", chatMsgLeftTextColor)
                             // 聊天气泡
-                            if (HookConfig.is_hook_bubble) {
-                                val bubble = WeChatHelper.getLeftBubble(msgView.resources)
-                                msgView.background = bubble
-                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                    msgView.setPadding(45, 25, 30, 25)
-                                }
+                            val bubble = WeChatHelper.getLeftBubble(msgView.resources)
+                            msgView.background = bubble
+                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                msgView.setPadding(45, 25, 30, 25)
                             }
                         }
                     }

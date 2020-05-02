@@ -249,12 +249,14 @@
                 <PreferenceCategory>
                     <com.jaredrummler.android.colorpicker.ColorPreference
                         android:defaultValue="@color/material_black"
+                        android:dependency="@string/key_hook_bubble"
                         android:key="@string/key_hook_chat_text_color_left"
                         android:title="@string/text_hook_chat_text_color_left"
                         app:cpv_colorPresets="@array/colors"
                         app:cpv_showAlphaSlider="true" />
                     <com.jaredrummler.android.colorpicker.ColorPreference
                         android:defaultValue="@color/material_white"
+                        android:dependency="@string/key_hook_bubble"
                         android:key="@string/key_hook_chat_text_color_right"
                         android:title="@string/text_hook_chat_text_color_right"
                         app:cpv_colorPresets="@array/colors"
@@ -314,7 +316,31 @@
                 android:key="@string/key_select_bg_3"
                 android:title="@string/text_select_bg_3" />
         </PreferenceScreen>
+        <PreferenceCategory android:title="@string/text_hook_bg_immersion">
+            <SwitchPreference
+                android:defaultValue="false"
+                android:dependency="@string/key_hook_tab_bg"
+                android:key="@string/key_hook_bg_immersion"
+                android:summary="@string/summary_hook_bg_immersion"
+                android:title="@string/text_hook_bg_immersion" />
+            <SwitchPreference
+                android:dependency="@string/key_hook_bg_immersion"
+                android:key="@string/key_change_resolution"
+                android:summary="@string/summary_change_resolution"
+                android:title="@string/text_change_resolution" />
+            <EditTextPreference
+                android:defaultValue="-1,-1"
+                android:dependency="@string/key_change_resolution"
+                android:key="@string/key_resolution"
+                android:summary="@string/summary_resolution"
+                android:title="@string/text_resolution" />
+        </PreferenceCategory>
         <PreferenceCategory />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/key_hook_statusbar_transparent"
+            android:summary="@string/summary_hook_statusbar_transparent"
+            android:title="@string/text_hook_statusbar_transparent" />
         <EditTextPreference
             android:defaultValue="0"
             android:dependency="@string/key_hook_tab_bg"
@@ -326,28 +352,6 @@
             android:summary="@string/summary_hook_conversation_background_alpha"
             android:title="@string/text_hook_conversation_background_alpha"
             tools:ignore="Deprecated" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/key_hook_statusbar_transparent"
-            android:summary="@string/summary_hook_statusbar_transparent"
-            android:title="@string/text_hook_statusbar_transparent" />
-        <SwitchPreference
-            android:defaultValue="false"
-            android:dependency="@string/key_hook_tab_bg"
-            android:key="@string/key_hook_bg_immersion"
-            android:summary="@string/summary_hook_bg_immersion"
-            android:title="@string/text_hook_bg_immersion" />
-        <SwitchPreference
-            android:dependency="@string/key_hook_bg_immersion"
-            android:key="@string/key_change_resolution"
-            android:summary="@string/summary_change_resolution"
-            android:title="@string/text_change_resolution" />
-        <EditTextPreference
-            android:defaultValue="-1,-1"
-            android:dependency="@string/key_change_resolution"
-            android:key="@string/key_resolution"
-            android:summary="@string/summary_resolution"
-            android:title="@string/text_resolution" />
     </PreferenceScreen>
     <!--主界面设置-->
     <PreferenceScreen
