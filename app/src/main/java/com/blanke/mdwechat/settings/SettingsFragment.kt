@@ -374,7 +374,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_reset_wechat_config) -> copyWechatConfig()
             getString(R.string.key_reset_config) -> deleteConfig()
             getString(R.string.key_reset_float_bottom_config) -> copyFloatBottomConfig()
-            getString(R.string.key_reset_icon_config) -> copyIcons()
+            getString(R.string.key_reset_icon_config) -> resetIcons()
             getString(R.string.key_feedback_email_blanke) -> sendEmail()
             getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
             getString(R.string.key_gitee_joshcai) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat")
@@ -483,12 +483,16 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         Toast.makeText(activity, R.string.msg_reset_ok, Toast.LENGTH_SHORT).show()
     }
 
-    private fun copyIcons() {
+    private fun resetIcons() {
         thread {
             FileUtils.copyAssets(activity, Common.APP_DIR_PATH, Common.ICON_DIR, true)
             val nomediaFile = File(Common.APP_DIR_PATH + Common.ICON_DIR + File.separator + ".nomedia")
             if (!nomediaFile.exists()) {
                 nomediaFile.createNewFile()
+            }
+            val file = File(getIconPath(Common.FILE_NAME_CHAT_BG))
+            if (file.isFile && file.exists()) {
+                file.delete()
             }
         }
         Toast.makeText(activity, R.string.msg_reset_ok, Toast.LENGTH_SHORT).show()
@@ -670,7 +674,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>?, grantResults: IntArray?) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
         PermissionManager.handlePermissionsResult(activity, type, invokeParam, this)
