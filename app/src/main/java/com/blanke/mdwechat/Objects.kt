@@ -17,6 +17,7 @@ object Objects {
         var actionBar: View? = null
 
         var tabLayout: CommonTabLayout? = null
+        var contactPageFix: View? = null
         var pagePosition = 0
     }
 

@@ -88,6 +88,7 @@ object LauncherUIHooker : HookerProvider {
                             }
 
                             val linearViewGroup = viewPager.parent as ViewGroup
+                            BackgroundImageUtils.contactPageParent = linearViewGroup
                             val contentViewGroup = linearViewGroup.parent as ViewGroup
                             Objects.Main.LauncherUI_mContentLayout = contentViewGroup
                             Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)

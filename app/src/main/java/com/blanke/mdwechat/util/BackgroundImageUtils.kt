@@ -1,8 +1,13 @@
 package com.blanke.mdwechat.util
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Methods
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.ViewTreeRepoThisVersion
@@ -11,16 +16,20 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.main.TitleColorHook
 
 object BackgroundImageUtils {
+    var _tabLayoutOnTop = false
+    var contactPageParent: ViewGroup? = null
+    var _contactPageWhiteBar = mutableListOf(0, 0)
+
     //  (y,height)
     var _actionBarLocation = mutableListOf(0, 0)
     var _tabLayoutLocation = mutableListOf(0, 0)
     var _contactPageLocation = mutableListOf(0, 0)
 
     var _actionBarBitmapInConversations: Bitmap? = null
-    var _actionBarBitmapInFriendsgroup: Bitmap? = null
     var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    var _contactPageFix = mutableListOf<Drawable?>(null, null, null, null)
     var DiscoverPage: View? = null
 
     //region 导航
@@ -42,6 +51,10 @@ object BackgroundImageUtils {
             setTabLayoutBitmap(page)
         } else {
             Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(_tabLayoutLocation[1], page))
+        }
+        Objects.Main.contactPageFix?.apply {
+            setContactPageFixBackround(this, page)
+//            this.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
         }
     }
 
@@ -208,6 +221,20 @@ object BackgroundImageUtils {
         LogUtil.log("Got TabLayoutBitmapAtBottom, $page")
         return _tabLayoutBitmap[page]
     }
+
+    fun setContactPageFixBackround(contactPageFix: View, page: Int) {
+        if (page != 1 && page != 2) {
+            contactPageFix.background = null
+        }
+        if (_contactPageFix[page] != null) {
+            contactPageFix.background = _contactPageFix[page]
+            return
+        }
+        LogUtil.log("Getting contactPageFix, $page")
+        val bg = AppCustomConfig.getTabBg(page)
+        _contactPageFix[page] = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
+        contactPageFix.background = _contactPageFix[page]
+    }
     //endregion
 
     //region 背景
@@ -272,6 +299,28 @@ object BackgroundImageUtils {
                 DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(
                         cutBitmap(logHead, AppCustomConfig.getTabBg(2),
                                 _contactPageLocation[0], _contactPageLocation[1]))
+
+                val pageBodyTop = if (_tabLayoutOnTop)
+                    _tabLayoutLocation[0] + _tabLayoutLocation[1]
+                else _actionBarLocation[0] + _actionBarLocation[1]
+
+                LogUtil.log("==========pageBodyTop=$pageBodyTop===========")
+                LogUtil.log("==========_contactPageLocation=${_contactPageLocation[0]}===========")
+
+
+                if (_contactPageLocation[0] > pageBodyTop) {
+                    _contactPageWhiteBar[0] = pageBodyTop
+                    _contactPageWhiteBar[1] = _contactPageLocation[0] - pageBodyTop
+                    contactPageParent?.apply {
+                        val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        paramsAddedOnTop.topMargin = _contactPageWhiteBar[0]
+                        paramsAddedOnTop.height = _contactPageWhiteBar[1]
+                        Objects.Main.contactPageFix = FrameLayout(this.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY))
+                        setContactPageFixBackround(this, 1)
+//                        Objects.Main.contactPageFix!!.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
+                        this.addView(Objects.Main.contactPageFix!!, 1, paramsAddedOnTop)
+                    }
+                }
                 //回到最近对话界面
                 Objects.Main.LauncherUI_mViewPager?.apply {
                     Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
