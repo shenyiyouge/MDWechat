@@ -267,6 +267,7 @@
     <string name="text_info">说明</string>
     <string name="text_pre_inst">预设方案</string>
     <string name="key_pre_inst_color_schemes">key_pre_inst_color_schemes</string>
+    <string name="key_pre_inst_color_schemes1">key_pre_inst_color_schemes1</string>
     <string name="text_pre_inst_color_schemes">使用预设方案</string>
     <string name="key_color_tip">key_color_tip</string>
     <string name="text_color_tip">消息提示颜色</string>

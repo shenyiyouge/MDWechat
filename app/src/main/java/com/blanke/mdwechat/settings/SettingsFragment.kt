@@ -110,6 +110,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference("key_clear_logs")?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_background_alpha))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_pre_inst_color_schemes))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_pre_inst_color_schemes1))?.onPreferenceChangeListener = this
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
@@ -187,6 +188,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_hide_launcher_icon) -> showHideLauncherIcon(!(o as Boolean))
             getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
             getString(R.string.key_pre_inst_color_schemes) -> changeColorScheme(o as String)
+            getString(R.string.key_pre_inst_color_schemes1) -> changeColorScheme(o as String)
 //            getString(R.string.key_mini_program_title) -> setSummary(o as String)
 //            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
         }
@@ -195,6 +197,8 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 
     @SuppressLint("ResourceAsColor")
     private fun changeColorScheme(s: String) {
+        (findPreference(getString(R.string.key_pre_inst_color_schemes)) as ListPreference).value = s
+        (findPreference(getString(R.string.key_pre_inst_color_schemes1)) as ListPreference).value = s
 //        try {
         when (s) {
             "immersionDark" -> {

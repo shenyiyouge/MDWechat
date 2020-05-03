@@ -116,6 +116,15 @@
                 android:summary="@string/text_download_wechat_config_info"
                 android:title="@string/text_download_wechat_config" />
         </PreferenceCategory>
+        <PreferenceCategory android:title="@string/text_pre_inst">
+            <ListPreference
+                android:dialogTitle="@string/text_pre_inst_color_schemes"
+                android:entries="@array/color_schemes"
+                android:entryValues="@array/color_schemes_value"
+                android:key="@string/key_pre_inst_color_schemes"
+                android:summary="重置配色方案为预设方案。(沉浸主题设置位于「背景」)"
+                android:title="@string/text_pre_inst_color_schemes" />
+        </PreferenceCategory>
     </PreferenceScreen>
     <!--配色方案-->
     <PreferenceScreen
@@ -129,7 +138,7 @@
                 android:dialogTitle="@string/text_pre_inst_color_schemes"
                 android:entries="@array/color_schemes"
                 android:entryValues="@array/color_schemes_value"
-                android:key="@string/key_pre_inst_color_schemes"
+                android:key="@string/key_pre_inst_color_schemes1"
                 android:summary="重置配色方案为预设方案。(沉浸主题设置位于「背景」)"
                 android:title="@string/text_pre_inst_color_schemes" />
         </PreferenceCategory>
