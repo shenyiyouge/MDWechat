@@ -298,6 +298,7 @@
     <string name="key_select_bg">key_select_bg</string>
     <string name="text_select_bg">选择背景图</string>
     <string name="key_select_bg_chat">key_select_bg_chat</string>
+    <string name="summary_select_bg_chat">沉浸主题专用，建议跟最近聊天页背景保持一致</string>
     <string name="text_select_bg_chat">聊天页背景图</string>
     <string name="key_select_bg_0">key_select_bg_0</string>
     <string name="text_select_bg_0">最近聊天页背景图(主界面)</string>

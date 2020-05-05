@@ -311,6 +311,7 @@
         <PreferenceScreen android:title="@string/text_select_bg">
             <Preference
                 android:key="@string/key_select_bg_chat"
+                android:summary="@string/summary_select_bg_chat"
                 android:title="@string/text_select_bg_chat" />
             <Preference
                 android:key="@string/key_select_bg_0"
