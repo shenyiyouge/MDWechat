@@ -1,7 +1,7 @@
 MDWechat
 ====
 # 简介
- Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信7.0.14.
+ Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信7.0.15.
 
 # 功能
 实现的功能有:
@@ -25,7 +25,7 @@ MDWechat
 
 # 版本支持
 - 只支持 Android 5.0 以上
-- 支持的微信版本: 6.7.3 - 7.0.14
+- 支持的微信版本: 6.7.3 - 7.0.15
 - MDWechat(官改) 4.0 对于国内版的适配性比较好，play版微信在部分机型上会出现无法适配的状况。
 
 # 效果预览

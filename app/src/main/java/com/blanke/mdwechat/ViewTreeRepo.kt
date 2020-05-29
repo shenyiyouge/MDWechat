@@ -78,11 +78,11 @@ object ViewTreeRepoThisVersion {
     val ActionBarContainerItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarContainerItem.invoke(ViewTreeRepo) as ViewTree
     }
-
-    // 朋友圈的action bar
-    val ActionBarInFriendsgroupItem: ViewTree by lazy {
-        ViewTreeConfig.get().actionBarInFriendsgroupItem.invoke(ViewTreeRepo) as ViewTree
-    }
+//
+//    // 朋友圈的action bar
+//    val ActionBarInFriendsgroupItem: ViewTree by lazy {
+//        ViewTreeConfig.get().actionBarInFriendsgroupItem.invoke(ViewTreeRepo) as ViewTree
+//    }
 }
 
 // 所有微信版本的repo
@@ -669,8 +669,8 @@ object ViewTreeRepo {
     val ActionBarInConversationItem: ViewTree by lazy {
         ViewTree(
                 mapOf("title" to intArrayOf(0, 1, 1, 0),
-                        "goBackButton" to intArrayOf(0, 1, 0, 0),
-                        "infoButton" to intArrayOf(0, 0, 0, 4, 0)),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0)),
+//                        "infoButton" to intArrayOf(0, 0, 0, 4, 0)),
                 ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
                         ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
                                 ViewTreeItem("android.support.v7.widget.ActionMenuView", arrayOf(
@@ -696,13 +696,44 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.ImageView.name))))),
                         ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
     }
+    val ActionBarInConversationItem_7_0_15: ViewTree by lazy {
+        ViewTree(
+                mapOf("title" to intArrayOf(0, 1, 1, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0)
+//                        "infoButton" to intArrayOf(0, 0, 0, 4, 0)
+                ),
+                ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
+                                ViewTreeItem("android.support.v7.widget.ActionMenuView", arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.ImageButton.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.ImageView.name))),
+                                                ViewTreeItem(CC.Button.name),
+                                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView),
+                                                        ViewTreeItem(CC.ImageView.name))))))),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.WeImageView))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.TextView.name))),
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.ImageView.name))))),
+                        ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
+    }
 
     //通过搜索进入的聊天界面
     val ActionBarInSearchConversationItem: ViewTree by lazy {
         ViewTree(
                 mapOf("title" to intArrayOf(0, 0, 1, 0),
-                        "goBackButton" to intArrayOf(0, 0, 0, 0),
-                        "infoButton" to intArrayOf(0, 1, 0, 4, 0)),
+                        "goBackButton" to intArrayOf(0, 0, 0, 0)),
+//                        "infoButton" to intArrayOf(0, 1, 0, 4, 0)),
                 ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
                         ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
@@ -725,6 +756,36 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.Button.name),
                                                 ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                                         ViewTreeItem(CC.ImageButton.name),
+                                                        ViewTreeItem(CC.ImageView.name))))))))),
+                        ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
+    }
+    val ActionBarInSearchConversationItem_7_0_15: ViewTree by lazy {
+        ViewTree(
+                mapOf("title" to intArrayOf(0, 0, 1, 0),
+                        "goBackButton" to intArrayOf(0, 0, 0, 0)),
+//                        "infoButton" to intArrayOf(0, 1, 0, 4, 0)),
+                ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.WeImageView))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.TextView.name))),
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.ImageView.name))),
+                                ViewTreeItem("android.support.v7.widget.ActionMenuView", arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.ImageButton.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.ImageView.name))),
+                                                ViewTreeItem(CC.Button.name),
+                                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView),
                                                         ViewTreeItem(CC.ImageView.name))))))))),
                         ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
     }

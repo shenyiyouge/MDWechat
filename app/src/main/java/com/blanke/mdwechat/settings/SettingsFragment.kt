@@ -369,9 +369,19 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //        hook_hide_actionbar.setChecked(o)
 //    }
 
+    private fun myTest() {
+//        val intent = Intent()
+//        intent.action = Intent.ACTION_GET_CONTENT
+//        val file = File(LOG_DIR)
+//        intent.setDataAndType(Uri.fromFile(file), "*/*")
+//        startActivity(intent)
+    }
+
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference.key) {
+            getString(R.string.key_joshcai_info) -> myTest()
+
             "key_clear_logs" -> _clearLogs()
             getString(R.string.key_donate) -> donate()
             getString(R.string.key_feedback) -> feedback()
@@ -387,7 +397,6 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_generate_wechat_config) -> generateWechatFile()
             getString(R.string.key_donate_wechat) -> donateWechat()
             getString(R.string.key_download_wechat_config) -> downloadWechatConfig()
-//            getString(R.string.key_joshcai_info) -> getImage()
             getString(R.string.key_attention) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161250")
             getString(R.string.key_feedback_group) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161272")
             getString(R.string.key_releases) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/releases")
