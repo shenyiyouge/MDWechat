@@ -1,5 +1,10 @@
 [
   {
+    "name": "7.0.15.config",
+    "desc": "7.0.15 国内版",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/7.0.15/7.0.15.config"
+  },
+  {
     "name": "7.0.14.config",
     "desc": "7.0.14 国内版",
     "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/7.0.14/7.0.14.config"
