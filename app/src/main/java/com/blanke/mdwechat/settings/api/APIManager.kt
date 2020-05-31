@@ -18,6 +18,13 @@ class APIManager {
         client.newCall(req).enqueue(callback)
     }
 
+    fun getNewestVersion(callback: Callback) {
+        val req = Request.Builder().url("${host}data/newest_version.json")
+                .get()
+                .build()
+        client.newCall(req).enqueue(callback)
+    }
+
     fun downloadWechatConfig(url: String, callback: Callback) {
         get(url, callback)
     }

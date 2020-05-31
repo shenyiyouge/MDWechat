@@ -2,6 +2,7 @@ package com.blanke.mdwechat.settings
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.settings.view.GetNewestVersion
 import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil
 import com.joshcai.mdwechat.R
@@ -48,6 +50,7 @@ class SettingsActivity : Activity() {
             _clearLogs()
             goToWechatSettingPage()
         }
+        GetNewestVersion.show(this, getVersionCode())
     }
 
     private fun _clearLogs() {
@@ -132,5 +135,19 @@ class SettingsActivity : Activity() {
                 finish()
             }
         }
+    }
+
+    private fun getVersionCode(): Int {
+        // 包管理器 可以获取清单文件信息
+        try {
+            // 获取包信息
+            // 参1 包名 参2 获取额外信息的flag 不需要的话 写0
+            val packageInfo: PackageInfo = packageManager.getPackageInfo(
+                    packageName, 0)
+            return packageInfo.versionCode
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return 0
     }
 }

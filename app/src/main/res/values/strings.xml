@@ -221,7 +221,9 @@
     <string name="text_generate_wechat_config">生成本机微信配置文件</string>
     <string name="text_generate_wechat_config_info">根据当前安装微信版本自动生成适配文件，第一次使用/升级微信版本必须重新生成！！</string>
     <string name="msg_wechat_notfound">本机未安装微信，生成失败</string>
-    <string name="text_confirm"> 确定</string>
+    <string name="text_confirm">确定</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_update">更新</string>
     <string name="key_donate_wechat">key_donate_wechat</string>
     <string name="key_download_wechat_config">key_download_wechat_config</string>
     <string name="text_download_wechat_config">下载共享的微信配置文件</string>
