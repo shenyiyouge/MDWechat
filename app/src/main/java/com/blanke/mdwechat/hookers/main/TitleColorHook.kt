@@ -10,10 +10,7 @@ import android.widget.*
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig.getChatBg
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.util.BackgroundImageUtils
-import com.blanke.mdwechat.util.NightModeUtils
-import com.blanke.mdwechat.util.ViewTreeUtils
-import com.blanke.mdwechat.util.ViewUtils
+import com.blanke.mdwechat.util.*
 import com.blanke.mdwechat.util.ViewUtils.measureHeight
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
@@ -27,6 +24,7 @@ object TitleColorHook {
     private var footerLocation = mutableListOf(-1, -1)
 
     fun setConversationColor(actionBar: View) {
+        LogUtil.log("开始设置聊天页沉浸背景")
         val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("title")) as TextView
         title.setTextColor(NightModeUtils.colorSecondary)
 //        val infoButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("infoButton")) as ImageButton
@@ -43,6 +41,7 @@ object TitleColorHook {
     }
 
     fun setConversationInSearchColor(actionBar: View) {
+        LogUtil.log("开始设置  - 由搜索进入的 -  聊天页沉浸背景")
         val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("title")) as TextView
         title.setTextColor(NightModeUtils.colorSecondary)
 //        val infoButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("infoButton")) as ImageButton
@@ -59,6 +58,7 @@ object TitleColorHook {
     }
 
     private fun setConversationFooterColor(ChattingScrollLayoutItem: ViewGroup, treeStacks: Map<String, IntArray>) {
+        LogUtil.log("开始设置聊天页底栏")
         //判断是否为公众号页面
         if ((ChattingScrollLayoutItem.childCount >= 3) &&
                 (ChattingScrollLayoutItem.getChildAt(2)::class.java.name == "com.tencent.mm.ui.chatting.ChatFooterCustom")) {
@@ -79,6 +79,7 @@ object TitleColorHook {
         val chattingBgShade = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chattingBgShade")) as View
         if (HookConfig.is_hook_scheme_dark || !HookConfig.is_hook_night_mode) chattingBgShade.setBackgroundColor(0)
+        LogUtil.log("去除聊天背景遮罩")
 
 //        自定义聊天背景
         val context = bgGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
@@ -88,6 +89,7 @@ object TitleColorHook {
         bgGroup.addView(view, 1, params)
         view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("ChattingImageBGView",
                 getChatBg(), actionBarBottom, params.height))
+        LogUtil.log("替换自定义聊天背景")
 
         //底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
@@ -98,6 +100,7 @@ object TitleColorHook {
         } else {
             BackgroundImageUtils.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
         }
+        LogUtil.log("替换聊天底栏背景")
         //语音打字切换
         val switchButton = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_switchButton")) as ImageButton
@@ -124,6 +127,7 @@ object TitleColorHook {
                 treeStacks.getValue("chatFooterChild2_sendButton")) as Button
         sendButton.setBackgroundColor(transparentBackground)
         sendButton.setTextColor(NightModeUtils.colorSecondary)
+        LogUtil.log("替换聊天底栏控件")
 
     }
 }
