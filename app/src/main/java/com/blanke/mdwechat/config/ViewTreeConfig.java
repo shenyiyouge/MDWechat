@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 //        2. add getter
 //        3. add init code [private void init()]
 //
+//         goto ViewTreeRepo.kt
 //        4. add com.blanke.mdwechat.ViewTreeRepoThisVersion
 //        5. add com.blanke.mdwechat.ViewTreeRepo
 public class ViewTreeConfig {
@@ -19,6 +20,10 @@ public class ViewTreeConfig {
 
     private Method ConversationListViewItem = null;
     private Method ContactListViewItem = null;
+    private Method ContactHeaderItem = null;
+    private Method ContactCompanySumItem = null;
+    private Method ContactCompanyHeaderItem = null;
+    private Method ContactCompanyListViewItem = null;
     private Method DiscoverViewItem = null;
     private Method SettingAvatarView = null;
     private Method ChatRightMessageItem = null;
@@ -43,8 +48,25 @@ public class ViewTreeConfig {
         return ConversationListViewItem;
     }
 
+
     public Method getContactListViewItem() {
         return ContactListViewItem;
+    }
+
+    public Method getContactHeaderItem() {
+        return ContactHeaderItem;
+    }
+
+    public Method getContactCompanySumItem() {
+        return ContactCompanySumItem;
+    }
+
+    public Method getContactCompanyHeaderItem() {
+        return ContactCompanyHeaderItem;
+    }
+
+    public Method getContactCompanyListViewItem() {
+        return ContactCompanyListViewItem;
     }
 
     public Method getDiscoverViewItem() {
@@ -142,6 +164,10 @@ public class ViewTreeConfig {
     private void init(Version versionName) {
         ConversationListViewItem = findViewTreeMethod("ConversationListViewItem", versionName);
         ContactListViewItem = findViewTreeMethod("ContactListViewItem", versionName);
+        ContactHeaderItem = findViewTreeMethod("ContactHeaderItem", versionName);
+        ContactCompanySumItem = findViewTreeMethod("ContactCompanySumItem", versionName);
+        ContactCompanyHeaderItem = findViewTreeMethod("ContactCompanyHeaderItem", versionName);
+        ContactCompanyListViewItem = findViewTreeMethod("ContactCompanyListViewItem", versionName);
         DiscoverViewItem = findViewTreeMethod("DiscoverViewItem", versionName);
         SettingAvatarView = findViewTreeMethod("SettingAvatarView", versionName);
         ChatRightMessageItem = findViewTreeMethod("ChatRightMessageItem", versionName);

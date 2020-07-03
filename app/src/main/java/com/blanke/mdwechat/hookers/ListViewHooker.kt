@@ -63,12 +63,12 @@ object ListViewHooker : HookerProvider {
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
 
-//                    LogUtil.log("----------抓取view start----------")
-//                    LogUtil.log(WechatGlobal.wxVersion.toString())
-//                    LogUtil.log("context=" + view.context)
-//                    LogUtil.logViewStackTraces(view)
-//                    LogUtil.logParentView(view, 10)
-//                    LogUtil.log("--------------------")
+                    LogUtil.log("----------抓取view start----------")
+                    LogUtil.log(WechatGlobal.wxVersion.toString())
+                    LogUtil.log("context=" + view.context)
+                    LogUtil.logViewStackTraces(view)
+                    LogUtil.logParentView(view, 10)
+                    LogUtil.log("--------------------")
 
                     // 按照使用频率重排序
                     //气泡
@@ -237,6 +237,48 @@ object ListViewHooker : HookerProvider {
                             val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headTextView")) as TextView
                             headTextView.setTextColor(summaryTextColor)
                             XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
+                        }
+                    }
+
+                    // 联系人列表头部
+                    if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
+                        LogUtil.logOnlyOnce("ListViewHooker.ContactHeaderItem")
+                        val ContactCompanySumItem = ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks.get("ContactCompanySumItem"))
+
+                        //企业联系人
+                        ContactCompanySumItem?.apply {
+                            if (ViewTreeUtils.equals(VTTV.ContactCompanySumItem.item, ContactCompanySumItem)) {
+                                LogUtil.logOnlyOnce("ListViewHooker.ContactCompanySumItem")
+
+                                //头部
+                                val ContactCompanyHeaderItem = ViewUtils.getChildView1(ContactCompanySumItem, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyHeaderItem"))
+                                ContactCompanyHeaderItem?.apply {
+                                    if (ViewTreeUtils.equals(VTTV.ContactCompanyHeaderItem.item, ContactCompanyHeaderItem)) {
+                                        LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyHeaderItem")
+                                        //  titleView
+                                        ViewUtils.getChildView1(ContactCompanyHeaderItem, VTTV.ContactCompanyHeaderItem.treeStacks.get("titleView"))
+                                                ?.background = drawableTransparent
+                                        if (isHookTextColor) {
+                                            val headTextView = ViewUtils.getChildView1(ContactCompanyHeaderItem, VTTV.ContactCompanyHeaderItem.treeStacks.get("headTextView")) as TextView
+                                            headTextView.setTextColor(summaryTextColor)
+                                        }
+                                    }
+                                }
+                                //主体
+                                val ContactCompanyListViewItem = ViewUtils.getChildView1(ContactCompanySumItem, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyListViewItem"))
+                                ContactCompanyListViewItem?.apply {
+                                    if (ViewTreeUtils.equals(VTTV.ContactCompanyListViewItem.item, ContactCompanyListViewItem)) {
+                                        LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyListViewItem")
+                                        //  titleView
+                                        ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("titleView"))
+                                                ?.background = drawableTransparent
+                                        if (isHookTextColor) {
+                                            val headTextView = ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("headTextView")) as TextView
+                                            headTextView.setTextColor(summaryTextColor)
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
 

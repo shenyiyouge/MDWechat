@@ -13,6 +13,18 @@ object ViewTreeRepoThisVersion {
     val ContactListViewItem: ViewTree by lazy {
         ViewTreeConfig.get().contactListViewItem.invoke(ViewTreeRepo) as ViewTree
     }
+    val ContactHeaderItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactHeaderItem.invoke(ViewTreeRepo) as ViewTree
+    }
+    val ContactCompanySumItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactCompanySumItem.invoke(ViewTreeRepo) as ViewTree
+    }
+    val ContactCompanyHeaderItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactCompanyHeaderItem.invoke(ViewTreeRepo) as ViewTree
+    }
+    val ContactCompanyListViewItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactCompanyListViewItem.invoke(ViewTreeRepo) as ViewTree
+    }
     val DiscoverViewItem: ViewTree by lazy {
         ViewTreeConfig.get().discoverViewItem.invoke(ViewTreeRepo) as ViewTree
     }
@@ -262,6 +274,70 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem("com.tencent.mm.ui.chatting.view.AvatarImageView"),
                                                 ViewTreeItem("com.tencent.mm.ui.AddressView"))))))))))
+    }
+
+    // 联系人上方分组列表
+    val ContactHeaderItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("ContactCompanySumItem" to intArrayOf(7)),
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                        // 新的电话
+                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                        // 新的朋友
+                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                        // 仅聊天的朋友
+                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                        // 群聊
+                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                        // 标签
+                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                        // 公众号
+                        ViewTreeItem("com.tencent.mm.ui.contact.BizContactEntranceView"),
+                        // --
+                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                        // 我的企业及企业联系人
+                        ViewTreeItem("com.tencent.mm.ui.contact."))))
+    }
+
+    // 企业联系人分组
+    val ContactCompanySumItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("ContactCompanyHeaderItem" to intArrayOf(0, 1, 0),
+                        "ContactCompanyListViewItem" to intArrayOf(0, 1, 1)),
+                ViewTreeItem("com.tencent.mm.ui.contact.", arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem("com.tencent.mm.ui.contact."),
+                                        ViewTreeItem("com.tencent.mm.ui.contact.")
+                                )))))))
+    }
+    val ContactCompanyHeaderItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("titleView" to intArrayOf(0),
+                        "headTextView" to intArrayOf(0, 0, 1, 0)),
+                ViewTreeItem("com.tencent.mm.ui.contact.", arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem("com.tencent.mm.ui.base.MaskLayout", arrayOf(
+                                                ViewTreeItem(CC.ImageView.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.ImageView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.TextView.name))))))))))
+    }
+    val ContactCompanyListViewItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("titleView" to intArrayOf(0),
+                        "headTextView" to intArrayOf(0, 0, 1)),
+                ViewTreeItem("com.tencent.mm.ui.contact.", arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem("com.tencent.mm.ui.base.MaskLayout", arrayOf(
+                                                ViewTreeItem(CC.ImageView.name),
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.ImageView.name))),
+                                        ViewTreeItem(CC.TextView.name))))))))
     }
 
     val DiscoverViewItem: ViewTree by lazy {
