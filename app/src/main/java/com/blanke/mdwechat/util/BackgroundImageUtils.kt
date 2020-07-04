@@ -315,12 +315,12 @@ object BackgroundImageUtils {
                 _contactPageLocation[0] = location[1]
                 _contactPageLocation[1] = view.height
                 //联系人界面和发现界面长宽比一样，故联系人界面可作发现界面的参考
-                DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
                 _backgroundBitmap[2] = cutBitmap(
                         logHead,
                         AppCustomConfig.getTabBg(2),
                         _contactPageLocation[0],
                         _contactPageLocation[1])
+                DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
 
                 val pageBodyTop = if (_tabLayoutOnTop)
                     _tabLayoutLocation[0] + _tabLayoutLocation[1]
