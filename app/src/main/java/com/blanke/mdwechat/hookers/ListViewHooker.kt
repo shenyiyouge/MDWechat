@@ -63,12 +63,12 @@ object ListViewHooker : HookerProvider {
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
 
-                    LogUtil.log("----------抓取view start----------")
-                    LogUtil.log(WechatGlobal.wxVersion.toString())
-                    LogUtil.log("context=" + view.context)
-                    LogUtil.logViewStackTraces(view)
-                    LogUtil.logParentView(view, 10)
-                    LogUtil.log("--------------------")
+//                    LogUtil.log("----------抓取view start----------")
+//                    LogUtil.log(WechatGlobal.wxVersion.toString())
+//                    LogUtil.log("context=" + view.context)
+//                    LogUtil.logViewStackTraces(view)
+//                    LogUtil.logParentView(view, 10)
+//                    LogUtil.log("--------------------")
 
                     // 按照使用频率重排序
                     //气泡

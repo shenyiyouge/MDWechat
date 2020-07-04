@@ -28,7 +28,7 @@ object DebugHooker : HookerProvider {
                     LogUtil.log("点击操作")
                     LogUtil.logViewStackTraces(view)
                     LogUtil.log("-------------------")
-//                    LogUtil.logViewStackTraces(ViewUtils.getParentViewSafe(view, 5))
+//                    LogUtil.logViewStackTraces(ViewUtils.getParentViewSafe(view, 35))
                 }
             }
         })

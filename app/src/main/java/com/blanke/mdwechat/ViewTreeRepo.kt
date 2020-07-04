@@ -61,6 +61,11 @@ object ViewTreeRepoThisVersion {
         ViewTreeConfig.get().actionBarItem.invoke(ViewTreeRepo) as ViewTree
     }
 
+    // 订阅号的action bar (暂无作用)
+    val ActionBarInSubscriptsItem: ViewTree by lazy {
+        ViewTreeConfig.get().actionBarInSubscriptsItem.invoke(ViewTreeRepo) as ViewTree
+    }
+
     // 聊天界面的action bar
     val ActionBarInConversationItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarInConversationItem.invoke(ViewTreeRepo) as ViewTree
@@ -742,6 +747,8 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem("com.tencent.mm.ui.widget.AlbumChooserView"))))))))))
     }
+
+    //聊天界面(头)
     val ActionBarInConversationItem: ViewTree by lazy {
         ViewTree(
                 mapOf("title" to intArrayOf(0, 1, 1, 0),
@@ -839,7 +846,7 @@ object ViewTreeRepo {
                         ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
     }
 
-    //通过搜索进入的聊天界面
+    //通过搜索进入的聊天界面(头)
     val ActionBarInSearchConversationItem: ViewTree by lazy {
         ViewTree(
                 mapOf("title" to intArrayOf(0, 0, 1, 0),
@@ -922,20 +929,54 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.ImageView.name),
                                         ViewTreeItem(CC.ImageView.name),
                                         ViewTreeItem(CC.ImageView.name))),
-                                ViewTreeItem("android.support.v7.widget.ActionMenuView", arrayOf(
-                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                ViewTreeItem(CC.ImageButton.name),
-                                                ViewTreeItem(CC.TextView.name),
-                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                        ViewTreeItem(CC.ImageView.name))),
-                                                ViewTreeItem(CC.Button.name),
-                                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
-                                                        ViewTreeItem(CC.WeImageView),
-                                                        ViewTreeItem(CC.ImageView.name))))))))),
+                                Item_ActionMenuView_7_0_16
+                        )),
                         ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
     }
 
-    //包含聊天内容和底部的部分
+    //订阅号(头)(7.0.16起)
+    val ActionBarInSubscriptsItem: ViewTree by lazy {
+        ViewTree(
+                mapOf("title" to intArrayOf(0, 0, 1, 0, 0),
+                        "goBackButton" to intArrayOf(0, 0, 0, 0)),
+//                        "infoButton" to intArrayOf(0, 1, 0, 4, 0)),
+                ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.WeImageView))),
+
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem("com.tencent.mm.ui.widget.AlbumChooserView", arrayOf()))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.ImageButton.name),
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.ProgressBar.name))),
+                                                ViewTreeItem(CC.TextView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.ImageButton.name))))))),
+                                Item_ActionMenuView_7_0_16
+                        )),
+                        ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
+    }
+
+    val Item_ActionMenuView_7_0_16: ViewTreeItem by lazy {
+        ViewTreeItem("android.support.v7.widget.ActionMenuView", arrayOf(
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                        ViewTreeItem(CC.ImageButton.name),
+                        ViewTreeItem(CC.TextView.name),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.ImageView.name))),
+                        ViewTreeItem(CC.Button.name),
+                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                ViewTreeItem(CC.WeImageView),
+                                ViewTreeItem(CC.ImageView.name)))))))
+    }
+
+    //包含聊天内容和底部的部分(尾)
     val ChattingScrollLayoutItem: ViewTree by lazy {
         ViewTree(
                 mapOf("bgGroup" to intArrayOf(0, 0),
@@ -1015,6 +1056,7 @@ object ViewTreeRepo {
                                                                                 ViewTreeItem(CC.Button.name))))))))))))))))))
     }
 
+    //头+尾
     val ChattingUILayoutItem: ViewTree by lazy {
         ViewTree(
                 mapOf("ChattingScrollLayoutItem" to intArrayOf(2)),
