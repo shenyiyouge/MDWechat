@@ -31,7 +31,7 @@ object BackgroundImageUtils {
     var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _contactPageFix = mutableListOf<Drawable?>(null, null, null, null)
     var DiscoverPage: View? = null
-    var _backgroundImage = mutableListOf<Drawable?>(null, null, null, null)
+    var _backgroundBitmap = mutableListOf<Bitmap?>(null, null, null, null)
 
     //region 导航
     var position = 0
@@ -240,8 +240,8 @@ object BackgroundImageUtils {
 
     //region 背景
     fun setConversationBitmap(view: View) {
-        _backgroundImage[0]?.apply {
-            view.background = _backgroundImage[0]
+        _backgroundBitmap[0]?.apply {
+            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[0])
             return
         }
 //        LogUtil.log("=============0===============")
@@ -254,8 +254,8 @@ object BackgroundImageUtils {
     }
 
     fun setContactBitmap(view: View) {
-        _backgroundImage[1]?.apply {
-            view.background = _backgroundImage[1]
+        _backgroundBitmap[1]?.apply {
+            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[1])
             return
         }
 //        LogUtil.log("=============1===============")
@@ -268,8 +268,8 @@ object BackgroundImageUtils {
     }
 
     fun setDiscoverBitmap(view: View) {
-        _backgroundImage[2]?.apply {
-            view.background = _backgroundImage[2]
+        _backgroundBitmap[2]?.apply {
+            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
             return
         }
 //        LogUtil.log("============2================")
@@ -286,8 +286,8 @@ object BackgroundImageUtils {
     }
 
     fun setSettingsBitmap(view: View) {
-        _backgroundImage[3]?.apply {
-            view.background = _backgroundImage[3]
+        _backgroundBitmap[3]?.apply {
+            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[3])
             return
         }
 //        LogUtil.log("============3================")
@@ -308,17 +308,19 @@ object BackgroundImageUtils {
             val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
             view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-            view.background = NightModeUtils.getBackgroundDrawable(cutBitmap(logHead, bg, location[1], view.height))
-            _backgroundImage[index] = view.background
+            _backgroundBitmap[index] = cutBitmap(logHead, bg, location[1], view.height)
+            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
 
             if (index == 1) {
                 _contactPageLocation[0] = location[1]
                 _contactPageLocation[1] = view.height
                 //联系人界面和发现界面长宽比一样，故联系人界面可作发现界面的参考
-                DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(
-                        cutBitmap(logHead, AppCustomConfig.getTabBg(2),
-                                _contactPageLocation[0], _contactPageLocation[1]))
-                _backgroundImage[2] = DiscoverPage?.background
+                DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
+                _backgroundBitmap[2] = cutBitmap(
+                        logHead,
+                        AppCustomConfig.getTabBg(2),
+                        _contactPageLocation[0],
+                        _contactPageLocation[1])
 
                 val pageBodyTop = if (_tabLayoutOnTop)
                     _tabLayoutLocation[0] + _tabLayoutLocation[1]
