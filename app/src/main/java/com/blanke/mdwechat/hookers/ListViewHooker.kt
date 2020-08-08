@@ -336,11 +336,12 @@ object ListViewHooker : HookerProvider {
                     else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ActionBarItem")
                         try {
-                            val miniProgramPage = ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage")!!) as RelativeLayout
-                            miniProgramPage.visibility
-                            // old action bar
-                            val actionBarPage = ViewUtils.getChildView1(miniProgramPage,
-                                    VTTV.ActionBarItem.treeStacks.get("miniProgramPage_actionBarPage")!!) as LinearLayout
+                            ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage"))?.apply {
+                                val miniProgramPage = this as RelativeLayout
+
+                                // old action bar
+                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks.get("miniProgramPage_actionBarPage"))?.apply {
+                                    val actionBarPage = this as LinearLayout
 //                            val title: TextView
 //                            title = ViewUtils.getChildView1(actionBarPage,
 //                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_title")!!) as TextView
@@ -349,29 +350,35 @@ object ListViewHooker : HookerProvider {
 //                            title.text = HookConfig.value_mini_program_title
 //                            val lp = title.layoutParams as LinearLayout.LayoutParams
 //                            lp.setMargins(0, 0, 0, 0)
-                            actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
-                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_addIcon")!!))
-                            actionBarPage.removeView(ViewUtils.getChildView1(actionBarPage,
-                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_searchIcon")!!))
+                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks.get("actionBarPage_addIcon"))?.apply {
+                                        actionBarPage.removeView(this)
+                                    }
+                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks.get("actionBarPage_searchIcon"))?.apply {
+                                        actionBarPage.removeView(this)
+                                    }
+                                }
 //                            actionBarPage.removeView(title)
+                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks.get("miniProgramPage_appBrandDesktopView"))?.apply {
+                                    val appBrandDesktopView = this as ViewGroup
 
-                            val appBrandDesktopView = ViewUtils.getChildView1(miniProgramPage,
-                                    VTTV.ActionBarItem.treeStacks.get("miniProgramPage_appBrandDesktopView")!!) as ViewGroup
-                            //小程序搜索框
-                            val searchEditText = ViewUtils.getChildView1(appBrandDesktopView,
-                                    VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_searchEditText")!!) as EditText
-                            searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
-//                    小程序字体
-                            setMiniProgramTitleColor(appBrandDesktopView)
-                            setMiniProgramTitleColor(ViewUtils.getChildView1(appBrandDesktopView,
-                                    VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_miniProgramTitle")!!) as ViewGroup)
+                                    // 小程序搜索框
+                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_searchEditText"))?.apply {
+                                        val searchEditText = this as EditText
+                                        searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
+                                    }
+                                    //  小程序字体
+                                    setMiniProgramTitleColor(appBrandDesktopView)
+                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_miniProgramTitle"))?.apply {
+                                        setMiniProgramTitleColor(this as ViewGroup)
+                                    }
+                                }
 //                    logXp("---------------------miniProgramPage------------------")
 //                    LogUtil.logViewStackTracesXp(miniProgramPage)
 //                    logXp("---------------------appBrandDesktopView------------------")
 //                    LogUtil.logViewStackTracesXp(appBrandDesktopView)
 //                    logXp("---------------------getChildView------------------")
 //                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
-
+                            }
                         } catch (e: ClassCastException) {
 //                            LogUtil.log(e)
 //                            LogUtil.logViewStackTraces(view)
