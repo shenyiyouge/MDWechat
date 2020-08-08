@@ -23,11 +23,13 @@ import com.blanke.mdwechat.markdown.MarkDownActivity
 import com.blanke.mdwechat.settings.view.DownloadWechatDialog
 import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil.clearFileLogs
+import com.blankj.utilcode.util.FileUtils.isFileExists
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.jaredrummler.android.colorpicker.ColorPreference
 import com.joshcai.mdwechat.BuildConfig
 import com.joshcai.mdwechat.R
+import net.dongliu.apk.parser.ApkFile
 import org.devio.takephoto.app.TakePhoto
 import org.devio.takephoto.app.TakePhoto.TakeResultListener
 import org.devio.takephoto.app.TakePhotoImpl
@@ -82,7 +84,14 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_hook_debug))?.apply {
             (this as SwitchPreference).isChecked = false
         }
-//        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
+
+        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
+        //检查微信坂本(适配文件 / 更新坂本)
+        setWechatVersionWarning()
+        setWechatConfigWarning()
+        //测试版警告
+        setBetaWarning()
+
 //        //隐藏主界面部分选项
 //        val main_settings=findPreference(getString(R.string.key_main_settings))as PreferenceScreen
 //        if (wxVersion < Version("7.0.3")) {
@@ -119,8 +128,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_reset_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_float_bottom_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_icon_config))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_feedback_email_blanke))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_feedback_email_josh_cai))?.onPreferenceClickListener = this
+//        findPreference(getString(R.string.key_feedback_email_blanke))?.onPreferenceClickListener = this
+//        findPreference(getString(R.string.key_feedback_email_josh_cai))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_feedback_gitee))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_gitee_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_github_blanke))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_github_joshcai))?.onPreferenceClickListener = this
@@ -145,6 +155,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             findPreference("${getString(R.string.key_select_bg)}_$i")?.onPreferenceClickListener = this
             findPreference("${getString(R.string.key_select_tab_icon)}_$i")?.onPreferenceClickListener = this
         }
+    }
+
+    private fun setBetaWarning() {
         if (BuildConfig.VERSION_NAME.endsWith("Beta", true)) {
             AlertDialog.Builder(activity)
                     .setTitle("警告")
@@ -156,6 +169,29 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                     .show()
         }
         showAppInfoDialog()
+    }
+
+    private fun setWechatConfigWarning() {
+        val outputPath = Common.APP_DIR_PATH + Common.CONFIG_WECHAT_DIR + "/${wxVersion}.config"
+        if (!isFileExists(outputPath)) {
+            AlertDialog.Builder(activity)
+//                    .setTitle("警告")
+                    .setMessage("未检测到微信适配文件，是否成微信适配文件？（可在通用 -> 微信适配文件中生成）")
+                    .setPositiveButton("朕同意了") { _, which -> generateWechatFile() }
+                    .setNegativeButton("不了",null)
+                    .setCancelable(true)
+                    .show()
+        }
+        showAppInfoDialog()
+    }
+
+    private fun setWechatVersionWarning() {
+        if (wxVersion > Version(getString(R.string.latest_wechat_version))) {
+            findPreference(getString(R.string.key_joshcai_info))?.apply {
+                this.layoutResource = R.layout.preference_warning
+                this.summary = "${getString(R.string.josh_cai_info_outdated)} ($wxVersion)\n${getString(R.string.josh_cai_info_outdated_suffix)}"
+            }
+        }
     }
 
     private fun setLayoutResource(preference: Preference) {
@@ -389,8 +425,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_reset_config) -> deleteConfig()
             getString(R.string.key_reset_float_bottom_config) -> copyFloatBottomConfig()
             getString(R.string.key_reset_icon_config) -> resetIcons()
-            getString(R.string.key_feedback_email_blanke) -> sendEmail()
-            getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
+//            getString(R.string.key_feedback_email_blanke) -> sendEmail()
+//            getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
+            getString(R.string.key_feedback_gitee) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/issues")
             getString(R.string.key_gitee_joshcai) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat")
             getString(R.string.key_github_blanke) -> gotoWebsite("https://github.com/Blankeer/MDWechat")
             getString(R.string.key_github_joshcai) -> gotoWebsite("https://github.com/JoshCai233/MDWechat")
@@ -563,27 +600,27 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         }
     }
 
-    private fun sendEmail() {
-        try {
-            val info = "mailto:blanke.master+mdwechat@gmail.com?subject=[MDWechat] 请简明描述该问题" +
-                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
-            val uri = Uri.parse(info)
-            startActivity(Intent(Intent.ACTION_SENDTO, uri))
-        } catch (e: Exception) {
-
-        }
-    }
-
-    private fun sendEmailCai() {
-        try {
-            val info = "mailto:joshcai_mdwechat@163.com?subject=[MDWechat] 请简明描述该问题" +
-                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
-            val uri = Uri.parse(info)
-            startActivity(Intent(Intent.ACTION_SENDTO, uri))
-        } catch (e: Exception) {
-
-        }
-    }
+//    private fun sendEmail() {
+//        try {
+//            val info = "mailto:blanke.master+mdwechat@gmail.com?subject=[MDWechat] 请简明描述该问题" +
+//                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
+//            val uri = Uri.parse(info)
+//            startActivity(Intent(Intent.ACTION_SENDTO, uri))
+//        } catch (e: Exception) {
+//
+//        }
+//    }
+//
+//    private fun sendEmailCai() {
+//        try {
+//            val info = "mailto:joshcai_mdwechat@163.com?subject=[MDWechat] 请简明描述该问题" +
+//                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
+//            val uri = Uri.parse(info)
+//            startActivity(Intent(Intent.ACTION_SENDTO, uri))
+//        } catch (e: Exception) {
+//
+//        }
+//    }
 
     private fun gotoWebsite(url: String) {
         val uri = Uri.parse(url)

@@ -15,6 +15,7 @@
     <string name="summary_color_tertiary">(如果着色)自定义导航其他页页图标前景色等</string>
     <string name="text_settings_info">修改之后停止微信重启生效.</string>
     <string name="text_donate">捐赠(支付宝)</string>
+    <string name="summary_donate">向原作者捐赠</string>
     <string name="text_donate_wechat">捐赠(微信)</string>
     <string name="key_donate">key_donate</string>
     <string name="text_category_settings">设置</string>
@@ -160,6 +161,8 @@
     <string name="summary_hook_hide_wx_tab">如果TabLayout沉底则默认隐藏</string>
     <string name="key_feedback_email">key_feedback_email</string>
     <string name="text_feedback_email">给我发邮件反馈</string>
+    <string name="key_feedback_gitee">key_feedback_gitee</string>
+    <string name="text_feedback_gitee">跳转至码云反馈</string>
     <string name="text_feedback_email_info">反馈问题请描述问题并提供调试日志,不定时检查回复</string>
     <string name="key_feedback_email_blanke">key_feedback_email_blanke</string>
     <string name="text_feedback_email_blanke">原作者 (blanke) 的邮箱</string>
@@ -329,5 +332,9 @@
     <string name="test">试验</string>
     <string name="app_name_version">MDWechat 4.0.6_1</string>
     <string name="key_joshcai_info">key_joshcai_info</string>
-    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将原作者(Blanke)在 github 上开源的代码进行二次开发，使其能够适配较新的微信。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>
+<!--    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将原作者(Blanke)在 github 上开源的代码进行二次开发，使其能够适配较新的微信。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>-->
+<!--    <string name="josh_cai_info">适配微信7.0.17(国内版)。 在play版或更高版本的微信中使用可能会出现一些bug，严重时可能导致封号等后果。\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>-->
+    <string name="josh_cai_info_outdated">检测到不兼容的微信版本</string>
+    <string name="josh_cai_info_outdated_suffix">在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
+    <string name="josh_cai_info">适配微信7.0.17(国内版)。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
 </resources>

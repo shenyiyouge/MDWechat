@@ -31,10 +31,12 @@
             android:title="@string/text_releases" />
         <Preference
             android:key="@string/key_donate"
+            android:summary="@string/summary_donate"
             android:title="@string/text_donate" />
 
         <Preference
             android:key="@string/key_donate_wechat"
+            android:summary="@string/summary_donate"
             android:title="@string/text_donate_wechat" />
 
         <!--<Preference-->
@@ -46,19 +48,23 @@
             android:summary="@string/text_feedback_group_info"
             android:title="@string/text_feedback_group" />
 
-        <PreferenceScreen
-            android:key="@string/key_feedback_email"
-            android:summary="@string/text_feedback_email_info"
-            android:title="@string/text_feedback_email">
-            <Preference
-                android:key="@string/key_feedback_email_josh_cai"
-                android:summary="@string/text_feedback_email_josh_cai_info"
-                android:title="@string/text_feedback_email_josh_cai" />
-            <Preference
-                android:key="@string/key_feedback_email_blanke"
-                android:summary="@string/text_feedback_email_blanke_info"
-                android:title="@string/text_feedback_email_blanke" />
-        </PreferenceScreen>
+        <!--        <PreferenceScreen-->
+        <!--            android:key="@string/key_feedback_email"-->
+        <!--            android:summary="@string/text_feedback_email_info"-->
+        <!--            android:title="@string/text_feedback_email">-->
+        <!--            <Preference-->
+        <!--                android:key="@string/key_feedback_email_josh_cai"-->
+        <!--                android:summary="@string/text_feedback_email_josh_cai_info"-->
+        <!--                android:title="@string/text_feedback_email_josh_cai" />-->
+        <!--            <Preference-->
+        <!--                android:key="@string/key_feedback_email_blanke"-->
+        <!--                android:summary="@string/text_feedback_email_blanke_info"-->
+        <!--                android:title="@string/text_feedback_email_blanke" />-->
+        <!--        </PreferenceScreen>-->
+
+        <Preference
+            android:key="@string/key_feedback_gitee"
+            android:title="@string/text_feedback_gitee" />
 
         <PreferenceScreen
             android:key="@string/key_github_screen"
