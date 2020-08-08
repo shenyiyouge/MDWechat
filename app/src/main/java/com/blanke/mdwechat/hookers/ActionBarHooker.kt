@@ -7,7 +7,10 @@ import com.blanke.mdwechat.Classes.ActionBarContainer
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.*
+import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.NightModeUtils
+import com.blanke.mdwechat.util.VXPUtils
+import com.blanke.mdwechat.util.ViewTreeUtils
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -64,10 +67,10 @@ object ActionBarHooker : HookerProvider {
                 if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, actionBar)) {
                     Objects.Main.actionBar = actionBar
                     if (!HookConfig.is_hook_hide_actionbar) {
-                        actionBar.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
+                        actionBar.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
                     }
                 } else {
-                    BackgroundImageUtils.setActionBarBitmapInConversations(actionBar)
+                    BackgroundImageHooker.setActionBarBitmapInConversations(actionBar)
                 }
             }
         })
@@ -83,7 +86,7 @@ object ActionBarHooker : HookerProvider {
 //                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, view)) {
                     Objects.Main.actionBar = view
                     if (!HookConfig.is_hook_hide_actionbar) {
-                        view.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                        view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     }
 //                    } else {
 //                        LogUtil.log("#############################################")

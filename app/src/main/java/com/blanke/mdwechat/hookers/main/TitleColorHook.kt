@@ -10,7 +10,11 @@ import android.widget.*
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig.getChatBg
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.util.*
+import com.blanke.mdwechat.hookers.BackgroundImageHooker
+import com.blanke.mdwechat.util.LogUtil
+import com.blanke.mdwechat.util.NightModeUtils
+import com.blanke.mdwechat.util.ViewTreeUtils
+import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.ViewUtils.measureHeight
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
@@ -37,6 +41,8 @@ object TitleColorHook {
             val chattingScrollLayoutItem = ViewUtils.getChildView1(chattingUILayout,
                     VTTV.ChattingUILayoutItem.treeStacks.getValue("ChattingScrollLayoutItem")) as ViewGroup
             setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
+        } else {
+            LogUtil.log("聊天页沉浸背景底栏匹配错误")
         }
     }
 
@@ -54,6 +60,9 @@ object TitleColorHook {
             val chattingScrollLayoutItem = ViewUtils.getChildView1(chattingUILayout,
                     VTTV.ChattingUILayoutInSearchItem.treeStacks.getValue("ChattingScrollLayoutItem")) as ViewGroup
             setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
+        } else {
+            LogUtil.log("聊天页沉浸背景底栏匹配错误")
+            LogUtil.logViewStackTraces(chattingUILayout)
         }
     }
 
@@ -64,7 +73,7 @@ object TitleColorHook {
                 (ChattingScrollLayoutItem.getChildAt(2)::class.java.name == "com.tencent.mm.ui.chatting.ChatFooterCustom")) {
             //底栏
             val footer = ChattingScrollLayoutItem.getChildAt(2) as View
-            val location = BackgroundImageUtils.setBackgroundBitmap("公众号 footer", footer, getChatBg(), null)
+            val location = BackgroundImageHooker.setBackgroundBitmap("公众号 footer", footer, getChatBg(), null)
             if ((footerLocation[1] < 0) && (location[1] > 0)) {
                 footerLocation[0] = location[0]
                 footerLocation[1] = location[1]
@@ -87,7 +96,7 @@ object TitleColorHook {
         val view = FrameLayout(context)
         params.height = HookConfig.value_resolution[1] - actionBarBottom
         bgGroup.addView(view, 1, params)
-        view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("ChattingImageBGView",
+        view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
                 getChatBg(), actionBarBottom, params.height))
         LogUtil.log("替换自定义聊天背景")
 
@@ -95,10 +104,10 @@ object TitleColorHook {
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chatFooterChild2")) as View
         if (footerLocation[1] > 0) {
-            chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageUtils.cutBitmap("chatFooterChild2",
+            chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("chatFooterChild2",
                     getChatBg(), footerLocation[0], measureHeight(chatFooterChild2)))
         } else {
-            BackgroundImageUtils.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
+            BackgroundImageHooker.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
         }
         LogUtil.log("替换聊天底栏背景")
         //语音打字切换

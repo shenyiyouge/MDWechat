@@ -1,4 +1,4 @@
-package com.blanke.mdwechat.util
+package com.blanke.mdwechat.hookers
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -14,8 +14,9 @@ import com.blanke.mdwechat.ViewTreeRepoThisVersion
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.main.TitleColorHook
+import com.blanke.mdwechat.util.*
 
-object BackgroundImageUtils {
+object BackgroundImageHooker {
     var _tabLayoutOnTop = false
     var contactPageParent: ViewGroup? = null
     var _contactPageWhiteBar = mutableListOf(0, 0)
@@ -154,9 +155,9 @@ object BackgroundImageUtils {
             null
         } else {
             val bg = AppCustomConfig.getTabBg(page)
-            if ((this._actionBarLocation[1] == 0)) {
-                this._actionBarLocation[0] = HookConfig.statusBarHeight
-                this._actionBarLocation[1] = actionBarHeight
+            if ((_actionBarLocation[1] == 0)) {
+                _actionBarLocation[0] = HookConfig.statusBarHeight
+                _actionBarLocation[1] = actionBarHeight
             }
 //            if ((this._actionBarLocation[1] != actionBarHeight) || (this._actionBarLocation[0] != HookConfig.statusBarHeight)) {
 //                LogUtil.log("Action bar 位置改变：(${this._actionBarLocation[0]},   ${this._actionBarLocation[1]}) TO (${HookConfig.statusBarHeight},$actionBarHeight)")
@@ -164,7 +165,7 @@ object BackgroundImageUtils {
 //                this._actionBarLocation[1] = actionBarHeight
 //            }
 
-            cutBitmap("ActionBarBitmap", bg, this._actionBarLocation[0], this._actionBarLocation[1])
+            cutBitmap("ActionBarBitmap", bg, _actionBarLocation[0], _actionBarLocation[1])
         }
         LogUtil.log("Got ActionBarBitmap, $page")
         return _actionBarBitmap[page]
@@ -214,11 +215,11 @@ object BackgroundImageUtils {
         if (_tabLayoutBitmap[page] != null) return _tabLayoutBitmap[page]
         LogUtil.log("Getting TabLayoutBitmapAtBottom, $page")
         val bg = AppCustomConfig.getTabBg(page)
-        if (this._tabLayoutLocation[1] == 0) {
-            this._tabLayoutLocation[0] = bg.height - tabLayoutHeight
-            this._tabLayoutLocation[1] = tabLayoutHeight
+        if (_tabLayoutLocation[1] == 0) {
+            _tabLayoutLocation[0] = bg.height - tabLayoutHeight
+            _tabLayoutLocation[1] = tabLayoutHeight
         }
-        _tabLayoutBitmap[page] = cutBitmap("TabLayoutBitmapAtBottom", bg, this._tabLayoutLocation[0], this._tabLayoutLocation[1])
+        _tabLayoutBitmap[page] = cutBitmap("TabLayoutBitmapAtBottom", bg, _tabLayoutLocation[0], _tabLayoutLocation[1])
         LogUtil.log("Got TabLayoutBitmapAtBottom, $page")
         return _tabLayoutBitmap[page]
     }

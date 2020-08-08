@@ -24,7 +24,6 @@ import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
-import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.LogUtil.log
 import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.ViewUtils.measureHeight
@@ -88,7 +87,7 @@ object LauncherUIHooker : HookerProvider {
                             }
 
                             val linearViewGroup = viewPager.parent as ViewGroup
-                            BackgroundImageUtils.contactPageParent = linearViewGroup
+                            BackgroundImageHooker.contactPageParent = linearViewGroup
                             val contentViewGroup = linearViewGroup.parent as ViewGroup
                             Objects.Main.LauncherUI_mContentLayout = contentViewGroup
                             Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
@@ -141,7 +140,7 @@ object LauncherUIHooker : HookerProvider {
                                 }
                                 else -> {
                                     log("不用添加 TabLayout")
-                                    BackgroundImageUtils._tabLayoutLocation[1] = -1
+                                    BackgroundImageHooker._tabLayoutLocation[1] = -1
                                 }
                             }
                             if (shouldFix) {
@@ -180,7 +179,7 @@ object LauncherUIHooker : HookerProvider {
 //                    log("WxViewPager_selectedPage position = $position , arg[1] =${param?.args!![1]}")
                     LauncherUI_mTabLayout?.currentTab = position
                     Objects.Main.pagePosition = position
-                    BackgroundImageUtils.setGuideBarBitmaps(position)
+                    BackgroundImageHooker.setGuideBarBitmaps(position)
                 }
             }
         })
@@ -197,7 +196,7 @@ object LauncherUIHooker : HookerProvider {
                     startScrollPosition = position as Int
                     indicatorOffset = positionOffset
                     Objects.Main.pagePosition = startScrollPosition
-                    BackgroundImageUtils.setGuideBarBitmaps(startScrollPosition)
+                    BackgroundImageHooker.setGuideBarBitmaps(startScrollPosition)
                 }
             }
         })

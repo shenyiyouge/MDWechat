@@ -11,7 +11,6 @@ import com.blanke.mdwechat.Classes.PhoneWindow
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
-import com.blanke.mdwechat.util.BackgroundImageUtils
 import com.blanke.mdwechat.util.ColorUtils
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.mainThread
@@ -54,7 +53,7 @@ object StatusBarHooker : HookerProvider {
                     if (activity::class.java.equals(Classes.LauncherUI)) {
                         Objects.Main.statusView = statusView
                     }
-                    statusView.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getStatusBarBitmap(0))
+                    statusView.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getStatusBarBitmap(0))
                     statusView.elevation = 1F
 //                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 //                        statusParam.topMargin = 0

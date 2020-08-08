@@ -14,6 +14,7 @@ import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
+import com.blanke.mdwechat.hookers.BackgroundImageHooker
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
 import com.flyco.tablayout.CommonTabLayout
@@ -82,7 +83,7 @@ object TabLayoutHook {
         params.height = height
         mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getTabLayoutBitmapAtBottom(params.height, 0))
+            tabLayout.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getTabLayoutBitmapAtBottom(params.height, 0))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -110,8 +111,8 @@ object TabLayoutHook {
         params.height = px48 + HookConfig.value_tab_layout_offset
 //        mainThread {
         Objects.Main.tabLayout = tabLayout
-        BackgroundImageUtils._tabLayoutOnTop = true
-        BackgroundImageUtils.setTabLayoutBitmap(0)
+        BackgroundImageHooker._tabLayoutOnTop = true
+        BackgroundImageHooker.setTabLayoutBitmap(0)
 //        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
@@ -150,7 +151,7 @@ object TabLayoutHook {
                     paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
                     val view = FrameLayout(context)
 //                    Objects.Main.actionBar = view
-                    view.background = NightModeUtils.getForegroundDrawable(BackgroundImageUtils.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                    view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)
