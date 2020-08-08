@@ -77,7 +77,7 @@ class Main {
             }
         }
         if (errorCount > 0) {
-            Logs.i("有 class 解析失败")
+            Logs.i("有 class 解析失败，可再次尝试或者下载共享的微信配置文件")
             return
         }
         Logs.i("解析完成，class 数量 = ${classesMap.size}")
@@ -115,7 +115,7 @@ class Main {
             }
         }
         if (errorCount > 0) {
-            Logs.i("有 field 解析失败")
+            Logs.i("有 field 解析失败，可再次尝试或者下载共享的微信配置文件")
             return
         }
         Logs.i("解析完成，field 数量 = ${fieldMap.size}")
@@ -156,7 +156,7 @@ class Main {
             }
         }
         if (errorCount > 0) {
-            Logs.i("有 method 解析失败")
+            Logs.i("有 method 解析失败，可再次尝试或者下载共享的微信配置文件")
             return
         }
         Logs.i("解析完成，method 数量 = ${methodMap.size}")
