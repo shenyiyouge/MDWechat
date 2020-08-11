@@ -2,6 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!--    <EditTextPreference-->
+    <!--        android:defaultValue="0+1+2"-->
+    <!--        android:key="debugConfigText"-->
+    <!--        android:summary="测试7.0.17输入框。输入0,1,2,3的组合；用'+'分隔"-->
+    <!--        android:title="debugConfigText" />-->
+    <!--    <EditTextPreference-->
+    <!--        android:key="debugConfigText1"-->
+    <!--        android:title="debugConfigText1" />-->
+
     <!--关于-->
     <Preference
         android:key="@string/key_joshcai_info"
@@ -89,13 +99,6 @@
             android:summary="@string/text_app_thank_content"
             android:title="@string/text_app_thank" />
     </PreferenceScreen>
-    <!--    <EditTextPreference-->
-    <!--        android:defaultValue="0 -1 0 -1"-->
-    <!--        android:key="debugConfigText"-->
-    <!--        android:title="debugConfigText" />-->
-    <!--    <EditTextPreference-->
-    <!--        android:key="debugConfigText1"-->
-    <!--        android:title="debugConfigText1" />-->
     <PreferenceCategory />
     <!--通用设置-->
     <PreferenceScreen android:title="@string/text_common_settings">

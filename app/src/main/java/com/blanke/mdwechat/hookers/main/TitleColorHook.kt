@@ -43,6 +43,7 @@ object TitleColorHook {
             setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
         } else {
             LogUtil.log("聊天页沉浸背景底栏匹配错误")
+            LogUtil.logViewStackTraces(chattingUILayout)
         }
     }
 
@@ -115,6 +116,10 @@ object TitleColorHook {
                 treeStacks.getValue("chatFooterChild2_switchButton")) as ImageButton
         switchButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
 
+        // 7.0.17 + MIUI 12 不透明 fix
+        ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))?.let {
+            it.background = ColorDrawable(transparentBackground)
+        }
         val editText = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_editText")) as EditText
         editText.background = ColorDrawable(transparentBackground)

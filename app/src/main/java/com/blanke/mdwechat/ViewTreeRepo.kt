@@ -1125,6 +1125,7 @@ object ViewTreeRepo {
                         "chatFooterChild2" to intArrayOf(1, 0, 1),
                         "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
                         "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0, 1),
+                        "chatFooterChild2_editText_MIUI12" to intArrayOf(0, 1, 1, 0, 0),
                         "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
                         "chatFooterChild2_faceButton" to intArrayOf(0, 1, 3, 0),
                         "chatFooterChild2_addButton" to intArrayOf(0, 1, 4, 1, 0),
@@ -1144,7 +1145,7 @@ object ViewTreeRepo {
                                                                 ViewTreeItem(CC.WeImageButton), //chatFooterChild2_switchButton
                                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                                         ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.MaxHeightScrollView", arrayOf(
-                                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf( //chatFooterChild2_editText_MIUI12
                                                                                         ViewTreeItem(CC.ImageView.name),
                                                                                         ViewTreeItem("com.tencent.mm.ui.widget.MMEditText") //chatFooterChild2_editText
                                                                                 )))),
