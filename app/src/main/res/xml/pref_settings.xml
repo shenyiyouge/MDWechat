@@ -6,7 +6,7 @@
     <!--    <EditTextPreference-->
     <!--        android:defaultValue="0+1+2"-->
     <!--        android:key="debugConfigText"-->
-    <!--        android:summary="测试7.0.17输入框。输入0,1,2,3的组合；用'+'分隔"-->
+    <!--        android:summary="测试输入框。输入0,1,2,3的组合；用'+'分隔"-->
     <!--        android:title="debugConfigText" />-->
     <!--    <EditTextPreference-->
     <!--        android:key="debugConfigText1"-->

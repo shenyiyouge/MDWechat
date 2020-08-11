@@ -117,8 +117,9 @@ object TitleColorHook {
         switchButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
 
         // 7.0.17 + MIUI 12 不透明 fix
-        ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))?.let {
-            it.background = ColorDrawable(transparentBackground)
+        if (treeStacks.containsKey("chatFooterChild2_editText_MIUI12")) {
+            ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))
+                    ?.background = ColorDrawable(transparentBackground)
         }
         val editText = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_editText")) as EditText
