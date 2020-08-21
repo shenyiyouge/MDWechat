@@ -84,6 +84,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_hook_debug))?.apply {
             (this as SwitchPreference).isChecked = false
         }
+        findPreference(getString(R.string.key_hook_debug2))?.apply {
+            (this as SwitchPreference).isChecked = false
+        }
 
         wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
         //检查微信坂本(适配文件 / 更新坂本)
@@ -178,7 +181,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //                    .setTitle("警告")
                     .setMessage("未检测到微信适配文件，是否成微信适配文件？（可在通用 -> 微信适配文件中生成）")
                     .setPositiveButton("朕同意了") { _, which -> generateWechatFile() }
-                    .setNegativeButton("不了",null)
+                    .setNegativeButton("不了", null)
                     .setCancelable(true)
                     .show()
         }

@@ -59,7 +59,7 @@ class WechatHook : IXposedHookLoadPackage {
             LogUtil.logStackTraces()
 //            //endregion
 
-            if ((!isVXPEnv) && (HookConfig.is_hook_debug)) {
+            if ((!isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
                 hookers.add(0, DebugHooker)
             }
             hookMain(lpparam, hookers)

@@ -13,6 +13,7 @@ import com.joshcai.mdwechat.BuildConfig
 
 object HookConfig {
     private val key_hook_debug = "key_hook_debug"
+    private val key_hook_debug2 = "key_hook_debug2"
     private val debugConfigText = "debugConfigText"
     private val debugConfigText1 = "debugConfigText1"
     private val key_main_text_offset = "key_main_text_offset"
@@ -86,6 +87,10 @@ object HookConfig {
     val is_hook_debug: Boolean
         get() {
             return is_hook_log && WeChatHelper.XMOD_PREFS.getBoolean(key_hook_debug, false)
+        }
+    val is_hook_debug2: Boolean
+        get() {
+            return is_hook_log && WeChatHelper.XMOD_PREFS.getBoolean(key_hook_debug2, false)
         }
     val debug_config_text: String
         get() {

@@ -533,6 +533,12 @@
                 android:key="@string/key_hook_debug"
                 android:summary="@string/text_hook_debug_info"
                 android:title="@string/text_hook_debug" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:dependency="@string/key_hook_log"
+                android:key="@string/key_hook_debug2"
+                android:summary="@string/text_hook_debug_info2"
+                android:title="@string/text_hook_debug2" />
         </PreferenceCategory>
     </PreferenceScreen>
 </PreferenceScreen>
