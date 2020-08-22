@@ -15,7 +15,7 @@ import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.ViewTreeUtils
 import com.blanke.mdwechat.util.ViewUtils
-import com.blanke.mdwechat.util.ViewUtils.measureHeight
+import com.blanke.mdwechat.util.ViewUtils.getParentViewSafe
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 
@@ -83,34 +83,33 @@ object TitleColorHook {
         }
 
 
-        // 去除默认聊天背景
+        // region去除默认聊天背景
         val bgGroup = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("bgGroup")) as ViewGroup
         val chattingBgShade = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chattingBgShade")) as View
         if (HookConfig.is_hook_scheme_dark || !HookConfig.is_hook_night_mode) chattingBgShade.setBackgroundColor(0)
         LogUtil.log("去除聊天背景遮罩")
+//endregion
 
-//        自定义聊天背景
+        // region 自定义聊天背景
         val context = bgGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        val view = FrameLayout(context)
+        val bgViewAdd = FrameLayout(context)
         params.height = HookConfig.value_resolution[1] - actionBarBottom
-        bgGroup.addView(view, 1, params)
-        view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
+        bgViewAdd.elevation = -100f
+        (getParentViewSafe(ChattingScrollLayoutItem, 1) as ViewGroup).addView(bgViewAdd, 1, params)
+        bgViewAdd.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
                 getChatBg(), actionBarBottom, params.height))
         LogUtil.log("替换自定义聊天背景")
+//endregion
 
-        //底栏
+        //region 底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chatFooterChild2")) as View
-        if (footerLocation[1] > 0) {
-            chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("chatFooterChild2",
-                    getChatBg(), footerLocation[0], measureHeight(chatFooterChild2)))
-        } else {
-            BackgroundImageHooker.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
-        }
-        LogUtil.log("替换聊天底栏背景")
+
+        chatFooterChild2.background = ColorDrawable(transparentBackground)
+        LogUtil.log("去除聊天底栏背景")
         //语音打字切换
         val switchButton = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_switchButton")) as ImageButton
@@ -121,6 +120,7 @@ object TitleColorHook {
             ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))
                     ?.background = ColorDrawable(transparentBackground)
         }
+
         val editText = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_editText")) as EditText
         editText.background = ColorDrawable(transparentBackground)
@@ -143,6 +143,6 @@ object TitleColorHook {
         sendButton.setBackgroundColor(transparentBackground)
         sendButton.setTextColor(NightModeUtils.colorSecondary)
         LogUtil.log("替换聊天底栏控件")
-
+//endregion
     }
 }
