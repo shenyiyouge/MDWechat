@@ -243,15 +243,13 @@ object ListViewHooker : HookerProvider {
                     // 联系人列表头部
                     if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactHeaderItem")
-                        val ContactCompanySumItem = ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks.get("ContactCompanySumItem"))
-
                         //企业联系人
-                        ContactCompanySumItem?.apply {
-                            if (ViewTreeUtils.equals(VTTV.ContactCompanySumItem.item, ContactCompanySumItem)) {
+                        ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks.get("ContactCompanySumItem"))?.apply {
+                            if (ViewTreeUtils.equals(VTTV.ContactCompanySumItem.item, this)) {
                                 LogUtil.logOnlyOnce("ListViewHooker.ContactCompanySumItem")
 
                                 //头部
-                                val ContactCompanyHeaderItem = ViewUtils.getChildView1(ContactCompanySumItem, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyHeaderItem"))
+                                val ContactCompanyHeaderItem = ViewUtils.getChildView1(this, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyHeaderItem"))
                                 ContactCompanyHeaderItem?.apply {
                                     if (ViewTreeUtils.equals(VTTV.ContactCompanyHeaderItem.item, ContactCompanyHeaderItem)) {
                                         LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyHeaderItem")
@@ -264,20 +262,20 @@ object ListViewHooker : HookerProvider {
                                         }
                                     }
                                 }
-                                //主体
-                                val ContactCompanyListViewItem = ViewUtils.getChildView1(ContactCompanySumItem, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyListViewItem"))
-                                ContactCompanyListViewItem?.apply {
-                                    if (ViewTreeUtils.equals(VTTV.ContactCompanyListViewItem.item, ContactCompanyListViewItem)) {
-                                        LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyListViewItem")
-                                        //  titleView
-                                        ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("titleView"))
-                                                ?.background = drawableTransparent
-                                        if (isHookTextColor) {
-                                            val headTextView = ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("headTextView")) as TextView
-                                            headTextView.setTextColor(summaryTextColor)
-                                        }
-                                    }
-                                }
+//                                //主体
+//                                val ContactCompanyListViewItem = ViewUtils.getChildView1(this, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyListViewItem"))
+//                                ContactCompanyListViewItem?.apply {
+//                                    if (ViewTreeUtils.equals(VTTV.ContactCompanyListViewItem.item, ContactCompanyListViewItem)) {
+//                                        LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyListViewItem")
+//                                        //  titleView
+//                                        ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("titleView"))
+//                                                ?.background = drawableTransparent
+//                                        if (isHookTextColor) {
+//                                            val headTextView = ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("headTextView")) as TextView
+//                                            headTextView.setTextColor(summaryTextColor)
+//                                        }
+//                                    }
+//                                }
                             }
                         }
                     }
