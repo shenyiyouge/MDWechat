@@ -95,14 +95,21 @@ object TitleColorHook {
         // region 自定义聊天背景
         val context = bgGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        val bgViewAdd = FrameLayout(context)
         params.height = HookConfig.value_resolution[1] - actionBarBottom
-        bgViewAdd.elevation = -100f
-        (getParentViewSafe(ChattingScrollLayoutItem, 1) as ViewGroup).addView(bgViewAdd, 1, params)
-        bgViewAdd.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
+        val bgViewWithEditText = FrameLayout(context)
+        bgViewWithEditText.elevation = -100f
+        (getParentViewSafe(ChattingScrollLayoutItem, 1) as ViewGroup).addView(bgViewWithEditText, 1, params)
+        bgViewWithEditText.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
                 getChatBg(), actionBarBottom, params.height))
-        LogUtil.log("替换自定义聊天背景")
+        LogUtil.log("替换自定义聊天背景+输入框背景")
 //endregion
+        //region 聊天背景 MIUI12
+        val bgViewMiui12fix = FrameLayout(context)
+        bgGroup.addView(bgViewMiui12fix, 1, params)
+        bgViewMiui12fix.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
+                getChatBg(), actionBarBottom, params.height))
+        LogUtil.log("聊天背景 + MIUI12 fix test")
+        //endregion
 
         //region 底栏
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
