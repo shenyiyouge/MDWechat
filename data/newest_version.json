@@ -1,5 +1,5 @@
 {
-  "version": "v4.0.7_1",
-  "versionCode": "52",
-  "info": "\n- 修复v4.0.7沉浸主题打开微信7.0.17之前版本会闪退的bug"
+  "version": "v4.0.8",
+  "versionCode": "53",
+  "info": "\n- 1.适配微信7.0.18\n2.修复一些小bug"
 }
