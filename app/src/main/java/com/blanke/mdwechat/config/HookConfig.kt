@@ -40,6 +40,7 @@ object HookConfig {
     private val key_hook_float_button_color_is_secondary = "key_hook_float_button_color_is_secondary"
     private val key_hook_search = "key_hook_search"
     private val key_hook_tab_bg = "key_hook_tab_bg"
+    private val key_chat_bg_mode = "key_chat_bg_mode"
     private val key_hook_bg_immersion = "key_hook_bg_immersion"
     private val key_hook_tab = "key_hook_tab"
     private val key_hide_tab = "key_hide_tab"
@@ -221,6 +222,10 @@ object HookConfig {
     val is_hook_tab_bg: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab_bg, true)
+        }
+    val is_chat_bg_transparent_mode: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getString(key_chat_bg_mode, "") == "transparentMode"
         }
     val is_hook_bg_immersion: Boolean by lazy {
         val version = WechatGlobal.wxVersion!! >= Version("7.0.10")

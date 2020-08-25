@@ -336,6 +336,15 @@
                 android:title="@string/text_select_bg_3" />
         </PreferenceScreen>
         <PreferenceCategory android:title="@string/text_hook_bg_immersion">
+            <ListPreference
+                android:defaultValue="false"
+                android:dependency="@string/key_hook_tab_bg"
+                android:dialogTitle="@string/text_chat_bg_mode"
+                android:entries="@array/chat_bg_modes"
+                android:entryValues="@array/chat_bg_mode_value"
+                android:key="@string/key_chat_bg_mode"
+                android:summary="@string/summary_chat_bg_mode"
+                android:title="@string/text_chat_bg_mode" />
             <SwitchPreference
                 android:defaultValue="false"
                 android:dependency="@string/key_hook_tab_bg"

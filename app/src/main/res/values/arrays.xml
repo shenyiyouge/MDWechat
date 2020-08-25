@@ -60,4 +60,12 @@
         <item>white</item>
         <item>khaki</item>
     </string-array>
+    <string-array name="chat_bg_modes">
+        <item>兼容模式</item>
+        <item>输入框透明模式</item>
+    </string-array>
+    <string-array name="chat_bg_mode_value">
+        <item>compatibleMode</item>
+        <item>transparentMode</item>
+    </string-array>
 </resources>
