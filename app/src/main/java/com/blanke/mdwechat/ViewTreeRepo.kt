@@ -422,6 +422,36 @@ object ViewTreeRepo {
                                                                                 ViewTreeItem(CC.ImageView.name))),
                                                                         ViewTreeItem(CC.TextView.name))))))))))))))))
     }
+    val DiscoverViewItem_7_0_22: ViewTree by lazy {
+        ViewTree(
+                mapOf("iconImageView" to intArrayOf(1, 0, 0, 0, 0),
+                        "titleView" to intArrayOf(1, 0, 0, 0, 1, 0, 0, 0),
+                        "unreadCountView" to intArrayOf(1, 0, 0, 0, 1, 0, 0, 1),
+
+                        "groupBorderTop" to intArrayOf(0),
+                        "contentBorder" to intArrayOf(1, 0),
+                        "groupBorderBottom" to intArrayOf(1, 0, 0, 0, 1),
+
+//                        未写出
+                        "unreadPointView" to intArrayOf(1, 0, 0, 0, 1, 2, 1),
+                        "borderRight" to intArrayOf(1, 1)
+                ),
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                        ViewTreeItem(CC.View.name),//groupBorderTop
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(//contentBorder
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem("com.tencent.mm.ui.MMImageView"),//iconImageView
+                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(//groupBorderBottom
+                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                                ViewTreeItem(CC.TextView.name),//titleView
+                                                                                ViewTreeItem(CC.TextView.name),//unreadCountView
+                                                                                ViewTreeItem(CC.TextView.name),
+                                                                                ViewTreeItem(CC.ImageView.name))),
+                                                                        ViewTreeItem(CC.TextView.name))))))))))))))))
+    }
 
     val SettingAvatarView: ViewTree by lazy {
         ViewTree(
@@ -939,43 +969,6 @@ object ViewTreeRepo {
                         ViewTreeItem(CC.View.name))))
     }
 
-    // 7018,,,算了
-//    val UrlRightMessageItem: ViewTree by lazy {
-//        ViewTree(
-//                mapOf("titleView" to intArrayOf(4, 1, 0, 3, 0, 0, 1, 0),
-//                        "subtitleView" to intArrayOf(4, 1, 0, 3, 0, 0, 1, 1),
-//                        "underView" to intArrayOf(4, 1, 0, 3, 0, 2)),
-//                ViewTreeItem("com.tencent.mm.ui.chatting.viewitems.", arrayOf(
-//                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                ViewTreeItem(CC.TextView.name))),
-//                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                ViewTreeItem(CC.View.name),
-//                                ViewTreeItem(CC.TextView.name),
-//                                ViewTreeItem(CC.View.name))),
-//                        ViewTreeItem(CC.TextView.name),
-//                        ViewTreeItem(CC.CheckBox.name),
-//                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                ViewTreeItem(CC.TextView.name),
-//                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
-//                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                                ViewTreeItem(CC.ImageView.name),
-//                                                ViewTreeItem(CC.ImageView.name),
-//                                                ViewTreeItem(CC.ProgressBar.name),
-//                                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
-//                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                                                        ViewTreeItem(CC.ImageView.name),
-//                                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMTextView"),
-//                                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMTextView"))))),
-//                                                                ViewTreeItem(CC.ImageView.name),
-//                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMTextView"))))))),
-//                                        ViewTreeItem("com.tencent.mm.ui.base.MaskLayout"))))),
-//                        ViewTreeItem(CC.View.name),
-//                        ViewTreeItem(CC.ImageView.name)
-//                )))
-//    }
-
     val ActionBarContainerItem: ViewTree by lazy {
         ViewTree(
                 mapOf(),
@@ -1409,6 +1402,52 @@ object ViewTreeRepo {
                                                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf( //chatFooterChild2_editText_MIUI12
                                                                                         ViewTreeItem(CC.ImageView.name),
                                                                                         ViewTreeItem("com.tencent.mm.ui.widget.MMEditText") //chatFooterChild2_editText
+                                                                                )))),
+                                                                        ViewTreeItem(CC.RelativeLayout.name))),
+                                                                ViewTreeItem(CC.Button.name), //chatFooterChild2_talkButton
+                                                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                                        ViewTreeItem(CC.WeImageButton))), //chatFooterChild2_faceButton
+                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                        ViewTreeItem(CC.TextView.name),
+                                                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                                                ViewTreeItem(CC.WeImageButton), //chatFooterChild2_addButton
+                                                                                ViewTreeItem(CC.ImageView.name),
+                                                                                ViewTreeItem(CC.Button.name)))))))))))))))))) //chatFooterChild2_sendButton
+    }
+    val ChattingScrollLayoutItem_7_0_22: ViewTree by lazy {
+        ViewTree(
+                mapOf("bgGroup" to intArrayOf(0, 0),
+                        "chattingBgShade" to intArrayOf(0, 0, 1),
+                        "chatFooterChild2" to intArrayOf(1, 0, 1),
+                        "chatFooterChild2_switchButton" to intArrayOf(0, 1, 0),
+                        "chatFooterChild2_editText" to intArrayOf(0, 1, 1, 0, 0, 1, 0),
+                        "chatFooterChild2_editText_MIUI12" to intArrayOf(0, 1, 1, 0, 0),
+                        "chatFooterChild2_talkButton" to intArrayOf(0, 1, 2),
+                        "chatFooterChild2_faceButton" to intArrayOf(0, 1, 3, 0),
+                        "chatFooterChild2_addButton" to intArrayOf(0, 1, 4, 1, 0),
+                        "chatFooterChild2_sendButton" to intArrayOf(0, 1, 4, 1, 2)),
+                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingScrollLayout", arrayOf(
+                        ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingContent", arrayOf(
+                                ViewTreeItem(CC.FrameLayout.name, arrayOf( //bgGroup
+                                        ViewTreeItem("com.tencent.mm.ui.chatting.ChattingImageBGView"),
+                                        ViewTreeItem(CC.ImageView.name))))), //chattingBgShade
+//                                         skip chatting contents
+                        ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChatFooter", arrayOf(
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.FrameLayout.name),
+//                                        skip
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf( //chatFooterChild2
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.LinearLayout.name),
+//                                                        skip
+                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                ViewTreeItem(CC.WeImageButton), //chatFooterChild2_switchButton
+                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                        ViewTreeItem("com.tencent.mm.view.MaxHeightScrollView", arrayOf(
+                                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf( //chatFooterChild2_editText_MIUI12
+                                                                                        ViewTreeItem(CC.ImageView.name),
+                                                                                        ViewTreeItem("com.tencent.mm.ui.widget.cedit.api.MMFlexEditText", arrayOf(
+                                                                                                ViewTreeItem("com.tencent.mm.ui.widget.MMEditText"))) //chatFooterChild2_editText
                                                                                 )))),
                                                                         ViewTreeItem(CC.RelativeLayout.name))),
                                                                 ViewTreeItem(CC.Button.name), //chatFooterChild2_talkButton

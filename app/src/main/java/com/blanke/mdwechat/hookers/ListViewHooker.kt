@@ -63,12 +63,12 @@ object ListViewHooker : HookerProvider {
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
 
-//                    LogUtil.log("----------抓取view start----------")
-//                    LogUtil.log(WechatGlobal.wxVersion.toString())
-//                    LogUtil.log("context=" + view.context)
-//                    LogUtil.logViewStackTraces(view)
-//                    LogUtil.logParentView(view, 10)
-//                    LogUtil.log("--------------------")
+                    LogUtil.log("----------抓取view start----------")
+                    LogUtil.log(WechatGlobal.wxVersion.toString())
+                    LogUtil.log("context=" + view.context)
+                    LogUtil.logViewStackTraces(view)
+                    LogUtil.logParentView(view, 10)
+                    LogUtil.log("--------------------")
 
                     // 按照使用频率重排序
                     //气泡
@@ -189,7 +189,7 @@ object ListViewHooker : HookerProvider {
                         }
                     }
 
-                    // ConversationFragment 聊天列表 item sum
+                    // ConversationFragment 聊天列表 item
                     if (ViewTreeUtils.equals(VTTV.ConversationListViewItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ConversationListViewItem")
                         try {
@@ -216,7 +216,7 @@ object ListViewHooker : HookerProvider {
                     }
 
                     view.background = defaultImageRippleDrawable
-                    // 联系人列表 sum
+                    // 联系人列表
                     if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
                         // 标题下面的线
@@ -281,8 +281,9 @@ object ListViewHooker : HookerProvider {
                         }
                     }
 
-                    // 发现 设置 item sum
+                    // 发现 设置 item
                     else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
+                        LogUtil.logViewStackTraces(view)
                         LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
                         val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["iconImageView"]) as View
                         if (iconImageView.visibility == View.VISIBLE) {
@@ -317,7 +318,7 @@ object ListViewHooker : HookerProvider {
                                 }
                     }
 
-                    // 设置 头像 sum
+                    // 设置 头像
                     else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.SettingAvatarView")
                         val nickNameView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("nickNameView")!!)
