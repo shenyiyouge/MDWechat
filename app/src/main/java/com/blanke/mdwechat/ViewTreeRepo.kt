@@ -1251,6 +1251,35 @@ object ViewTreeRepo {
                         ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
     }
 
+    //7.0.22(21没测)
+    val ActionBarInSearchConversationItem_7_0_21: ViewTree by lazy {
+        ViewTree(
+                mapOf("title" to intArrayOf(0, 1, 2, 0, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0)),
+//                        "infoButton" to intArrayOf(0, 1, 0, 4, 0)),
+                ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
+                                Item_ActionMenuView_7_0_16,
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.WeImageView))),//gobackButton
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),//title
+                                                        ViewTreeItem(CC.WeImageView))),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.WeImageView))))),
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.ImageView.name)))
+                        )),
+                        ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
+    }
+
     //订阅号(头)(7.0.16起)
     val ActionBarInSubscriptsItem: ViewTree by lazy {
         ViewTree(
