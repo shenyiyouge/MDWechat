@@ -19,7 +19,7 @@ import com.blanke.mdwechat.util.ViewUtils.getParentViewSafe
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 
-object TitleColorHook {
+object ChattingRoomHook {
     var actionBarBottom = 0
     private val transparentDark = Color.parseColor("#30000000")
     private val transparentLight = Color.parseColor("#30EEEEEE")

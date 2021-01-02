@@ -13,7 +13,7 @@ import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.ViewTreeRepoThisVersion
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.hookers.main.TitleColorHook
+import com.blanke.mdwechat.hookers.main.ChattingRoomHook
 import com.blanke.mdwechat.util.*
 
 object BackgroundImageHooker {
@@ -84,7 +84,7 @@ object BackgroundImageHooker {
             "com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout" -> {
                 if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
                     actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
-                    TitleColorHook.setConversationColor(actionBar)
+                    ChattingRoomHook.setConversationColor(actionBar)
                     return
                 }
                 LogUtil.log("等待点击聊天界面以显示聊天界面的沉浸背景.....")
@@ -95,14 +95,14 @@ object BackgroundImageHooker {
                     val location = IntArray(2)
                     actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
                     val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
-                    TitleColorHook.actionBarBottom = location[1] + actionBar.height
+                    ChattingRoomHook.actionBarBottom = location[1] + actionBar.height
                     actionBar.background = NightModeUtils.getForegroundDrawable(background)
 
                     if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
                         LogUtil.log("已找到聊天界面")
 //                        Objects.Main.actionBarInConversations = actionBar
                         _actionBarBitmapInConversations = background
-                        TitleColorHook.setConversationColor(actionBar)
+                        ChattingRoomHook.setConversationColor(actionBar)
                     }
 //                    else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
 //                        LogUtil.log("已找到朋友圈界面")
@@ -128,14 +128,14 @@ object BackgroundImageHooker {
                     val location = IntArray(2)
                     actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
                     val background = cutBitmap("ActionBarInSearchConversation", bg, location[1], actionBar.height)
-                    TitleColorHook.actionBarBottom = location[1] + actionBar.height
+                    ChattingRoomHook.actionBarBottom = location[1] + actionBar.height
                     actionBar.background = NightModeUtils.getForegroundDrawable(background)
 
                     if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInSearchConversationItem.item, actionBar)) {
                         LogUtil.log("已找到通过搜索打开的聊天界面")
 //                        Objects.Main.actionBarInConversations = actionBar
                         _actionBarBitmapInConversations = background
-                        TitleColorHook.setConversationInSearchColor(actionBar)
+                        ChattingRoomHook.setConversationInSearchColor(actionBar)
 
                     }
 //            isSettingMap = false
