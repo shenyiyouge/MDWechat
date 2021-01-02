@@ -109,6 +109,7 @@ object TabLayoutHook {
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
+        BackgroundImageHooker._tabLayoutOnTopOffset = params.height
 //        mainThread {
         Objects.Main.tabLayout = tabLayout
         BackgroundImageHooker._tabLayoutOnTop = true

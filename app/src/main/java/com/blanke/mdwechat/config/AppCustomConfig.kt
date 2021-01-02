@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.bean.FloatButtonConfig
+import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.bean.PicPositionConfig
 import com.blanke.mdwechat.util.BitmapUtil
 import com.blanke.mdwechat.util.LogUtil
@@ -94,21 +95,31 @@ object AppCustomConfig {
     }
 
     //保存图片的默认高度
-    val picPositionConfig: PicPositionConfig? = readPicPositionConfig()
+    val picPositionConfig: PicPositionConfig = readPicPositionConfig()
 
-    fun readPicPositionConfig(): PicPositionConfig? {
+    fun readPicPositionConfig(): PicPositionConfig {
         val path = getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
+        var lastModifiedTimeOfSettings: Long = 0
         try {
+            lastModifiedTimeOfSettings = File(getConfigFile(Common.MOD_PREFS + ".xml")).lastModified()
             val `is` = FileInputStream(path)
-            return Gson().fromJson(InputStreamReader(`is`), PicPositionConfig::class.java)
+            val json = Gson().fromJson(InputStreamReader(`is`), PicPositionConfig::class.java)
+            if (json.lastModifiedTimeOfSettings == lastModifiedTimeOfSettings) {
+                return json
+            }
         } catch (e: Exception) {
-            return null
         }
+        return PicPositionConfig(lastModifiedTimeOfSettings, -1, mutableListOf(
+                PicPosition(0, 0),
+                PicPosition(0, 0),
+                PicPosition(0, 0),
+                PicPosition(0, 0)
+        ))
     }
 
     fun writePicPositionConfig() {
         val json = Gson().toJson(picPositionConfig) +
-                "//提示：此文件自动生成，用于保存沉浸背景的图片位置信息。\n" +
+                "\n//提示：此文件自动生成，用于保存沉浸背景的图片位置信息。\n" +
                 "//Created by JoshCai"
         val op = getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
         val succ = FileIOUtils.writeFileFromString(op, json)

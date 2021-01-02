@@ -20,6 +20,7 @@ import com.blanke.mdwechat.util.*
 
 object BackgroundImageHooker {
     var _tabLayoutOnTop = false
+    var _tabLayoutOnTopOffset = 0
     var _tabLayoutHeightOnBottom: Int = -1//微信默认tab的高度
     var contactPageParent: ViewGroup? = null
     var _contactPageWhiteBar = mutableListOf(0, 0)
@@ -306,10 +307,11 @@ object BackgroundImageHooker {
 
     fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap, index: Int) {
 //        加载记录的高度
-        picPositionConfig?.apply {
-            LogUtil.log("加载记录的背景图片:" + index)
+        picPositionConfig.apply {
+            LogUtil.log("加载已记录位置的背景图片:" + index)
             try {
-                if (picPositionConfig.screenHeight <= 0
+                if (picPositionConfig.lastModifiedTimeOfSettings == 0.toLong()
+                        || picPositionConfig.screenHeight <= 0
                         || picPositionConfig.backgroundPicPos == null
                         || picPositionConfig.backgroundPicPos!!.size < 4
                         || index > 3) {
@@ -353,74 +355,90 @@ object BackgroundImageHooker {
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
             view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
 
-//            记录位置信息到文件
-            picPositionConfig?.apply {
-                try {
-                    if (picPositionConfig.screenHeight <= 0) {
-                        picPositionConfig.screenHeight = HookConfig.value_resolution[1]
+            var height = view.height
+            when (index) {
+                0, 3 -> {
+                    if (_tabLayoutOnTop) {
+                        location[1] += _tabLayoutOnTopOffset
+                        height -= _tabLayoutOnTopOffset
                     }
-                    if (picPositionConfig.backgroundPicPos == null) {
-                        picPositionConfig.backgroundPicPos = mutableListOf(
-                                PicPosition(0, 0),
-                                PicPosition(0, 0),
-                                PicPosition(0, 0),
-                                PicPosition(0, 0)
-                        )
+                }
+            }
+            _backgroundBitmap[index] = cutBitmap(logHead, bg, location[1], height)
+            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
+
+            when (index) {
+                3 -> {
+                    if (_tabLayoutOnTop) {
+                        location[1] -= _tabLayoutOnTopOffset
+                        height += _tabLayoutOnTopOffset
                     }
-                    val bottomY: Int = location[1] + view.height
-                    if (bottomY == picPositionConfig.screenHeight
-                            || bottomY + _tabLayoutHeightOnBottom == picPositionConfig.screenHeight) {
-                        picPositionConfig.backgroundPicPos!![index] = PicPosition(location[1], view.height)
-                        if (index == 1) {
-                            //连同发现页一起写了
-                            picPositionConfig.backgroundPicPos!![2] = PicPosition(location[1], view.height)
+                }
+                1 -> {
+                    _contactPageLocation[0] = location[1]
+                    _contactPageLocation[1] = view.height
+                    //联系人界面和发现界面长宽比一样，故联系人界面可作发现界面的参考
+                    _backgroundBitmap[2] = cutBitmap(
+                            logHead,
+                            AppCustomConfig.getTabBg(2),
+                            _contactPageLocation[0],
+                            _contactPageLocation[1])
+                    DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
+
+                    val pageBodyTop = if (_tabLayoutOnTop)
+                        _tabLayoutLocation[0] + _tabLayoutLocation[1]
+                    else _actionBarLocation[0] + _actionBarLocation[1]
+
+                    LogUtil.log("==========pageBodyTop=$pageBodyTop===========")
+                    LogUtil.log("==========_contactPageLocation=${_contactPageLocation[0]}===========")
+
+
+                    if (_contactPageLocation[0] > pageBodyTop) {
+                        _contactPageWhiteBar[0] = pageBodyTop
+                        _contactPageWhiteBar[1] = _contactPageLocation[0] - pageBodyTop
+                        contactPageParent?.apply {
+                            val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                            paramsAddedOnTop.topMargin = _contactPageWhiteBar[0]
+                            paramsAddedOnTop.height = _contactPageWhiteBar[1]
+                            Objects.Main.contactPageFix = FrameLayout(this.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY))
+                            setContactPageFixBackround(this, 1)
+//                        Objects.Main.contactPageFix!!.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
+                            this.addView(Objects.Main.contactPageFix!!, 1, paramsAddedOnTop)
                         }
-                        AppCustomConfig.writePicPositionConfig()
                     }
-                } catch (e: Exception) {
-                    LogUtil.log(e)
+                    //回到最近对话界面
+                    Objects.Main.LauncherUI_mViewPager?.apply {
+                        Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
+                    }
                 }
             }
 
-            _backgroundBitmap[index] = cutBitmap(logHead, bg, location[1], view.height)
-            view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
-
-            if (index == 1) {
-                _contactPageLocation[0] = location[1]
-                _contactPageLocation[1] = view.height
-                //联系人界面和发现界面长宽比一样，故联系人界面可作发现界面的参考
-                _backgroundBitmap[2] = cutBitmap(
-                        logHead,
-                        AppCustomConfig.getTabBg(2),
-                        _contactPageLocation[0],
-                        _contactPageLocation[1])
-                DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
-
-                val pageBodyTop = if (_tabLayoutOnTop)
-                    _tabLayoutLocation[0] + _tabLayoutLocation[1]
-                else _actionBarLocation[0] + _actionBarLocation[1]
-
-                LogUtil.log("==========pageBodyTop=$pageBodyTop===========")
-                LogUtil.log("==========_contactPageLocation=${_contactPageLocation[0]}===========")
-
-
-                if (_contactPageLocation[0] > pageBodyTop) {
-                    _contactPageWhiteBar[0] = pageBodyTop
-                    _contactPageWhiteBar[1] = _contactPageLocation[0] - pageBodyTop
-                    contactPageParent?.apply {
-                        val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                        paramsAddedOnTop.topMargin = _contactPageWhiteBar[0]
-                        paramsAddedOnTop.height = _contactPageWhiteBar[1]
-                        Objects.Main.contactPageFix = FrameLayout(this.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY))
-                        setContactPageFixBackround(this, 1)
-//                        Objects.Main.contactPageFix!!.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
-                        this.addView(Objects.Main.contactPageFix!!, 1, paramsAddedOnTop)
+//            记录位置信息到文件
+            try {
+                if (picPositionConfig.screenHeight <= 0) {
+                    picPositionConfig.screenHeight = HookConfig.value_resolution[1]
+                }
+                if (picPositionConfig.backgroundPicPos == null) {
+                    picPositionConfig.backgroundPicPos = mutableListOf(
+                            PicPosition(0, 0),
+                            PicPosition(0, 0),
+                            PicPosition(0, 0),
+                            PicPosition(0, 0)
+                    )
+                }
+                //图片底部的y值
+                val bottomY: Int = location[1] + height
+                if (bottomY == picPositionConfig.screenHeight
+                        || bottomY + _tabLayoutHeightOnBottom == picPositionConfig.screenHeight) {
+                    picPositionConfig.backgroundPicPos!![index] = PicPosition(location[1], height)
+                    if (index == 1) {
+                        //连同发现页一起写了
+                        picPositionConfig.backgroundPicPos!![2] = PicPosition(location[1], height)
                     }
+                    AppCustomConfig.writePicPositionConfig()
                 }
-                //回到最近对话界面
-                Objects.Main.LauncherUI_mViewPager?.apply {
-                    Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
-                }
+            } catch (e: Exception) {
+                LogUtil.log(e)
             }
         })
     }

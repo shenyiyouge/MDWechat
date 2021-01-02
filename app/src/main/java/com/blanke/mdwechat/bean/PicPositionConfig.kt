@@ -5,6 +5,7 @@ package com.blanke.mdwechat.bean
  */
 
 data class PicPositionConfig(
+        var lastModifiedTimeOfSettings: Long = 0,
         var screenHeight: Int = -1,
         var backgroundPicPos: MutableList<PicPosition>?
 )
