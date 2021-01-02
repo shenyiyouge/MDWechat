@@ -21,9 +21,9 @@ public class ViewTreeConfig {
     private Method ConversationListViewItem = null;
     private Method ContactListViewItem = null;
     private Method ContactHeaderItem = null;
-    private Method ContactCompanySumItem = null;
-    private Method ContactCompanyHeaderItem = null;
-    private Method ContactCompanyListViewItem = null;
+    private Method ContactWorkItem = null;
+    private Method ContactWorkContactsItem = null;
+    private Method ContactMyWorkItem = null;
     private Method DiscoverViewItem = null;
     private Method SettingAvatarView = null;
     private Method ChatRightMessageItem = null;
@@ -43,6 +43,11 @@ public class ViewTreeConfig {
     private Method ChattingScrollLayoutItem = null;
     private Method ChattingUILayoutItem = null;
     private Method ChattingUILayoutInSearchItem = null;
+    private Method Tmp = null;
+
+    public Method getTmp() {
+        return Tmp;
+    }
 
     //region getters
     public Method getConversationListViewItem() {
@@ -58,16 +63,16 @@ public class ViewTreeConfig {
         return ContactHeaderItem;
     }
 
-    public Method getContactCompanySumItem() {
-        return ContactCompanySumItem;
+    public Method getContactWorkItem() {
+        return ContactWorkItem;
     }
 
-    public Method getContactCompanyHeaderItem() {
-        return ContactCompanyHeaderItem;
+    public Method getContactWorkContactsItem() {
+        return ContactWorkContactsItem;
     }
 
-    public Method getContactCompanyListViewItem() {
-        return ContactCompanyListViewItem;
+    public Method getContactMyWorkItem() {
+        return ContactMyWorkItem;
     }
 
     public Method getDiscoverViewItem() {
@@ -170,9 +175,9 @@ public class ViewTreeConfig {
         ConversationListViewItem = findViewTreeMethod("ConversationListViewItem", versionName);
         ContactListViewItem = findViewTreeMethod("ContactListViewItem", versionName);
         ContactHeaderItem = findViewTreeMethod("ContactHeaderItem", versionName);
-        ContactCompanySumItem = findViewTreeMethod("ContactCompanySumItem", versionName);
-        ContactCompanyHeaderItem = findViewTreeMethod("ContactCompanyHeaderItem", versionName);
-        ContactCompanyListViewItem = findViewTreeMethod("ContactCompanyListViewItem", versionName);
+        ContactWorkItem = findViewTreeMethod("ContactWorkItem", versionName);
+        ContactWorkContactsItem = findViewTreeMethod("ContactWorkContactsItem", versionName);
+        ContactMyWorkItem = findViewTreeMethod("ContactMyWorkItem", versionName);
         DiscoverViewItem = findViewTreeMethod("DiscoverViewItem", versionName);
         SettingAvatarView = findViewTreeMethod("SettingAvatarView", versionName);
         ChatRightMessageItem = findViewTreeMethod("ChatRightMessageItem", versionName);
@@ -192,6 +197,7 @@ public class ViewTreeConfig {
         ChattingUILayoutItem = findViewTreeMethod("ChattingUILayoutItem", versionName);
         ChattingUILayoutInSearchItem = findViewTreeMethod("ChattingUILayoutInSearchItem", versionName);
         ActionBarInFriendsgroupItem = findViewTreeMethod("ActionBarInFriendsgroupItem", versionName);
+        Tmp = findViewTreeMethod("Tmp", versionName);
     }
 
     private static Method findViewTreeMethod(String name, Version versionName) {

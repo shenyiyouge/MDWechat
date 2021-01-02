@@ -7,6 +7,9 @@ import com.blanke.mdwechat.config.ViewTreeConfig
 // 当前微信版本适用的repo
 // based on ViewTreeRepo
 object ViewTreeRepoThisVersion {
+    val Tmp: ViewTree by lazy {
+        ViewTreeConfig.get().tmp.invoke(ViewTreeRepo) as ViewTree
+    }
     val ConversationListViewItem: ViewTree by lazy {
         ViewTreeConfig.get().conversationListViewItem.invoke(ViewTreeRepo) as ViewTree
     }
@@ -16,14 +19,14 @@ object ViewTreeRepoThisVersion {
     val ContactHeaderItem: ViewTree by lazy {
         ViewTreeConfig.get().contactHeaderItem.invoke(ViewTreeRepo) as ViewTree
     }
-    val ContactCompanySumItem: ViewTree by lazy {
-        ViewTreeConfig.get().contactCompanySumItem.invoke(ViewTreeRepo) as ViewTree
+    val ContactWorkItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactWorkItem.invoke(ViewTreeRepo) as ViewTree
     }
-    val ContactCompanyHeaderItem: ViewTree by lazy {
-        ViewTreeConfig.get().contactCompanyHeaderItem.invoke(ViewTreeRepo) as ViewTree
+    val ContactWorkContactsItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactWorkContactsItem.invoke(ViewTreeRepo) as ViewTree
     }
-    val ContactCompanyListViewItem: ViewTree by lazy {
-        ViewTreeConfig.get().contactCompanyListViewItem.invoke(ViewTreeRepo) as ViewTree
+    val ContactMyWorkItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactMyWorkItem.invoke(ViewTreeRepo) as ViewTree
     }
     val DiscoverViewItem: ViewTree by lazy {
         ViewTreeConfig.get().discoverViewItem.invoke(ViewTreeRepo) as ViewTree
@@ -105,6 +108,11 @@ object ViewTreeRepoThisVersion {
 // 所有微信版本的repo
 @Suppress("unused")
 object ViewTreeRepo {
+    val tmp: ViewTree by lazy {
+        ViewTree(
+                mapOf("tmp" to intArrayOf(0, 1, 0)),
+                ViewTreeItem("com.tencent.mm.ui.contact."))
+    }
 
     val ConversationListViewItem: ViewTree by lazy {
         ViewTree(
@@ -284,7 +292,8 @@ object ViewTreeRepo {
     // 联系人上方分组列表
     val ContactHeaderItem: ViewTree by lazy {
         ViewTree(
-                mapOf("ContactCompanySumItem" to intArrayOf(7)),
+                // 企业联系人分组
+                mapOf("ContactWorkItem" to intArrayOf(7)),
                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                         // 新的电话
                         ViewTreeItem("com.tencent.mm.ui.contact."),
@@ -304,11 +313,11 @@ object ViewTreeRepo {
                         ViewTreeItem("com.tencent.mm.ui.contact."))))
     }
 
-    // 企业联系人分组
-    // 7_0_17
-    val ContactCompanySumItem: ViewTree by lazy {
+    // region 企业联系人分组 7_0_17
+    val ContactWorkItem: ViewTree by lazy {
         ViewTree(
-                mapOf("ContactCompanyHeaderItem" to intArrayOf(0, 1, 0)),
+                mapOf("ContactContentsItem" to intArrayOf(0, 1, 0),
+                        "ContactContentsItem1" to intArrayOf(0, 1, 1)),
                 ViewTreeItem("com.tencent.mm.ui.contact.", arrayOf(
                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                 ViewTreeItem(CC.TextView.name),
@@ -317,20 +326,7 @@ object ViewTreeRepo {
                                 )))))))
     }
 
-//    val ContactCompanySumItem: ViewTree by lazy {
-//        ViewTree(
-//                mapOf("ContactCompanyHeaderItem" to intArrayOf(0, 1, 0),
-//                        "ContactCompanyListViewItem" to intArrayOf(0, 1, 1)),
-//                ViewTreeItem("com.tencent.mm.ui.contact.", arrayOf(
-//                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                ViewTreeItem(CC.TextView.name),
-//                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
-//                                        ViewTreeItem("com.tencent.mm.ui.contact."),
-//                                        ViewTreeItem("com.tencent.mm.ui.contact.")
-//                                )))))))
-//    }
-
-    val ContactCompanyHeaderItem: ViewTree by lazy {
+    val ContactWorkContactsItem: ViewTree by lazy {
         ViewTree(
                 mapOf("titleView" to intArrayOf(0),
                         "headTextView" to intArrayOf(0, 0, 1, 0)),
@@ -344,7 +340,7 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem(CC.TextView.name))))))))))
     }
-    val ContactCompanyListViewItem: ViewTree by lazy {
+    val ContactMyWorkItem: ViewTree by lazy {
         ViewTree(
                 mapOf("titleView" to intArrayOf(0),
                         "headTextView" to intArrayOf(0, 0, 1)),
@@ -357,6 +353,7 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.ImageView.name))),
                                         ViewTreeItem(CC.TextView.name))))))))
     }
+    // endregion
 
     val DiscoverViewItem: ViewTree by lazy {
         ViewTree(
@@ -710,8 +707,7 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.ViewStub.name),
                                         ViewTreeItem(CC.View.name),
                                         ViewTreeItem(CC.ImageView.name))),
-                                ViewTreeItem(CC.RelativeLayout.name
-                                        , arrayOf(
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                         ViewTreeItem(CC.TextView.name),
                                         ViewTreeItem(CC.TextView.name),
                                         null,
@@ -738,8 +734,7 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.ViewStub.name),
                                         ViewTreeItem(CC.View.name),
                                         ViewTreeItem(CC.ImageView.name))),
-                                ViewTreeItem(CC.RelativeLayout.name
-                                        , arrayOf(
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                         ViewTreeItem(CC.TextView.name),
                                         ViewTreeItem(CC.TextView.name),
                                         null,

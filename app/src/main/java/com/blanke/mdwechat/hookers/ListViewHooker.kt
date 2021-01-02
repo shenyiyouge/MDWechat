@@ -196,11 +196,11 @@ object ListViewHooker : HookerProvider {
                             view.background.alpha = HookConfig.get_hook_conversation_background_alpha
                         } catch (e: Exception) {
                         }
-                        val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatNameView"))
-                        val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("chatTimeView"))
-                        val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("recentMsgView"))
-                        val unreadCountView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadCountView")) as TextView
-                        val unreadView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks.get("unreadView")) as ImageView
+                        val chatNameView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks["chatNameView"])
+                        val chatTimeView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks["chatTimeView"])
+                        val recentMsgView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks["recentMsgView"])
+                        val unreadCountView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks["unreadCountView"]) as TextView
+                        val unreadView = ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks["unreadView"]) as ImageView
 //                    LogUtil.logXp("chatNameView=$chatNameView,chatTimeView=$chatTimeView,recentMsgView=$recentMsgView")
                         if (isHookTextColor) {
                             XposedHelpers.callMethod(chatNameView, "setTextColor", titleTextColor)
@@ -220,21 +220,21 @@ object ListViewHooker : HookerProvider {
                     if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
                         // 标题下面的线
-                        if (VTTV.ContactListViewItem.treeStacks.get("headerView") != null) {
-                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headerView"))
+                        if (VTTV.ContactListViewItem.treeStacks["headerView"] != null) {
+                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headerView"])
                                     ?.background = drawableTransparent
                         }
                         //内容下面的线 innerView
-                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("innerView"))
+                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["innerView"])
                                 ?.background = drawableTransparent
 
-                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("contentView"))
+                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["contentView"])
                                 ?.background = drawableTransparent
 
-                        val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("titleView"))
+                        val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView"])
                         titleView?.background = drawableTransparent
                         if (isHookTextColor) {
-                            val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks.get("headTextView")) as TextView
+                            val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headTextView"]) as TextView
                             headTextView.setTextColor(summaryTextColor)
                             XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
                         }
@@ -243,39 +243,40 @@ object ListViewHooker : HookerProvider {
                     // 联系人列表头部
                     if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactHeaderItem")
-                        //企业联系人
-                        ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks.get("ContactCompanySumItem"))?.apply {
-                            if (ViewTreeUtils.equals(VTTV.ContactCompanySumItem.item, this)) {
-                                LogUtil.logOnlyOnce("ListViewHooker.ContactCompanySumItem")
+                        //企业联系人分组
+                        ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItem"])?.apply {
+                            if (ViewTreeUtils.equals(VTTV.ContactWorkItem.item, this)) {
+                                LogUtil.logOnlyOnce("ListViewHooker.ContactWorkItem")
 
-                                //头部
-                                val ContactCompanyHeaderItem = ViewUtils.getChildView1(this, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyHeaderItem"))
-                                ContactCompanyHeaderItem?.apply {
-                                    if (ViewTreeUtils.equals(VTTV.ContactCompanyHeaderItem.item, ContactCompanyHeaderItem)) {
-                                        LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyHeaderItem")
+                                var ContactContentsItem = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem"])
+                                if (ContactContentsItem != null) {
+                                    //企业联系人
+                                    if (ViewTreeUtils.equals(VTTV.ContactWorkContactsItem.item, ContactContentsItem)) {
+                                        LogUtil.logOnlyOnce("ListViewHooker.ContactWorkContactsItem")
                                         //  titleView
-                                        ViewUtils.getChildView1(ContactCompanyHeaderItem, VTTV.ContactCompanyHeaderItem.treeStacks.get("titleView"))
+                                        ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["titleView"])
                                                 ?.background = drawableTransparent
                                         if (isHookTextColor) {
-                                            val headTextView = ViewUtils.getChildView1(ContactCompanyHeaderItem, VTTV.ContactCompanyHeaderItem.treeStacks.get("headTextView")) as TextView
+                                            val headTextView = ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["headTextView"]) as TextView
+                                            headTextView.setTextColor(summaryTextColor)
+                                        }
+                                        val tmpView = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem1"])
+                                        tmpView?.apply {
+                                            ContactContentsItem = tmpView
+                                        }
+                                    }
+                                    // 我的企业
+                                    if (ViewTreeUtils.equals(VTTV.ContactMyWorkItem.item, ContactContentsItem!!)) {
+                                        LogUtil.logOnlyOnce("ListViewHooker.ContactMyWorkItem")
+                                        //  titleView
+                                        ViewUtils.getChildView1(ContactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["titleView"])
+                                                ?.background = drawableTransparent
+                                        if (isHookTextColor) {
+                                            val headTextView = ViewUtils.getChildView1(ContactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["headTextView"]) as TextView
                                             headTextView.setTextColor(summaryTextColor)
                                         }
                                     }
                                 }
-//                                //主体
-//                                val ContactCompanyListViewItem = ViewUtils.getChildView1(this, VTTV.ContactCompanySumItem.treeStacks.get("ContactCompanyListViewItem"))
-//                                ContactCompanyListViewItem?.apply {
-//                                    if (ViewTreeUtils.equals(VTTV.ContactCompanyListViewItem.item, ContactCompanyListViewItem)) {
-//                                        LogUtil.logOnlyOnce("ListViewHooker.ContactCompanyListViewItem")
-//                                        //  titleView
-//                                        ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("titleView"))
-//                                                ?.background = drawableTransparent
-//                                        if (isHookTextColor) {
-//                                            val headTextView = ViewUtils.getChildView1(ContactCompanyListViewItem, VTTV.ContactCompanyListViewItem.treeStacks.get("headTextView")) as TextView
-//                                            headTextView.setTextColor(summaryTextColor)
-//                                        }
-//                                    }
-//                                }
                             }
                         }
                     }
@@ -283,33 +284,33 @@ object ListViewHooker : HookerProvider {
                     // 发现 设置 item sum
                     else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
-                        val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("iconImageView")) as View
+                        val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["iconImageView"]) as View
                         if (iconImageView.visibility == View.VISIBLE) {
-                            val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("titleView")) as TextView
+                            val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["titleView"]) as TextView
                             if (isHookTextColor) {
                                 titleView.setTextColor(titleTextColor)
                             }
                         }
 //                        LogUtil.logViewStackTraces(view)
                         //group顶部横线
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("groupBorderTop"))
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["groupBorderTop"])
                                 ?.background = drawableTransparent
                         //内容分割线
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("contentBorder"))
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["contentBorder"])
                                 ?.background = drawableTransparent
 
                         //group底部横线
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("groupBorderBottom"))
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["groupBorderBottom"])
                                 ?.background = drawableTransparent
 
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("borderRight"))
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["borderRight"])
                                 ?.background = drawableTransparent
 
 
 
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadPointView"))
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["unreadPointView"])
                                 ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks.get("unreadCountView"))
+                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["unreadCountView"])
                                 ?.apply {
                                     this.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                                     if (this is TextView) this.setTextColor(HookConfig.get_color_tip_num)
@@ -325,7 +326,7 @@ object ListViewHooker : HookerProvider {
                             wechatTextView.setTextColor(titleTextColor)
                             XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
                         }
-                        VTTV.SettingAvatarView.treeStacks.get("headView")?.apply {
+                        VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
                             ViewUtils.getChildView1(view, this)?.background = defaultImageRippleDrawable
                         }
                     }
@@ -334,11 +335,11 @@ object ListViewHooker : HookerProvider {
                     else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ActionBarItem")
                         try {
-                            ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks.get("miniProgramPage"))?.apply {
+                            ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks["miniProgramPage"])?.apply {
                                 val miniProgramPage = this as RelativeLayout
 
                                 // old action bar
-                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks.get("miniProgramPage_actionBarPage"))?.apply {
+                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks["miniProgramPage_actionBarPage"])?.apply {
                                     val actionBarPage = this as LinearLayout
 //                            val title: TextView
 //                            title = ViewUtils.getChildView1(actionBarPage,
@@ -348,25 +349,25 @@ object ListViewHooker : HookerProvider {
 //                            title.text = HookConfig.value_mini_program_title
 //                            val lp = title.layoutParams as LinearLayout.LayoutParams
 //                            lp.setMargins(0, 0, 0, 0)
-                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks.get("actionBarPage_addIcon"))?.apply {
+                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks["actionBarPage_addIcon"])?.apply {
                                         actionBarPage.removeView(this)
                                     }
-                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks.get("actionBarPage_searchIcon"))?.apply {
+                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks["actionBarPage_searchIcon"])?.apply {
                                         actionBarPage.removeView(this)
                                     }
                                 }
 //                            actionBarPage.removeView(title)
-                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks.get("miniProgramPage_appBrandDesktopView"))?.apply {
+                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks["miniProgramPage_appBrandDesktopView"])?.apply {
                                     val appBrandDesktopView = this as ViewGroup
 
                                     // 小程序搜索框
-                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_searchEditText"))?.apply {
+                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks["appBrandDesktopView_searchEditText"])?.apply {
                                         val searchEditText = this as EditText
                                         searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
                                     }
                                     //  小程序字体
                                     setMiniProgramTitleColor(appBrandDesktopView)
-                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks.get("appBrandDesktopView_miniProgramTitle"))?.apply {
+                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks["appBrandDesktopView_miniProgramTitle"])?.apply {
                                         setMiniProgramTitleColor(this as ViewGroup)
                                     }
                                 }
