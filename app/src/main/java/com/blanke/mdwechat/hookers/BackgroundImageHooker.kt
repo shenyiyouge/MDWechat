@@ -52,7 +52,7 @@ object BackgroundImageHooker {
         if (!HookConfig.is_hook_hide_actionbar) {
             Objects.Main.actionBar?.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(_actionBarLocation[1], page))
         }
-        if (HookConfig.is_tab_layout_on_top) {
+        if (HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top) {
             setTabLayoutBitmap(page)
         } else {
             Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(_tabLayoutLocation[1], page))
