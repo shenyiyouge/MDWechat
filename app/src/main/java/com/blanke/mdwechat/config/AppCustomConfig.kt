@@ -6,6 +6,8 @@ import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.bean.FloatButtonConfig
 import com.blanke.mdwechat.bean.PicPositionConfig
 import com.blanke.mdwechat.util.BitmapUtil
+import com.blanke.mdwechat.util.LogUtil
+import com.blankj.utilcode.util.FileIOUtils
 import com.google.gson.Gson
 import java.io.File
 import java.io.FileInputStream
@@ -91,7 +93,10 @@ object AppCustomConfig {
         }
     }
 
-    fun getPicPositionConfig(): PicPositionConfig? {
+    //保存图片的默认高度
+    val picPositionConfig: PicPositionConfig? = readPicPositionConfig()
+
+    fun readPicPositionConfig(): PicPositionConfig? {
         val path = getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
         try {
             val `is` = FileInputStream(path)
@@ -99,6 +104,15 @@ object AppCustomConfig {
         } catch (e: Exception) {
             return null
         }
+    }
+
+    fun writePicPositionConfig() {
+        val json = Gson().toJson(picPositionConfig) +
+                "//提示：此文件自动生成，用于保存沉浸背景的图片位置信息。\n" +
+                "//Created by JoshCai"
+        val op = getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
+        val succ = FileIOUtils.writeFileFromString(op, json)
+        LogUtil.log("记录图片位置信息至文件:" + succ)
     }
 
     fun getIconPath(fileName: String): String {

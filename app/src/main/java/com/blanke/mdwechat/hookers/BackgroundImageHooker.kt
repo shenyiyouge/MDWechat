@@ -13,11 +13,10 @@ import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.ViewTreeRepoThisVersion
 import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.config.AppCustomConfig
+import com.blanke.mdwechat.config.AppCustomConfig.picPositionConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.main.ChattingRoomHook
 import com.blanke.mdwechat.util.*
-import com.blankj.utilcode.util.FileIOUtils
-import com.google.gson.Gson
 
 object BackgroundImageHooker {
     var _tabLayoutOnTop = false
@@ -30,8 +29,6 @@ object BackgroundImageHooker {
     var _tabLayoutLocation = mutableListOf(0, 0)
     var _contactPageLocation = mutableListOf(0, 0)
 
-    //保存图片的默认高度
-    val picPositionConfig = AppCustomConfig.getPicPositionConfig()
     var _actionBarBitmapInConversations: Bitmap? = null
     var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
@@ -378,11 +375,7 @@ object BackgroundImageHooker {
                             //连同发现页一起写了
                             picPositionConfig.backgroundPicPos!![2] = PicPosition(location[1], view.height)
                         }
-
-                        val json = Gson().toJson(picPositionConfig)
-                        val op = AppCustomConfig.getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
-                        val succ = FileIOUtils.writeFileFromString(op, json)
-                        LogUtil.log("记录位置信息至文件:" + succ)
+                        AppCustomConfig.writePicPositionConfig()
                     }
                 } catch (e: Exception) {
                     LogUtil.log(e)

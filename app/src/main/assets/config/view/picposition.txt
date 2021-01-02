@@ -1,3 +1,5 @@
+//提示：此文件自动生成，用于保存沉浸背景的图片位置信息。
+//created by JoshCai
 {
 screenHeight:-1,
 backgroundPicPos:[
