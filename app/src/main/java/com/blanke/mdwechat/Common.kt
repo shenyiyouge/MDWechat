@@ -32,6 +32,7 @@ object Common {
     val FILE_NAME_TAB_BG_PREFIX = "tab_bg"
     val FILE_NAME_CHAT_BG = "tab_bg_chat.png"
     val FILE_NAME_FLOAT_BUTTON = "floatbutton.txt"
+    val FILE_NAME_PIC_POSITION = "picposition.txt"
 
     val isVXPEnv: Boolean by lazy {
         VXPUtils.isVXPEnv()

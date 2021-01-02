@@ -63,12 +63,12 @@ object ListViewHooker : HookerProvider {
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
 
-                    LogUtil.log("----------抓取view start----------")
-                    LogUtil.log(WechatGlobal.wxVersion.toString())
-                    LogUtil.log("context=" + view.context)
-                    LogUtil.logViewStackTraces(view)
-                    LogUtil.logParentView(view, 10)
-                    LogUtil.log("--------------------")
+//                    LogUtil.log("----------抓取view start----------")
+//                    LogUtil.log(WechatGlobal.wxVersion.toString())
+//                    LogUtil.log("context=" + view.context)
+//                    LogUtil.logViewStackTraces(view)
+//                    LogUtil.logParentView(view, 10)
+//                    LogUtil.log("--------------------")
 
                     // 按照使用频率重排序
                     //气泡
@@ -283,7 +283,7 @@ object ListViewHooker : HookerProvider {
 
                     // 发现 设置 item
                     else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
-                        LogUtil.logViewStackTraces(view)
+//                        LogUtil.logViewStackTraces(view)
                         LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
                         val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["iconImageView"]) as View
                         if (iconImageView.visibility == View.VISIBLE) {

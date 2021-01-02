@@ -103,6 +103,8 @@ object LauncherUIHooker : HookerProvider {
 
                             val tabView = linearViewGroup.getChildAt(1) as ViewGroup
                             val tabViewUnderneathHeight = measureHeight(tabView)
+                            if (BackgroundImageHooker._tabLayoutHeightOnBottom < 0)
+                                BackgroundImageHooker._tabLayoutHeightOnBottom = tabViewUnderneathHeight
 
                             if (isKeyHideTab) {
                                 // region 隐藏底栏

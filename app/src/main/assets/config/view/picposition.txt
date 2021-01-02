@@ -1,0 +1,9 @@
+{
+screenHeight:-1,
+backgroundPicPos:[
+{y:0,height:0},
+{y:0,height:0},
+{y:0,height:0},
+{y:0,height:0}
+]
+}

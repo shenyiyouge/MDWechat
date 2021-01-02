@@ -11,13 +11,17 @@ import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.Methods
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.ViewTreeRepoThisVersion
+import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.main.ChattingRoomHook
 import com.blanke.mdwechat.util.*
+import com.blankj.utilcode.util.FileIOUtils
+import com.google.gson.Gson
 
 object BackgroundImageHooker {
     var _tabLayoutOnTop = false
+    var _tabLayoutHeightOnBottom: Int = -1//微信默认tab的高度
     var contactPageParent: ViewGroup? = null
     var _contactPageWhiteBar = mutableListOf(0, 0)
 
@@ -26,6 +30,8 @@ object BackgroundImageHooker {
     var _tabLayoutLocation = mutableListOf(0, 0)
     var _contactPageLocation = mutableListOf(0, 0)
 
+    //保存图片的默认高度
+    val picPositionConfig = AppCustomConfig.getPicPositionConfig()
     var _actionBarBitmapInConversations: Bitmap? = null
     var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
@@ -302,6 +308,46 @@ object BackgroundImageHooker {
     //endregion
 
     fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap, index: Int) {
+//        加载记录的高度
+        picPositionConfig?.apply {
+            LogUtil.log("加载记录的背景图片:" + index)
+            try {
+                if (picPositionConfig.screenHeight <= 0
+                        || picPositionConfig.backgroundPicPos == null
+                        || picPositionConfig.backgroundPicPos!!.size < 4
+                        || index > 3) {
+                    return@apply
+                }
+                val position = picPositionConfig.backgroundPicPos!![index]
+                if (position.height <= 0) {
+                    return@apply
+                }
+                _backgroundBitmap[index] = cutBitmap(logHead, bg, position.y, position.height)
+                view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
+
+                if (index == 1) {
+                    //发现页
+                    _contactPageLocation[0] = position.y
+                    _contactPageLocation[1] = position.height
+                    _backgroundBitmap[2] = cutBitmap(
+                            logHead,
+                            AppCustomConfig.getTabBg(2),
+                            _contactPageLocation[0],
+                            _contactPageLocation[1])
+                    DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
+
+                    //回到最近对话界面
+                    Objects.Main.LauncherUI_mViewPager?.apply {
+                        Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
+                    }
+                }
+                LogUtil.log("背景图片" + index + "已生成")
+                return
+            } catch (e: Exception) {
+                LogUtil.log(e)
+            }
+        }
+
         waitInvoke(500, true, {
             LogUtil.log("$logHead 继续等待, view.height  = ${view.height}")
             view.height > 0
@@ -309,6 +355,40 @@ object BackgroundImageHooker {
             val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
             view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+
+//            记录位置信息到文件
+            picPositionConfig?.apply {
+                try {
+                    if (picPositionConfig.screenHeight <= 0) {
+                        picPositionConfig.screenHeight = HookConfig.value_resolution[1]
+                    }
+                    if (picPositionConfig.backgroundPicPos == null) {
+                        picPositionConfig.backgroundPicPos = mutableListOf(
+                                PicPosition(0, 0),
+                                PicPosition(0, 0),
+                                PicPosition(0, 0),
+                                PicPosition(0, 0)
+                        )
+                    }
+                    val bottomY: Int = location[1] + view.height
+                    if (bottomY == picPositionConfig.screenHeight
+                            || bottomY + _tabLayoutHeightOnBottom == picPositionConfig.screenHeight) {
+                        picPositionConfig.backgroundPicPos!![index] = PicPosition(location[1], view.height)
+                        if (index == 1) {
+                            //连同发现页一起写了
+                            picPositionConfig.backgroundPicPos!![2] = PicPosition(location[1], view.height)
+                        }
+
+                        val json = Gson().toJson(picPositionConfig)
+                        val op = AppCustomConfig.getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
+                        val succ = FileIOUtils.writeFileFromString(op, json)
+                        LogUtil.log("记录位置信息至文件:" + succ)
+                    }
+                } catch (e: Exception) {
+                    LogUtil.log(e)
+                }
+            }
+
             _backgroundBitmap[index] = cutBitmap(logHead, bg, location[1], view.height)
             view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
 

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.bean.FloatButtonConfig
+import com.blanke.mdwechat.bean.PicPositionConfig
 import com.blanke.mdwechat.util.BitmapUtil
 import com.google.gson.Gson
 import java.io.File
@@ -85,6 +86,16 @@ object AppCustomConfig {
         try {
             val `is` = FileInputStream(path)
             return Gson().fromJson(InputStreamReader(`is`), FloatButtonConfig::class.java)
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+    fun getPicPositionConfig(): PicPositionConfig? {
+        val path = getViewConfigFile(Common.FILE_NAME_PIC_POSITION)
+        try {
+            val `is` = FileInputStream(path)
+            return Gson().fromJson(InputStreamReader(`is`), PicPositionConfig::class.java)
         } catch (e: Exception) {
             return null
         }
