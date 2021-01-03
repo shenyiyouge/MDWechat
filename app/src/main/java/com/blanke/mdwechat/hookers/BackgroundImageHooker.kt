@@ -75,79 +75,6 @@ object BackgroundImageHooker {
         return _statusBarBitmap[page]
     }
 
-
-    fun setActionBarBitmapInConversations(actionBar: View) {
-        if (!HookConfig.is_hook_bg_immersion) {
-            actionBar.background = NightModeUtils.getForegroundDrawable(null)
-            return
-        }
-
-        // 只修改聊天页面
-        val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as View
-        when (chattingUILayout::class.java.name) {
-            "com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout" -> {
-                if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
-                    actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
-                    ChattingRoomHook.setConversationColor(actionBar)
-                    return
-                }
-                LogUtil.log("等待点击聊天界面以显示聊天界面的沉浸背景.....")
-                waitInvoke(200, true, {
-                    actionBar.height > 0
-                }, {
-                    val bg = AppCustomConfig.getChatBg()
-                    val location = IntArray(2)
-                    actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-                    val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
-                    ChattingRoomHook.actionBarBottom = location[1] + actionBar.height
-                    actionBar.background = NightModeUtils.getForegroundDrawable(background)
-
-                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
-                        LogUtil.log("已找到聊天界面")
-//                        Objects.Main.actionBarInConversations = actionBar
-                        _actionBarBitmapInConversations = background
-                        ChattingRoomHook.setConversationColor(actionBar)
-                    }
-//                    else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
-//                        LogUtil.log("已找到朋友圈界面")
-//                        _actionBarBitmapInFriendsgroup = background
-//                    }
-                })
-            }
-            "android.support.v7.widget.ActionBarOverlayLayout" -> {
-                val ChattingScrollLayoutItem = ViewUtils.getParentView(chattingUILayout, 3) as View
-                if (!ChattingScrollLayoutItem::class.java.name.equals("com.tencent.mm.ui.widget.SwipeBackLayout")) {
-                    return
-                }
-                if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInSearchConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
-                    actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
-//                    TitleColorHook.setConversationColor(actionBar)
-                    return
-                }
-                waitInvoke(100, true, {
-                    LogUtil.log("ActionBarInSearchConversation 继续等待, view.height  = ${actionBar.height}")
-                    actionBar.height > 0
-                }, {
-                    val bg = AppCustomConfig.getChatBg()
-                    val location = IntArray(2)
-                    actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
-                    val background = cutBitmap("ActionBarInSearchConversation", bg, location[1], actionBar.height)
-                    ChattingRoomHook.actionBarBottom = location[1] + actionBar.height
-                    actionBar.background = NightModeUtils.getForegroundDrawable(background)
-
-                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInSearchConversationItem.item, actionBar)) {
-                        LogUtil.log("已找到通过搜索打开的聊天界面")
-//                        Objects.Main.actionBarInConversations = actionBar
-                        _actionBarBitmapInConversations = background
-                        ChattingRoomHook.setConversationInSearchColor(actionBar)
-
-                    }
-//            isSettingMap = false
-                })
-            }
-        }
-    }
-
     fun getActionBarBitmap(actionBarHeight: Int, page: Int): Bitmap? {
         if (!HookConfig.is_hook_bg_immersion || (HookConfig.is_hook_hide_actionbar)) {
             _actionBarLocation[1] = -1
@@ -241,8 +168,86 @@ object BackgroundImageHooker {
         _contactPageFix[page] = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
         contactPageFix.background = _contactPageFix[page]
     }
-    //endregion
 
+    //endregion
+    //region 聊天
+    fun setActionBarBitmapInConversations(actionBar: View) {
+        if (!HookConfig.is_hook_bg_immersion) {
+            actionBar.background = NightModeUtils.getForegroundDrawable(null)
+            return
+        }
+
+        // 只修改聊天页面
+        val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as View
+        when (chattingUILayout::class.java.name) {
+            "com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout" -> {
+                if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
+                    actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
+                    ChattingRoomHook.setConversationColor(actionBar)
+                    return
+                }
+                LogUtil.log("等待点击聊天界面以显示聊天界面的沉浸背景.....")
+                waitInvoke(200, true, {
+                    actionBar.height > 0
+                }, {
+                    val bg = AppCustomConfig.getChatBg()
+                    val location = IntArray(2)
+                    actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+                    val background = cutBitmap("actionBarInConversations", bg, location[1], actionBar.height)
+                    ChattingRoomHook.actionBarBottom = location[1] + actionBar.height
+                    actionBar.background = NightModeUtils.getForegroundDrawable(background)
+
+                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInConversationItem.item, actionBar)) {
+                        LogUtil.log("已找到聊天界面")
+//                        Objects.Main.actionBarInConversations = actionBar
+                        _actionBarBitmapInConversations = background
+                        ChattingRoomHook.setConversationColor(actionBar)
+                    }
+//                    else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
+//                        LogUtil.log("已找到朋友圈界面")
+//                        _actionBarBitmapInFriendsgroup = background
+//                    }
+                })
+            }
+            "android.support.v7.widget.ActionBarOverlayLayout" -> {
+                val ChattingScrollLayoutItem = ViewUtils.getParentView(chattingUILayout, 3) as View
+                if (!ChattingScrollLayoutItem::class.java.name.equals("com.tencent.mm.ui.widget.SwipeBackLayout")) {
+                    return
+                }
+                if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInSearchConversationItem.item, actionBar) && (_actionBarBitmapInConversations != null)) {
+                    actionBar.background = NightModeUtils.getForegroundDrawable(_actionBarBitmapInConversations)
+//                    TitleColorHook.setConversationColor(actionBar)
+                    return
+                }
+                waitInvoke(100, true, {
+                    LogUtil.log("ActionBarInSearchConversation 继续等待, view.height  = ${actionBar.height}")
+                    actionBar.height > 0
+                }, {
+                    val bg = AppCustomConfig.getChatBg()
+                    val location = IntArray(2)
+                    actionBar.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
+                    val background = cutBitmap("ActionBarInSearchConversation", bg, location[1], actionBar.height)
+                    ChattingRoomHook.actionBarBottom = location[1] + actionBar.height
+                    actionBar.background = NightModeUtils.getForegroundDrawable(background)
+
+                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInSearchConversationItem.item, actionBar)) {
+                        LogUtil.log("已找到通过搜索打开的聊天界面")
+//                        Objects.Main.actionBarInConversations = actionBar
+                        _actionBarBitmapInConversations = background
+                        ChattingRoomHook.setConversationInSearchColor(actionBar)
+
+                    } else {
+                        LogUtil.log("匹配通过搜索打开的聊天界面失败")
+                        LogUtil.logViewStackTraces(actionBar)
+                    }
+//            isSettingMap = false
+                })
+            }
+        }
+    }
+
+
+    //endregion
     //region 背景
     fun setConversationBitmap(view: View) {
         _backgroundBitmap[0]?.apply {
@@ -307,43 +312,45 @@ object BackgroundImageHooker {
 
     fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap, index: Int) {
 //        加载记录的高度
-        picPositionConfig.apply {
-            LogUtil.log("加载已记录位置的背景图片:" + index)
-            try {
-                if (picPositionConfig.lastModifiedTimeOfSettings == 0.toLong()
-                        || picPositionConfig.screenHeight <= 0
-                        || picPositionConfig.backgroundPicPos == null
-                        || picPositionConfig.backgroundPicPos!!.size < 4
-                        || index > 3) {
-                    return@apply
-                }
-                val position = picPositionConfig.backgroundPicPos!![index]
-                if (position.height <= 0) {
-                    return@apply
-                }
-                _backgroundBitmap[index] = cutBitmap(logHead, bg, position.y, position.height)
-                view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
-
-                if (index == 1) {
-                    //发现页
-                    _contactPageLocation[0] = position.y
-                    _contactPageLocation[1] = position.height
-                    _backgroundBitmap[2] = cutBitmap(
-                            logHead,
-                            AppCustomConfig.getTabBg(2),
-                            _contactPageLocation[0],
-                            _contactPageLocation[1])
-                    DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
-
-                    //回到最近对话界面
-                    Objects.Main.LauncherUI_mViewPager?.apply {
-                        Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
+        if (HookConfig.is_bg_preload_mode) {
+            picPositionConfig.apply {
+                LogUtil.log("加载已记录位置的背景图片:" + index)
+                try {
+                    if (picPositionConfig.lastModifiedTimeOfSettings == 0.toLong()
+                            || picPositionConfig.screenHeight <= 0
+                            || picPositionConfig.backgroundPicPos == null
+                            || picPositionConfig.backgroundPicPos!!.size < 4
+                            || index > 3) {
+                        return@apply
                     }
+                    val position = picPositionConfig.backgroundPicPos!![index]
+                    if (position.height <= 0) {
+                        return@apply
+                    }
+                    _backgroundBitmap[index] = cutBitmap(logHead, bg, position.y, position.height)
+                    view.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[index])
+
+                    if (index == 1) {
+                        //发现页
+                        _contactPageLocation[0] = position.y
+                        _contactPageLocation[1] = position.height
+                        _backgroundBitmap[2] = cutBitmap(
+                                logHead,
+                                AppCustomConfig.getTabBg(2),
+                                _contactPageLocation[0],
+                                _contactPageLocation[1])
+                        DiscoverPage?.background = NightModeUtils.getBackgroundDrawable(_backgroundBitmap[2])
+
+                        //回到最近对话界面
+                        Objects.Main.LauncherUI_mViewPager?.apply {
+                            Methods.WxViewPager_selectedPage.invoke(this, 0, false, false, 0)
+                        }
+                    }
+                    LogUtil.log("背景图片" + index + "已生成")
+                    return
+                } catch (e: Exception) {
+                    LogUtil.log(e)
                 }
-                LogUtil.log("背景图片" + index + "已生成")
-                return
-            } catch (e: Exception) {
-                LogUtil.log(e)
             }
         }
 
@@ -414,31 +421,33 @@ object BackgroundImageHooker {
             }
 
 //            记录位置信息到文件
-            try {
-                if (picPositionConfig.screenHeight <= 0) {
-                    picPositionConfig.screenHeight = HookConfig.value_resolution[1]
-                }
-                if (picPositionConfig.backgroundPicPos == null) {
-                    picPositionConfig.backgroundPicPos = mutableListOf(
-                            PicPosition(0, 0),
-                            PicPosition(0, 0),
-                            PicPosition(0, 0),
-                            PicPosition(0, 0)
-                    )
-                }
-                //图片底部的y值
-                val bottomY: Int = location[1] + height
-                if (bottomY == picPositionConfig.screenHeight
-                        || bottomY + _tabLayoutHeightOnBottom == picPositionConfig.screenHeight) {
-                    picPositionConfig.backgroundPicPos!![index] = PicPosition(location[1], height)
-                    if (index == 1) {
-                        //连同发现页一起写了
-                        picPositionConfig.backgroundPicPos!![2] = PicPosition(location[1], height)
+            if (HookConfig.is_bg_preload_mode) {
+                try {
+                    if (picPositionConfig.screenHeight <= 0) {
+                        picPositionConfig.screenHeight = HookConfig.value_resolution[1]
                     }
-                    AppCustomConfig.writePicPositionConfig()
+                    if (picPositionConfig.backgroundPicPos == null) {
+                        picPositionConfig.backgroundPicPos = mutableListOf(
+                                PicPosition(0, 0),
+                                PicPosition(0, 0),
+                                PicPosition(0, 0),
+                                PicPosition(0, 0)
+                        )
+                    }
+                    //图片底部的y值
+                    val bottomY: Int = location[1] + height
+                    if (bottomY == picPositionConfig.screenHeight
+                            || bottomY + _tabLayoutHeightOnBottom == picPositionConfig.screenHeight) {
+                        picPositionConfig.backgroundPicPos!![index] = PicPosition(location[1], height)
+                        if (index == 1) {
+                            //连同发现页一起写了
+                            picPositionConfig.backgroundPicPos!![2] = PicPosition(location[1], height)
+                        }
+                        AppCustomConfig.writePicPositionConfig()
+                    }
+                } catch (e: Exception) {
+                    LogUtil.log(e)
                 }
-            } catch (e: Exception) {
-                LogUtil.log(e)
             }
         })
     }

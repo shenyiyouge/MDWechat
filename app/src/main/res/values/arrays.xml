@@ -68,4 +68,12 @@
         <item>compatibleMode</item>
         <item>transparentMode</item>
     </string-array>
+    <string-array name="bg_immersion_modes">
+        <item>兼容模式</item>
+        <item>预加载模式</item>
+    </string-array>
+    <string-array name="bg_immersion_value">
+        <item>compatibleMode</item>
+        <item>preloadMode</item>
+    </string-array>
 </resources>

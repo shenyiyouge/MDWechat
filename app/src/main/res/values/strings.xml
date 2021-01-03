@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">MDWechat (官改)</string>
     <string name="text_category_switch">开关</string>
     <string name="key_hook_switch">hookSwitch</string>
@@ -15,7 +15,7 @@
     <string name="summary_color_tertiary">(如果着色)自定义导航其他页页图标前景色等</string>
     <string name="text_settings_info">修改之后停止微信重启生效.</string>
     <string name="text_donate">捐赠(支付宝)</string>
-    <string name="summary_donate">向原作者捐赠</string>
+    <string name="summary_donate">向原作者 Blanke 捐赠</string>
     <string name="text_donate_wechat">捐赠(微信)</string>
     <string name="key_donate">key_donate</string>
     <string name="text_category_settings">设置</string>
@@ -107,6 +107,8 @@
     <string name="summary_hook_bubble_in_night_mode">当色系为亮色系且开启深色模式时也启用自定义气泡。依赖于「配色方案 -> 自动切换暗色系」</string>
     <string name="key_hook_bg_immersion">key_hook_bg_immersion</string>
     <string name="text_hook_bg_immersion">沉浸主题</string>
+    <string name="text_hook_bg_immersion_mode">沉浸主题设置</string>
+    <string name="summary_hook_bg_immersion_mode">(click here)沉浸主题的一些模式选择(开启沉浸主题后生效)</string>
     <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面(聊天背景需在微信中设置:「设置 -> 聊天 -> 聊天背景」; 默认使用最近聊天页的背景图作为聊天页的背景)。</string>
     <string name="key_hook_tab_bg">key_hook_tab_bg</string>
     <string name="text_hook_tab_bg">主界面背景修改</string>
@@ -308,6 +310,9 @@
     <string name="key_chat_bg_mode">key_chat_bg_mode</string>
     <string name="text_chat_bg_mode">聊天输入框显示模式</string>
     <string name="summary_chat_bg_mode">建议输入框透明模式，有显示问题可选择兼容模式</string>
+    <string name="key_bg_immersion_mode">key_bg_immersion_mode</string>
+    <string name="text_bg_immersion_mode">主界面背景显示模式</string>
+    <string name="summary_bg_immersion_mode">预加载模式：比兼容模式快那么一丢丢\n兼容模式：比预加载模式稳定那么一丢丢</string>
     <string name="key_select_bg_chat">key_select_bg_chat</string>
     <string name="summary_select_bg_chat">沉浸主题专用，建议跟最近聊天页背景保持一致</string>
     <string name="text_select_bg_chat">聊天页背景图</string>
@@ -336,12 +341,13 @@
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
-    <string name="latest_wechat_version">7.0.18</string>
+    <string name="latest_wechat_version">7.0.22</string>
     <string name="app_name_version">MDWechat (官改)</string>
     <string name="key_joshcai_info">key_joshcai_info</string>
 <!--    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将原作者(Blanke)在 github 上开源的代码进行二次开发，使其能够适配较新的微信。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>-->
-    <!--    <string name="josh_cai_info">适配微信7.0.18(国内版)。 在play版或更高版本的微信中使用可能会出现一些bug，严重时可能导致封号等后果。\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>-->
+    <!--    <string name="josh_cai_info">适配微信7.0.22(国内版)。 在play版或更高版本的微信中使用可能会出现一些bug，严重时可能导致封号等后果。\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>-->
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本</string>
     <string name="josh_cai_info_outdated_suffix">在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
-    <string name="josh_cai_info">适配微信7.0.18(国内版)\n\n 使用沉浸主题的用户现在可以到 "背景 -> 沉浸主题 -> 聊天输入框显示模式" 更改其显示模式 。</string>
+    <string name="josh_cai_info">适配微信7.0.22</string>
+    <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件可以请他喝杯奶茶。</string>
 </resources>

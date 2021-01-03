@@ -37,22 +37,23 @@
         android:summary="@string/summary_about_settings"
         android:title="@string/text_about_settings">
         <Preference
-            android:key="@string/key_releases"
-            android:title="@string/text_releases" />
+            android:layout="@layout/preference_info"
+            android:summary="@string/josh_cai_info2" />
+
+        <!--捐赠-->
         <Preference
             android:key="@string/key_donate"
             android:summary="@string/summary_donate"
             android:title="@string/text_donate" />
-
         <Preference
             android:key="@string/key_donate_wechat"
             android:summary="@string/summary_donate"
             android:title="@string/text_donate_wechat" />
 
-        <!--<Preference-->
-        <!--android:key="@string/key_feedback"-->
-        <!--android:title="@string/text_feedback" />-->
-
+        <PreferenceCategory />
+        <Preference
+            android:key="@string/key_releases"
+            android:title="@string/text_releases" />
         <Preference
             android:key="@string/key_feedback_group"
             android:summary="@string/text_feedback_group_info"
@@ -336,15 +337,6 @@
                 android:title="@string/text_select_bg_3" />
         </PreferenceScreen>
         <PreferenceCategory android:title="@string/text_hook_bg_immersion">
-            <ListPreference
-                android:defaultValue="false"
-                android:dependency="@string/key_hook_tab_bg"
-                android:dialogTitle="@string/text_chat_bg_mode"
-                android:entries="@array/chat_bg_modes"
-                android:entryValues="@array/chat_bg_mode_value"
-                android:key="@string/key_chat_bg_mode"
-                android:summary="@string/summary_chat_bg_mode"
-                android:title="@string/text_chat_bg_mode" />
             <SwitchPreference
                 android:defaultValue="false"
                 android:dependency="@string/key_hook_tab_bg"
@@ -380,6 +372,31 @@
             android:summary="@string/summary_hook_conversation_background_alpha"
             android:title="@string/text_hook_conversation_background_alpha"
             tools:ignore="Deprecated" />
+    </PreferenceScreen>
+    <!--沉浸主题模式选择-->
+    <PreferenceScreen
+        android:dependency="@string/key_hook_bg_immersion"
+        android:layout="@layout/preference_info"
+        android:summary="@string/summary_hook_bg_immersion_mode"
+        android:title="@string/text_hook_bg_immersion_mode">
+        <ListPreference
+            android:defaultValue="false"
+            android:dependency="@string/key_hook_tab_bg"
+            android:dialogTitle="@string/text_chat_bg_mode"
+            android:entries="@array/chat_bg_modes"
+            android:entryValues="@array/chat_bg_mode_value"
+            android:key="@string/key_chat_bg_mode"
+            android:summary="@string/summary_chat_bg_mode"
+            android:title="@string/text_chat_bg_mode" />
+        <ListPreference
+            android:defaultValue="false"
+            android:dependency="@string/key_hook_bg_immersion"
+            android:dialogTitle="@string/text_bg_immersion_mode"
+            android:entries="@array/bg_immersion_modes"
+            android:entryValues="@array/bg_immersion_value"
+            android:key="@string/key_bg_immersion_mode"
+            android:summary="@string/summary_bg_immersion_mode"
+            android:title="@string/text_bg_immersion_mode" />
     </PreferenceScreen>
     <!--主界面设置-->
     <PreferenceScreen

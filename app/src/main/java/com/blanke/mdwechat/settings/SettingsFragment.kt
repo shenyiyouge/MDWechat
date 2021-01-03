@@ -165,7 +165,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             AlertDialog.Builder(activity)
                     .setTitle("警告")
                     .setMessage("当前版本为${BuildConfig.VERSION_NAME}版，不是正式版本，可能会遇到各种问题/无法预估的风险等。" +
-                            "如果你想反馈问题，请打开最底部的调试开关，重启微信，将/sdcard/mdwechat/logs/目录下当天的日志发我邮箱。" +
+                            "如果你想反馈问题，请打开最底部的调试开关，重启微信，将/sdcard/mdwechat/logs/目录下当天的日志发我QQ。" +
                             "谢谢合作！")
                     .setPositiveButton("我知道了", null)
                     .setCancelable(false)
@@ -200,7 +200,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
     private fun setLayoutResource(preference: Preference) {
         if (preference is PreferenceScreen) {
             val ps = preference
-            ps.layoutResource = R.layout.preference_screen
+//            ps.layoutResource = R.layout.preference_screen
             val cnt = ps.preferenceCount
             for (i in 0 until cnt) {
                 val p = ps.getPreference(i)
