@@ -200,7 +200,10 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
     private fun setLayoutResource(preference: Preference) {
         if (preference is PreferenceScreen) {
             val ps = preference
-//            ps.layoutResource = R.layout.preference_screen
+            if (ps.layoutResource != R.layout.preference_warning
+                    || ps.layoutResource != R.layout.preference_info) {
+                ps.layoutResource = R.layout.preference_screen
+            }
             val cnt = ps.preferenceCount
             for (i in 0 until cnt) {
                 val p = ps.getPreference(i)
