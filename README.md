@@ -26,15 +26,15 @@ MDWechat
 # 版本支持
 - 只支持 Android 5.0 以上
 - 支持的微信版本: 6.7.3 - 7.0.22；由于测试不够全面， MDWechat 的某些功能可能对于某些微信版本不生效。若不生效可以升级微信版本或者反馈问题到Issue里。
-- MDWechat(官改) 4.0 对于国内版的适配性比较好，play版微信在部分机型上会出现无法适配的状况。
+- MDWechat(官改) 4.0 对于国内版的适配性比较好，play版微信在部分机型/框架上可能出现无法适配的状况。
 
 # 效果预览
+![gif_demo](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/demo.gif)
 ![main00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main00.png)
 ![chat00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/chat00.png)
 ![main01](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main01.png)
 ![main02](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main02.png)
 ![main03](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main03.png)
-![main04](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main04.png)
 ![main05](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main05.png)
 ![chat01](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/chat01.png)
 
