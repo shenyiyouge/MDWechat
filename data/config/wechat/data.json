@@ -1,8 +1,18 @@
 [
   {
+    "name": "7.0.22.config",
+    "desc": "7.0.22 国内版",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/7.0.22/7.0.22.config"
+  },
+  {
     "name": "7.0.18.config",
     "desc": "7.0.18 国内版",
     "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/7.0.18/7.0.18.config"
+  },
+  {
+    "name": "7.0.17.config",
+    "desc": "7.0.17 play版 (64位)",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/7.0.17-playx64/7.0.17.config"
   },
   {
     "name": "7.0.17.config",
