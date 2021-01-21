@@ -23,8 +23,14 @@ object ChattingRoomHook {
     var actionBarBottom = 0
     private val transparentDark = Color.parseColor("#30000000")
     private val transparentLight = Color.parseColor("#30EEEEEE")
-    private val isBgLight = !HookConfig.is_hook_scheme_dark && !NightModeUtils.isNightMode()
-    private val transparentBackground = if (isBgLight) transparentLight else transparentDark
+    private fun isBgLight(): Boolean {
+        return !HookConfig.is_hook_scheme_dark && !NightModeUtils.isNightMode()
+    }
+
+    private fun transparentBackground(): Int {
+        return if (isBgLight()) transparentLight else transparentDark
+    }
+
     private var footerLocation = mutableListOf(-1, -1)
 
     fun setConversationColor(actionBar: View) {
@@ -117,7 +123,7 @@ object ChattingRoomHook {
                     //endregion
                 }
                 //region 底栏输入框
-                chatFooterChild2.background = ColorDrawable(transparentBackground)
+                chatFooterChild2.background = ColorDrawable(transparentBackground())
                 LogUtil.log("去除聊天底栏背景")
                 //endregion
             } else {
@@ -156,17 +162,17 @@ object ChattingRoomHook {
         // 7.0.17 + MIUI 12 不透明 fix
         if (treeStacks.containsKey("chatFooterChild2_editText_MIUI12")) {
             ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))
-                    ?.background = ColorDrawable(transparentBackground)
+                    ?.background = ColorDrawable(transparentBackground())
         }
 
         val editText = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_editText")) as EditText
-        editText.background = ColorDrawable(transparentBackground)
+        editText.background = ColorDrawable(transparentBackground())
         editText.setTextColor(NightModeUtils.colorSecondary)
 //        editText.setTextColor(if (isBgLight) WeChatHelper.colorDark else WeChatHelper.colorWhite)
         val talkButton = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_talkButton")) as View
-        talkButton.background = ColorDrawable(transparentBackground)
+        talkButton.background = ColorDrawable(transparentBackground())
 
         //表情
         val faceButton = ViewUtils.getChildView1(chatFooterChild2,
@@ -178,7 +184,7 @@ object ChattingRoomHook {
         //发送
         val sendButton = ViewUtils.getChildView1(chatFooterChild2,
                 treeStacks.getValue("chatFooterChild2_sendButton")) as Button
-        sendButton.setBackgroundColor(transparentBackground)
+        sendButton.setBackgroundColor(transparentBackground())
         sendButton.setTextColor(NightModeUtils.colorSecondary)
         LogUtil.log("替换聊天底栏控件")
 //endregion
