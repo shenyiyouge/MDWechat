@@ -43,6 +43,7 @@ object HookConfig {
     private val key_chat_bg_mode = "key_chat_bg_mode"
     private val key_bg_immersion_mode = "key_bg_immersion_mode"
     private val key_hook_bg_immersion = "key_hook_bg_immersion"
+    private val key_enable_bg_chat = "key_enable_bg_chat"
     private val key_hook_tab = "key_hook_tab"
     private val key_hide_tab = "key_hide_tab"
     private val key_tab_layout_filtered = "key_tab_layout_filtered"
@@ -237,6 +238,10 @@ object HookConfig {
         version && is_hook_tab_bg && WeChatHelper.XMOD_PREFS.getBoolean(key_hook_bg_immersion, true)
     }
 
+    val is_enable_bg_chat: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_enable_bg_chat, true)
+        }
     val is_hook_tab: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab, true)

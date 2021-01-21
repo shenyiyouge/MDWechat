@@ -313,6 +313,8 @@
     <string name="key_bg_immersion_mode">key_bg_immersion_mode</string>
     <string name="text_bg_immersion_mode">主界面背景显示模式</string>
     <string name="summary_bg_immersion_mode">预加载模式：比兼容模式快那么一丢丢\n兼容模式：比预加载模式稳定那么一丢丢</string>
+    <string name="key_enable_bg_chat">key_enable_bg_chat</string>
+    <string name="text_enable_bg_chat">替换微信默认聊天页背景</string>
     <string name="key_select_bg_chat">key_select_bg_chat</string>
     <string name="summary_select_bg_chat">沉浸主题专用，建议跟最近聊天页背景保持一致</string>
     <string name="text_select_bg_chat">聊天页背景图</string>

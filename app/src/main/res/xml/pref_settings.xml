@@ -320,10 +320,6 @@
             android:title="@string/text_hook_tab_bg" />
         <PreferenceScreen android:title="@string/text_select_bg">
             <Preference
-                android:key="@string/key_select_bg_chat"
-                android:summary="@string/summary_select_bg_chat"
-                android:title="@string/text_select_bg_chat" />
-            <Preference
                 android:key="@string/key_select_bg_0"
                 android:title="@string/text_select_bg_0" />
             <Preference
@@ -335,6 +331,17 @@
             <Preference
                 android:key="@string/key_select_bg_3"
                 android:title="@string/text_select_bg_3" />
+            <PreferenceCategory>
+                <SwitchPreference
+                    android:defaultValue="true"
+                    android:key="@string/key_enable_bg_chat"
+                    android:title="@string/text_enable_bg_chat" />
+                <Preference
+                    android:dependency="@string/key_enable_bg_chat"
+                    android:key="@string/key_select_bg_chat"
+                    android:summary="@string/summary_select_bg_chat"
+                    android:title="@string/text_select_bg_chat" />
+            </PreferenceCategory>
         </PreferenceScreen>
         <PreferenceCategory android:title="@string/text_hook_bg_immersion">
             <SwitchPreference
