@@ -364,10 +364,11 @@ object BackgroundImageHooker {
 
             var height = view.height
             when (index) {
+                // 由于view渲染和识别顺序的问题这里得做微调
                 0, 3 -> {
-                    if (_tabLayoutOnTop) {
-                        location[1] += _tabLayoutOnTopOffset
-                        height -= _tabLayoutOnTopOffset
+                    if (HookConfig.is_hook_hide_actionbar && !_tabLayoutOnTop) {
+                        location[1] -= _tabLayoutOnTopOffset
+                        height += _tabLayoutOnTopOffset
                     }
                 }
             }
