@@ -167,8 +167,8 @@ object BackgroundImageHook {
         _contactPageFix[page] = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
         contactPageFix.background = _contactPageFix[page]
     }
-
     //endregion
+
     //region 聊天
     fun setActionBarBitmapInConversations(actionBar: View) {
         if (!HookConfig.is_hook_bg_immersion) {
@@ -201,6 +201,9 @@ object BackgroundImageHook {
 //                        Objects.Main.actionBarInConversations = actionBar
                         _actionBarBitmapInConversations = background
                         ChattingRoomHook.setConversationColor(actionBar)
+                    } else {
+                        LogUtil.log("匹配聊天界面失败")
+                        LogUtil.logViewStackTraces(chattingUILayout)
                     }
 //                    else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
 //                        LogUtil.log("已找到朋友圈界面")
@@ -237,16 +240,15 @@ object BackgroundImageHook {
 
                     } else {
                         LogUtil.log("匹配通过搜索打开的聊天界面失败")
-                        LogUtil.logViewStackTraces(actionBar)
+                        LogUtil.logViewStackTraces(chattingUILayout)
                     }
 //            isSettingMap = false
                 })
             }
         }
     }
-
-
     //endregion
+
     //region 背景
     fun setConversationBitmap(view: View) {
         _backgroundBitmap[0]?.apply {
