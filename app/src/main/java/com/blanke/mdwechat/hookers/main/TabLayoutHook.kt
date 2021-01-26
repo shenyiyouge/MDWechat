@@ -14,7 +14,6 @@ import com.blanke.mdwechat.*
 import com.blanke.mdwechat.Objects
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.hookers.BackgroundImageHooker
 import com.blanke.mdwechat.hookers.StatusBarHooker
 import com.blanke.mdwechat.util.*
 import com.flyco.tablayout.CommonTabLayout
@@ -83,7 +82,7 @@ object TabLayoutHook {
         params.height = height
         mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getTabLayoutBitmapAtBottom(params.height, 0))
+            tabLayout.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getTabLayoutBitmapAtBottom(params.height, 0))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -109,11 +108,11 @@ object TabLayoutHook {
         val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val px48 = ConvertUtils.dp2px(resContext, 48f)
         params.height = px48 + HookConfig.value_tab_layout_offset
-        BackgroundImageHooker._tabLayoutOnTopOffset = params.height
+        BackgroundImageHook._tabLayoutOnTopOffset = params.height
 //        mainThread {
         Objects.Main.tabLayout = tabLayout
-        BackgroundImageHooker._tabLayoutOnTop = true
-        BackgroundImageHooker.setTabLayoutBitmap(0)
+        BackgroundImageHook._tabLayoutOnTop = true
+        BackgroundImageHook.setTabLayoutBitmap(0)
 //        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)
@@ -152,7 +151,7 @@ object TabLayoutHook {
                     paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
                     val view = FrameLayout(context)
 //                    Objects.Main.actionBar = view
-                    view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHooker.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                    view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)

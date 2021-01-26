@@ -21,6 +21,7 @@ import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.hookers.main.BackgroundImageHook
 import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
@@ -87,7 +88,7 @@ object LauncherUIHooker : HookerProvider {
                             }
 
                             val linearViewGroup = viewPager.parent as ViewGroup
-                            BackgroundImageHooker.contactPageParent = linearViewGroup
+                            BackgroundImageHook.contactPageParent = linearViewGroup
                             val contentViewGroup = linearViewGroup.parent as ViewGroup
                             Objects.Main.LauncherUI_mContentLayout = contentViewGroup
                             Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
@@ -103,8 +104,8 @@ object LauncherUIHooker : HookerProvider {
 
                             val tabView = linearViewGroup.getChildAt(1) as ViewGroup
                             val tabViewUnderneathHeight = measureHeight(tabView)
-                            if (BackgroundImageHooker._tabLayoutHeightOnBottom < 0)
-                                BackgroundImageHooker._tabLayoutHeightOnBottom = tabViewUnderneathHeight
+                            if (BackgroundImageHook._tabLayoutHeightOnBottom < 0)
+                                BackgroundImageHook._tabLayoutHeightOnBottom = tabViewUnderneathHeight
 
                             if (isKeyHideTab) {
                                 // region 隐藏底栏
@@ -142,7 +143,7 @@ object LauncherUIHooker : HookerProvider {
                                 }
                                 else -> {
                                     log("不用添加 TabLayout")
-                                    BackgroundImageHooker._tabLayoutLocation[1] = -1
+                                    BackgroundImageHook._tabLayoutLocation[1] = -1
                                 }
                             }
                             if (shouldFix) {
@@ -181,7 +182,7 @@ object LauncherUIHooker : HookerProvider {
 //                    log("WxViewPager_selectedPage position = $position , arg[1] =${param?.args!![1]}")
                     LauncherUI_mTabLayout?.currentTab = position
                     Objects.Main.pagePosition = position
-                    BackgroundImageHooker.setGuideBarBitmaps(position)
+                    BackgroundImageHook.setGuideBarBitmaps(position)
                 }
             }
         })
@@ -198,7 +199,7 @@ object LauncherUIHooker : HookerProvider {
                     startScrollPosition = position as Int
                     indicatorOffset = positionOffset
                     Objects.Main.pagePosition = startScrollPosition
-                    BackgroundImageHooker.setGuideBarBitmaps(startScrollPosition)
+                    BackgroundImageHook.setGuideBarBitmaps(startScrollPosition)
                 }
             }
         })

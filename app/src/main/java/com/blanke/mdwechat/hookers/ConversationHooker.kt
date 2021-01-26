@@ -16,6 +16,7 @@ import com.blanke.mdwechat.WechatGlobal
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.hookers.main.BackgroundImageHook
 import com.blanke.mdwechat.util.LogUtil
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
@@ -55,7 +56,7 @@ object ConversationHooker : HookerProvider {
             private fun init(fragment: Any) {
                 val listView = ConversationFragment_mListView.get(fragment)
                 if (listView != null && listView is View) {
-                    BackgroundImageHooker.setConversationBitmap(listView)
+                    BackgroundImageHook.setConversationBitmap(listView)
                 }
             }
         })

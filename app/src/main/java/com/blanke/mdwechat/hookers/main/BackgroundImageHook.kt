@@ -1,4 +1,4 @@
-package com.blanke.mdwechat.hookers
+package com.blanke.mdwechat.hookers.main
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -15,10 +15,9 @@ import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.AppCustomConfig.picPositionConfig
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.hookers.main.ChattingRoomHook
 import com.blanke.mdwechat.util.*
 
-object BackgroundImageHooker {
+object BackgroundImageHook {
     var _tabLayoutOnTop = false
     var _tabLayoutOnTopOffset = 0
     var _tabLayoutHeightOnBottom: Int = -1//微信默认tab的高度

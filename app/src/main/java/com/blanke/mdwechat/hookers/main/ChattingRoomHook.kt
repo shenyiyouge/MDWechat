@@ -10,7 +10,6 @@ import android.widget.*
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig.getChatBg
 import com.blanke.mdwechat.config.HookConfig
-import com.blanke.mdwechat.hookers.BackgroundImageHooker
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.ViewTreeUtils
@@ -80,7 +79,7 @@ object ChattingRoomHook {
                 (ChattingScrollLayoutItem.getChildAt(2)::class.java.name == "com.tencent.mm.ui.chatting.ChatFooterCustom")) {
             //底栏
             val footer = ChattingScrollLayoutItem.getChildAt(2) as View
-            val location = BackgroundImageHooker.setBackgroundBitmap("公众号 footer", footer, getChatBg(), null)
+            val location = BackgroundImageHook.setBackgroundBitmap("公众号 footer", footer, getChatBg(), null)
             if ((footerLocation[1] < 0) && (location[1] > 0)) {
                 footerLocation[0] = location[0]
                 footerLocation[1] = location[1]
@@ -110,14 +109,14 @@ object ChattingRoomHook {
                     val bgViewWithEditText = FrameLayout(context)
                     bgViewWithEditText.elevation = -100f
                     (getParentViewSafe(ChattingScrollLayoutItem, 1) as ViewGroup).addView(bgViewWithEditText, 1, params)
-                    bgViewWithEditText.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
+                    bgViewWithEditText.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("替换自定义聊天背景+输入框背景")
                     //endregion
                     //region 聊天背景 MIUI12
                     val bgViewMiui12fix = FrameLayout(context)
                     bgGroup.addView(bgViewMiui12fix, 1, params)
-                    bgViewMiui12fix.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
+                    bgViewMiui12fix.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("聊天背景 + MIUI12 fix test")
                     //endregion
@@ -134,17 +133,17 @@ object ChattingRoomHook {
                     val view = FrameLayout(context)
                     params.height = HookConfig.value_resolution[1] - actionBarBottom
                     bgGroup.addView(view, 1, params)
-                    view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("ChattingImageBGView",
+                    view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("替换自定义聊天背景")
 //endregion
                 }
                 // region底栏输入框
                 if (footerLocation[1] > 0) {
-                    chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHooker.cutBitmap("chatFooterChild2",
+                    chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("chatFooterChild2",
                             getChatBg(), footerLocation[0], ViewUtils.measureHeight(chatFooterChild2)))
                 } else {
-                    BackgroundImageHooker.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
+                    BackgroundImageHook.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)
                 }
                 LogUtil.log("替换聊天底栏背景")
                 //endregion

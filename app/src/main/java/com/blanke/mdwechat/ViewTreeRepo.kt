@@ -288,6 +288,27 @@ object ViewTreeRepo {
                                                 ViewTreeItem("com.tencent.mm.ui.chatting.view.AvatarImageView"),
                                                 ViewTreeItem("com.tencent.mm.ui.AddressView"))))))))))
     }
+    val ContactListViewItem_8_0: ViewTree by lazy {
+        ViewTree(
+                mapOf("headerView" to intArrayOf(0),
+                        "innerView" to intArrayOf(1, 0),
+                        "contentView" to intArrayOf(1),
+                        "titleView" to intArrayOf(1, 0, 3, 1),
+                        "headTextView" to intArrayOf(0, 0)),
+                ViewTreeItem(Classes.NoDrawingCacheLinearLayout.name, arrayOf(
+                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(//headerView
+                                ViewTreeItem(CC.TextView.name)//headTextView
+                        )),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(//contentView
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(//innerView
+                                        ViewTreeItem(CC.TextView.name),
+                                        ViewTreeItem(CC.TextView.name),
+                                        ViewTreeItem(CC.TextView.name),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem("com.tencent.mm.ui.chatting.view.AvatarImageView"),
+                                                ViewTreeItem(Classes.NoMeasuredTextView.name)//titleView
+                                        )))))))))
+    }
 
     // 联系人上方分组列表
     val ContactHeaderItem: ViewTree by lazy {
