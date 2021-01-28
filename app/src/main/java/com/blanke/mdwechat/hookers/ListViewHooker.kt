@@ -375,7 +375,7 @@ object ListViewHooker : HookerProvider {
                                             BackgroundImageHook.setMainPageBitmap("设置页头像栏", this, AppCustomConfig.getTabBg(3), 4, 4)
                                         }
                                     } else {
-                                        this.background = if (NightModeUtils.isNightMode()) WeChatHelper.drawableDark else WeChatHelper.drawableWhite
+                                        this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
                                     }
                                 }
                             }
@@ -391,7 +391,7 @@ object ListViewHooker : HookerProvider {
                                             BackgroundImageHook.setMainPageBitmap("设置页头像栏 (状态) ", this, AppCustomConfig.getTabBg(3), 5, 4)
                                         }
                                     } else {
-                                        this.background = if (NightModeUtils.isNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                                        this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
                                     }
                                 }
                             }
