@@ -19,6 +19,9 @@ object Objects {
         var tabLayout: CommonTabLayout? = null
         var contactPageFix: View? = null
         var pagePosition = 0
+
+        //小程序下拉之后的填空
+        var actionBarAppbrandFix: View? = null
     }
 
 //    fun clear() {

@@ -96,6 +96,7 @@ object TabLayoutHook {
         }
     }
 
+    //    小程序下拉之后需要填空
     fun addTabLayout(viewPagerLinearLayout: ViewGroup) {
         val context = viewPagerLinearLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewPagerLinearLayout.context
@@ -153,6 +154,7 @@ object TabLayoutHook {
 //                    Objects.Main.actionBar = view
                     view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
+                    Objects.Main.actionBarAppbrandFix = view
                 }
                 viewPagerLinearLayout.addView(tabLayout, 2, params)
             }

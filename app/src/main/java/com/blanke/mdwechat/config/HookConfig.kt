@@ -49,6 +49,7 @@ object HookConfig {
     private val key_hide_tab = "key_hide_tab"
     private val key_tab_layout_filtered = "key_tab_layout_filtered"
     private val key_tab_layout_on_top = "key_tab_layout_on_top"
+    private val key_settings_page_transparent = "key_settings_page_transparent"
     private val key_hook_hide_wx_tab = "key_hook_hide_wx_tab"
     private val key_hook_hide_wx_tab_2 = "key_hook_hide_wx_tab_2"
     private val key_hook_hide_wx_tab_3 = "key_hook_hide_wx_tab_3"
@@ -259,6 +260,10 @@ object HookConfig {
     val is_tab_layout_on_top: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_on_top, false)
+        }
+    val is_settings_page_transparent: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_settings_page_transparent, false)
         }
     val is_hook_tab_elevation: Boolean
         get() {

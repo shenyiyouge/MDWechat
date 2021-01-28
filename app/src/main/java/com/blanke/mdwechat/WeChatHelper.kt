@@ -19,28 +19,24 @@ import java.io.File
 object WeChatHelper {
     lateinit var XMOD_PREFS: XSharedPreferences
 
+    //微信8.0.0第四页底色
+    val wechatWhite: Int = Color.parseColor("#ededed")
+    val wechatDark: Int = Color.parseColor("#111111")
 
-    val colorWhite: Int
-        get() = Color.parseColor("#FAFAFA")
-    val colorDarkWhite: Int
-        get() =  Color.LTGRAY
+    val colorWhite: Int = Color.parseColor("#FAFAFA")
+    val colorDarkWhite: Int = Color.LTGRAY
 
-    val colorDark: Int
-        get() = Color.parseColor("#232323")
+    val colorDark: Int = Color.parseColor("#232323")
 
     //深色模式下 action bar 的颜色
-    val colorDarkPrimary: Int
-        get() = Color.parseColor("#333333")
+    val colorDarkPrimary: Int = Color.parseColor("#333333")
 
 
-    val drawableTransparent: ColorDrawable
-        get() = ColorDrawable(Color.TRANSPARENT)
+    val drawableTransparent: ColorDrawable = ColorDrawable(Color.TRANSPARENT)
 
-    val drawableWhite: ColorDrawable
-        get() = ColorDrawable(colorWhite)
+    val drawableWhite: ColorDrawable = ColorDrawable(colorWhite)
 
-    val drawableDark: ColorDrawable
-        get() = ColorDrawable(colorDark)
+    val drawableDark: ColorDrawable = ColorDrawable(colorDark)
 
     val colorPrimaryDrawable: ColorDrawable
         get() {
@@ -71,24 +67,30 @@ object WeChatHelper {
             return imageRippleDrawable
         }
 
-    fun getLeftBubble(resources: Resources,
-                      isTint: Boolean = HookConfig.is_hook_bubble_tint,
-                      tintColor: Int = HookConfig.get_hook_bubble_tint_left): Drawable? {
+    fun getLeftBubble(
+            resources: Resources,
+            isTint: Boolean = HookConfig.is_hook_bubble_tint,
+            tintColor: Int = HookConfig.get_hook_bubble_tint_left
+    ): Drawable? {
         val bubble = AppCustomConfig.getBubbleLeftIcon() ?: return null
         return getBubble(bubble, resources, isTint, tintColor)
     }
 
-    fun getRightBubble(resources: Resources,
-                       isTint: Boolean = HookConfig.is_hook_bubble_tint,
-                       tintColor: Int = HookConfig.get_hook_bubble_tint_right): Drawable? {
+    fun getRightBubble(
+            resources: Resources,
+            isTint: Boolean = HookConfig.is_hook_bubble_tint,
+            tintColor: Int = HookConfig.get_hook_bubble_tint_right
+    ): Drawable? {
         val bubble = AppCustomConfig.getBubbleRightIcon() ?: return null
         return getBubble(bubble, resources, isTint, tintColor)
     }
 
-    private fun getBubble(sourceBitmap: Bitmap,
-                          resources: Resources,
-                          isTint: Boolean = HookConfig.is_hook_bubble_tint,
-                          tintColor: Int = HookConfig.get_hook_bubble_tint_right): Drawable? {
+    private fun getBubble(
+            sourceBitmap: Bitmap,
+            resources: Resources,
+            isTint: Boolean = HookConfig.is_hook_bubble_tint,
+            tintColor: Int = HookConfig.get_hook_bubble_tint_right
+    ): Drawable? {
         val bubbleDrawable = DrawableUtils.getNineDrawable(resources, sourceBitmap)
         val drawable = StateListDrawable()
         val pressBubbleDrawable = bubbleDrawable.constantState!!.newDrawable().mutate()

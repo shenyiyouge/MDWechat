@@ -59,19 +59,18 @@
             android:summary="@string/text_feedback_group_info"
             android:title="@string/text_feedback_group" />
 
-        <!--        <PreferenceScreen-->
-        <!--            android:key="@string/key_feedback_email"-->
-        <!--            android:summary="@string/text_feedback_email_info"-->
-        <!--            android:title="@string/text_feedback_email">-->
-        <!--            <Preference-->
-        <!--                android:key="@string/key_feedback_email_josh_cai"-->
-        <!--                android:summary="@string/text_feedback_email_josh_cai_info"-->
-        <!--                android:title="@string/text_feedback_email_josh_cai" />-->
-        <!--            <Preference-->
-        <!--                android:key="@string/key_feedback_email_blanke"-->
-        <!--                android:summary="@string/text_feedback_email_blanke_info"-->
-        <!--                android:title="@string/text_feedback_email_blanke" />-->
-        <!--        </PreferenceScreen>-->
+        <PreferenceScreen
+            android:key="@string/key_feedback_email"
+            android:summary="@string/text_feedback_email_info"
+            android:title="@string/text_feedback_email">
+            <Preference
+                android:key="@string/key_feedback_email_josh_cai"
+                android:title="@string/text_feedback_email_josh_cai" />
+            <!--                    <Preference-->
+            <!--                        android:key="@string/key_feedback_email_blanke"-->
+            <!--                        android:summary="@string/text_feedback_email_blanke_info"-->
+            <!--                        android:title="@string/text_feedback_email_blanke" />-->
+        </PreferenceScreen>
 
         <Preference
             android:key="@string/key_feedback_gitee"
@@ -410,15 +409,30 @@
         android:dependency="@string/key_hook_switch"
         android:key="@string/key_main_settings"
         android:title="@string/text_main_settings">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/key_hook_remove_appbrand"
-            android:summary="@string/key_hook_remove_appbrand_summary"
-            android:title="@string/text_hook_remove_appbrand" />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/key_hook_avatar"
-            android:title="@string/text_hook_avatar" />
+        <PreferenceCategory android:title="@string/text_wechat_8_0_0">
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/key_settings_page_transparent"
+                android:summary="@string/summary_settings_page_transparent"
+                android:title="@string/text_settings_page_transparent" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/text_others">
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/key_hook_remove_appbrand"
+                android:summary="@string/key_hook_remove_appbrand_summary"
+                android:title="@string/text_hook_remove_appbrand" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/key_hook_avatar"
+                android:title="@string/text_hook_avatar" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/key_hide_wechatId"
+                android:summary="@string/summmary_hide_wechatId"
+                android:title="@string/text_hide_wechatId" />
+        </PreferenceCategory>
         <PreferenceCategory android:title="@string/text_help_float_button">
             <Preference
                 android:key="@string/key_float_button_help"

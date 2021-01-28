@@ -3,14 +3,12 @@ package com.blanke.mdwechat.hookers.main
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import com.blanke.mdwechat.Common
-import com.blanke.mdwechat.Methods
-import com.blanke.mdwechat.Objects
-import com.blanke.mdwechat.ViewTreeRepoThisVersion
+import com.blanke.mdwechat.*
 import com.blanke.mdwechat.bean.PicPosition
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.AppCustomConfig.picPositionConfig
@@ -35,7 +33,7 @@ object BackgroundImageHook {
     var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
     var _contactPageFix = mutableListOf<Drawable?>(null, null, null, null)
     var DiscoverPage: View? = null
-    var _backgroundBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    var _backgroundBitmap = mutableListOf<Bitmap?>(null, null, null, null, null, null)
 
     //region 导航
     var position = 0
@@ -45,21 +43,55 @@ object BackgroundImageHook {
         }
         position = page
         LogUtil.log("翻页操作: $page")
-//        LogUtil.logOnlyOnce("Objects.Main.statusView=${Objects.Main.statusView}", "")
-//        LogUtil.logOnlyOnce("Objects.Main.actionBar=${Objects.Main.actionBar}", "")
-//        LogUtil.logOnlyOnce("Objects.Main.tabLayout=${Objects.Main.tabLayout}", "")
-        Objects.Main.statusView?.background = NightModeUtils.getForegroundDrawable(getStatusBarBitmap(page))
-        if (!HookConfig.is_hook_hide_actionbar) {
-            Objects.Main.actionBar?.background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(_actionBarLocation[1], page))
-        }
-        if (HookConfig.is_hook_tab && HookConfig.is_tab_layout_on_top) {
-            setTabLayoutBitmap(page)
+        if (page == 3 && WechatGlobal.wxVersion!! >= Version("8.0.0") && HookConfig.is_settings_page_transparent) {
+            Objects.Main.statusView?.background = WeChatHelper.drawableTransparent
+            Objects.Main.actionBar?.background = WeChatHelper.drawableTransparent
+            Objects.Main.contactPageFix?.background = WeChatHelper.drawableTransparent
+            Objects.Main.actionBarAppbrandFix?.background = WeChatHelper.drawableTransparent
         } else {
-            Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(_tabLayoutLocation[1], page))
-        }
-        Objects.Main.contactPageFix?.apply {
-            setContactPageFixBackround(this, page)
+            Objects.Main.statusView?.background = NightModeUtils.getForegroundDrawable(getStatusBarBitmap(page))
+            if (!HookConfig.is_hook_hide_actionbar) {
+                val background = NightModeUtils.getForegroundDrawable(getActionBarBitmap(_actionBarLocation[1], page))
+                Objects.Main.actionBar?.background = background
+                Objects.Main.actionBarAppbrandFix?.background = background
+            }
+            Objects.Main.contactPageFix?.apply {
+                setContactPageFixBackround(this, page)
 //            this.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
+            }
+        }
+
+        //tabLayout
+        if (HookConfig.is_hook_tab) {
+            //上方
+            if (HookConfig.is_tab_layout_on_top) {
+                if (page == 3 && WechatGlobal.wxVersion!! >= Version("8.0.0") && HookConfig.is_settings_page_transparent) {
+                    Objects.Main.tabLayout?.background = WeChatHelper.drawableTransparent
+                } else {
+                    setTabLayoutBitmap(page)
+                }
+            }
+            //下方
+            else {
+                if (page == 3 && WechatGlobal.wxVersion!! >= Version("8.0.0") && HookConfig.is_settings_page_transparent) {
+
+//                    if (NightModeUtils.isWechatNightMode()) {
+////                        Objects.Main.tabLayout?.background = ColorDrawable(WeChatHelper.colorDarkPrimary)
+//                    } else {
+//                        Objects.Main.tabLayout?.background = ColorDrawable(HookConfig.get_color_primary)
+//                    }
+
+//                    if (NightModeUtils.isNightMode()) {
+//                        Objects.Main.tabLayout?.background = ColorDrawable(WeChatHelper.wechatDark)
+//                    } else {
+//                        Objects.Main.tabLayout?.background = ColorDrawable(WeChatHelper.wechatWhite)
+//                    }
+
+                    Objects.Main.tabLayout?.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                } else {
+                    Objects.Main.tabLayout?.background = NightModeUtils.getForegroundDrawable(getTabLayoutBitmapAtBottom(_tabLayoutLocation[1], page))
+                }
+            }
         }
     }
 
@@ -311,7 +343,8 @@ object BackgroundImageHook {
     }
     //endregion
 
-    fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap, index: Int) {
+    //index 代表当前面的页数；index=4/5 -> 设置页面头像框
+    fun setMainPageBitmap(logHead: String, view: View, bg: Bitmap, index: Int, timeout: Int = 0) {
 //        加载记录的高度
         if (HookConfig.is_bg_preload_mode) {
             picPositionConfig.apply {
@@ -320,8 +353,8 @@ object BackgroundImageHook {
                     if (picPositionConfig.lastModifiedTimeOfSettings == 0.toLong()
                             || picPositionConfig.screenHeight <= 0
                             || picPositionConfig.backgroundPicPos == null
-                            || picPositionConfig.backgroundPicPos!!.size < 4
-                            || index > 3) {
+                            || picPositionConfig.backgroundPicPos!!.size < 6
+                            || index > 5) {
                         return@apply
                     }
                     val position = picPositionConfig.backgroundPicPos!![index]
@@ -354,11 +387,17 @@ object BackgroundImageHook {
                 }
             }
         }
-
+        var tryCount = -1
         waitInvoke(500, true, {
             LogUtil.log("$logHead 继续等待, view.height  = ${view.height}")
-            view.height > 0
+            if (timeout > 0) {
+                tryCount++
+            }
+            view.height > 0 || timeout <= tryCount
         }, {
+            if (timeout <= tryCount) {
+                return@waitInvoke
+            }
             val location = IntArray(2)
 //            view.getLocationInWindow(location); //获取在当前窗口内的绝对坐标
             view.getLocationOnScreen(location)//获取在整个屏幕内的绝对坐标
@@ -423,13 +462,15 @@ object BackgroundImageHook {
             }
 
 //            记录位置信息到文件
-            if (HookConfig.is_bg_preload_mode) {
+            if (HookConfig.is_bg_preload_mode && false) {
                 try {
                     if (picPositionConfig.screenHeight <= 0) {
                         picPositionConfig.screenHeight = HookConfig.value_resolution[1]
                     }
-                    if (picPositionConfig.backgroundPicPos == null) {
+                    if (picPositionConfig.backgroundPicPos == null || picPositionConfig.backgroundPicPos!!.size < 6) {
                         picPositionConfig.backgroundPicPos = mutableListOf(
+                                PicPosition(0, 0),
+                                PicPosition(0, 0),
                                 PicPosition(0, 0),
                                 PicPosition(0, 0),
                                 PicPosition(0, 0),

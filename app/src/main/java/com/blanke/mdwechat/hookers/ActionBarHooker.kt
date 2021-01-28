@@ -77,7 +77,7 @@ object ActionBarHooker : HookerProvider {
         })
     }
 
-    //主界面下滑之后需要保持ActionBar不变
+    //主界面下滑之后需要保持ActionBar不变( in TabLayoutHook.addTabLayout)
     private val mainPageActionBarHooker = Hooker {
         XposedBridge.hookAllMethods(CC.View, "setBackgroundColor", object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
@@ -86,7 +86,7 @@ object ActionBarHooker : HookerProvider {
                 if (clazz == ActionBarContainer.name) {
 //                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, view)) {
                     Objects.Main.actionBar = view
-                    if (!HookConfig.is_hook_hide_actionbar) {
+                    if (!HookConfig.is_hook_hide_actionbar && !(Objects.Main.pagePosition == 3 && WechatGlobal.wxVersion!! >= Version("8.0.0"))) {
                         view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     }
 //                    } else {

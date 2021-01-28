@@ -362,6 +362,40 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         }
+                        if (WechatGlobal.wxVersion!! >= Version("8.0.0") && !HookConfig.is_settings_page_transparent) {
+                            VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
+                                ViewUtils.getChildView1(view, this)?.apply {
+                                    //生成背景
+                                    if (HookConfig.is_hook_bg_immersion) {
+                                        if (BackgroundImageHook._backgroundBitmap[4] != null) {
+                                            this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[4])
+                                            return
+                                        } else {
+                                            //2s之后如果没生成背景就放弃
+                                            BackgroundImageHook.setMainPageBitmap("设置页头像栏", this, AppCustomConfig.getTabBg(3), 4, 4)
+                                        }
+                                    } else {
+                                        this.background = if (NightModeUtils.isNightMode()) WeChatHelper.drawableDark else WeChatHelper.drawableWhite
+                                    }
+                                }
+                            }
+                            VTTV.SettingAvatarView.treeStacks["q1"]?.apply {
+                                ViewUtils.getChildView1(view, this)?.apply {
+                                    //生成背景
+                                    if (HookConfig.is_hook_bg_immersion) {
+                                        if (BackgroundImageHook._backgroundBitmap[5] != null) {
+                                            this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[5])
+
+                                        } else {
+                                            //2s之后如果没生成背景就放弃
+                                            BackgroundImageHook.setMainPageBitmap("设置页头像栏 (状态) ", this, AppCustomConfig.getTabBg(3), 5, 4)
+                                        }
+                                    } else {
+                                        this.background = if (NightModeUtils.isNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     // (7.0.7 以上) 下拉小程序框

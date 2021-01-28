@@ -9,12 +9,20 @@ import com.blanke.mdwechat.config.HookConfig
 
 object NightModeUtils {
     private var _isNightMode = false
+
+    //    微信8.0 第四页判断底色用
+    private var _isWechatNightMode = true
     fun isNightMode(): Boolean {
         return _isNightMode
     }
 
+    fun isWechatNightMode(): Boolean {
+        return _isWechatNightMode
+    }
+
     fun setNightMode(b: Boolean) {
-        _isNightMode =HookConfig.is_hook_night_mode && b
+        _isNightMode = HookConfig.is_hook_night_mode && b
+        _isWechatNightMode = HookConfig.is_hook_scheme_dark || b
     }
 
     fun isHookMainColor(): Boolean {
@@ -52,7 +60,7 @@ object NightModeUtils {
 
     private fun getTextColor(defaultColor: Int?): Int {
         return when {
-            isNightMode() ->WeChatHelper.colorDarkWhite
+            isNightMode() -> WeChatHelper.colorDarkWhite
             !isHookMainColor() -> Color.BLACK
             else -> defaultColor ?: Color.BLACK
         }
