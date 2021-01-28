@@ -23,6 +23,9 @@
     <string name="text_hook_actionbar">ActionBar变色</string>
     <string name="key_hook_avatar">key_hook_avatar</string>
     <string name="text_hook_avatar">圆角头像</string>
+    <string name="key_hide_wechatId">key_hide_wechatId</string>
+    <string name="text_hide_wechatId">隐藏微信号(试验)</string>
+    <string name="summmary_hide_wechatId">仅本机有效</string>
     <string name="key_hook_ripple">key_hook_ripple</string>
     <string name="text_hook_ripple">按下波纹效果</string>
     <string name="key_hook_float_button">key_hook_float_button</string>

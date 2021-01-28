@@ -25,6 +25,7 @@ import de.robv.android.xposed.XposedHelpers
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 object ListViewHooker : HookerProvider {
+    private var wechatId: CharSequence = ""
     private val excludeContext = arrayOf("com.tencent.mm.plugin.mall.ui.MallIndexUI")
 
     private val titleTextColor: Int
@@ -321,14 +322,35 @@ object ListViewHooker : HookerProvider {
                     // 设置 头像
                     else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.SettingAvatarView")
-                        val nickNameView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("nickNameView")!!)
-                        val wechatTextView = ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks.get("wechatTextView")!!) as TextView
-                        if (wechatTextView.text.startsWith("微信号") && isHookTextColor) {
-                            wechatTextView.setTextColor(titleTextColor)
-                            XposedHelpers.callMethod(nickNameView, "setTextColor", titleTextColor)
-                        }
-                        VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
-                            ViewUtils.getChildView1(view, this)?.background = defaultImageRippleDrawable
+
+//                        微信号
+                        ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["wechatTextView"])?.apply {
+                            this as TextView
+                            if (this.text.startsWith("微信号")) {
+
+                                //隐藏微信号
+                                if (HookConfig.is_hide_wechatId) {
+                                    if (wechatId.length == 0) wechatId = this.text
+                                    this.text = "点击显示微信号"
+                                    try {
+                                        this.setOnClickListener({
+                                            this.text = wechatId
+                                            LogUtil.log("已显示微信号")
+                                        })
+                                    } catch (e: Exception) {
+                                        LogUtil.log("显示微信号错误")
+                                        LogUtil.log(e)
+                                    }
+                                }
+
+                                //微信号颜色
+                                if (isHookTextColor) {
+                                    this.setTextColor(titleTextColor)
+                                    ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["nickNameView"])?.apply {
+                                        XposedHelpers.callMethod(this, "setTextColor", titleTextColor)
+                                    }
+                                }
+                            }
                         }
                     }
 

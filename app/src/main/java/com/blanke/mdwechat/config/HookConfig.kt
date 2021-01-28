@@ -33,6 +33,7 @@ object HookConfig {
     private val key_hook__actionbar_color = "key_hook__actionbar_color"
     private val key_hook_actionbar = "key_hook_actionbar"
     private val key_hook_avatar = "key_hook_avatar"
+    private val key_hide_wechatId = "key_hide_wechatId"
     private val key_hook_ripple = "key_hook_ripple"
     private val key_hook_float_button = "key_hook_float_button"
     private val key_hook_float_button_angle = "key_hook_float_button_angle"
@@ -191,6 +192,11 @@ object HookConfig {
     val is_hook_avatar: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_avatar, true)
+        }
+
+    val is_hide_wechatId: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hide_wechatId, true)
         }
 
     val is_hook_ripple: Boolean
