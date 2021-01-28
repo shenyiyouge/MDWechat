@@ -15,10 +15,15 @@
     <string name="text_color_tertiary">副色2</string>
     <string name="summary_color_tertiary">(如果着色)自定义导航其他页页图标前景色等</string>
     <string name="text_settings_info">修改之后停止微信重启生效.</string>
-    <string name="text_donate">捐赠(支付宝)</string>
-    <string name="summary_donate">向原作者 Blanke 捐赠</string>
-    <string name="text_donate_wechat">捐赠(微信)</string>
+    <string name="summary_donate">本软件完全开源，捐赠并不能获得高级功能。</string>
+    <string name="text_donate">向原作者 (Blanke) 捐赠</string>
+    <string name="text_donate_joshcai">向我 (JoshCai) 捐赠</string>
     <string name="key_donate">key_donate</string>
+    <string name="key_donate_wechat">key_donate_wechat</string>
+    <string name="key_donate_joshcai">key_donate_joshcai</string>
+    <string name="key_donate_wechat_joshcai">key_donate_wechat_joshcai</string>
+    <string name="text_donate_alipay">捐赠(支付宝)</string>
+    <string name="text_donate_wechat">捐赠(微信)</string>
     <string name="text_category_settings">设置</string>
     <string name="key_hook_actionbar">key_hook_actionbar</string>
     <string name="text_hook_actionbar">ActionBar变色</string>
@@ -239,7 +244,6 @@
     <string name="text_confirm">确定</string>
     <string name="text_cancel">取消</string>
     <string name="text_update">更新</string>
-    <string name="key_donate_wechat">key_donate_wechat</string>
     <string name="key_download_wechat_config">key_download_wechat_config</string>
     <string name="text_download_wechat_config">下载共享的微信配置文件</string>
     <string name="text_download_wechat_config_info">上面生成失败的可以尝试下载，配置文件作者维护，更新可能不及时，欢迎贡献配置文件(发邮件给作者)</string>
@@ -247,7 +251,7 @@
     <string name="text_wechat_config_settings">微信适配文件</string>
     <string name="text_feedback_donate_settings">反馈和捐赠</string>
     <string name="text_about_settings">更多信息</string>
-    <string name="summary_about_settings">向原作者捐赠 / 查看交流群等</string>
+    <string name="summary_about_settings">捐赠 / 查看交流群等</string>
     <string name="key_feedback_wechat">key_feedback_wechat</string>
     <string name="text_feedback_wechat">微信交流群</string>
     <string name="text_feedback_group">加入交流群</string>
@@ -353,9 +357,8 @@
     <string name="latest_wechat_version">8.0.0</string>
     <string name="app_name_version">version 4.0.10</string>
     <string name="key_joshcai_info">key_joshcai_info</string>
-<!--    <string name="josh_cai_info">由于原作者未更新，所以我(JoshCai)将原作者(Blanke)在 github 上开源的代码进行二次开发，使其能够适配较新的微信。保留app内原作者的捐赠方式，如果大家喜欢本软件可以请原作者喝杯奶茶。</string>-->
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本</string>
     <string name="josh_cai_info_outdated_suffix">\n 不适配内测版本！不要再问了！\n\n在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
     <string name="josh_cai_info">适配微信8.0.0\n\n新增功能：\n\n1.第四页透明（微信8.0专用）—— mdwechat 主界面 -> 微信8.0，建议仅在设置了微信状态时打开此选项。\n\n2.隐藏微信号 —— mdwechat 主界面 -> 其他</string>
-    <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件可以请他喝杯奶茶。</string>
+    <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯奶茶。</string>
 </resources>

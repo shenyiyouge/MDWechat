@@ -139,6 +139,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_donate_wechat))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_donate_joshcai))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_donate_wechat_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_wechat_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_config))?.onPreferenceClickListener = this
@@ -152,7 +155,6 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_github_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_hook_conversation_bg))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_generate_wechat_config))?.onPreferenceClickListener = this
-        findPreference(getString(R.string.key_donate_wechat))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_download_wechat_config))?.onPreferenceClickListener = this
 
         findPreference(getString(R.string.key_joshcai_info))?.onPreferenceClickListener = this
@@ -439,7 +441,10 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_joshcai_info) -> myTest()
 
             "key_clear_logs" -> _clearLogs()
-            getString(R.string.key_donate) -> donate()
+            getString(R.string.key_donate) -> donate("https://qr.alipay.com/tsx05730go4ditv2dmwia15")
+            getString(R.string.key_donate_wechat) -> donateWechat("f2f0YjlNObKWk7zwpDQoGtBDBe-Cper5cndi")
+            getString(R.string.key_donate_joshcai) -> donate("https://qr.alipay.com/fkx12707x8vvnh6mjpqseb4")
+            getString(R.string.key_donate_wechat_joshcai) -> donateWechat("f2f0xQLV4IlGwE3CHY7LelHelT0Uqklc-n9W")
             getString(R.string.key_feedback) -> feedback()
             getString(R.string.key_reset_wechat_config) -> copyWechatConfig()
             getString(R.string.key_reset_config) -> deleteConfig()
@@ -452,7 +457,6 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_github_blanke) -> gotoWebsite("https://github.com/Blankeer/MDWechat")
             getString(R.string.key_github_joshcai) -> gotoWebsite("https://github.com/JoshCai233/MDWechat")
             getString(R.string.key_generate_wechat_config) -> generateWechatFile()
-            getString(R.string.key_donate_wechat) -> donateWechat()
             getString(R.string.key_download_wechat_config) -> downloadWechatConfig()
             getString(R.string.key_attention) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161250")
             getString(R.string.key_feedback_group) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2161272")
@@ -577,10 +581,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                 PackageManager.DONT_KILL_APP)
     }
 
-    private fun donate() {
+    private fun donate(payUrl: String = "https://qr.alipay.com/fkx12707x8vvnh6mjpqseb4") {
         val intent = Intent()
         intent.action = "android.intent.action.VIEW"
-        val payUrl = "https://qr.alipay.com/tsx05730go4ditv2dmwia15"
         intent.data = Uri.parse("alipayqr://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=" + payUrl)
         if (intent.resolveActivity(activity.packageManager) != null) {
             startActivity(intent)
@@ -590,8 +593,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         startActivity(intent)
     }
 
-    private fun donateWechat() {
-        val wechatPayCode = "f2f0YjlNObKWk7zwpDQoGtBDBe-Cper5cndi"
+    private fun donateWechat(wechatPayCode: String = "f2f0xQLV4IlGwE3CHY7LelHelT0Uqklc-n9W") {
         val className = "com.tencent.mm.plugin.base.stub.WXCustomSchemeEntryActivity"
         val componentName = ComponentName("com.tencent.mm", className)
         try {
@@ -620,7 +622,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         }
     }
 
-//    private fun sendEmail() {
+    //    private fun sendEmail() {
 //        try {
 //            val info = "mailto:blanke.master+mdwechat@gmail.com?subject=[MDWechat] 请简明描述该问题" +
 //                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
@@ -631,16 +633,16 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //        }
 //    }
 //
-private fun sendEmailCai() {
-    try {
-        val info = "mailto:1797761061@qq.com?subject=[MDWechat] 请简明描述该问题" +
-                "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
-        val uri = Uri.parse(info)
-        startActivity(Intent(Intent.ACTION_SENDTO, uri))
-    } catch (e: Exception) {
+    private fun sendEmailCai() {
+        try {
+            val info = "mailto:1797761061@qq.com?subject=[MDWechat] 请简明描述该问题" +
+                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
+            val uri = Uri.parse(info)
+            startActivity(Intent(Intent.ACTION_SENDTO, uri))
+        } catch (e: Exception) {
 
+        }
     }
-}
 
     private fun gotoWebsite(url: String) {
         val uri = Uri.parse(url)
@@ -664,7 +666,7 @@ private fun sendEmailCai() {
                 .setMessage(message)
                 .setPositiveButton(R.string.text_app_know, null)
                 .setNegativeButton(R.string.text_donate_wechat) { dialog, which -> donateWechat() }
-                .setNeutralButton(R.string.text_donate) { dialog, which -> donate() }
+                .setNeutralButton(R.string.text_donate_alipay) { dialog, which -> donate() }
                 .show()
     }
 

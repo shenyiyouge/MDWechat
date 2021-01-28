@@ -41,14 +41,26 @@
             android:summary="@string/josh_cai_info2" />
 
         <!--捐赠-->
-        <Preference
-            android:key="@string/key_donate"
+        <PreferenceScreen
             android:summary="@string/summary_donate"
-            android:title="@string/text_donate" />
-        <Preference
-            android:key="@string/key_donate_wechat"
+            android:title="@string/text_donate">
+            <Preference
+                android:key="@string/key_donate"
+                android:title="@string/text_donate_alipay" />
+            <Preference
+                android:key="@string/key_donate_wechat"
+                android:title="@string/text_donate_wechat" />
+        </PreferenceScreen>
+        <PreferenceScreen
             android:summary="@string/summary_donate"
-            android:title="@string/text_donate_wechat" />
+            android:title="@string/text_donate_joshcai">
+            <Preference
+                android:key="@string/key_donate_joshcai"
+                android:title="@string/text_donate_alipay" />
+            <Preference
+                android:key="@string/key_donate_wechat_joshcai"
+                android:title="@string/text_donate_wechat" />
+        </PreferenceScreen>
 
         <PreferenceCategory />
         <Preference
