@@ -64,9 +64,13 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
     }
 
     private fun getWechatPath(): String {
-        val pm = activity.packageManager
-        val ai = pm.getApplicationInfo(Common.WECHAT_PACKAGENAME, 0)
-        return ai.publicSourceDir
+        try {
+            val pm = activity.packageManager
+            val ai = pm.getApplicationInfo(Common.WECHAT_PACKAGENAME, 0)
+            return ai.publicSourceDir
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,7 +92,16 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             (this as SwitchPreference).isChecked = false
         }
 
-        wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
+        try {
+            wxVersion = Version(ApkFile(getWechatPath()).apkMeta.versionName)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ToastUtils.showShort(R.string.msg_wechat_notfound)
+            generateWechatLogView?.append(getString(R.string.msg_wechat_notfound) + "\n\n")
+            wxVersion = Version("999.999.999-unknown")
+        }
+
+
         //检查微信坂本(适配文件 / 更新坂本)
         setWechatVersionWarning()
         setWechatConfigWarning()
@@ -132,7 +145,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_reset_float_bottom_config))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_reset_icon_config))?.onPreferenceClickListener = this
 //        findPreference(getString(R.string.key_feedback_email_blanke))?.onPreferenceClickListener = this
-//        findPreference(getString(R.string.key_feedback_email_josh_cai))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_feedback_email_josh_cai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_feedback_gitee))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_gitee_joshcai))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_github_blanke))?.onPreferenceClickListener = this
@@ -164,8 +177,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         if (BuildConfig.VERSION_NAME.endsWith("Beta", true)) {
             AlertDialog.Builder(activity)
                     .setTitle("警告")
-                    .setMessage("当前版本为${BuildConfig.VERSION_NAME}版，不是正式版本，可能会遇到各种问题/无法预估的风险等。" +
-                            "如果你想反馈问题，请打开最底部的调试开关，重启微信，将/sdcard/mdwechat/logs/目录下当天的日志发我QQ。" +
+                    .setMessage("请不要在太极上使用 Beta 版！\n请不要在太极上使用 Beta 版！\n请不要在太极上使用 Beta 版！\n\n" +
+                            "当前版本为${BuildConfig.VERSION_NAME}版，不是正式版本，可能会遇到各种问题/无法预估的风险等。故也请不要上传至太极。" +
+                            "如果你想反馈问题，请打开最底部的调试开关，重启微信，将/sdcard/mdwechat/logs/目录下当天的日志发我邮箱。" +
                             "谢谢合作！")
                     .setPositiveButton("我知道了", null)
                     .setCancelable(false)
@@ -432,7 +446,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_reset_float_bottom_config) -> copyFloatBottomConfig()
             getString(R.string.key_reset_icon_config) -> resetIcons()
 //            getString(R.string.key_feedback_email_blanke) -> sendEmail()
-//            getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
+            getString(R.string.key_feedback_email_josh_cai) -> sendEmailCai()
             getString(R.string.key_feedback_gitee) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat/issues")
             getString(R.string.key_gitee_joshcai) -> gotoWebsite("https://gitee.com/JoshCai/MDWechat")
             getString(R.string.key_github_blanke) -> gotoWebsite("https://github.com/Blankeer/MDWechat")
@@ -617,16 +631,16 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //        }
 //    }
 //
-//    private fun sendEmailCai() {
-//        try {
-//            val info = "mailto:joshcai_mdwechat@163.com?subject=[MDWechat] 请简明描述该问题" +
-//                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
-//            val uri = Uri.parse(info)
-//            startActivity(Intent(Intent.ACTION_SENDTO, uri))
-//        } catch (e: Exception) {
-//
-//        }
-//    }
+private fun sendEmailCai() {
+    try {
+        val info = "mailto:1797761061@qq.com?subject=[MDWechat] 请简明描述该问题" +
+                "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
+        val uri = Uri.parse(info)
+        startActivity(Intent(Intent.ACTION_SENDTO, uri))
+    } catch (e: Exception) {
+
+    }
+}
 
     private fun gotoWebsite(url: String) {
         val uri = Uri.parse(url)
