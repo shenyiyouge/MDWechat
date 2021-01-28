@@ -2,6 +2,7 @@ package com.blanke.mdwechat.hookers
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,11 @@ import com.blanke.mdwechat.WeChatHelper
 import com.blanke.mdwechat.WeChatHelper.defaultImageRippleDrawable
 import com.blanke.mdwechat.WeChatHelper.drawableTransparent
 import com.blanke.mdwechat.WechatGlobal
+import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
+import com.blanke.mdwechat.hookers.main.BackgroundImageHook
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.ViewTreeUtils
@@ -64,12 +67,14 @@ object ListViewHooker : HookerProvider {
 //                    view.background.alpha = 120
 //                view.background = defaultImageRippleDrawable
 
-//                    LogUtil.log("----------抓取view start----------")
-//                    LogUtil.log(WechatGlobal.wxVersion.toString())
-//                    LogUtil.log("context=" + view.context)
-//                    LogUtil.logViewStackTraces(view)
-//                    LogUtil.logParentView(view, 10)
-//                    LogUtil.log("--------------------")
+//                    if ((!Common.isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
+//                        LogUtil.log("----------抓取view start----------")
+//                        LogUtil.log(WechatGlobal.wxVersion.toString())
+//                        LogUtil.log("context=" + view.context)
+//                        LogUtil.logViewStackTraces(view)
+//                        LogUtil.logParentView(view, 10)
+//                        LogUtil.log("--------------------")
+//                    }
 
                     // 按照使用频率重排序
                     //气泡
@@ -234,10 +239,15 @@ object ListViewHooker : HookerProvider {
 
                         val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView"])
                         titleView?.background = drawableTransparent
+                        val titleView_8_0 = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView_8_0"])
+                        titleView_8_0?.background = drawableTransparent
                         if (isHookTextColor) {
                             val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headTextView"]) as TextView
                             headTextView.setTextColor(summaryTextColor)
-                            XposedHelpers.callMethod(titleView, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor))
+                            titleView?.apply { XposedHelpers.callMethod(this, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor)) }
+                            titleView_8_0?.apply {
+                                XposedHelpers.callMethod(titleView_8_0, "setTextColor", titleTextColor)
+                            }
                         }
                     }
 
@@ -259,7 +269,7 @@ object ListViewHooker : HookerProvider {
                                                 ?.background = drawableTransparent
                                         if (isHookTextColor) {
                                             val headTextView = ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["headTextView"]) as TextView
-                                            headTextView.setTextColor(summaryTextColor)
+                                            headTextView.setTextColor(titleTextColor)
                                         }
                                         val tmpView = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem1"])
                                         tmpView?.apply {
@@ -274,7 +284,7 @@ object ListViewHooker : HookerProvider {
                                                 ?.background = drawableTransparent
                                         if (isHookTextColor) {
                                             val headTextView = ViewUtils.getChildView1(ContactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["headTextView"]) as TextView
-                                            headTextView.setTextColor(summaryTextColor)
+                                            headTextView.setTextColor(titleTextColor)
                                         }
                                     }
                                 }

@@ -7,9 +7,9 @@ import com.blanke.mdwechat.config.ViewTreeConfig
 // 当前微信版本适用的repo
 // based on ViewTreeRepo
 object ViewTreeRepoThisVersion {
-    val Tmp: ViewTree by lazy {
-        ViewTreeConfig.get().tmp.invoke(ViewTreeRepo) as ViewTree
-    }
+    //    val Tmp: ViewTree by lazy {
+//        ViewTreeConfig.get().tmp.invoke(ViewTreeRepo) as ViewTree
+//    }
     val ConversationListViewItem: ViewTree by lazy {
         ViewTreeConfig.get().conversationListViewItem.invoke(ViewTreeRepo) as ViewTree
     }
@@ -65,9 +65,9 @@ object ViewTreeRepoThisVersion {
     }
 
     // 订阅号的action bar (暂无作用)
-    val ActionBarInSubscriptsItem: ViewTree by lazy {
-        ViewTreeConfig.get().actionBarInSubscriptsItem.invoke(ViewTreeRepo) as ViewTree
-    }
+//    val ActionBarInSubscriptsItem: ViewTree by lazy {
+//        ViewTreeConfig.get().actionBarInSubscriptsItem.invoke(ViewTreeRepo) as ViewTree
+//    }
 
     // 聊天界面的action bar
     val ActionBarInConversationItem: ViewTree by lazy {
@@ -293,7 +293,7 @@ object ViewTreeRepo {
                 mapOf("headerView" to intArrayOf(0),
                         "innerView" to intArrayOf(1, 0),
                         "contentView" to intArrayOf(1),
-                        "titleView" to intArrayOf(1, 0, 3, 1),
+                        "titleView_8_0" to intArrayOf(1, 0, 3, 1),
                         "headTextView" to intArrayOf(0, 0)),
                 ViewTreeItem(Classes.NoDrawingCacheLinearLayout.name, arrayOf(
                         ViewTreeItem(CC.RelativeLayout.name, arrayOf(//headerView
@@ -306,7 +306,7 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.TextView.name),
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem("com.tencent.mm.ui.chatting.view.AvatarImageView"),
-                                                ViewTreeItem(Classes.NoMeasuredTextView.name)//titleView
+                                                ViewTreeItem(Classes.NoMeasuredTextView.name)//titleView_8_0
                                         )))))))))
     }
 
@@ -517,6 +517,34 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                         ViewTreeItem(Classes.NoMeasuredTextView.name))))))))))))
+    }
+    val SettingAvatarView_8_0_0: ViewTree by lazy {
+        ViewTree(
+                mapOf("headView" to intArrayOf(1, 0, 0, 0),
+                        "nickNameView" to intArrayOf(3, 0, 1, 0, 0),
+                        "wechatTextView" to intArrayOf(3, 0, 1, 1, 0),
+                        "q1" to intArrayOf(4, 0)
+//                        "q2" to intArrayOf(4, 2, 1)
+                ),
+                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                        ViewTreeItem(CC.ImageView.name),//headView
+                        ViewTreeItem(CC.ImageView.name),
+                        ViewTreeItem(CC.FrameLayout.name),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(Classes.NoMeasuredTextView.name))),//nickNameView
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name)))//wechatTextView
+                                        )))))), ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                        ViewTreeItem(CC.RelativeLayout.name)//q1
+//                        ViewTreeItem(CC.ImageView.name),
+//                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+//                                ViewTreeItem(CC.LinearLayout.name),
+//                                ViewTreeItem(CC.View.name)))//q2
+                )))))
     }
 
     val ChatRightMessageItem: ViewTree by lazy {
