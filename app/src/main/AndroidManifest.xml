@@ -25,7 +25,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="(官改) 增加主题沉浸功能." />
+            android:value="(官改) 微信美化模块，增加主题沉浸功能." />
         <meta-data
             android:name="xposedminversion"
             android:value="42" />
