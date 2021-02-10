@@ -336,17 +336,17 @@ object ListViewHooker : HookerProvider {
 //                        微信号
                         ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["wechatTextView"])?.apply {
                             this as TextView
-                            if (this.text.startsWith("微信号")) {
+                            if (this.text.contains(": ") || this.text.contains("：")) {
 
                                 //隐藏微信号
                                 if (HookConfig.is_hide_wechatId) {
                                     if (wechatId.length == 0) wechatId = this.text
                                     this.text = "点击显示微信号"
                                     try {
-                                        this.setOnClickListener({
+                                        this.setOnClickListener {
                                             this.text = wechatId
                                             LogUtil.log("已显示微信号")
-                                        })
+                                        }
                                     } catch (e: Exception) {
                                         LogUtil.log("显示微信号错误")
                                         LogUtil.log(e)
