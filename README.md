@@ -1,7 +1,7 @@
 MDWechat
 ====
 # 简介
- Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信8.0.0.
+ Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信8.0.1.
 
 # 效果预览
 ![gif_demo](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/demo.gif)
@@ -37,9 +37,12 @@ MDWechat
 
 # 版本支持
 - 只支持 Android 5.0 以上
-- 支持的微信版本: 6.7.3 - 8.0.0；由于测试不够全面， MDWechat 的某些功能可能对于某些微信版本不生效。若不生效可以升级微信版本或者反馈问题到Issue里。
+- 支持的微信版本: 6.7.3 - 8.0.1；由于测试不够全面， MDWechat 的某些功能可能对于某些微信版本不生效。若不生效可以升级微信版本或者反馈问题到Issue里。
 - MDWechat(官改) 4.0 对于国内版的适配性比较好，play版微信在部分机型/框架上可能出现无法适配的状况。
-- 
+
+# 下载地址
+[下载地址](https://gitee.com/JoshCai/MDWechat/releases)
+
 # 使用教程
 [查看使用教程](https://gitee.com/JoshCai/MDWechat/wikis/?sort_id=2158198)
 
@@ -49,6 +52,7 @@ MDWechat
 3. 4.0版本对于一些高分辨率的机型可能存在闪退的情况.
 4. 微信7.0.5之后进入首页可能产生黑色遮罩, 一般来说下滑即可消除.
 5. 点击最近聊天进入聊天页面后,返回主界面时有几率产生白条, 这时把白条移除屏幕外(比如下拉到小程序界面等)即可消除白条.
+6. 沉浸背景时朋友圈顶栏图片显示错位.
 
 # 感谢
 1. [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat)
