@@ -26,6 +26,17 @@ public class ViewTreeConfig {
     private Method ContactMyWorkItem = null;
     private Method DiscoverViewItem = null;
     private Method SettingAvatarView = null;
+    private Method ChatHinterItem = null;
+    private Method ChatLeftContactCardItem = null;
+    private Method ChatLeftPositionItem = null;
+    private Method ChatLeftPictureItem = null;
+    private Method ChatLeftRedPacketItem = null;
+    private Method ChatLeftSharingItem = null;
+    private Method ChatRightContactCardItem = null;
+    private Method ChatRightPositionItem = null;
+    private Method ChatRightPictureItem = null;
+    private Method ChatRightRedPacketItem = null;
+    private Method ChatRightSharingItem = null;
     private Method ChatRightMessageItem = null;
     private Method ChatLeftMessageItem = null;
     private Method ChatRightAudioMessageItem = null;
@@ -81,6 +92,50 @@ public class ViewTreeConfig {
 
     public Method getSettingAvatarView() {
         return SettingAvatarView;
+    }
+
+    public Method getChatHinterItem() {
+        return ChatHinterItem;
+    }
+
+    public Method getChatLeftContactCardItem() {
+        return ChatLeftContactCardItem;
+    }
+
+    public Method getChatLeftPositionItem() {
+        return ChatLeftPositionItem;
+    }
+
+    public Method getChatLeftPictureItem() {
+        return ChatLeftPictureItem;
+    }
+
+    public Method getChatLeftRedPacketItem() {
+        return ChatLeftRedPacketItem;
+    }
+
+    public Method getChatLeftSharingItem() {
+        return ChatLeftSharingItem;
+    }
+
+    public Method getChatRightContactCardItem() {
+        return ChatRightContactCardItem;
+    }
+
+    public Method getChatRightPositionItem() {
+        return ChatRightPositionItem;
+    }
+
+    public Method getChatRightPictureItem() {
+        return ChatRightPictureItem;
+    }
+
+    public Method getChatRightRedPacketItem() {
+        return ChatRightRedPacketItem;
+    }
+
+    public Method getChatRightSharingItem() {
+        return ChatRightSharingItem;
     }
 
     public Method getChatRightMessageItem() {
@@ -180,6 +235,17 @@ public class ViewTreeConfig {
         ContactMyWorkItem = findViewTreeMethod("ContactMyWorkItem", versionName);
         DiscoverViewItem = findViewTreeMethod("DiscoverViewItem", versionName);
         SettingAvatarView = findViewTreeMethod("SettingAvatarView", versionName);
+        ChatHinterItem = findViewTreeMethod("ChatHinterItem", versionName);
+        ChatLeftContactCardItem = findViewTreeMethod("ChatLeftContactCardItem", versionName);
+        ChatLeftPositionItem = findViewTreeMethod("ChatLeftPositionItem", versionName);
+        ChatLeftPictureItem = findViewTreeMethod("ChatLeftPictureItem", versionName);
+        ChatLeftRedPacketItem = findViewTreeMethod("ChatLeftRedPacketItem", versionName);
+        ChatLeftSharingItem = findViewTreeMethod("ChatLeftSharingItem", versionName);
+        ChatRightContactCardItem = findViewTreeMethod("ChatRightContactCardItem", versionName);
+        ChatRightPositionItem = findViewTreeMethod("ChatRightPositionItem", versionName);
+        ChatRightPictureItem = findViewTreeMethod("ChatRightPictureItem", versionName);
+        ChatRightRedPacketItem = findViewTreeMethod("ChatRightRedPacketItem", versionName);
+        ChatRightSharingItem = findViewTreeMethod("ChatRightSharingItem", versionName);
         ChatRightMessageItem = findViewTreeMethod("ChatRightMessageItem", versionName);
         ChatLeftMessageItem = findViewTreeMethod("ChatLeftMessageItem", versionName);
         ChatRightAudioMessageItem = findViewTreeMethod("ChatRightAudioMessageItem", versionName);

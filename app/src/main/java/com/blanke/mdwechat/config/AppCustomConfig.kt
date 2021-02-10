@@ -50,6 +50,14 @@ object AppCustomConfig {
         return getScaleBitmap(getIcon(Common.FILE_NAME_TAB_PREFIX + "$index.png"))
     }
 
+    fun getRedPacketBubbleLeftIcon(): Bitmap? {
+        return getIcon(Common.CHAT_RED_PACKET_BUBBLE_LEFT_FILENAME)
+    }
+
+    fun getRedPacketBubbleRightIcon(): Bitmap? {
+        return getIcon(Common.CHAT_RED_PACKET_BUBBLE_RIGHT_FILENAME)
+    }
+
     fun getBubbleLeftIcon(): Bitmap? {
         return getIcon(Common.CHAT_BUBBLE_LEFT_FILENAME)
     }

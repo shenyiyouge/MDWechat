@@ -63,6 +63,7 @@
     <string name="text_app_thank_content">感谢 Blankeer@github 开源的 MDwechat, 感谢 hzknm@coolapk 设计的 Logo, 感谢 Gh0u1L5@github 开源的微信巫师, 感谢 weishu 对代码的贡献, 感谢 chouqibao@github 开源的微信深色主题, 感谢 @装睡 提供的精神支持</string>
     <string name="key_hook_bubble_tint">key_hook_bubble_tint</string>
     <string name="text_hook_bubble_tint">气泡着色</string>
+    <string name="text_hook_bubble_tint_info">可以修改气泡颜色，不包括红包气泡</string>
     <string name="text_hook_menu_qrcode">隐藏扫一扫</string>
     <string name="key_hook_menu_qrcode">key_hook_menu_qrcode</string>
     <string name="key_hook_menu_shake">key_hook_menu_shake</string>
@@ -111,10 +112,16 @@
     <string name="text_hook_menu_sns">隐藏朋友圈</string>
     <string name="key_hook_menu_appbrand">key_hook_menu_appbrand</string>
     <string name="text_hook_menu_appbrand">隐藏小程序</string>
-    <string name="text_chat_settings">聊天气泡</string>
+    <string name="key_hook_chat_label_color">key_hook_chat_label_color</string>
+    <string name="text_hook_chat_label_color">修改 聊天时间 / 群聊人员名称 的颜色</string>
+    <string name="key_chat_label_color">key_chat_label_color</string>
+    <string name="text_chat_label_color">聊天项 标签颜色</string>
+    <string name="symmary_chat_label_color">聊天时间 / 群聊人员名称 的颜色</string>
+    <string name="text_chat_settings">聊天界面</string>
+    <string name="text_chat_bubbles">聊天气泡</string>
     <string name="summary_chat_settings">一些设置依赖于上级菜单的「聊天气泡」</string>
-    <string name="key_hook_bubble">key_hook_bubble</string>
-    <string name="text_hook_bubble">自定义气泡</string>
+    <string name="key_hook_chat_settings">key_hook_chat_settings</string>
+    <string name="text_hook_chat_settings">自定义聊天界面</string>
     <string name="key_hook_bubble_in_night_mode">key_hook_bubble_in_night_mode</string>
     <string name="text_hook_bubble_in_night_mode">深色模式下启用自定义气泡</string>
     <string name="summary_hook_bubble_in_night_mode">当色系为亮色系且开启深色模式时也启用自定义气泡。依赖于「配色方案 -> 自动切换暗色系」</string>
@@ -133,7 +140,6 @@
     <string name="text_resolution">背景图分辨率</string>
     <string name="summary_resolution">自定义背景图片分辨率，格式为"宽,高",单位为像素(整数)。</string>
     <string name="text_hook_bubble_info">必须是.9图</string>
-    <string name="text_hook_bubble_tint_info">可以修改气泡颜色</string>
     <string name="key_hook_bubble_tint_left">key_hook_bubble_tint_left</string>
     <string name="text_hook_bubble_tint_left">左边气泡颜色</string>
     <string name="key_hook_bubble_tint_right">key_hook_bubble_tint_right</string>
@@ -142,6 +148,11 @@
     <string name="text_hook_chat_text_color_left">左边文字颜色</string>
     <string name="key_hook_chat_text_color_right">key_hook_chat_text_color_right</string>
     <string name="text_hook_chat_text_color_right">右边文字颜色</string>
+    <string name="key_hook_red_packet">key_hook_red_packet</string>
+    <string name="text_hook_red_packet">自定义红包气泡</string>
+    <string name="text_hook_bubble">自定义气泡</string>
+    <string name="key_hook_red_packet_text_color">key_hook_red_packet_text_color</string>
+    <string name="text_hook_red_packet_text_color">红包文字颜色</string>
     <string name="key_reset_wechat_config">key_reset_wechat_config</string>
     <string name="text_reset_wechat_config_info">微信版本适配文件,更新版本或失败请重置,配置文件在 手机存储/mdwechat/config/wechat/目录下,谨慎修改</string>
     <string name="text_reset_wechat_config">重置微信版本适配文件</string>
@@ -174,7 +185,7 @@
     <string name="text_tab_layout_main_page_filtered">TabLayout 激活页 图标着色</string>
     <string name="summary_tab_layout_main_page_filtered">若着色则使用副色1.</string>
     <string name="key_tab_layout_filtered">key_tab_layout_filtered</string>
-    <string name="text_tab_layout_filtered">TabLayout未激活页图标着色</string>
+    <string name="text_tab_layout_filtered">TabLayout 未激活页 图标着色</string>
     <string name="summary_tab_layout_filtered">若着色则使用副色2.</string>
     <string name="summary_hook_hide_wx_tab">如果TabLayout沉底则默认隐藏</string>
     <string name="key_feedback_email">key_feedback_email</string>
@@ -270,7 +281,7 @@
     <!--    <string name="key_help_bubble">key_help_bubble</string>-->
     <string name="text_app_tips">软件使用提示</string>
     <string name="text_app_desc">本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件！</string>
-    <string name="text_app_donate">你已使用「MDWechat」%s，在使用过程中有任何问题欢迎加入微信群讨论。\n如果你觉得「MDWechat」很好用，是否愿意支持下作者，让我更有动力完善维护这个软件呢？</string>
+    <string name="text_app_donate">你已使用「MDWechat」%s，在使用过程中有任何问题欢迎加入QQ群讨论。\n如果你觉得「MDWechat」很好用，是否愿意支持下作者，让我更有动力完善维护这个软件呢？</string>
     <string name="text_app_know">我已知晓</string>
     <string name="key_feedback_group">key_feedback_group</string>
 
@@ -363,5 +374,5 @@
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本</string>
     <string name="josh_cai_info_outdated_suffix">\n 不适配内测版本！不要再问了！\n\n在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
     <string name="josh_cai_info">适配微信8.0.0\n\n新增功能：\n\n1.第四页透明（微信8.0专用）—— mdwechat 主界面 -> 微信8.0，建议仅在设置了微信状态时打开此选项。\n\n2.隐藏微信号 —— mdwechat 主界面 -> 其他</string>
-    <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯奶茶。</string>
+    <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯咖啡。</string>
 </resources>

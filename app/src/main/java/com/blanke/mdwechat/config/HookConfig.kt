@@ -72,12 +72,16 @@ object HookConfig {
     private val key_hook_remove_foot_view = "key_hook_remove_foot_view"
     private val key_hook_menu_sns = "key_hook_menu_sns"
     private val key_hook_menu_appbrand = "key_hook_menu_appbrand"
-    private val key_hook_bubble = "key_hook_bubble"
+    private val key_chat_label_color = "key_chat_label_color"
+    private val key_hook_chat_settings = "key_hook_chat_settings"
+    private val key_hook_red_packet = "key_hook_red_packet"
+    private val key_hook_chat_label_color = "key_hook_chat_label_color"
     private val key_hook_bubble_in_night_mode = "key_hook_bubble_in_night_mode"
     private val key_hook_bubble_tint_left = "key_hook_bubble_tint_left"
     private val key_hook_bubble_tint_right = "key_hook_bubble_tint_right"
     private val key_hook_chat_text_color_left = "key_hook_chat_text_color_left"
     private val key_hook_chat_text_color_right = "key_hook_chat_text_color_right"
+    private val key_hook_red_packet_text_color = "key_hook_red_packet_text_color"
     private val key_hook_statusbar_transparent = "key_hook_statusbar_transparent"
     private val key_hook_log = "key_hook_log"
     private val key_hook_log_xposed = "key_hook_log_xposed"
@@ -351,9 +355,21 @@ object HookConfig {
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_menu_appbrand, false)
         }
-    val is_hook_bubble: Boolean
+    val chat_label_color: Int
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_bubble, true)
+            return WeChatHelper.XMOD_PREFS.getInt(key_chat_label_color, 10395294)
+        }
+    val is_hook_chat_settings: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_chat_settings, true)
+        }
+    val is_hook_red_packet: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_red_packet, true)
+        }
+    val is_hook_chat_label_color: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_chat_label_color, true)
         }
     val is_hook_bubble_in_night_mode: Boolean
         get() {
@@ -378,6 +394,10 @@ object HookConfig {
     val get_hook_chat_text_color_right: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_hook_chat_text_color_right, Color.BLACK)
+        }
+    val get_hook_red_packet_text_color: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getInt(key_hook_red_packet_text_color, Color.BLACK)
         }
     val is_hook_log: Boolean
         get() {

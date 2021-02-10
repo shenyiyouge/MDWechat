@@ -259,16 +259,30 @@
                 app:cpv_showAlphaSlider="true" />
         </PreferenceCategory>
         <!--聊天气泡-->
-        <PreferenceCategory>
-            <PreferenceScreen android:title="@string/text_chat_settings">
+        <PreferenceCategory android:title="@string/text_chat_settings">
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="@string/key_hook_chat_settings"
+                android:title="@string/text_hook_bubble" />
+            <SwitchPreference
+                android:defaultValue="true"
+                android:dependency="@string/key_hook_chat_settings"
+                android:key="@string/key_hook_chat_label_color"
+                android:title="@string/text_hook_chat_label_color" />
+            <com.jaredrummler.android.colorpicker.ColorPreference
+                android:defaultValue="@color/material_grey"
+                android:dependency="@string/key_hook_chat_label_color"
+                android:key="@string/key_chat_label_color"
+                android:summary="@string/symmary_chat_label_color"
+                android:title="@string/text_chat_label_color"
+                app:cpv_colorPresets="@array/colors"
+                app:cpv_showAlphaSlider="true" />
+            <PreferenceScreen
+                android:summary="@string/text_hook_bubble_info"
+                android:title="@string/text_chat_bubbles">
                 <Preference
                     android:key="@string/key_bubble_help"
                     android:title="@string/text_info" />
-                <SwitchPreference
-                    android:defaultValue="true"
-                    android:key="@string/key_hook_bubble"
-                    android:summary="@string/text_hook_bubble_info"
-                    android:title="@string/text_hook_bubble" />
                 <!--深色模式-->
                 <SwitchPreference
                     android:defaultValue="false"
@@ -276,26 +290,24 @@
                     android:key="@string/key_hook_bubble_in_night_mode"
                     android:summary="@string/summary_hook_bubble_in_night_mode"
                     android:title="@string/text_hook_bubble_in_night_mode" />
-                <PreferenceCategory>
+                <PreferenceCategory android:title="@string/text_hook_bubble">
                     <com.jaredrummler.android.colorpicker.ColorPreference
                         android:defaultValue="@color/material_black"
-                        android:dependency="@string/key_hook_bubble"
+                        android:dependency="@string/key_hook_chat_settings"
                         android:key="@string/key_hook_chat_text_color_left"
                         android:title="@string/text_hook_chat_text_color_left"
                         app:cpv_colorPresets="@array/colors"
                         app:cpv_showAlphaSlider="true" />
                     <com.jaredrummler.android.colorpicker.ColorPreference
                         android:defaultValue="@color/material_white"
-                        android:dependency="@string/key_hook_bubble"
+                        android:dependency="@string/key_hook_chat_settings"
                         android:key="@string/key_hook_chat_text_color_right"
                         android:title="@string/text_hook_chat_text_color_right"
                         app:cpv_colorPresets="@array/colors"
                         app:cpv_showAlphaSlider="true" />
-                </PreferenceCategory>
-                <PreferenceCategory>
                     <SwitchPreference
                         android:defaultValue="true"
-                        android:dependency="@string/key_hook_bubble"
+                        android:dependency="@string/key_hook_chat_settings"
                         android:key="@string/key_hook_bubble_tint"
                         android:summary="@string/text_hook_bubble_tint_info"
                         android:title="@string/text_hook_bubble_tint" />
@@ -313,6 +325,21 @@
                         android:title="@string/text_hook_bubble_tint_right"
                         app:cpv_colorPresets="@array/colors"
                         app:cpv_showAlphaSlider="true" />
+                </PreferenceCategory>
+                <PreferenceCategory android:title="@string/text_hook_red_packet">
+                    <SwitchPreference
+                        android:defaultValue="true"
+                        android:dependency="key_hook_chat_settings"
+                        android:key="key_hook_red_packet"
+                        android:title="@string/text_hook_red_packet" />
+                    <com.jaredrummler.android.colorpicker.ColorPreference
+                        android:defaultValue="@color/material_white"
+                        android:dependency="@string/key_hook_chat_settings"
+                        android:key="@string/key_hook_red_packet_text_color"
+                        android:title="@string/text_hook_red_packet_text_color"
+                        app:cpv_colorPresets="@array/colors"
+                        app:cpv_showAlphaSlider="true" />
+
                 </PreferenceCategory>
             </PreferenceScreen>
         </PreferenceCategory>

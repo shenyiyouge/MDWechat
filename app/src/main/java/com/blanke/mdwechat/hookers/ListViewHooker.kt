@@ -2,6 +2,7 @@ package com.blanke.mdwechat.hookers
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
@@ -64,24 +65,30 @@ object ListViewHooker : HookerProvider {
                     if (tmp != null) {
                         return
                     }
-//                    view.background.alpha = 120
-//                view.background = defaultImageRippleDrawable
 
-//                    if ((!Common.isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
-//                        LogUtil.log("----------抓取view start----------")
-//                        LogUtil.log(WechatGlobal.wxVersion.toString())
-//                        LogUtil.log("context=" + view.context)
-//                        LogUtil.logViewStackTraces(view)
-//                        LogUtil.logParentView(view, 10)
-//                        LogUtil.log("--------------------")
-//                    }
+                    if ((!com.blanke.mdwechat.Common.isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
+                        LogUtil.log("----------抓取view start----------")
+                        LogUtil.log(WechatGlobal.wxVersion.toString())
+                        LogUtil.log("context=" + view.context)
+                        LogUtil.logViewStackTraces(view)
+                        LogUtil.logParentView(view, 10)
+                        LogUtil.log("--------------------")
+                    }
 
                     // 按照使用频率重排序
                     //气泡
-                    if (((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) && HookConfig.is_hook_bubble) {
+                    if (((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) && HookConfig.is_hook_chat_settings) {
                         // 聊天消息 item
                         if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightMessageItem")
+
+                            //chat_label
+                            if (HookConfig.is_hook_chat_label_color)
+                                VTTV.ChatRightMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightMessageItem.treeStacks["msgView"]!!) as View
 //                    log("msgView=$msgView")
@@ -97,6 +104,19 @@ object ListViewHooker : HookerProvider {
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                //chat_label
+                                VTTV.ChatLeftMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatLeftMessageItem.treeStacks["nickNameView"]?.apply {
+                                    val nickNameView = ViewUtils.getChildView1(view, this) as TextView
+                                    nickNameView.setTextColor(HookConfig.chat_label_color)
+                                }
+                            }
                             val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                             val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftMessageItem.treeStacks.get("msgView")!!) as View
 //                    LogUtil.logXp("=======start=========")
@@ -121,54 +141,149 @@ object ListViewHooker : HookerProvider {
                         // 聊天消息 audio
                         else if (ViewTreeUtils.equals(VTTV.ChatRightAudioMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightAudioMessageItem")
-                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgView")!!) as View
+                            val chatMsgTextColor = HookConfig.get_hook_chat_text_color_right
+
+                            //chat_label
+                            if (HookConfig.is_hook_chat_label_color)
+                                VTTV.ChatRightAudioMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+                            //audioLengthView
+                            VTTV.ChatRightAudioMessageItem.treeStacks["audioLengthView"]?.apply {
+                                val audioLengthView = ViewUtils.getChildView1(view, this) as TextView
+                                audioLengthView.setTextColor(chatMsgTextColor)
+                            }
+
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgView")!!) as TextView
+                            //播放语音时的view
                             val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatRightAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             val bubble = WeChatHelper.getRightBubble(msgView.resources)
-                            msgView.background = bubble
+                            msgView.background = null
+                            ViewUtils.getParentViewSafe(msgView, 1).background = bubble
+                            msgAnimView.background = null
                             if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                 msgView.setPadding(30, 25, 45, 25)
+//                                msgAnimView.setPadding(30, 25, 45, 25)
                             }
-                            msgAnimView.background = bubble
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                msgAnimView.setPadding(30, 25, 45, 25)
-                            }
+
+//                            //喇叭图标
+                            val speakerIcon = msgView.compoundDrawables[2]
+                            speakerIcon.setColorFilter(chatMsgTextColor, PorterDuff.Mode.SRC_ATOP)
+                            msgView.setCompoundDrawables(null, null, speakerIcon, null)
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftAudioMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftAudioMessageItem")
-                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as View
+                            val chatMsgTextColor = HookConfig.get_hook_chat_text_color_left
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                //chat_label
+                                VTTV.ChatLeftAudioMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatLeftAudioMessageItem.treeStacks["nickNameView"]?.apply {
+                                    val nickNameView = ViewUtils.getChildView1(view, this) as TextView
+                                    nickNameView.setTextColor(HookConfig.chat_label_color)
+                                }
+                            }
+                            //audioLengthView
+                            VTTV.ChatLeftAudioMessageItem.treeStacks["audioLengthView"]?.apply {
+                                val audioLengthView = ViewUtils.getChildView1(view, this) as TextView
+                                audioLengthView.setTextColor(chatMsgTextColor)
+                            }
+
+                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgView")!!) as TextView
                             val msgAnimView = ViewUtils.getChildView1(view, VTTV.ChatLeftAudioMessageItem.treeStacks.get("msgAnimView")!!) as View
                             val bubble = WeChatHelper.getLeftBubble(msgView.resources)
-                            msgView.background = bubble
+                            msgView.background = null
+                            ViewUtils.getParentViewSafe(msgView, 1).background = bubble
+                            msgAnimView.background = null
                             if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                 msgView.setPadding(45, 25, 30, 25)
+//                                msgAnimView.setPadding(45, 25, 30, 25)
                             }
-                            msgAnimView.background = bubble
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                msgAnimView.setPadding(45, 25, 30, 25)
-                            }
+//                            //喇叭图标
+                            val speakerIcon = msgView.compoundDrawables[0]
+                            speakerIcon.setColorFilter(chatMsgTextColor, PorterDuff.Mode.SRC_ATOP)
+                            msgView.setCompoundDrawables(speakerIcon, null, null, null)
                         }
 
                         // 通话消息
                         else if (ViewTreeUtils.equals(VTTV.ChatRightCallMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatRightCallMessageItem")
-                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")!!) as View
-                            val bubble = WeChatHelper.getRightBubble(msgView.resources)
-                            msgView.background = bubble
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                msgView.setPadding(30, 25, 45, 25)
+                            val chatMsgTextColor = HookConfig.get_hook_chat_text_color_right
+                            //chat_label
+                            if (HookConfig.is_hook_chat_label_color) {
+                                VTTV.ChatRightCallMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+                            }
+                            VTTV.ChatRightCallMessageItem.treeStacks.get("bgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as View
+                                val bubble = WeChatHelper.getRightBubble(msgView.resources)
+                                msgView.background = bubble
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    msgView.setPadding(30, 25, 45, 25)
+                                }
+                            }
+                            //icon
+                            VTTV.ChatRightCallMessageItem.treeStacks.get("icon")?.apply {
+                                val icon = ViewUtils.getChildView1(view, this) as LinearLayout
+                                val speakerIcon = icon.background
+                                speakerIcon.setColorFilter(chatMsgTextColor, PorterDuff.Mode.SRC_ATOP)
+                                icon.background = speakerIcon
+                            }
+                            //msgView
+                            VTTV.ChatRightCallMessageItem.treeStacks.get("msgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                msgView.setTextColor(chatMsgTextColor)
                             }
                         } else if (ViewTreeUtils.equals(VTTV.ChatLeftCallMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftCallMessageItem")
-                            val msgView = ViewUtils.getChildView1(view, VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")!!) as View
-                            val bubble = WeChatHelper.getLeftBubble(msgView.resources)
-                            msgView.background = bubble
-                            if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
-                                msgView.setPadding(45, 25, 30, 25)
+                            val chatMsgTextColor = HookConfig.get_hook_chat_text_color_left
+
+                            //chat_label
+                            if (HookConfig.is_hook_chat_label_color)
+                                VTTV.ChatLeftCallMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+
+                            //msgView
+                            VTTV.ChatLeftCallMessageItem.treeStacks.get("msgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                msgView.setTextColor(chatMsgTextColor)
+                            }
+                            //icon
+                            VTTV.ChatLeftCallMessageItem.treeStacks.get("icon")?.apply {
+                                val icon = ViewUtils.getChildView1(view, this) as LinearLayout
+                                val speakerIcon = icon.background
+                                speakerIcon.setColorFilter(chatMsgTextColor, PorterDuff.Mode.SRC_ATOP)
+                                icon.background = speakerIcon
+                            }
+                            VTTV.ChatLeftCallMessageItem.treeStacks.get("bgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as View
+                                val bubble = WeChatHelper.getLeftBubble(msgView.resources)
+                                msgView.background = bubble
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    msgView.setPadding(30, 25, 45, 25)
+                                }
                             }
                         }
 
                         // 引用消息 item
-                        if (ViewTreeUtils.equals(VTTV.RefRightMessageItem.item, view)) {
+                        else if (ViewTreeUtils.equals(VTTV.RefRightMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.RefRightMessageItem")
+
+                            //chat_label
+                            if (HookConfig.is_hook_chat_label_color)
+                                VTTV.RefRightMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+
                             val chatMsgRightTextColor = HookConfig.get_hook_chat_text_color_right
                             val msgView = ViewUtils.getChildView1(view, VTTV.RefRightMessageItem.treeStacks.get("msgView")!!) as View
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgRightTextColor)
@@ -181,6 +296,20 @@ object ListViewHooker : HookerProvider {
                             }
                         } else if (ViewTreeUtils.equals(VTTV.RefLeftMessageItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                //chat_label
+                                VTTV.RefLeftMessageItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(HookConfig.chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.RefLeftMessageItem.treeStacks["nickNameView"]?.apply {
+                                    val nickNameView = ViewUtils.getChildView1(view, this) as TextView
+                                    nickNameView.setTextColor(HookConfig.chat_label_color)
+                                }
+                            }
+
                             val chatMsgLeftTextColor = HookConfig.get_hook_chat_text_color_left
                             val msgView = ViewUtils.getChildView1(view, VTTV.RefLeftMessageItem.treeStacks.get("msgView")!!) as View
                             XposedHelpers.callMethod(msgView, "setTextColor", chatMsgLeftTextColor)
@@ -191,6 +320,398 @@ object ListViewHooker : HookerProvider {
                             msgView.background = bubble
                             if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                 msgView.setPadding(45, 25, 30, 25)
+                            }
+                        }
+
+                        //提示信息
+                        else if (ViewTreeUtils.equals(VTTV.ChatHinterItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatHinterItem")
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+                                //chat_label
+                                VTTV.ChatHinterItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                                VTTV.ChatHinterItem.treeStacks.get("msgView")?.apply {
+                                    val msgView = ViewUtils.getChildView1(view, this) as View
+                                    XposedHelpers.callMethod(msgView, "setTextColor", chat_label_color)
+                                }
+                            }
+                        }
+                        //图片
+                        else if (ViewTreeUtils.equals(VTTV.ChatLeftPictureItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftPictureItem")
+                            if (HookConfig.is_hook_chat_label_color) {
+
+                                val chat_label_color = HookConfig.chat_label_color
+
+                                //timeView
+                                VTTV.ChatLeftPictureItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatLeftPictureItem.treeStacks.get("nickNameView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                        } else if (ViewTreeUtils.equals(VTTV.ChatRightPictureItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightPictureItem")
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+
+                                //timeView
+                                VTTV.ChatLeftPictureItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                        }
+                        //名片
+                        else if (ViewTreeUtils.equals(VTTV.ChatLeftContactCardItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftContactCardItem")
+                            val chat_label_color = HookConfig.chat_label_color
+                            val chat_text_color_left = HookConfig.get_hook_chat_text_color_left
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                //timeView
+                                VTTV.ChatLeftContactCardItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatLeftContactCardItem.treeStacks.get("nickNameView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                            VTTV.ChatLeftContactCardItem.treeStacks.get("msgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color_left)
+                            }
+                            VTTV.ChatLeftContactCardItem.treeStacks.get("titleView")?.apply {
+                                val titleView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color_left)
+                            }
+                            // 聊天气泡
+                            VTTV.ChatLeftContactCardItem.treeStacks.get("bgView")?.apply {
+                                val bgView = ViewUtils.getChildView1(view, this) as View
+                                bgView.background = WeChatHelper.getLeftBubble(bgView.resources)
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    bgView.setPadding(10, 0, 20, 25)
+                                }
+                            }
+                        } else if (ViewTreeUtils.equals(VTTV.ChatRightContactCardItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightContactCardItem")
+                            val chat_text_color_right = HookConfig.get_hook_chat_text_color_right
+
+                            //timeView
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+                                VTTV.ChatRightContactCardItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                            VTTV.ChatRightContactCardItem.treeStacks.get("msgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color_right)
+                            }
+                            VTTV.ChatRightContactCardItem.treeStacks.get("msgView1")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color_right)
+                            }
+                            VTTV.ChatRightContactCardItem.treeStacks.get("titleView")?.apply {
+                                val titleView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color_right)
+                            }
+                            // 聊天气泡
+                            VTTV.ChatRightContactCardItem.treeStacks.get("bgView")?.apply {
+                                val bgView = ViewUtils.getChildView1(view, this) as View
+                                bgView.background = WeChatHelper.getRightBubble(bgView.resources)
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    bgView.setPadding(20, 20, 10, 25)
+                                }
+                            }
+                        }
+                        //位置
+                        else if (ViewTreeUtils.equals(VTTV.ChatLeftPositionItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftPositionItem")
+                            val chat_text_color_left = HookConfig.get_hook_chat_text_color_left
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+                                //timeView
+                                VTTV.ChatLeftPositionItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatLeftPositionItem.treeStacks.get("nickNameView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                            VTTV.ChatLeftPositionItem.treeStacks.get("msgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color_left)
+                            }
+                            VTTV.ChatLeftPositionItem.treeStacks.get("msgView1")?.apply {
+                                val msgView1 = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView1, "setTextColor", chat_text_color_left)
+                            }
+//                            VTTV.ChatLeftPositionItem.treeStacks.get("titleView")?.apply {
+//                                val titleView = ViewUtils.getChildView1(view, this) as TextView
+//                                XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color_left)
+//                            }
+                            // 聊天气泡
+                            VTTV.ChatLeftPositionItem.treeStacks.get("bgView")?.apply {
+                                val bgView = ViewUtils.getChildView1(view, this) as View
+                                bgView.background = WeChatHelper.getLeftBubble(bgView.resources)
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    bgView.setPadding(20, 25, 20, 45)
+                                }
+                            }
+                        } else if (ViewTreeUtils.equals(VTTV.ChatRightPositionItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightPositionItem")
+                            val chat_text_color = HookConfig.get_hook_chat_text_color_right
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+                                //timeView
+                                VTTV.ChatRightPositionItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                            VTTV.ChatRightPositionItem.treeStacks.get("msgView")?.apply {
+                                val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color)
+                            }
+                            VTTV.ChatRightPositionItem.treeStacks.get("msgView1")?.apply {
+                                val msgView1 = ViewUtils.getChildView1(view, this) as TextView
+                                XposedHelpers.callMethod(msgView1, "setTextColor", chat_text_color)
+                            }
+//                            VTTV.ChatRightPositionItem.treeStacks.get("titleView")?.apply {
+//                                val titleView = ViewUtils.getChildView1(view, this) as TextView
+//                                XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color_left)
+//                            }
+                            // 聊天气泡
+                            VTTV.ChatRightPositionItem.treeStacks.get("bgView")?.apply {
+                                val bgView = ViewUtils.getChildView1(view, this) as View
+                                bgView.background = WeChatHelper.getRightBubble(bgView.resources)
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    bgView.setPadding(20, 25, 20, 45)
+                                }
+                            }
+                        }
+                        //分享 / 小程序
+                        else if (ViewTreeUtils.equals(VTTV.ChatLeftSharingItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftSharingItem")
+                            val chat_text_color_left = HookConfig.get_hook_chat_text_color_left
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+                                //timeView
+                                VTTV.ChatLeftSharingItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatLeftSharingItem.treeStacks.get("nickNameView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                            // 聊天气泡 miniProgramBgView
+                            VTTV.ChatLeftSharingItem.treeStacks.get("miniProgramBgView")?.apply {
+                                val miniProgramBgView = ViewUtils.getChildView1(view, this) as View
+                                miniProgramBgView.background = WeChatHelper.getLeftBubble(miniProgramBgView.resources)
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    miniProgramBgView.setPadding(20, 25, 20, 25)
+                                }
+
+                                VTTV.ChatLeftSharingItem.treeStacks.get("miniProgramBgView_miniProgramNameView")?.apply {
+                                    val miniProgramNameView = ViewUtils.getChildView1(miniProgramBgView, this) as TextView
+                                    XposedHelpers.callMethod(miniProgramNameView, "setTextColor", chat_text_color_left)
+                                }
+                                VTTV.ChatLeftSharingItem.treeStacks.get("miniProgramBgView_miniProgramTitleView")?.apply {
+                                    val miniProgramTitleView = ViewUtils.getChildView1(miniProgramBgView, this) as TextView
+                                    XposedHelpers.callMethod(miniProgramTitleView, "setTextColor", chat_text_color_left)
+                                }
+
+                                // 聊天气泡 null
+                                VTTV.ChatLeftSharingItem.treeStacks.get("miniProgramBgView_bgView")?.apply {
+                                    val bgView = ViewUtils.getChildView1(miniProgramBgView, this) as View
+                                    bgView.background = null
+                                    VTTV.ChatLeftSharingItem.treeStacks.get("bgView_titleView")?.apply {
+                                        val titleView = ViewUtils.getChildView1(bgView, this) as TextView
+                                        XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color_left)
+                                    }
+                                    VTTV.ChatLeftSharingItem.treeStacks.get("bgView_fileNameView")?.apply {
+                                        val fileNameView = ViewUtils.getChildView1(bgView, this) as View
+                                        XposedHelpers.callMethod(fileNameView, "setTextColor", chat_text_color_left)
+                                    }
+                                    VTTV.ChatLeftSharingItem.treeStacks.get("bgView_msgView")?.apply {
+                                        val msgView = ViewUtils.getChildView1(bgView, this) as TextView
+                                        XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color_left)
+                                    }
+                                    VTTV.ChatLeftSharingItem.treeStacks.get("bgView_msgView1")?.apply {
+                                        val msgView1 = ViewUtils.getChildView1(bgView, this) as TextView
+                                        XposedHelpers.callMethod(msgView1, "setTextColor", chat_text_color_left)
+                                    }
+                                }
+                            }
+                        } else if (ViewTreeUtils.equals(VTTV.ChatRightSharingItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightSharingItem")
+                            val chat_text_color = HookConfig.get_hook_chat_text_color_right
+
+                            if (HookConfig.is_hook_chat_label_color) {
+                                val chat_label_color = HookConfig.chat_label_color
+                                //timeView
+                                VTTV.ChatRightSharingItem.treeStacks.get("timeView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                                //nickNameView
+                                VTTV.ChatRightSharingItem.treeStacks.get("nickNameView")?.apply {
+                                    val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                    timeView.setTextColor(chat_label_color)
+                                }
+                            }
+                            // 聊天气泡 miniProgramBgView
+                            VTTV.ChatRightSharingItem.treeStacks.get("miniProgramBgView")?.apply {
+                                val miniProgramBgView = ViewUtils.getChildView1(view, this) as View
+                                miniProgramBgView.background = WeChatHelper.getRightBubble(miniProgramBgView.resources)
+                                if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                    miniProgramBgView.setPadding(20, 25, 20, 25)
+                                }
+
+                                VTTV.ChatRightSharingItem.treeStacks.get("miniProgramBgView_miniProgramNameView")?.apply {
+                                    val miniProgramNameView = ViewUtils.getChildView1(miniProgramBgView, this) as TextView
+                                    XposedHelpers.callMethod(miniProgramNameView, "setTextColor", chat_text_color)
+                                }
+                                VTTV.ChatRightSharingItem.treeStacks.get("miniProgramBgView_miniProgramTitleView")?.apply {
+                                    val miniProgramTitleView = ViewUtils.getChildView1(miniProgramBgView, this) as TextView
+                                    XposedHelpers.callMethod(miniProgramTitleView, "setTextColor", chat_text_color)
+                                }
+
+                                // 聊天气泡 null
+                                VTTV.ChatRightSharingItem.treeStacks.get("miniProgramBgView_bgView")?.apply {
+                                    val bgView = ViewUtils.getChildView1(miniProgramBgView, this) as View
+                                    bgView.background = null
+                                    VTTV.ChatRightSharingItem.treeStacks.get("bgView_titleView")?.apply {
+                                        val titleView = ViewUtils.getChildView1(bgView, this) as TextView
+                                        XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color)
+                                    }
+                                    VTTV.ChatRightSharingItem.treeStacks.get("bgView_fileNameView")?.apply {
+                                        val fileNameView = ViewUtils.getChildView1(bgView, this) as View
+                                        XposedHelpers.callMethod(fileNameView, "setTextColor", chat_text_color)
+                                    }
+                                    VTTV.ChatRightSharingItem.treeStacks.get("bgView_msgView")?.apply {
+                                        val msgView = ViewUtils.getChildView1(bgView, this) as TextView
+                                        XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color)
+                                    }
+                                    VTTV.ChatRightSharingItem.treeStacks.get("bgView_msgView1")?.apply {
+                                        val msgView1 = ViewUtils.getChildView1(bgView, this) as TextView
+                                        XposedHelpers.callMethod(msgView1, "setTextColor", chat_text_color)
+                                    }
+                                }
+                            }
+                        }
+
+                        //红包 放最后
+                        else if (HookConfig.is_hook_red_packet) {
+                            if (ViewTreeUtils.equals(VTTV.ChatLeftRedPacketItem.item, view)) {
+                                LogUtil.logOnlyOnce("ListViewHooker.ChatLeftRedPacketItem")
+                                val chat_text_color = HookConfig.get_hook_red_packet_text_color
+
+                                if (HookConfig.is_hook_chat_label_color) {
+                                    val chat_label_color = HookConfig.chat_label_color
+                                    //timeView
+                                    VTTV.ChatLeftRedPacketItem.treeStacks.get("timeView")?.apply {
+                                        val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                        timeView.setTextColor(chat_label_color)
+                                    }
+                                    //nickNameView
+                                    VTTV.ChatLeftRedPacketItem.treeStacks.get("nickNameView")?.apply {
+                                        val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                        timeView.setTextColor(chat_label_color)
+                                    }
+                                }
+                                VTTV.ChatLeftRedPacketItem.treeStacks.get("msgView")?.apply {
+                                    val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                    XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color)
+                                }
+                                VTTV.ChatLeftRedPacketItem.treeStacks.get("msgView1")?.apply {
+                                    val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                    XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color)
+                                }
+                                VTTV.ChatLeftRedPacketItem.treeStacks.get("titleView")?.apply {
+                                    val titleView = ViewUtils.getChildView1(view, this) as TextView
+                                    XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color)
+                                }
+                                // 聊天气泡
+                                VTTV.ChatLeftRedPacketItem.treeStacks.get("bgView")?.apply {
+                                    val bgView = ViewUtils.getChildView1(view, this) as View
+                                    bgView.background = WeChatHelper.getLeftRedPacketBubble(bgView.resources)
+                                    if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                        bgView.setPadding(10, 0, 10, 25)
+                                    }
+                                }
+                                VTTV.ChatLeftRedPacketItem.treeStacks.get("adsView")?.apply {
+                                    val adsView = ViewUtils.getChildView1(view, this) as FrameLayout
+                                    adsView.visibility = View.GONE
+                                }
+                                // 左侧图标
+                                VTTV.ChatLeftRedPacketItem.treeStacks.get("leftPicView")?.apply {
+                                    val leftPicView = ViewUtils.getChildView1(view, this) as ImageView
+                                    leftPicView.setImageDrawable(null)
+                                }
+                            } else if (ViewTreeUtils.equals(VTTV.ChatRightRedPacketItem.item, view)) {
+                                LogUtil.logOnlyOnce("ListViewHooker.ChatRightRedPacketItem")
+                                val chat_text_color = HookConfig.get_hook_red_packet_text_color
+
+                                if (HookConfig.is_hook_chat_label_color) {
+                                    val chat_label_color = HookConfig.chat_label_color
+                                    //timeView
+                                    VTTV.ChatRightRedPacketItem.treeStacks.get("timeView")?.apply {
+                                        val timeView = ViewUtils.getChildView1(view, this) as TextView
+                                        timeView.setTextColor(chat_label_color)
+                                    }
+                                }
+                                VTTV.ChatRightRedPacketItem.treeStacks.get("msgView")?.apply {
+                                    val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                    XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color)
+                                }
+                                VTTV.ChatRightRedPacketItem.treeStacks.get("msgView1")?.apply {
+                                    val msgView = ViewUtils.getChildView1(view, this) as TextView
+                                    XposedHelpers.callMethod(msgView, "setTextColor", chat_text_color)
+                                }
+                                VTTV.ChatRightRedPacketItem.treeStacks.get("titleView")?.apply {
+                                    val titleView = ViewUtils.getChildView1(view, this) as TextView
+                                    XposedHelpers.callMethod(titleView, "setTextColor", chat_text_color)
+                                }
+                                // 聊天气泡
+                                VTTV.ChatRightRedPacketItem.treeStacks.get("bgView")?.apply {
+                                    val bgView = ViewUtils.getChildView1(view, this) as View
+                                    bgView.background = WeChatHelper.getRightRedPacketBubble(bgView.resources)
+                                    if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
+                                        bgView.setPadding(10, 0, 10, 25)
+                                    }
+                                }
+                                VTTV.ChatRightRedPacketItem.treeStacks.get("adsView")?.apply {
+                                    val adsView = ViewUtils.getChildView1(view, this) as FrameLayout
+                                    adsView.visibility = View.GONE
+                                }
+                                // 左侧图标
+                                VTTV.ChatRightRedPacketItem.treeStacks.get("leftPicView")?.apply {
+                                    val leftPicView = ViewUtils.getChildView1(view, this) as ImageView
+                                    leftPicView.setImageDrawable(null)
+                                }
                             }
                         }
                     }
@@ -221,7 +742,7 @@ object ListViewHooker : HookerProvider {
                         return
                     }
 
-                    view.background = defaultImageRippleDrawable
+                    view.background = drawableTransparent
                     // 联系人列表
                     if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
@@ -254,23 +775,40 @@ object ListViewHooker : HookerProvider {
                     // 联系人列表头部
                     if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
                         LogUtil.logOnlyOnce("ListViewHooker.ContactHeaderItem")
+
+                        //公众号的下边界 —— ContactHeaderItem.ContactWorkItemBorderTop
+                        ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItemBorderTop"])?.apply {
+                            this.background = drawableTransparent
+                        }
+
                         //企业联系人分组
                         ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItem"])?.apply {
                             if (ViewTreeUtils.equals(VTTV.ContactWorkItem.item, this)) {
                                 LogUtil.logOnlyOnce("ListViewHooker.ContactWorkItem")
 
+                                //region borderLineTop
+                                ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["borderLineTop"])?.apply {
+                                    this.background = drawableTransparent
+                                }
+                                //endregion
+
                                 var ContactContentsItem = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem"])
                                 if (ContactContentsItem != null) {
-                                    //企业联系人
+                                    //region 企业联系人
                                     if (ViewTreeUtils.equals(VTTV.ContactWorkContactsItem.item, ContactContentsItem)) {
                                         LogUtil.logOnlyOnce("ListViewHooker.ContactWorkContactsItem")
-                                        //  titleView
-                                        ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["titleView"])
-                                                ?.background = drawableTransparent
                                         if (isHookTextColor) {
                                             val headTextView = ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["headTextView"]) as TextView
                                             headTextView.setTextColor(titleTextColor)
                                         }
+                                        //  titleView
+                                        ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["titleView"])
+                                                ?.background = defaultImageRippleDrawable
+                                        ViewUtils.getChildView1(ContactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["borderLineBottom"])
+                                                ?.background = defaultImageRippleDrawable
+                                        //endregion
+
+
                                         val tmpView = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem1"])
                                         tmpView?.apply {
                                             ContactContentsItem = tmpView
@@ -281,6 +819,8 @@ object ListViewHooker : HookerProvider {
                                         LogUtil.logOnlyOnce("ListViewHooker.ContactMyWorkItem")
                                         //  titleView
                                         ViewUtils.getChildView1(ContactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["titleView"])
+                                                ?.background = defaultImageRippleDrawable
+                                        ViewUtils.getChildView1(ContactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["borderLineBottom"])
                                                 ?.background = drawableTransparent
                                         if (isHookTextColor) {
                                             val headTextView = ViewUtils.getChildView1(ContactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["headTextView"]) as TextView
@@ -362,38 +902,44 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         }
-                        if (WechatGlobal.wxVersion!! >= Version("8.0.0") && !HookConfig.is_settings_page_transparent) {
-                            VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
-                                ViewUtils.getChildView1(view, this)?.apply {
-                                    //生成背景
-                                    if (HookConfig.is_hook_bg_immersion) {
-                                        if (BackgroundImageHook._backgroundBitmap[4] != null) {
-                                            this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[4])
-                                            return
+                        if (WechatGlobal.wxVersion!! >= Version("8.0.0")) {
+                            if (!HookConfig.is_settings_page_transparent) {
+                                VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
+                                    ViewUtils.getChildView1(view, this)?.apply {
+                                        //生成背景
+                                        if (HookConfig.is_hook_bg_immersion) {
+                                            if (BackgroundImageHook._backgroundBitmap[4] != null) {
+                                                this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[4])
+                                                return
+                                            } else {
+                                                //2s之后如果没生成背景就放弃
+                                                BackgroundImageHook.setMainPageBitmap("设置页头像栏", this, AppCustomConfig.getTabBg(3), 4, 4)
+                                            }
                                         } else {
-                                            //2s之后如果没生成背景就放弃
-                                            BackgroundImageHook.setMainPageBitmap("设置页头像栏", this, AppCustomConfig.getTabBg(3), 4, 4)
+                                            this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
                                         }
-                                    } else {
-                                        this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                                    }
+                                }
+                                VTTV.SettingAvatarView.treeStacks["q1"]?.apply {
+                                    ViewUtils.getChildView1(view, this)?.apply {
+                                        //生成背景
+                                        if (HookConfig.is_hook_bg_immersion) {
+                                            if (BackgroundImageHook._backgroundBitmap[5] != null) {
+                                                this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[5])
+
+                                            } else {
+                                                //2s之后如果没生成背景就放弃
+                                                BackgroundImageHook.setMainPageBitmap("设置页头像栏 (状态) ", this, AppCustomConfig.getTabBg(3), 5, 4)
+                                            }
+                                        } else {
+                                            this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                                        }
                                     }
                                 }
                             }
-                            VTTV.SettingAvatarView.treeStacks["q1"]?.apply {
-                                ViewUtils.getChildView1(view, this)?.apply {
-                                    //生成背景
-                                    if (HookConfig.is_hook_bg_immersion) {
-                                        if (BackgroundImageHook._backgroundBitmap[5] != null) {
-                                            this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[5])
-
-                                        } else {
-                                            //2s之后如果没生成背景就放弃
-                                            BackgroundImageHook.setMainPageBitmap("设置页头像栏 (状态) ", this, AppCustomConfig.getTabBg(3), 5, 4)
-                                        }
-                                    } else {
-                                        this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
-                                    }
-                                }
+                        } else {
+                            VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
+                                ViewUtils.getChildView1(view, this)?.background = drawableTransparent
                             }
                         }
                     }

@@ -26,6 +26,8 @@ object Common {
     val CONTACT_BACKGROUND_FILENAME = "contact.png"
     val DISCOVER_BACKGROUND_FILENAME = "discover.png"
     val SETTINGS_BACKGROUND_FILENAME = "settings.png"
+    val CHAT_RED_PACKET_BUBBLE_LEFT_FILENAME = "red_pocket_left.9.png"
+    val CHAT_RED_PACKET_BUBBLE_RIGHT_FILENAME = "red_pocket_right.9.png"
     val CHAT_BUBBLE_LEFT_FILENAME = "bubble_left.9.png"
     val CHAT_BUBBLE_RIGHT_FILENAME = "bubble_right.9.png"
     val FILE_NAME_TAB_PREFIX = "tab_icon"
