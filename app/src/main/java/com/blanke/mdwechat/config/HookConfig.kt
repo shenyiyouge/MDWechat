@@ -47,6 +47,7 @@ object HookConfig {
     private val key_enable_bg_chat = "key_enable_bg_chat"
     private val key_hook_tab = "key_hook_tab"
     private val key_hide_tab = "key_hide_tab"
+    private val key_tab_layout_main_page_filtered = "key_tab_layout_main_page_filtered"
     private val key_tab_layout_filtered = "key_tab_layout_filtered"
     private val key_tab_layout_on_top = "key_tab_layout_on_top"
     private val key_settings_page_transparent = "key_settings_page_transparent"
@@ -252,6 +253,10 @@ object HookConfig {
     val is_hook_tab: Boolean
         get() {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_tab, true)
+        }
+    val is_tab_layout_main_page_filtered: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_tab_layout_main_page_filtered, false)
         }
     val is_tab_layout_filtered: Boolean
         get() {

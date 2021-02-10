@@ -93,6 +93,10 @@ object NightModeUtils {
         get() {
             return HookConfig.is_hook_tab_elevation || _isNightMode
         }
+    val is_tab_layout_main_page_filtered: Boolean
+        get() {
+            return HookConfig.is_tab_layout_main_page_filtered || _isNightMode
+        }
     val is_tab_layout_filtered: Boolean
         get() {
             return HookConfig.is_tab_layout_filtered || _isNightMode

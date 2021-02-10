@@ -42,7 +42,10 @@ object TabLayoutHook {
         tabLayout.elevation = tabElevation
         tabLayout.unreadBackground = tipColor
         tabLayout.unreadTextColor = HookConfig.get_color_tip_num_in_guide
-        tabLayout.selectIconColor = secondaryColor
+        if (NightModeUtils.is_tab_layout_main_page_filtered) {
+            tabLayout.changeSelectIconColor = true
+            tabLayout.selectIconColor = secondaryColor
+        }
 //        tabLayout.unSelectIconColor = Color.WHITE
 
         val mTabEntities = intArrayOf(0, 1, 2, 3)
