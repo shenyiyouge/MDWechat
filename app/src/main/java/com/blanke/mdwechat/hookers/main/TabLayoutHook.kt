@@ -23,7 +23,7 @@ import de.robv.android.xposed.XposedHelpers
 import java.util.*
 
 object TabLayoutHook {
-    fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float = 0F): CommonTabLayout {
+    fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float): CommonTabLayout {
         val primaryColor: Int = NightModeUtils.colorPrimary
         val secondaryColor: Int = NightModeUtils.colorSecondary
         val get_color_tertiary: Int = NightModeUtils.colorTeritary
@@ -104,8 +104,8 @@ object TabLayoutHook {
         val context = viewPagerLinearLayout.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewPagerLinearLayout.context
         // 7.0.7(?) 之后小程序下拉相关
-        val isHideElevation = (WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_wx_tab)
-        val tabElevation = if (!isHideElevation && NightModeUtils.is_hook_tab_elevation) 5F else 0F
+//        val isHideElevation = (WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_tab)
+        val tabElevation = if (NightModeUtils.is_hook_tab_elevation) 5F else 0F
 
         val tabLayout = newTabLayout(viewPagerLinearLayout, Gravity.BOTTOM, tabElevation)
 
