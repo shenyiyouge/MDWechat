@@ -4,7 +4,7 @@ MDWechat
  Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信8.0.1.
 
 # 效果预览
-![gif_demo](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/demo.gif)
+[![gif_demo](https://z3.ax1x.com/2021/03/24/6bOQKJ.gif)](https://imgtu.com/i/6bOQKJ)
 ![main00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main00.png)
 ![chat00](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/chat00.png)
 ![main01](https://gitee.com/JoshCai/MDWechat/raw/v4.0/image/main01.png)
