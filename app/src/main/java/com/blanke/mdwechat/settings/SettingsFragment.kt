@@ -138,6 +138,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_pre_inst_color_schemes1))?.onPreferenceChangeListener = this
 
         findPreference(getString(R.string.key_hide_launcher_icon))?.onPreferenceChangeListener = this
+        findPreference(getString(R.string.key_alipay_red_packet))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_donate))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_donate_wechat))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_donate_joshcai))?.onPreferenceClickListener = this
@@ -208,7 +209,11 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         if (wxVersion > Version(getString(R.string.latest_wechat_version))) {
             findPreference(getString(R.string.key_joshcai_info))?.apply {
                 this.layoutResource = R.layout.preference_warning
-                this.summary = "${getString(R.string.josh_cai_info_outdated)} ($wxVersion)\n${getString(R.string.josh_cai_info_outdated_suffix)}"
+                this.summary = String.format("${getString(R.string.josh_cai_info_outdated)}\n${getString(R.string.josh_cai_info_outdated_suffix)}", wxVersion, getString(R.string.latest_wechat_version))
+            }
+        } else {
+            findPreference(getString(R.string.key_joshcai_info))?.apply {
+                this.summary = String.format(getString(R.string.josh_cai_info), getString(R.string.latest_wechat_version), wxVersion)
             }
         }
     }
@@ -448,6 +453,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_joshcai_info) -> myTest()
 
             "key_clear_logs" -> _clearLogs()
+            getString(R.string.key_alipay_red_packet) -> donate("https://qr.alipay.com/cpx030345hsmmzm2j44ro47")
             getString(R.string.key_donate) -> donate("https://qr.alipay.com/tsx05730go4ditv2dmwia15")
             getString(R.string.key_donate_wechat) -> donateWechat("f2f0YjlNObKWk7zwpDQoGtBDBe-Cper5cndi")
             getString(R.string.key_donate_joshcai) -> donate("https://qr.alipay.com/fkx12707x8vvnh6mjpqseb4")
@@ -642,8 +648,8 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //
     private fun sendEmailCai() {
         try {
-            val info = "mailto:1797761061@qq.com?subject=[MDWechat] 请简明描述该问题" +
-                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xp 微信 版本%0d%0a[日志]可以传附件"
+            val info = "mailto:joshcai_mdwechat@163.com?subject=[MDWechat] 请简明描述该问题" +
+                    "&body=请按以下步骤填写,不按此填写的邮件可能会被忽略,谢谢!%0d%0a[问题描述] 请描述遇到了什么问题%0d%0a[环境]请写明安卓版本 手机 rom xposed 微信 MDWechat版本%0d%0a[日志]可以传附件\n"
             val uri = Uri.parse(info)
             startActivity(Intent(Intent.ACTION_SENDTO, uri))
         } catch (e: Exception) {

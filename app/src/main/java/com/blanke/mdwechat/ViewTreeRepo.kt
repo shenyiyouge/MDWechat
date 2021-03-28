@@ -99,11 +99,6 @@ object ViewTreeRepoThisVersion {
         ViewTreeConfig.get().actionBarItem.invoke(ViewTreeRepo) as ViewTree
     }
 
-    // 订阅号的action bar (暂无作用)
-//    val ActionBarInSubscriptsItem: ViewTree by lazy {
-//        ViewTreeConfig.get().actionBarInSubscriptsItem.invoke(ViewTreeRepo) as ViewTree
-//    }
-
     // 聊天界面的action bar
     val ActionBarInConversationItem: ViewTree by lazy {
         ViewTreeConfig.get().actionBarInConversationItem.invoke(ViewTreeRepo) as ViewTree
@@ -149,6 +144,8 @@ object ViewTreeRepo {
                 ViewTreeItem("com.tencent.mm.ui.contact."))
     }
 
+    //region 主界面
+    //region 0
     val ConversationListViewItem: ViewTree by lazy {
         ViewTree(
                 mapOf("chatNameView" to intArrayOf(1, 0, 0, 0),
@@ -288,7 +285,9 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.WeImageView)))
                                 )))))))
     }
+    //endregion
 
+    //region 1
     val ContactListViewItem: ViewTree by lazy {
         ViewTree(
                 mapOf(
@@ -418,7 +417,9 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.TextView.name))))))))
     }
     // endregion
+    //endregion
 
+    //region 2
     val DiscoverViewItem: ViewTree by lazy {
         ViewTree(
                 mapOf("iconImageView" to intArrayOf(0, 0, 0, 0),
@@ -516,7 +517,9 @@ object ViewTreeRepo {
                                                                                 ViewTreeItem(CC.ImageView.name))),
                                                                         ViewTreeItem(CC.TextView.name))))))))))))))))
     }
+    //endregion`
 
+    //region 3
     val SettingAvatarView: ViewTree by lazy {
         ViewTree(
                 mapOf(
@@ -589,7 +592,10 @@ object ViewTreeRepo {
 //                                ViewTreeItem(CC.View.name)))//q2
                 )))))
     }
+    //endregion
+    //endregion
 
+    //region 聊天气泡
     val ChatHinterItem: ViewTree by lazy {
         ViewTree(
                 mapOf("msgView" to intArrayOf(2, 0),
@@ -861,7 +867,7 @@ object ViewTreeRepo {
     }
     //endregion
 
-    //位置
+    //region 位置
     val ChatLeftPositionItem: ViewTree by lazy {
         ViewTree(
                 mapOf("nickNameView" to intArrayOf(4, 1, 0),
@@ -942,7 +948,7 @@ object ViewTreeRepo {
     }
     //endregion
 
-    //红包
+    //region 红包
     val ChatLeftRedPacketItem: ViewTree by lazy {
         ViewTree(
                 mapOf("nickNameView" to intArrayOf(4, 1, 0),
@@ -1551,6 +1557,7 @@ object ViewTreeRepo {
                         ViewTreeItem(CC.View.name))))
     }
     //endregion
+    //endregion
 
     val ActionBarContainerItem: ViewTree by lazy {
         ViewTree(
@@ -1585,6 +1592,7 @@ object ViewTreeRepo {
                                                 ViewTreeItem("com.tencent.mm.ui.widget.AlbumChooserView"))))))))))
     }
 
+    //region 聊天界面
     //聊天界面(头)
     val ActionBarInConversationItem: ViewTree by lazy {
         ViewTree(
@@ -1740,6 +1748,29 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem(CC.WeImageView))),//goBackButton
                                         ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),//title
+                                                        ViewTreeItem(CC.WeImageView))),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.WeImageView))))))))),
+                        ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
+    }
+    val ActionBarInConversationItem_8_0_2: ViewTree by lazy {
+        ViewTree(
+                mapOf(
+                        "title" to intArrayOf(0, 1, 1, 0, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0, 0)
+                ),
+                ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
+                                Item_ActionMenuView_7_0_16,
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView))),//goBackButton
+                                                ViewTreeItem(CC.ImageView.name))),
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                         ViewTreeItem(CC.TextView.name),//title
@@ -1913,37 +1944,11 @@ object ViewTreeRepo {
                                 )))),
                         ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
     }
-
-    //订阅号(头)(7.0.16起)
-    val ActionBarInSubscriptsItem: ViewTree by lazy {
-        ViewTree(
-                mapOf("title" to intArrayOf(0, 0, 1, 0, 0),
-                        "goBackButton" to intArrayOf(0, 0, 0, 0)),
-//                        "infoButton" to intArrayOf(0, 1, 0, 4, 0)),
-                ViewTreeItem("android.support.v7.widget.ActionBarContainer", arrayOf(
-                        ViewTreeItem("android.support.v7.widget.Toolbar", arrayOf(
-                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                ViewTreeItem(CC.WeImageView))),
-
-                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                ViewTreeItem("com.tencent.mm.ui.widget.AlbumChooserView", arrayOf()))),
-                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                        ViewTreeItem(CC.ImageButton.name),
-                                                        ViewTreeItem(CC.TextView.name),
-                                                        ViewTreeItem(CC.ProgressBar.name))),
-                                                ViewTreeItem(CC.TextView.name))),
-                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                                        ViewTreeItem(CC.TextView.name),
-                                                        ViewTreeItem(CC.ImageButton.name))))))),
-                                Item_ActionMenuView_7_0_16
-                        )),
-                        ViewTreeItem("android.support.v7.widget.ActionBarContextView"))))
+    val ActionBarInSearchConversationItem_8_0_2: ViewTree by lazy {
+        ViewTreeRepoThisVersion.ActionBarInConversationItem
     }
 
-    val Item_ActionMenuView_7_0_16: ViewTreeItem by lazy {
+    private val Item_ActionMenuView_7_0_16: ViewTreeItem by lazy {
         ViewTreeItem("android.support.v7.widget.ActionMenuView", arrayOf(
                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                         ViewTreeItem(CC.ImageButton.name),
@@ -2176,6 +2181,7 @@ object ViewTreeRepo {
                         ))
                 ))
     }
+    //endregion
 
     //小程序的actionbar
     val ActionBarItem: ViewTree by lazy {

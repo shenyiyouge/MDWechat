@@ -16,7 +16,6 @@
     <Preference
         android:key="@string/key_joshcai_info"
         android:layout="@layout/preference_info"
-        android:summary="@string/josh_cai_info"
         android:title="@string/app_name_version" />
     <!--帮助和教程-->
     <PreferenceScreen
@@ -41,6 +40,10 @@
             android:summary="@string/josh_cai_info2" />
 
         <!--捐赠-->
+        <Preference
+            android:key="@string/key_alipay_red_packet"
+            android:summary="@string/summary_alipay_red_packet"
+            android:title="@string/text_alipay_red_packet" />
         <PreferenceScreen
             android:summary="@string/summary_donate"
             android:title="@string/text_donate">

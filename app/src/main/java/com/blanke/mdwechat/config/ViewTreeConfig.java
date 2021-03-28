@@ -48,7 +48,6 @@ public class ViewTreeConfig {
     private Method ActionBarItem = null;
     private Method ActionBarContainerItem = null;
     private Method ActionBarInFriendsgroupItem = null;
-    private Method ActionBarInSubscriptsItem = null;
     private Method ActionBarInConversationItem = null;
     private Method ActionBarInSearchConversationItem = null;
     private Method ChattingScrollLayoutItem = null;
@@ -182,10 +181,6 @@ public class ViewTreeConfig {
         return ActionBarInFriendsgroupItem;
     }
 
-    public Method getActionBarInSubscriptsItem() {
-        return ActionBarInSubscriptsItem;
-    }
-
     public Method getActionBarInConversationItem() {
         return ActionBarInConversationItem;
     }
@@ -256,7 +251,6 @@ public class ViewTreeConfig {
         RefLeftMessageItem = findViewTreeMethod("RefLeftMessageItem", versionName);
         ActionBarItem = findViewTreeMethod("ActionBarItem", versionName);
         ActionBarContainerItem = findViewTreeMethod("ActionBarContainerItem", versionName);
-        ActionBarInSubscriptsItem = findViewTreeMethod("ActionBarInSubscriptsItem", versionName);
         ActionBarInConversationItem = findViewTreeMethod("ActionBarInConversationItem", versionName);
         ActionBarInSearchConversationItem = findViewTreeMethod("ActionBarInSearchConversationItem", versionName);
         ChattingScrollLayoutItem = findViewTreeMethod("ChattingScrollLayoutItem", versionName);
