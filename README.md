@@ -1,7 +1,7 @@
 MDWechat
 ====
 # 简介
- Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信8.0.1.
+ Fork自 [Blankeer/MDWechat](https://github.com/Blankeer/MDWechat) ,支持微信8.0.2.
 
 # 效果预览
 [![gif_demo](https://z3.ax1x.com/2021/03/24/6bOQKJ.gif)](https://imgtu.com/i/6bOQKJ)
