@@ -56,7 +56,7 @@ object BackgroundImageHook {
                 Objects.Main.actionBarAppbrandFix?.background = background
             }
             Objects.Main.contactPageFix?.apply {
-                setContactPageFixBackround(this, page)
+                setContactPageFixBackground(this, page)
 //            this.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
             }
         }
@@ -186,7 +186,7 @@ object BackgroundImageHook {
         return _tabLayoutBitmap[page]
     }
 
-    fun setContactPageFixBackround(contactPageFix: View, page: Int) {
+    fun setContactPageFixBackground(contactPageFix: View, page: Int) {
         if (page != 1 && page != 2) {
             contactPageFix.background = null
         }
@@ -449,7 +449,7 @@ object BackgroundImageHook {
                             paramsAddedOnTop.topMargin = _contactPageWhiteBar[0]
                             paramsAddedOnTop.height = _contactPageWhiteBar[1]
                             Objects.Main.contactPageFix = FrameLayout(this.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY))
-                            setContactPageFixBackround(this, 1)
+                            setContactPageFixBackground(this, 1)
 //                        Objects.Main.contactPageFix!!.background = NightModeUtils.getBackgroundDrawable(cutBitmap("联系人界面高度补正", bg, _contactPageWhiteBar[0], _contactPageWhiteBar[1]))
                             this.addView(Objects.Main.contactPageFix!!, 1, paramsAddedOnTop)
                         }
