@@ -37,9 +37,14 @@ object Fields {
 
     val HomeUI_mActionBar: Field?
         get() {
-            return findFieldsWithType(
+            var fields = findFieldsWithType(
                     HomeUI!!, "android.support.v7.app.ActionBar")
-                    .firstOrNull()?.apply { isAccessible = true }
+            //wx8.0.3
+            if (fields.size == 0) {
+                fields = findFieldsWithType(
+                        HomeUI!!, "androidx.appcompat.app.ActionBar")
+            }
+            return fields.firstOrNull()?.apply { isAccessible = true }
         }
 
 //    val LauncherUIBottomTabViewItem_mTextViews: List<Field>?

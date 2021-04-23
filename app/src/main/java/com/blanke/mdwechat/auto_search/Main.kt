@@ -3,9 +3,7 @@ package com.blanke.mdwechat.auto_search
 import android.content.Context
 import com.blanke.mdwechat.Version
 import com.blanke.mdwechat.auto_search.bean.OutputJson
-import com.blanke.mdwechat.util.LogUtil
 import com.blankj.utilcode.util.FileIOUtils
-import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import dalvik.system.DexClassLoader
 import net.dongliu.apk.parser.ApkFile
@@ -48,6 +46,7 @@ class Main {
         WechatGlobal.wxLoader = classLoader
         WechatGlobal.wxClasses = wxClasses.map { it.classType }
 
+        //region classes
         Logs.i("开始解析 classes")
         var errorCount = 0
         val classesMap = mutableMapOf<String, String>()
@@ -68,12 +67,17 @@ class Main {
                     throw  NullPointerException("$methodName != class")
                 }
             } catch (e: Exception) {
-                Logs.i("$methodName 解析失败,${e}")
+                if (!
+                        //在 wx8.0.3 中已删除 ConversationWithAppBrandListView 类
+                        (WechatGlobal.wxVersion!! >= Version("8.0.3") && e.cause?.message == "ConversationWithAppBrandListView")
+                ) {
+                    Logs.i("$methodName 解析失败,${e}")
 //                e.stackTrace.forEach {
 //                    Logs.i(it.toString())
 //                }
-                e.printStackTrace()
-                errorCount++
+                    e.printStackTrace()
+                    errorCount++
+                }
             }
         }
         if (errorCount > 0) {
@@ -81,7 +85,9 @@ class Main {
             return
         }
         Logs.i("解析完成，class 数量 = ${classesMap.size}")
+        //endregion
 
+        //region fields
         Logs.i("开始解析 fields")
         errorCount = 0
         val fieldMap = mutableMapOf<String, Any>()
@@ -119,8 +125,10 @@ class Main {
             return
         }
         Logs.i("解析完成，field 数量 = ${fieldMap.size}")
+        //endregion
 
-        Logs.i("开始解析 method")
+        //region methods
+        Logs.i("开始解析 methods")
         errorCount = 0
         val methodMap = mutableMapOf<String, Any>()
         Methods::class.java.methods.forEach {
@@ -150,9 +158,14 @@ class Main {
                     throw  NullPointerException("$methodName != Method,$res")
                 }
             } catch (e: Exception) {
-                Logs.i("$methodName 解析失败,${e}")
-                e.printStackTrace()
-                errorCount++
+                if (!
+                        //在 wx8.0.3 中已删除 ConversationWithAppBrandListView 类
+                        (WechatGlobal.wxVersion!! >= Version("8.0.3") && e.cause?.message == "ConversationWithAppBrandListView_isAppBrandHeaderEnable")
+                ) {
+                    Logs.i("$methodName 解析失败,${e}")
+                    e.printStackTrace()
+                    errorCount++
+                }
             }
         }
         if (errorCount > 0) {
@@ -160,6 +173,7 @@ class Main {
             return
         }
         Logs.i("解析完成，method 数量 = ${methodMap.size}")
+        //endregion
 
         val outputJson = OutputJson(classesMap, methodMap, fieldMap)
         val json = Gson().toJson(outputJson)

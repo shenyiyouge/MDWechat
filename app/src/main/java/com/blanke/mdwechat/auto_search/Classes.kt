@@ -22,7 +22,7 @@ import com.blanke.mdwechat.util.ReflectionUtil
 object Classes {
     val LauncherUI: Class<*>?
         get() {
-            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.LauncherUI",WechatGlobal. wxLoader)
+            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.LauncherUI", WechatGlobal.wxLoader)
         }
 
     val HomeUI: Class<*>?
@@ -95,7 +95,13 @@ object Classes {
 
     val ActionBarContainer: Class<*>?
         get() {
-            return ReflectionUtil.findClassIfExists("android.support.v7.widget.ActionBarContainer", WechatGlobal.wxLoader)
+            try {
+                return ReflectionUtil.findClassIfExists("android.support.v7.widget.ActionBarContainer", WechatGlobal.wxLoader)
+            }
+            //wx8.0.3
+            catch (_: Exception) {
+                return ReflectionUtil.findClassIfExists("androidx.appcompat.widget.ActionBarContainer", WechatGlobal.wxLoader)
+            }
         }
 
 //    val ScrollingTabContainerView: Class<*>?
@@ -127,7 +133,11 @@ object Classes {
 
     val ConversationWithAppBrandListView: Class<*>?
         get() {
-            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.conversation.ConversationWithAppBrandListView", WechatGlobal.wxLoader)
+            try {
+                return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.conversation.ConversationWithAppBrandListView", WechatGlobal.wxLoader)
+            } catch (e: ClassNotFoundException) {
+                throw  ClassNotFoundException("ConversationWithAppBrandListView")
+            }
         }
 
     val ConversationListView: Class<*>?
@@ -226,7 +236,12 @@ object Classes {
 
     val ActionMenuView: Class<*>?
         get() {
-            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "android.support.v7.view.menu")
+            var clazzes = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "android.support.v7.view.menu")
+            //wx8.0.3
+            if (clazzes.classes.size == 0) {
+                clazzes = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "androidx.appcompat.view.menu")
+            }
+            return clazzes
                     .filterByField(CharSequence::class.java.name)
                     .filterByField(Drawable::class.java.name)
                     .filterByMethod(MenuItem::class.java, "add", CharSequence::class.java)

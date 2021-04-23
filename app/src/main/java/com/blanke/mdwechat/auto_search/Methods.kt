@@ -54,8 +54,12 @@ object Methods {
 
     val ConversationWithAppBrandListView_isAppBrandHeaderEnable: Method?
         get() {
-            return findMethodsByExactParameters(ConversationWithAppBrandListView!!, CC.Boolean, CC.Boolean)
-                    .firstOrNull()?.apply { isAccessible = true }
+            try {
+                return findMethodsByExactParameters(ConversationWithAppBrandListView!!, CC.Boolean, CC.Boolean)
+                        .firstOrNull()?.apply { isAccessible = true }
+            } catch (e: Exception) {
+                throw  Exception("ConversationWithAppBrandListView_isAppBrandHeaderEnable")
+            }
         }
 
     // 所有生命周期方法
