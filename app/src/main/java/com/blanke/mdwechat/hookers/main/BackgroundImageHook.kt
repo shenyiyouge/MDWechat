@@ -20,29 +20,32 @@ object BackgroundImageHook {
     var _tabLayoutOnTopOffset = 0
     var _tabLayoutHeightOnBottom: Int = -1//微信默认tab的高度
     var contactPageParent: ViewGroup? = null
-    var _contactPageWhiteBar = mutableListOf(0, 0)
+    private var _contactPageWhiteBar = mutableListOf(0, 0)
 
     //  (y,height)
-    var _actionBarLocation = mutableListOf(0, 0)
+    private var _actionBarLocation = mutableListOf(0, 0)
     var _tabLayoutLocation = mutableListOf(0, 0)
-    var _contactPageLocation = mutableListOf(0, 0)
+    private var _contactPageLocation = mutableListOf(0, 0)
 
-    var _actionBarBitmapInConversations: Bitmap? = null
-    var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
-    var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
-    var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
-    var _contactPageFix = mutableListOf<Drawable?>(null, null, null, null)
-    var DiscoverPage: View? = null
+    private var _actionBarBitmapInConversations: Bitmap? = null
+    private var _statusBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    private var _actionBarBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    private var _tabLayoutBitmap = mutableListOf<Bitmap?>(null, null, null, null)
+    private var _contactPageFix = mutableListOf<Drawable?>(null, null, null, null)
+    private var DiscoverPage: View? = null
+
+    //分别代表背景0-3 与 背景3上半部分(微信号处)的2个图片
     var _backgroundBitmap = mutableListOf<Bitmap?>(null, null, null, null, null, null)
 
     //region 导航
-    var position = 0
+    private var position = 0
     fun setGuideBarBitmaps(page: Int) {
         if (position == page) {
             return
         }
         position = page
         LogUtil.log("翻页操作: $page")
+        //除了 tabLayout 之外的
         if (page == 3 && WechatGlobal.wxVersion!! >= Version("8.0.0") && HookConfig.is_settings_page_transparent) {
             Objects.Main.statusView?.background = WeChatHelper.drawableTransparent
             Objects.Main.actionBar?.background = WeChatHelper.drawableTransparent
@@ -186,7 +189,8 @@ object BackgroundImageHook {
         return _tabLayoutBitmap[page]
     }
 
-    fun setContactPageFixBackground(contactPageFix: View, page: Int) {
+    //联系人界面高度补正
+    private fun setContactPageFixBackground(contactPageFix: View, page: Int) {
         if (page != 1 && page != 2) {
             contactPageFix.background = null
         }
@@ -348,7 +352,7 @@ object BackgroundImageHook {
 //        加载记录的高度
         if (HookConfig.is_bg_preload_mode) {
             picPositionConfig.apply {
-                LogUtil.log("加载已记录位置的背景图片:" + index)
+                LogUtil.log("加载已记录位置的背景图片:$index")
                 try {
                     if (picPositionConfig.lastModifiedTimeOfSettings == 0.toLong()
                             || picPositionConfig.screenHeight <= 0

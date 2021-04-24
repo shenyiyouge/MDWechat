@@ -23,10 +23,10 @@ import de.robv.android.xposed.XposedHelpers
 import java.util.*
 
 object TabLayoutHook {
-    fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float): CommonTabLayout {
+    private fun newTabLayout(viewGroup: ViewGroup, indicatorGravity: Int = Gravity.BOTTOM, tabElevation: Float): CommonTabLayout {
         val primaryColor: Int = NightModeUtils.colorPrimary
         val secondaryColor: Int = NightModeUtils.colorSecondary
-        val get_color_tertiary: Int = NightModeUtils.colorTeritary
+        val getColorTertiary: Int = NightModeUtils.colorTeritary
         val tipColor: Int = HookConfig.get_color_tip_in_guide
         val context = viewGroup.context.createPackageContext(Common.MY_APPLICATION_PACKAGE, Context.CONTEXT_IGNORE_SECURITY)
         val resContext = viewGroup.context
@@ -55,7 +55,7 @@ object TabLayoutHook {
                     object : CustomTabEntity.TabCustomData() {
                         override fun getTabIcon(): Drawable {
                             val drawable: Drawable = BitmapDrawable(resContext.resources, AppCustomConfig.getTabIcon(it))
-                            return if (NightModeUtils.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, get_color_tertiary) else drawable
+                            return if (NightModeUtils.is_tab_layout_filtered) DrawableUtils.setDrawableColor(drawable, getColorTertiary) else drawable
                         }
                     }
                 }
@@ -122,65 +122,69 @@ object TabLayoutHook {
             BackgroundImageHook.setTabLayoutBitmap(0)
         }
 //        }
-        if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
-            viewPagerLinearLayout.addView(tabLayout, 0, params)
-        } else if (WechatGlobal.wxVersion!! < Version("7.0.0")) {// 672 wx布局更改
-            val mockLayout = FrameLayout(context)
-            var paddingTop = px48
-            if (HookConfig.is_hook_hide_actionbar) {
-                paddingTop = 0
+        when {
+            WechatGlobal.wxVersion!! < Version("6.7.2") -> {
+                viewPagerLinearLayout.addView(tabLayout, 0, params)
             }
-            mockLayout.setPadding(0, paddingTop, 0, 0)
-            val viewpager = viewPagerLinearLayout.getChildAt(0)
-            viewPagerLinearLayout.removeViewAt(0)
-            mockLayout.addView(tabLayout, params)
-            mockLayout.addView(viewpager)
-            viewPagerLinearLayout.addView(mockLayout, 0)
-        } else {
-            val cb = { actionHeight: Int ->
-                params.topMargin = actionHeight + HookConfig.statusBarHeight
-                if (WechatGlobal.wxVersion!! == Version("7.0.0")) {
-                    // mock status bar
-                    val statusView = View(context)
-                    statusView.background = ColorDrawable(StatusBarHooker.getStatusBarColor())
-                    statusView.elevation = 1F
-                    val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    statusParam.topMargin = 0
-                    statusParam.height = HookConfig.statusBarHeight
-                    viewPagerLinearLayout.addView(statusView, 0, statusParam)
+            WechatGlobal.wxVersion!! < Version("7.0.0") -> {// 672 wx布局更改
+                val mockLayout = FrameLayout(context)
+                var paddingTop = px48
+                if (HookConfig.is_hook_hide_actionbar) {
+                    paddingTop = 0
                 }
+                mockLayout.setPadding(0, paddingTop, 0, 0)
+                val viewpager = viewPagerLinearLayout.getChildAt(0)
+                viewPagerLinearLayout.removeViewAt(0)
+                mockLayout.addView(tabLayout, params)
+                mockLayout.addView(viewpager)
+                viewPagerLinearLayout.addView(mockLayout, 0)
+            }
+            else -> {
+                val cb = { actionHeight: Int ->
+                    params.topMargin = actionHeight + HookConfig.statusBarHeight
+                    if (WechatGlobal.wxVersion!! == Version("7.0.0")) {
+                        // mock status bar
+                        val statusView = View(context)
+                        statusView.background = ColorDrawable(StatusBarHooker.getStatusBarColor())
+                        statusView.elevation = 1F
+                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        statusParam.topMargin = 0
+                        statusParam.height = HookConfig.statusBarHeight
+                        viewPagerLinearLayout.addView(statusView, 0, statusParam)
+                    }
 //                viewPagerLinearLayout.height
-                viewPagerLinearLayout.setPadding(0, 0, 0, 0)
-                viewPagerLinearLayout.requestLayout()
-                //小程序下拉之后的填空
-                if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (!HookConfig.is_hook_hide_actionbar)) {
-                    val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    paramsAddedOnTop.height = px48
-                    paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
-                    val view = FrameLayout(context)
+                    viewPagerLinearLayout.setPadding(0, 0, 0, 0)
+                    viewPagerLinearLayout.requestLayout()
+                    //小程序下拉之后的填空
+                    if ((WechatGlobal.wxVersion!! >= Version("7.0.7")) && (!HookConfig.is_hook_hide_actionbar)) {
+                        val paramsAddedOnTop = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        paramsAddedOnTop.height = px48
+                        paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
+                        val view = FrameLayout(context)
 //                    Objects.Main.actionBar = view
-                    view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
-                    viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
-                    Objects.Main.actionBarAppbrandFix = view
+                        view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                        viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
+                        Objects.Main.actionBarAppbrandFix = view
+                    }
+                    viewPagerLinearLayout.addView(tabLayout, 2, params)
                 }
-                viewPagerLinearLayout.addView(tabLayout, 2, params)
-            }
-            val mActionBar = Objects.Main.HomeUI_mActionBar!!
-            waitInvoke(100, true, {
-                XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
-            }, {
-                val actionHeight = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
+                val mActionBar = Objects.Main.HomeUI_mActionBar!!
+                waitInvoke(100, true, {
+                    XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
+                }, {
+                    val actionHeight = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
 
 
 //                LogUtil.log("=================1")
 //                if (actionHeight > 0) AppCustomConfig.actionBarHeight = actionHeight
 
-                if (!HookConfig.is_hook_hide_actionbar) {
-                    cb(actionHeight)
-                } else {
-                    cb(0)
-                }
-            })
+                    if (!HookConfig.is_hook_hide_actionbar) {
+                        cb(actionHeight)
+                    } else {
+                        cb(0)
+                    }
+                })
+            }
         }
         LogUtil.log("add table layout success")
         Objects.Main.LauncherUI_mTabLayout = tabLayout

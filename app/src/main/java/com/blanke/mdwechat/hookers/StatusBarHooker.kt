@@ -51,7 +51,7 @@ object StatusBarHooker : HookerProvider {
                     val activity = param.thisObject as Activity
 //                    LogUtil.log("activity onCreate " + activity)
                     val statusView = View(activity)
-                    if (activity::class.java.equals(Classes.LauncherUI)) {
+                    if (activity::class.java == Classes.LauncherUI) {
                         Objects.Main.statusView = statusView
                     }
                     statusView.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getStatusBarBitmap(0))
@@ -66,10 +66,10 @@ object StatusBarHooker : HookerProvider {
                     val rootView = window.decorView as ViewGroup
                     val clazz = activity::class.java.name
                     mainThread(100) {
-                        if ((!clazz.equals("com.tencent.mm.ui.chatting.gallery.ImageGalleryUI"))
-                                && (!clazz.equals("com.tencent.mm.plugin.recordvideo.activity.MMRecordUI"))
-                                && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsBrowseUI"))
-                                && (!clazz.equals("com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity"))) {
+                        if ((clazz != "com.tencent.mm.ui.chatting.gallery.ImageGalleryUI")
+                                && (clazz != "com.tencent.mm.plugin.recordvideo.activity.MMRecordUI")
+                                && (clazz != "com.tencent.mm.plugin.sns.ui.SnsBrowseUI")
+                                && (clazz != "com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity")) {
                             rootView.addView(statusView)
                         }
                         setColor(window, color)

@@ -25,7 +25,7 @@ import com.blanke.mdwechat.hookers.main.BackgroundImageHook
 import com.blanke.mdwechat.hookers.main.FloatMenuHook
 import com.blanke.mdwechat.hookers.main.HomeActionBarHook
 import com.blanke.mdwechat.hookers.main.TabLayoutHook
-import com.blanke.mdwechat.util.LogUtil.log
+import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.ViewUtils.measureHeight
 import de.robv.android.xposed.XC_MethodHook
@@ -66,10 +66,10 @@ object LauncherUIHooker : HookerProvider {
                         WeChatHelper.reloadPrefs()
                         val isInit = XposedHelpers.getAdditionalInstanceField(activity, keyInit)
                         if (isInit != null) {
-                            log("LauncherUI 已经hook过")
+                            LogUtil.log("LauncherUI 已经hook过")
                             return
                         }
-                        log("LauncherUI onResume(), start hook")
+                        LogUtil.log("LauncherUI onResume(), start hook")
                         initHookLauncherUI(activity)
                     }
 
@@ -83,7 +83,7 @@ object LauncherUIHooker : HookerProvider {
                             val mainTabUI = HomeUI_mMainTabUI.get(homeUI)
                             val viewPager = MainTabUI_mCustomViewPager.get(mainTabUI)
                             if (viewPager == null || viewPager !is View) {
-                                log("MainTabUI_mCustomViewPager == null return;")
+                                LogUtil.log("MainTabUI_mCustomViewPager == null return;")
                                 return
                             }
 
@@ -117,32 +117,32 @@ object LauncherUIHooker : HookerProvider {
                                 } else {
                                     linearViewGroup.removeView(tabView)
                                 }
-                                log("移除 tabView $tabView")
+                                LogUtil.log("移除 tabView $tabView")
                                 //endregion
                             }
 
                             when {
                                 isTabLayoutOnTop -> {
                                     try {
-                                        log("添加 TabLayout")
+                                        LogUtil.log("添加 TabLayout")
                                         TabLayoutHook.addTabLayout(linearViewGroup)
                                     } catch (e: Throwable) {
-                                        log("添加 TabLayout 报错")
-                                        log(e)
+                                        LogUtil.log("添加 TabLayout 报错")
+                                        LogUtil.log(e)
                                     }
                                 }
                                 isTabLayoutOnBottom -> {
                                     try {
-                                        log("添加底栏")
+                                        LogUtil.log("添加底栏")
                                         TabLayoutHook.addTabLayoutAtBottom(tabView, tabViewUnderneathHeight)
-                                        log("添加底栏成功")
+                                        LogUtil.log("添加底栏成功")
                                     } catch (e: Throwable) {
-                                        log("添加底栏 报错")
-                                        log(e)
+                                        LogUtil.log("添加底栏 报错")
+                                        LogUtil.log(e)
                                     }
                                 }
                                 else -> {
-                                    log("不用添加 TabLayout")
+                                    LogUtil.log("不用添加 TabLayout")
                                     BackgroundImageHook._tabLayoutLocation[1] = -1
                                 }
                             }
@@ -150,30 +150,29 @@ object LauncherUIHooker : HookerProvider {
                                 // 隐藏 action bar 测试
                                 HomeActionBarHook.fix(linearViewGroup)
                             }
-                            log("fix completed")
+                            LogUtil.log("fix completed")
                             //endregion
 
                             // float menu
                             if (HookConfig.is_hook_float_button) {
                                 try {
-                                    log("添加 FloatMenu")
+                                    LogUtil.log("添加 FloatMenu")
                                     FloatMenuHook.addFloatMenu(contentViewGroup, floatButtonMarginBottom * tabViewUnderneathHeight)
                                 } catch (e: Throwable) {
-                                    log("添加 FloatMenu 报错")
-                                    log(e)
+                                    LogUtil.log("添加 FloatMenu 报错")
+                                    LogUtil.log(e)
                                 }
                             }
                             XposedHelpers.setAdditionalInstanceField(activity, keyInit, true)
-                            log("LaunchUI Hook Completed.")
+                            LogUtil.log("LaunchUI Hook Completed.")
                         } catch (e: Exception) {
-                            log(e)
+                            LogUtil.log(e)
                         }
                     }
                 })
     }
 
-    private
-    val mainTabUIPageAdapterHook = Hooker {
+    private val mainTabUIPageAdapterHook = Hooker {
         XposedHelpers.findAndHookMethod(WxViewPager, WxViewPager_selectedPage.name, CC.Int, CC.Boolean, CC.Boolean, CC.Int, object : XC_MethodHook() {
             override fun beforeHookedMethod(param: MethodHookParam?) {
                 val vp = param?.thisObject
@@ -274,7 +273,7 @@ object LauncherUIHooker : HookerProvider {
                             val str = param.args[3]
                             val menuItem = param.result as MenuItem
                             if (str == "微X模块") {
-                                log("检测到 微X模块")
+                                LogUtil.log("检测到 微X模块")
                                 menuItem.isVisible = false
                                 Objects.Main.LauncherUI_mWechatXMenuItem = menuItem
                             }
