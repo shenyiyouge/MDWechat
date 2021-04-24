@@ -77,7 +77,7 @@
     <string name="key_color_ripple">key_color_ripple</string>
     <string name="text_color_ripple">波纹颜色</string>
     <string name="key_main_settings">key_main_settings</string>
-    <string name="text_main_settings">主界面</string>
+    <string name="text_main_settings">主界面设置</string>
     <string name="text_wechat_8_0_0">微信8.0</string>
     <string name="key_settings_page_transparent">key_settings_page_transparent</string>
     <string name="text_settings_page_transparent">第四页透明</string>
@@ -178,7 +178,10 @@
     <string name="msg_kill_wechat">请手动强行停止微信,再打开微信看效果.</string>
     <string name="key_hook_tab_elevation">key_hook_tab_elevation</string>
     <string name="text_hook_tab_elevation">TabLayout阴影</string>
-    <string name="summary_hook_tab_elevation">阴影和TabLayout当前页的横杠</string>
+    <string name="summary_hook_tab_elevation">(试验性) 仅当沉浸主题关闭且TabLayout置于上方时可用</string>
+    <string name="key_hook_tab_bar">key_hook_tab_bar</string>
+    <string name="text_hook_tab_bar">TabLayout横杠</string>
+    <string name="summary_hook_tab_bar">TabLayout当前页的横杠</string>
     <string name="key_small_tab_bar_size">key_small_tab_bar_size</string>
     <string name="text_small_tab_bar_size">使用小号横杠</string>
     <string name="summary_small_tab_bar_size">使TabLayout当前页的横杠大小变扁</string>

@@ -35,7 +35,7 @@ object TabLayoutHook {
         val indicatorWeight = if (HookConfig.is_small_tab_bar_size) 0.5f else 1f
         val dp2 = ConvertUtils.dp2px(resContext, indicatorWeight)
         tabLayout.indicatorHeight = dp2.toFloat()
-        tabLayout.indicatorColor = if (NightModeUtils.is_hook_tab_elevation) secondaryColor else primaryColor
+        tabLayout.indicatorColor = if (NightModeUtils.is_hook_tab_bar) secondaryColor else primaryColor
         tabLayout.setIndicatorGravity(indicatorGravity)
         tabLayout.indicatorCornerRadius = dp2.toFloat()
         tabLayout.indicatorAnimDuration = 200
@@ -89,8 +89,9 @@ object TabLayoutHook {
         }
         viewChild.addView(tabLayout, 4, params)
         try {
-            LogUtil.log("add table layout success")
             Objects.Main.LauncherUI_mTabLayout = tabLayout
+            LogUtil.log("add table layout success")
+            //disable original tabLayout
             for (index in 0..3) {
                 viewChild.getChildAt(index).visibility = View.GONE
             }
@@ -105,7 +106,8 @@ object TabLayoutHook {
         val resContext = viewPagerLinearLayout.context
         // 7.0.7(?) 之后小程序下拉相关
 //        val isHideElevation = (WechatGlobal.wxVersion!! >= Version("7.0.7")) && (HookConfig.is_hook_hide_tab)
-        val tabElevation = if (NightModeUtils.is_hook_tab_elevation) 5F else 0F
+        //沉浸主题下取消 elevation
+        val tabElevation = if (!HookConfig.is_hook_bg_immersion && HookConfig.is_hook_tab_elevation) 5F else 0F
 
         val tabLayout = newTabLayout(viewPagerLinearLayout, Gravity.BOTTOM, tabElevation)
 
@@ -116,7 +118,9 @@ object TabLayoutHook {
 //        mainThread {
         Objects.Main.tabLayout = tabLayout
         BackgroundImageHook._tabLayoutOnTop = true
-        BackgroundImageHook.setTabLayoutBitmap(0)
+        if (!HookConfig.is_hook_bg_immersion) {
+            BackgroundImageHook.setTabLayoutBitmap(0)
+        }
 //        }
         if (WechatGlobal.wxVersion!! < Version("6.7.2")) {
             viewPagerLinearLayout.addView(tabLayout, 0, params)

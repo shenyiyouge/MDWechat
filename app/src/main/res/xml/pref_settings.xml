@@ -150,6 +150,12 @@
                 android:title="@string/text_pre_inst_color_schemes" />
         </PreferenceCategory>
     </PreferenceScreen>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:dependency="@string/key_hook_switch"
+        android:key="@string/key_fix_play"
+        android:summary="@string/summary_fix_play"
+        android:title="@string/text_fix_play" />
     <!--配色方案-->
     <PreferenceScreen
         android:dependency="@string/key_hook_switch"
@@ -560,14 +566,20 @@
                 android:summary="@string/summary_tab_layout_filtered"
                 android:title="@string/text_tab_layout_filtered" />
             <SwitchPreference
-                android:defaultValue="true"
+                android:defaultValue="false"
                 android:dependency="@string/key_hook_tab"
                 android:key="@string/key_hook_tab_elevation"
                 android:summary="@string/summary_hook_tab_elevation"
                 android:title="@string/text_hook_tab_elevation" />
             <SwitchPreference
+                android:defaultValue="true"
+                android:dependency="@string/key_hook_tab"
+                android:key="@string/key_hook_tab_bar"
+                android:summary="@string/summary_hook_tab_bar"
+                android:title="@string/text_hook_tab_bar" />
+            <SwitchPreference
                 android:defaultValue="false"
-                android:dependency="@string/key_hook_tab_elevation"
+                android:dependency="@string/key_hook_tab_bar"
                 android:key="@string/key_small_tab_bar_size"
                 android:summary="@string/summary_small_tab_bar_size"
                 android:title="@string/text_small_tab_bar_size" />
