@@ -7,10 +7,16 @@ import de.robv.android.xposed.XposedHelpers
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 
 object WechatGlobal {
+    //play版等部分微信需要提前识别classLoader
+    var preloaded = false
+//    var hookersLoaded=false
+
     @Volatile
     var wxVersion: Version? = null
+
     @Volatile
     var wxPackageName: String = ""
+
     @Volatile
     lateinit var wxLoader: ClassLoader
     lateinit var wxClasses: List<String>

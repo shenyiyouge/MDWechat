@@ -66,7 +66,11 @@ object TabLayoutHook {
                 LogUtil.log("tab click position=$position")
                 tabLayout.currentTab = position
                 Objects.Main.LauncherUI_mViewPager?.apply {
-                    Methods.WxViewPager_selectedPage.invoke(this, position, false, false, 0)
+                    try {
+                        Methods.WxViewPager_selectedPage.invoke(this, position, false, false, 0)
+                    } catch (e: Exception) {
+                        LogUtil.log(e)
+                    }
                 }
             }
 
@@ -85,7 +89,7 @@ object TabLayoutHook {
         params.height = height
         mainThread {
             Objects.Main.tabLayout = tabLayout
-            tabLayout.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getTabLayoutBitmapAtBottom(params.height, 0))
+            tabLayout.background = NightModeUtils.getForegroundDrawable(tabLayout.resources, BackgroundImageHook.getTabLayoutBitmapAtBottom(params.height, 0))
         }
         viewChild.addView(tabLayout, 4, params)
         try {
@@ -162,7 +166,7 @@ object TabLayoutHook {
                         paramsAddedOnTop.topMargin = actionHeight + HookConfig.statusBarHeight - px48
                         val view = FrameLayout(context)
 //                    Objects.Main.actionBar = view
-                        view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                        view.background = NightModeUtils.getForegroundDrawable(view.resources, BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                         viewPagerLinearLayout.addView(view, 1, paramsAddedOnTop)
                         Objects.Main.actionBarAppbrandFix = view
                     }

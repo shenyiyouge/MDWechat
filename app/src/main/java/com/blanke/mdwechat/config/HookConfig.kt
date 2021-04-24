@@ -21,6 +21,7 @@ object HookConfig {
     private val key_resolution = "key_resolution"
 
     private val key_hook_switch = "hookSwitch"
+    private val key_fix_play = "key_fix_play"
     private val key_color_primary = "key_color_primary"
     private val key_color_secondary = "key_color_secondary"
     private val key_color_tertiary = "key_color_tertiary"
@@ -139,6 +140,11 @@ object HookConfig {
         out
     }
 
+
+    val is_fix_play: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_fix_play, false)
+        }
 
     val is_hook_switch: Boolean
         get() {

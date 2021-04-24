@@ -8,6 +8,7 @@ import com.blanke.mdwechat.hookers.*
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
+import com.blanke.mdwechat.util.waitInvoke
 import com.joshcai.mdwechat.BuildConfig
 import de.robv.android.xposed.IXposedHookLoadPackage
 import de.robv.android.xposed.callbacks.XC_LoadPackage
@@ -29,6 +30,7 @@ class WechatHook : IXposedHookLoadPackage {
                 return
             }
             log("模块加载中...")
+            val preloadHooker = LauncherUIHooker.launcherLifeHooker
             val hookers = mutableListOf(
                     StatusBarHooker,
                     ActionBarHooker,
@@ -62,8 +64,8 @@ class WechatHook : IXposedHookLoadPackage {
             if ((!isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
                 hookers.add(0, DebugHooker)
             }
+            preloadHooker.hook()
             hookMain(lpparam, hookers)
-            log("模块加载成功")
         } catch (e: Throwable) {
             log(e)
         }
@@ -82,14 +84,25 @@ class WechatHook : IXposedHookLoadPackage {
                 + ",processName=" + lpparam.processName
                 + ",isVXPEnv = " + isVXPEnv
                 + ",MDWechat version=" + BuildConfig.VERSION_NAME)
-        plugins.forEach { provider ->
-            provider.provideStaticHookers()?.forEach { hooker ->
-                if (!hooker.hasHooked) {
-                    hooker.hook()
-                    hooker.hasHooked = true
+
+        if (!HookConfig.is_fix_play) {
+            WechatGlobal.preloaded = true
+        }
+        //todo 等待其他hookers加载
+        waitInvoke(1, true, {
+            WechatGlobal.preloaded
+        }, {
+            plugins.forEach { provider ->
+                provider.provideStaticHookers()?.forEach { hooker ->
+                    if (!hooker.hasHooked) {
+                        hooker.hook()
+                        hooker.hasHooked = true
+                    }
                 }
             }
-        }
+        })
+
+        log("模块加载成功")
     }
 }
 

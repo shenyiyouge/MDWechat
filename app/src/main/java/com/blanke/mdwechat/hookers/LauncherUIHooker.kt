@@ -38,11 +38,11 @@ object LauncherUIHooker : HookerProvider {
 
     override fun provideStaticHookers(): List<Hooker>? {
         return listOf(
-                launcherLifeHooker,
+//                launcherLifeHooker,
                 mainTabUIPageAdapterHook, actionMenuHooker)
     }
 
-    private val launcherLifeHooker = Hooker {
+    val launcherLifeHooker = Hooker {
 //        XposedHelpers.findAndHookMethod(CC.Activity, "onDestroy", object : XC_MethodHook() {
 //            override fun afterHookedMethod(param: MethodHookParam) {
 //                val activity = param.thisObject as? Activity ?: return
@@ -59,7 +59,22 @@ object LauncherUIHooker : HookerProvider {
                 object : XC_MethodHook() {
                     override fun afterHookedMethod(param: MethodHookParam) {
                         val activity = param.thisObject as? Activity ?: return
-                        log("activity resume = $activity")
+                        LogUtil.log("activity resume = $activity")
+
+                        if (activity::class.java.classLoader != WechatGlobal.wxLoader) {
+//                            LogUtil.log("============")
+                            LogUtil.log("微信使用的classloader = ${activity::class.java.classLoader}")
+                            LogUtil.log("MDWechat使用的classloader = ${Classes.LauncherUI.classLoader}")
+//                            LogUtil.log("============")
+                            WechatGlobal.wxLoader = activity::class.java.classLoader
+                            Classes.setLauncherUI()
+                        }
+                        WechatGlobal.preloaded = true
+//                        //等待其他hookers加载
+//                        while(!WechatGlobal.hookersLoaded){
+//                            sleep(100)
+//                        }
+
                         if (activity::class.java != Classes.LauncherUI) {
                             return
                         }

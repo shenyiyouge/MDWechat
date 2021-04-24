@@ -18,8 +18,18 @@ object Classes {
         findClass(WechatGlobal.wxVersionConfig.classes.HomeUI)
     }
 
-    val LauncherUI: Class<*> by WechatGlobal.wxLazy("LauncherUI") {
-        findClass(WechatGlobal.wxVersionConfig.classes.LauncherUI)
+    var _LauncherUI: Class<*>? = null
+
+    val LauncherUI: Class<*>
+        get() {
+            if (_LauncherUI == null) {
+                setLauncherUI()
+            }
+            return _LauncherUI!!
+        }
+
+    fun setLauncherUI() {
+        _LauncherUI = findClass(WechatGlobal.wxVersionConfig.classes.LauncherUI)!!
     }
 
     val WxViewPager: Class<*> by WechatGlobal.wxLazy("WxViewPager") {

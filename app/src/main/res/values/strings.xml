@@ -369,6 +369,10 @@
     <string name="key_select_tab_icon_3">key_select_tab_icon_3</string>
     <string name="text_select_tab_icon_3">设置页图标</string>
 
+    <string name="key_fix_play">key_fix_play</string>
+    <string name="text_fix_play">适应play版微信</string>
+    <string name="summary_fix_play">由于理论上来说这个功能有bug，故仅建议出现更加严重的bug（主要表现为微信底栏为无法美化、无法加载悬浮按钮等现象，多发生于play版本微信）时开启该选项。</string>
+
     <string name="help_info">帮助/关于</string>
     <string name="reset">重置图标/配置文件</string>
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
@@ -379,6 +383,6 @@
     <string name="key_joshcai_info">key_joshcai_info</string>
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本（当前版本%s，最高适配%s)</string>
     <string name="josh_cai_info_outdated_suffix">\n 不适配内测版本！不要再问了！\n\n在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
-    <string name="josh_cai_info">适配微信%s (当前微信版本:%s)\n\n新增功能：\n\n- 自定义本机红包气泡背景 —— 配色方案 -> 聊天界面 ->聊天气泡 -> 自定义红包气泡。\n\n- 自定义聊天标签（时间、群聊人员名称等）颜色 —— 配色方案 -> 聊天界面 -> 聊天项目 标签颜色\n\n- 隐藏微信号 —— mdwechat 主界面 -> 其他\n\n- 第四页透明（微信8.0专用）—— mdwechat 主界面 -> 微信8.0，建议仅在设置了微信状态时打开此选项。</string>
+    <string name="josh_cai_info">适配微信%s (当前微信版本:%s)\n\n新增功能：\n\n- 针对一些play版本的微信或者有重大bug（主要表现为底栏与悬浮按钮无法正常显示等）的用户提供一个开关</string>
     <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯咖啡。</string>
 </resources>
