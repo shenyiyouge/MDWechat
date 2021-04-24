@@ -95,7 +95,11 @@ object Classes {
     }
 
     val Fragment: Class<*> by WechatGlobal.wxLazy("Fragment") {
-        findClass("android.support.v4.app.Fragment")
+        if (WechatGlobal.wxVersion!! < Version("8.0.3")) {
+            findClass("android.support.v4.app.Fragment")
+        } else {
+            findClass("androidx.fragment.app.Fragment")
+        }
     }
 
     val DiscoverFragment: Class<*> by WechatGlobal.wxLazy("DiscoverFragment") {

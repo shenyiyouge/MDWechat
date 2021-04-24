@@ -247,7 +247,9 @@ object BackgroundImageHook {
 //                    }
                 })
             }
-            "android.support.v7.widget.ActionBarOverlayLayout" -> {
+            "android.support.v7.widget.ActionBarOverlayLayout",
+                //wx8.0.3
+            "androidx.appcompat.widget.ActionBarOverlayLayout" -> {
                 val ChattingScrollLayoutItem = ViewUtils.getParentView(chattingUILayout, 3) as View
                 if (!ChattingScrollLayoutItem::class.java.name.equals("com.tencent.mm.ui.widget.SwipeBackLayout")) {
                     return
