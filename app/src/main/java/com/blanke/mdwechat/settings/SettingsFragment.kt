@@ -81,7 +81,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //        preferenceManager.setSharedPreferencesMode(Context.MODE_WORLD_READABLE)
         preferenceManager.sharedPreferencesName = Common.MOD_PREFS
         addPreferencesFromResource(R.xml.pref_settings)
-        setLayoutResource(preferenceScreen)
+        setLayout(preferenceScreen)
         setResolution()
 
         // 禁用 详细日志
@@ -218,30 +218,37 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         }
     }
 
-    private fun setLayoutResource(preference: Preference) {
-        if (preference is PreferenceScreen) {
-            val ps = preference
-            if (ps.layoutResource != R.layout.preference_warning
-                    || ps.layoutResource != R.layout.preference_info) {
-                ps.layoutResource = R.layout.preference_screen
-            }
-            val cnt = ps.preferenceCount
-            for (i in 0 until cnt) {
-                val p = ps.getPreference(i)
-                setLayoutResource(p)
-            }
-        } else if (preference is PreferenceCategory) {
-            val pc = preference
-            pc.layoutResource = R.layout.preference_category
-            val cnt = pc.preferenceCount
-            for (i in 0 until cnt) {
-                val p = pc.getPreference(i)
-                setLayoutResource(p)
-            }
+    //设置layout
+    private fun setLayoutResource(ps: Preference, defaultRes: Int) {
+        if (ps.layoutResource != R.layout.preference_warning
+                && ps.layoutResource != R.layout.preference_info) {
+            ps.layoutResource = defaultRes
         }
-//        else {
-//            preference_warning.layoutResource = R.layout.preference_warning
-//        }
+    }
+
+    //递归设置layout
+    private fun setLayout(preference: Preference) {
+        when (preference) {
+            is PreferenceScreen -> {
+                setLayoutResource(preference, R.layout.preference_screen)
+                val cnt = preference.preferenceCount
+                for (i in 0 until cnt) {
+                    val p = preference.getPreference(i)
+                    setLayout(p)
+                }
+            }
+            is PreferenceCategory -> {
+                setLayoutResource(preference, R.layout.preference_category)
+                val cnt = preference.preferenceCount
+                for (i in 0 until cnt) {
+                    val p = preference.getPreference(i)
+                    setLayout(p)
+                }
+            }
+//            else -> {
+//                setLayoutResource(preference, R.layout.preference_screen)
+//            }
+        }
     }
 
     override fun onPreferenceChange(preference: Preference, o: Any): Boolean {
