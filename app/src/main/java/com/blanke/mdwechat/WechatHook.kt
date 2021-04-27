@@ -5,6 +5,7 @@ import com.blanke.mdwechat.config.HookConfig
 import com.blanke.mdwechat.config.ViewTreeConfig
 import com.blanke.mdwechat.config.WxVersionConfig
 import com.blanke.mdwechat.hookers.*
+import com.blanke.mdwechat.hookers.base.Hooker
 import com.blanke.mdwechat.hookers.base.HookerProvider
 import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.LogUtil.log
@@ -64,17 +65,17 @@ class WechatHook : IXposedHookLoadPackage {
             if ((!isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
                 hookers.add(0, DebugHooker)
             }
-            preloadHooker.hook()
-            hookMain(lpparam, hookers)
+            hookMain(lpparam, preloadHooker, hookers)
         } catch (e: Throwable) {
             log(e)
         }
     }
 
-    private fun hookMain(lpparam: XC_LoadPackage.LoadPackageParam, plugins: List<HookerProvider>) {
+    private fun hookMain(lpparam: XC_LoadPackage.LoadPackageParam, preloadHooker: Hooker, plugins: List<HookerProvider>) {
         WechatGlobal.init(lpparam)
         try {
             WechatGlobal.wxVersionConfig = WxVersionConfig.loadConfig(WechatGlobal.wxVersion!!.toString())
+            preloadHooker.hook()
             ViewTreeConfig.set(WechatGlobal.wxVersion!!)
         } catch (e: Exception) {
             log("${WechatGlobal.wxVersion} 配置文件不存在或解析失败")
@@ -85,23 +86,23 @@ class WechatHook : IXposedHookLoadPackage {
                 + ",isVXPEnv = " + isVXPEnv
                 + ",MDWechat version=" + BuildConfig.VERSION_NAME)
 
-        if (!HookConfig.is_fix_play) {
-            WechatGlobal.preloaded = true
+        if (HookConfig.is_fix_play) {
+            //todo 等待其他hookers加载
+            waitInvoke(1, true, { WechatGlobal.preloaded }, { enableHookers(plugins) })
+        } else {
+            enableHookers(plugins)
         }
-        //todo 等待其他hookers加载
-        waitInvoke(1, true, {
-            WechatGlobal.preloaded
-        }, {
-            plugins.forEach { provider ->
-                provider.provideStaticHookers()?.forEach { hooker ->
-                    if (!hooker.hasHooked) {
-                        hooker.hook()
-                        hooker.hasHooked = true
-                    }
+    }
+
+    fun enableHookers(plugins: List<HookerProvider>) {
+        plugins.forEach { provider ->
+            provider.provideStaticHookers()?.forEach { hooker ->
+                if (!hooker.hasHooked) {
+                    hooker.hook()
+                    hooker.hasHooked = true
                 }
             }
-        })
-
+        }
         log("模块加载成功")
     }
 }
