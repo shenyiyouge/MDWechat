@@ -153,6 +153,7 @@
     <SwitchPreference
         android:defaultValue="false"
         android:dependency="@string/key_hook_switch"
+        android:layout="@layout/preference_warning"
         android:key="@string/key_fix_play"
         android:summary="@string/summary_fix_play"
         android:title="@string/text_fix_play" />
@@ -432,6 +433,7 @@
         android:dependency="@string/key_hook_bg_immersion"
         android:layout="@layout/preference_info"
         android:summary="@string/summary_hook_bg_immersion_mode"
+        android:key="@string/key_hook_bg_immersion_mode"
         android:title="@string/text_hook_bg_immersion_mode">
         <ListPreference
             android:defaultValue="false"

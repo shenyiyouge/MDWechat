@@ -81,7 +81,7 @@
     <string name="text_wechat_8_0_0">微信8.0</string>
     <string name="key_settings_page_transparent">key_settings_page_transparent</string>
     <string name="text_settings_page_transparent">第四页透明</string>
-    <string name="summary_settings_page_transparent">当添加状态时请打开此开关，以关闭主界面第四页的主题配置。</string>
+    <string name="summary_settings_page_transparent">微信8.0不添加微信状态时请关闭此开关</string>
     <string name="key_hook__actionbar_color">key_hook__actionbar_color</string>
     <string name="text_hook__actionbar_color">顶栏字体颜色修改</string>
     <string name="summary_hook__actionbar_color">将使用副色1。Visual xposed环境下不会生效。</string>
@@ -130,6 +130,7 @@
     <string name="summary_hook_bubble_in_night_mode">当色系为亮色系且开启深色模式时也启用自定义气泡。依赖于「配色方案 -> 自动切换暗色系」</string>
     <string name="key_hook_bg_immersion">key_hook_bg_immersion</string>
     <string name="text_hook_bg_immersion">沉浸主题</string>
+    <string name="key_hook_bg_immersion_mode">key_hook_bg_immersion_mode</string>
     <string name="text_hook_bg_immersion_mode">沉浸主题设置</string>
     <string name="summary_hook_bg_immersion_mode">(click here)沉浸主题的一些模式选择(开启沉浸主题后生效)</string>
     <string name="summary_hook_bg_immersion">微信7.0.11以上生效，包含主界面和聊天界面(聊天背景需在微信中设置:「设置 -> 聊天 -> 聊天背景」; 默认使用最近聊天页的背景图作为聊天页的背景)。</string>
@@ -370,8 +371,8 @@
     <string name="text_select_tab_icon_3">设置页图标</string>
 
     <string name="key_fix_play">key_fix_play</string>
-    <string name="text_fix_play">适应play版微信</string>
-    <string name="summary_fix_play">由于理论上来说这个功能有bug，故仅建议出现更加严重的bug（主要表现为微信底栏为无法美化、无法加载悬浮按钮等现象，多发生于play版本微信）时开启该选项。</string>
+    <string name="text_fix_play">play 开关</string>
+    <string name="summary_fix_play">由于理论上来说这个功能有bug，故仅建议出现更加严重的bug（主要表现为无法变更背景或者无法替换微信原生底栏、底栏点击无反应等现象，多发生于play版微信）时开启该选项。</string>
 
     <string name="help_info">帮助/关于</string>
     <string name="reset">重置图标/配置文件</string>
@@ -379,10 +380,10 @@
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
     <string name="latest_wechat_version">8.0.3</string>
-    <string name="app_name_version">version 4.1.0-beta</string>
+    <string name="app_name_version">version 4.1.0</string>
     <string name="key_joshcai_info">key_joshcai_info</string>
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本（当前版本%s，最高适配%s)</string>
     <string name="josh_cai_info_outdated_suffix">\n 不适配内测版本！不要再问了！\n\n在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
-    <string name="josh_cai_info">适配微信%s (当前微信版本:%s)\n\n新增功能：\n\n- 针对一些play版本的微信或者有重大bug（主要表现为底栏与悬浮按钮无法正常显示等）的用户提供一个开关</string>
+    <string name="josh_cai_info">适配微信%s (当前微信版本:%s)\n\n新增功能：\n\n- 针对一些有重大bug（主要表现为无法变更背景或者无法替换微信原生底栏、底栏点击无反应等现象，多发生于play版微信）的用户提供一个开关</string>
     <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯咖啡。</string>
 </resources>
