@@ -35,7 +35,7 @@ object TabLayoutHook {
         val indicatorWeight = if (HookConfig.is_small_tab_bar_size) 0.5f else 1f
         val dp2 = ConvertUtils.dp2px(resContext, indicatorWeight)
         tabLayout.indicatorHeight = dp2.toFloat()
-        tabLayout.indicatorColor = if (NightModeUtils.is_hook_tab_bar) secondaryColor else primaryColor
+        tabLayout.indicatorColor = if (NightModeUtils.is_hook_tab_bar) secondaryColor else Color.TRANSPARENT
         tabLayout.setIndicatorGravity(indicatorGravity)
         tabLayout.indicatorCornerRadius = dp2.toFloat()
         tabLayout.indicatorAnimDuration = 200
