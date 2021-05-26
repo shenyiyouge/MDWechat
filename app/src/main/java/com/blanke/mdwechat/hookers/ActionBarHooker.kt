@@ -72,7 +72,7 @@ object ActionBarHooker : HookerProvider {
                 if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, actionBar)) {
                     Objects.Main.actionBar = actionBar
                     if (!HookConfig.is_hook_hide_actionbar) {
-                        actionBar.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
+                        actionBar.background = NightModeUtils.getForegroundDrawable(actionBar.resources, BackgroundImageHook.getActionBarBitmap(actionBar.measuredHeight, Objects.Main.pagePosition))
                     }
                 } else {
                     BackgroundImageHook.setActionBarBitmapInConversations(actionBar)
@@ -95,7 +95,7 @@ object ActionBarHooker : HookerProvider {
 //                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, view)) {
                     Objects.Main.actionBar = view
                     if (!HookConfig.is_hook_hide_actionbar && !(Objects.Main.pagePosition == 3 && WechatGlobal.wxVersion!! >= Version("8.0.0"))) {
-                        view.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
+                        view.background = NightModeUtils.getForegroundDrawable(view.resources, BackgroundImageHook.getActionBarBitmap(view.measuredHeight, Objects.Main.pagePosition))
                     }
 //                    } else {
 //                        LogUtil.log("#############################################")

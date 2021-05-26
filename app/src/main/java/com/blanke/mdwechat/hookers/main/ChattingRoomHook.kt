@@ -109,14 +109,14 @@ object ChattingRoomHook {
                     val bgViewWithEditText = FrameLayout(context)
                     bgViewWithEditText.elevation = -100f
                     (getParentViewSafe(ChattingScrollLayoutItem, 1) as ViewGroup).addView(bgViewWithEditText, 1, params)
-                    bgViewWithEditText.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("ChattingImageBGView",
+                    bgViewWithEditText.background = NightModeUtils.getBackgroundDrawable(bgViewWithEditText.resources, BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("替换自定义聊天背景+输入框背景")
                     //endregion
                     //region 聊天背景 MIUI12
                     val bgViewMiui12fix = FrameLayout(context)
                     bgGroup.addView(bgViewMiui12fix, 1, params)
-                    bgViewMiui12fix.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("ChattingImageBGView",
+                    bgViewMiui12fix.background = NightModeUtils.getBackgroundDrawable(bgViewMiui12fix.resources, BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("聊天背景 + MIUI12 fix test")
                     //endregion
@@ -133,14 +133,14 @@ object ChattingRoomHook {
                     val view = FrameLayout(context)
                     params.height = HookConfig.value_resolution[1] - actionBarBottom
                     bgGroup.addView(view, 1, params)
-                    view.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("ChattingImageBGView",
+                    view.background = NightModeUtils.getBackgroundDrawable(view.resources, BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("替换自定义聊天背景")
 //endregion
                 }
                 // region底栏输入框
                 if (footerLocation[1] > 0) {
-                    chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook.cutBitmap("chatFooterChild2",
+                    chatFooterChild2.background = NightModeUtils.getBackgroundDrawable(chatFooterChild2.resources, BackgroundImageHook.cutBitmap("chatFooterChild2",
                             getChatBg(), footerLocation[0], ViewUtils.measureHeight(chatFooterChild2)))
                 } else {
                     BackgroundImageHook.setBackgroundBitmap("chatFooterChild2", chatFooterChild2, getChatBg(), null)

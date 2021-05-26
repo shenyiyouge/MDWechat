@@ -1,5 +1,6 @@
 package com.blanke.mdwechat.util
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
@@ -34,18 +35,18 @@ object NightModeUtils {
 //                ?: WeChatHelper.drawableWhite
 //    }
 
-    fun getBackgroundDrawable(defaultDrawable: Bitmap?): Drawable {
+    fun getBackgroundDrawable(res: Resources, defaultDrawable: Bitmap?): Drawable {
         return when {
             isNightMode() -> WeChatHelper.drawableDark
-            defaultDrawable != null -> BitmapDrawable(defaultDrawable)
+            defaultDrawable != null -> BitmapDrawable(res, defaultDrawable)
             else -> WeChatHelper.drawableWhite
         }
     }
 
-    fun getForegroundDrawable(defaultDrawable: Bitmap?): Drawable {
+    fun getForegroundDrawable(res: Resources?, defaultDrawable: Bitmap?): Drawable {
         return when {
             isNightMode() -> WeChatHelper.colorPrimaryDrawableDark
-            defaultDrawable != null -> BitmapDrawable(defaultDrawable)
+            defaultDrawable != null -> BitmapDrawable(res, defaultDrawable)
             else -> WeChatHelper.colorPrimaryDrawable
         }
     }

@@ -54,7 +54,8 @@ object StatusBarHooker : HookerProvider {
                     if (activity::class.java == Classes.LauncherUI) {
                         Objects.Main.statusView = statusView
                     }
-                    statusView.background = NightModeUtils.getForegroundDrawable(BackgroundImageHook.getStatusBarBitmap(0))
+                    statusView.background = NightModeUtils.getForegroundDrawable(statusView.resources, BackgroundImageHook.getStatusBarBitmap(0))
+//                    调至上层显示
                     statusView.elevation = 1F
 //                        val statusParam = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 //                        statusParam.topMargin = 0

@@ -26,6 +26,7 @@ import com.blanke.mdwechat.util.ViewUtils
 import com.blanke.mdwechat.util.ViewUtils.findLastChildView
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
+import kotlin.concurrent.thread
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 object ListViewHooker : HookerProvider {
@@ -909,39 +910,39 @@ object ListViewHooker : HookerProvider {
                                     }
                                 }
 
-                                //微信号颜色
-                                if (isHookTextColor) {
-                                    this.setTextColor(titleTextColor)
-                                    ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["nickNameView"])?.apply {
-                                        XposedHelpers.callMethod(this, "setTextColor", titleTextColor)
-                                    }
-                                }
-                            }
-                        }
-                        if (WechatGlobal.wxVersion!! >= Version("8.0.0")) {
-                            if (!HookConfig.is_settings_page_transparent) {
-                                VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
-                                    ViewUtils.getChildView1(view, this)?.apply {
-                                        //生成背景
-                                        if (HookConfig.is_hook_bg_immersion) {
-                                            if (BackgroundImageHook._backgroundBitmap[4] != null) {
-                                                this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[4])
-                                                return
-                                            } else {
-                                                //2s之后如果没生成背景就放弃
-                                                BackgroundImageHook.setMainPageBitmap("设置页头像栏", this, AppCustomConfig.getTabBg(3), 4, 4)
-                                            }
-                                        } else {
-                                            this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                                    //微信号颜色
+                                    if (isHookTextColor) {
+                                        this.setTextColor(titleTextColor)
+                                        ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["nickNameView"])?.apply {
+                                            XposedHelpers.callMethod(this, "setTextColor", titleTextColor)
                                         }
                                     }
                                 }
-                                VTTV.SettingAvatarView.treeStacks["q1"]?.apply {
-                                    ViewUtils.getChildView1(view, this)?.apply {
-                                        //生成背景
-                                        if (HookConfig.is_hook_bg_immersion) {
-                                            if (BackgroundImageHook._backgroundBitmap[5] != null) {
-                                                this.background = NightModeUtils.getBackgroundDrawable(BackgroundImageHook._backgroundBitmap[5])
+                            }
+                            if (WechatGlobal.wxVersion!! >= Version("8.0.0")) {
+                                if (!HookConfig.is_settings_page_transparent) {
+                                    VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
+                                        ViewUtils.getChildView1(view, this)?.apply {
+                                            //生成背景
+                                            if (HookConfig.is_hook_bg_immersion) {
+                                                if (BackgroundImageHook._backgroundBitmap[4] != null) {
+                                                    this.background = NightModeUtils.getBackgroundDrawable(this.resources, BackgroundImageHook._backgroundBitmap[4])
+                                                    return
+                                                } else {
+                                                    //2s之后如果没生成背景就放弃
+                                                    BackgroundImageHook.setMainPageBitmap("设置页头像栏", this, AppCustomConfig.getTabBg(3), 4, 4)
+                                                }
+                                            } else {
+                                                this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
+                                            }
+                                        }
+                                    }
+                                    VTTV.SettingAvatarView.treeStacks["q1"]?.apply {
+                                        ViewUtils.getChildView1(view, this)?.apply {
+                                            //生成背景
+                                            if (HookConfig.is_hook_bg_immersion) {
+                                                if (BackgroundImageHook._backgroundBitmap[5] != null) {
+                                                    this.background = NightModeUtils.getBackgroundDrawable(this.resources, BackgroundImageHook._backgroundBitmap[5])
 
                                             } else {
                                                 //2s之后如果没生成背景就放弃
