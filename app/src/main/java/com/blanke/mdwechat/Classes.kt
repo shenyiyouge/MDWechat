@@ -17,6 +17,9 @@ object Classes {
     val HomeUI: Class<*> by WechatGlobal.wxLazy("HomeUI") {
         findClass(WechatGlobal.wxVersionConfig.classes.HomeUI)
     }
+    val SnsTimeLineUI: Class<*> by WechatGlobal.wxLazy("SnsTimeLineUI") {
+        findClass(WechatGlobal.wxVersionConfig.classes.SnsTimeLineUI)
+    }
 
     var _LauncherUI: Class<*>? = null
 

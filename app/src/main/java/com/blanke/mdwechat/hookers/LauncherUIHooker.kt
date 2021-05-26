@@ -1,6 +1,8 @@
 package com.blanke.mdwechat.hookers
 
 import android.app.Activity
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -55,8 +57,23 @@ object LauncherUIHooker : HookerProvider {
 ////                }
 //            }
 //        })
+
         XposedHelpers.findAndHookMethod(CC.Activity, "onPostResume",
                 object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        val activity = param.thisObject as? Activity ?: return
+
+                        //判断是否为朋友圈, 若是则不修改actionbar
+                        if (activity::class.java == Classes.LauncherUI) {
+                            Objects.Main.activityNow = Classes.LauncherUI
+                            Objects.Main.statusView?.elevation = 1f
+                        } else if (activity::class.java == Classes.SnsTimeLineUI) {
+                            Objects.Main.activityNow = Classes.SnsTimeLineUI
+                            Objects.Main.actionBar?.background = ColorDrawable(Color.TRANSPARENT)
+                            Objects.Main.statusView?.elevation = 0f
+                        }
+                    }
+
                     override fun afterHookedMethod(param: MethodHookParam) {
                         val activity = param.thisObject as? Activity ?: return
                         LogUtil.log("activity resume = $activity")

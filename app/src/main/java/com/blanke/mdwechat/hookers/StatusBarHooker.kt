@@ -69,8 +69,13 @@ object StatusBarHooker : HookerProvider {
                         if ((clazz != "com.tencent.mm.ui.chatting.gallery.ImageGalleryUI")
                                 && (clazz != "com.tencent.mm.plugin.recordvideo.activity.MMRecordUI")
                                 && (clazz != "com.tencent.mm.plugin.sns.ui.SnsBrowseUI")
+                                && (clazz != "com.tencent.mm.plugin.sns.ui.SnsTimeLineUI")
                                 && (clazz != "com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity")) {
                             rootView.addView(statusView)
+                        }
+                        //朋友圈
+                        if (clazz == "com.tencent.mm.plugin.sns.ui.SnsTimeLineUI") {
+                            statusView.elevation = 0F
                         }
                         setColor(window, color)
                     }

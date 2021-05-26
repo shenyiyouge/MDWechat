@@ -30,6 +30,11 @@ object Classes {
             return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.HomeUI", WechatGlobal.wxLoader)
         }
 
+    val SnsTimeLineUI: Class<*>?
+        get() {
+            return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.plugin.sns.ui.SnsTimeLineUI", WechatGlobal.wxLoader)
+        }
+
     val WxViewPager: Class<*>?
         get() {
             return ReflectionUtil.findClassIfExists("${WechatGlobal.wxPackageName}.ui.mogic.WxViewPager", WechatGlobal.wxLoader)

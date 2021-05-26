@@ -65,6 +65,10 @@ object ActionBarHooker : HookerProvider {
 
             override fun afterHookedMethod(param: MethodHookParam) {
                 val actionBar = param.thisObject as View
+                //朋友圈不改
+                if (Objects.Main.activityNow == Classes.SnsTimeLineUI) {
+                    return
+                }
                 if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, actionBar)) {
                     Objects.Main.actionBar = actionBar
                     if (!HookConfig.is_hook_hide_actionbar) {
@@ -82,6 +86,10 @@ object ActionBarHooker : HookerProvider {
         XposedBridge.hookAllMethods(CC.View, "setBackgroundColor", object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 val view = param.thisObject as View
+                //朋友圈不改
+                if (Objects.Main.activityNow == Classes.SnsTimeLineUI) {
+                    return
+                }
                 val clazz = view::class.java.name
                 if (clazz == ActionBarContainer.name) {
 //                    if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarContainerItem.item, view)) {

@@ -7,6 +7,9 @@ import com.flyco.tablayout.CommonTabLayout
 
 object Objects {
     object Main {
+        //当前的 activity, 用于朋友圈 actionbar 上色
+        var activityNow: Class<*>? = null
+
         var LauncherUI: Activity? = null
         var LauncherUI_mContentLayout: View? = null
         var HomeUI_mActionBar: Any? = null

@@ -18,6 +18,7 @@ class WxVersionConfig {
         var CustomViewPager: String? = null
         var DiscoverFragment: String? = null
         var HomeUI: String? = null
+        var SnsTimeLineUI: String? = "com.tencent.mm.plugin.sns.ui.SnsTimeLineUI"
         var LauncherUI: String? = null
         var LauncherUIBottomTabView: String? = null
         var LauncherUIBottomTabViewItem: String? = null
