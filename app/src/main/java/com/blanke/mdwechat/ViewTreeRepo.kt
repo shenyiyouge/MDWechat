@@ -3,6 +3,7 @@ package com.blanke.mdwechat
 import com.blanke.mdwechat.bean.ViewTree
 import com.blanke.mdwechat.bean.ViewTreeItem
 import com.blanke.mdwechat.config.ViewTreeConfig
+
 //import java.lang.reflect.Method
 
 // 当前微信版本适用的repo
@@ -1816,7 +1817,8 @@ object ViewTreeRepo {
                 ),
                 ViewTreeItem("androidx.appcompat.widget.ActionBarContainer", arrayOf(
                         ViewTreeItem("androidx.appcompat.widget.Toolbar", arrayOf(
-                                Item_ActionMenuView_8_0_3,
+                                ViewTreeItem("androidx.appcompat.widget.ActionMenuView", arrayOf(
+                                        Item_ActionMenuView_8_0_3)),
                                 ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
@@ -1829,6 +1831,30 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
                                                         ViewTreeItem(CC.TextView.name),
                                                         ViewTreeItem(CC.WeImageView))))))))),
+                        ViewTreeItem("androidx.appcompat.widget.ActionBarContextView"))))
+    }
+    val ActionBarInConversationItem_8_0_6: ViewTree by lazy {
+        ViewTree(
+                mapOf(
+                        "title" to intArrayOf(0, 1, 1, 0, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0, 0)
+                ),
+                ViewTreeItem("androidx.appcompat.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("androidx.appcompat.widget.Toolbar", arrayOf(
+                                ViewTreeItem("androidx.appcompat.widget.ActionMenuView"),
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView))),//goBackButton
+                                                ViewTreeItem(CC.ImageView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),//title
+                                                        ViewTreeItem(CC.WeImageView))),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.WeImageView))))),
+                                        Item_ActionMenuView_8_0_6)))),
                         ViewTreeItem("androidx.appcompat.widget.ActionBarContextView"))))
     }
 
@@ -2014,16 +2040,28 @@ object ViewTreeRepo {
                                 ViewTreeItem(CC.ImageView.name)))))))
     }
     private val Item_ActionMenuView_8_0_3: ViewTreeItem by lazy {
-        ViewTreeItem("androidx.appcompat.widget.ActionMenuView", arrayOf(
+        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                ViewTreeItem(CC.ImageButton.name),
+                ViewTreeItem(CC.TextView.name),
                 ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                        ViewTreeItem(CC.ImageButton.name),
-                        ViewTreeItem(CC.TextView.name),
+                        ViewTreeItem(CC.ImageView.name))),
+                ViewTreeItem(CC.Button.name),
+                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                        ViewTreeItem(CC.WeImageView),
+                        ViewTreeItem(CC.ImageView.name)))))
+    }
+    private val Item_ActionMenuView_8_0_6: ViewTreeItem by lazy {
+        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
                         ViewTreeItem(CC.LinearLayout.name, arrayOf(
-                                ViewTreeItem(CC.ImageView.name))),
-                        ViewTreeItem(CC.Button.name),
-                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
-                                ViewTreeItem(CC.WeImageView),
-                                ViewTreeItem(CC.ImageView.name)))))))
+                                ViewTreeItem(CC.ImageButton.name),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.ImageView.name))),
+                                ViewTreeItem(CC.Button.name),
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.ImageView.name)))))))))
     }
 
     //包含聊天内容和底部的部分(尾)
@@ -2212,6 +2250,17 @@ object ViewTreeRepo {
                         ViewTreeItem(CC.FrameLayout.name, arrayOf(
                                 ViewTreeRepoThisVersion.ChattingScrollLayoutItem.item)))))
     }
+    val ChattingUILayoutItem_8_0_6: ViewTree by lazy {
+        ViewTree(
+                mapOf("ChattingScrollLayoutItem" to intArrayOf(3, 0)),
+                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout", arrayOf(
+                        ViewTreeRepoThisVersion.ActionBarInConversationItem.item,
+                        ViewTreeItem("android.view.ViewStub"),
+                        ViewTreeItem("android.view.ViewStub"),
+                        ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                ViewTreeRepoThisVersion.ChattingScrollLayoutItem.item)//ChattingScrollLayoutItem
+                        ))))
+    }
 
     val ChattingUILayoutInSearchItem: ViewTree by lazy {
         ViewTree(
@@ -2258,6 +2307,26 @@ object ViewTreeRepo {
                                                         ViewTreeItem("android.view.ViewStub"),
                                                         ViewTreeItem(CC.FrameLayout.name, arrayOf(
                                                                 ViewTreeRepoThisVersion.ChattingScrollLayoutItem.item)))))
+                                        ))
+                                ))
+                        ))
+                ))
+    }
+    val ChattingUILayoutInSearchItem_8_0_6: ViewTree by lazy {
+        ViewTree(
+                mapOf("ChattingScrollLayoutItem" to intArrayOf(0, 0, 0, 0, 3, 0)),
+                ViewTreeItem("androidx.appcompat.widget.ActionBarOverlayLayout", arrayOf(
+                        ViewTreeItem("androidx.appcompat.widget.ContentFrameLayout", arrayOf(
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem("com.tencent.mm.ui.LayoutListenerView", arrayOf(
+                                                ViewTreeItem("com.tencent.mm.pluginsdk.ui.chat.ChattingUILayout", arrayOf(
+                                                        ViewTreeItem("android.view.ViewStub"),
+                                                        ViewTreeItem("android.view.ViewStub"),
+                                                        ViewTreeItem("android.view.ViewStub"),
+                                                        ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                                ViewTreeRepoThisVersion.ChattingScrollLayoutItem.item)//ChattingScrollLayoutItem
+                                                        ))
+                                                ))
                                         ))
                                 ))
                         ))
