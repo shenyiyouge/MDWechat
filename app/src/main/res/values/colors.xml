@@ -2,6 +2,7 @@
 <resources>
     <color name="colorTransparent">#00000000</color>
     <color name="transparentDark">#30000000</color>
+    <color name="transparentGray">#80000000</color>
     <color name="transparentLight">#30EEEEEE</color>
 
     <color name="khaki">#D3B494</color>

@@ -185,7 +185,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                             "如果你想反馈问题，请打开最底部的调试开关，重启微信，将/sdcard/mdwechat/logs/目录下当天的日志发我邮箱。" +
                             "谢谢合作！")
                     .setPositiveButton("我知道了", null)
-                    .setCancelable(false)
+                    .setCancelable(true)
                     .show()
         }
         showAppInfoDialog()
@@ -279,6 +279,8 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                 findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTransparent)) }
                 findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
                 findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //小程序界面
+                findPreference(getString(R.string.key_hook_appbrand_bg_color))?.apply { (this as SwitchPreference).isChecked = false }
                 //提示颜色
                 findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTip)) }
                 findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
@@ -315,6 +317,9 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                 findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTransparent)) }
                 findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_blue_grey_700)) }
                 findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_blue_grey_700)) }
+                //小程序界面
+                findPreference(getString(R.string.key_hook_appbrand_bg_color))?.apply { (this as SwitchPreference).isChecked = true }
+                findPreference(getString(R.string.key_appbrand_bg_color))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.transparentGray)) }
                 //提示颜色
                 findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_red)) }
                 findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
@@ -352,6 +357,8 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                 findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorPrimary)) }
                 findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorSecondary)) }
                 findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTertiary)) }
+                //小程序界面
+                findPreference(getString(R.string.key_hook_appbrand_bg_color))?.apply { (this as SwitchPreference).isChecked = false }
                 //提示颜色
                 findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.colorTip)) }
                 findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
@@ -392,6 +399,8 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                 findPreference(getString(R.string.key_color_primary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khaki)) }
                 findPreference(getString(R.string.key_color_secondary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
                 findPreference(getString(R.string.key_color_tertiary))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
+                //小程序界面
+                findPreference(getString(R.string.key_hook_appbrand_bg_color))?.apply { (this as SwitchPreference).isChecked = false }
                 //提示颜色
                 findPreference(getString(R.string.key_color_tip))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.khaki)) }
                 findPreference(getString(R.string.key_color_tip_num))?.apply { (this as ColorPreference).saveValue(ContextCompat.getColor(context, R.color.material_white)) }
@@ -680,7 +689,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         val message = getString(R.string.text_app_desc) + "\n" + getString(R.string.text_app_donate, installDateStr)
         AlertDialog.Builder(activity)
                 .setTitle(R.string.text_app_tips)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setMessage(message)
                 .setPositiveButton(R.string.text_app_know, null)
                 .setNegativeButton(R.string.text_donate_wechat) { dialog, which -> donateWechat() }

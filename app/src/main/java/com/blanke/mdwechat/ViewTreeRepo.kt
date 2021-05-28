@@ -2274,7 +2274,7 @@ object ViewTreeRepo {
                         "actionBarPage_searchIcon" to intArrayOf(1),
                         "actionBarPage_addIcon" to intArrayOf(2),
                         "miniProgramPage_appBrandDesktopView" to intArrayOf(0, 0, 2, 0),
-                        "appBrandDesktopView_searchEditText" to intArrayOf(0, 0),
+                        "appBrandDesktopView_searchText" to intArrayOf(0, 0),
                         "appBrandDesktopView_miniProgramTitle" to intArrayOf(2, 0, 0)),
                 ViewTreeItem("com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopContainer", arrayOf(
                         ViewTreeItem(CC.RelativeLayout.name, arrayOf(
@@ -2304,7 +2304,7 @@ object ViewTreeRepo {
                         "actionBarPage_searchIcon" to intArrayOf(1),
                         "actionBarPage_addIcon" to intArrayOf(2),
                         "miniProgramPage_appBrandDesktopView" to intArrayOf(0, 0, 2, 0),
-                        "appBrandDesktopView_searchEditText" to intArrayOf(0, 0),
+                        "appBrandDesktopView_searchText" to intArrayOf(0, 0),
                         "appBrandDesktopView_miniProgramTitle" to intArrayOf(2, 0, 0)),
                 ViewTreeItem("com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopContainer", arrayOf(
                         ViewTreeItem(CC.RelativeLayout.name, arrayOf(
@@ -2325,5 +2325,60 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.RelativeLayout.name, arrayOf(
                                                         ViewTreeItem(CC.WeImageView),
                                                         ViewTreeItem(CC.ImageView.name))))))))))))
+    }
+    val ActionBarItem_8_0_3: ViewTree by lazy {
+        ViewTree(
+                mapOf("miniProgramPage" to intArrayOf(0),
+
+                        "miniProgramPage_actionBarPage" to intArrayOf(3, 0, 1),
+                        "actionBarPage_title" to intArrayOf(1, 0, 0, 0),
+                        "actionBarPage_searchIcon" to intArrayOf(2),
+                        "actionBarPage_addIcon" to intArrayOf(3),
+
+                        "miniProgramPage_appBrandDesktopView" to intArrayOf(0, 0, 2, 0),
+
+                        "appBrandDesktopView_searchText" to intArrayOf(0, 0, 0),
+                        "appBrandDesktopView_miniProgramTitle" to intArrayOf(2, 0, 0)),
+                ViewTreeItem("com.tencent.mm.plugin.taskbar.ui.TaskBarContainer", arrayOf(
+                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(//miniProgramPage
+                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                // 小程序
+                                                ViewTreeItem(CC.TextView.name),
+                                                ViewTreeItem(CC.View.name),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem("com.tencent.mm.plugin.taskbar.ui.TaskBarView", arrayOf(//miniProgramPage_appBrandDesktopView
+                                                                ViewTreeItem("com.tencent.mm.plugin.taskbar.ui.section.weapp.", arrayOf(
+                                                                        ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(//appBrandDesktopView_searchText
+                                                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                                                ViewTreeItem(CC.WeImageView),
+                                                                                                ViewTreeItem(CC.TextView.name))))))))),
+                                                                //最近使用的小程序
+                                                                ViewTreeItem("com.tencent.mm.plugin.taskbar.ui.section.weapp."),
+                                                                //我的小程序
+                                                                ViewTreeItem("com.tencent.mm.plugin.taskbar.ui.section.weapp.")
+                                                        )))))))),
+                                ViewTreeItem("com.tencent.mm.plugin.taskbar.api.GyroView"),
+                                ViewTreeItem("com.tencent.mm.plugin.appbrand.widget.desktop.AppBrandDesktopContainerView"),
+
+                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                        ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                ViewTreeItem("com.tencent.mm.plugin.taskbar.ui.TaskBarBottomView"),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(//miniProgramPage_actionBarPage
+                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                ViewTreeItem(CC.WeImageView))),//goBackButton(not using)
+                                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                                ViewTreeItem(CC.TextView.name),//actionBarPage_title
+                                                                                ViewTreeItem(CC.WeImageView)))
+                                                                )))),
+                                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(//actionBarPage_searchIcon
+                                                                ViewTreeItem(CC.WeImageView),
+                                                                ViewTreeItem(CC.ImageView.name))),
+                                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(//actionBarPage_addIcon
+                                                                ViewTreeItem(CC.WeImageView),
+                                                                ViewTreeItem(CC.ImageView.name))))))))))))))
     }
 }

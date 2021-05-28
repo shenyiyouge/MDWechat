@@ -23,10 +23,8 @@ import com.blanke.mdwechat.util.LogUtil
 import com.blanke.mdwechat.util.NightModeUtils
 import com.blanke.mdwechat.util.ViewTreeUtils
 import com.blanke.mdwechat.util.ViewUtils
-import com.blanke.mdwechat.util.ViewUtils.findLastChildView
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedHelpers
-import kotlin.concurrent.thread
 import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 object ListViewHooker : HookerProvider {
@@ -758,157 +756,158 @@ object ListViewHooker : HookerProvider {
                         contentView.background = defaultImageRippleDrawable
                         return
                     }
-
-                    view.background = drawableTransparent
-                    // 联系人列表
-                    if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
-                        LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
-                        // 标题下面的线
-                        if (VTTV.ContactListViewItem.treeStacks["headerView"] != null) {
-                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headerView"])
+                    //其他项, 背景置透明
+                    else {
+                        view.background = drawableTransparent
+                        // 联系人列表
+                        if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
+                            // 标题下面的线
+                            if (VTTV.ContactListViewItem.treeStacks["headerView"] != null) {
+                                ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headerView"])
+                                        ?.background = drawableTransparent
+                            }
+                            //内容下面的线 innerView
+                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["innerView"])
                                     ?.background = drawableTransparent
-                        }
-                        //内容下面的线 innerView
-                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["innerView"])
-                                ?.background = drawableTransparent
 
-                        ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["contentView"])
-                                ?.background = drawableTransparent
+                            ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["contentView"])
+                                    ?.background = drawableTransparent
 
-                        val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView"])
-                        titleView?.background = drawableTransparent
-                        val titleView80 = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView_8_0"])
-                        titleView80?.background = drawableTransparent
-                        if (isHookTextColor) {
-                            val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headTextView"]) as TextView
-                            headTextView.setTextColor(summaryTextColor)
-                            titleView?.apply { XposedHelpers.callMethod(this, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor)) }
-                            titleView80?.apply {
-                                XposedHelpers.callMethod(titleView80, "setTextColor", titleTextColor)
-                            }
-                        }
-                    }
-
-                    // 联系人列表头部
-                    if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
-                        LogUtil.logOnlyOnce("ListViewHooker.ContactHeaderItem")
-
-                        //公众号的下边界 —— ContactHeaderItem.ContactWorkItemBorderTop
-                        ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItemBorderTop"])?.apply {
-                            this.background = drawableTransparent
-                        }
-
-                        //企业联系人分组
-                        ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItem"])?.apply {
-                            if (ViewTreeUtils.equals(VTTV.ContactWorkItem.item, this)) {
-                                LogUtil.logOnlyOnce("ListViewHooker.ContactWorkItem")
-
-                                //region borderLineTop
-                                ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["borderLineTop"])?.apply {
-                                    this.background = drawableTransparent
-                                }
-                                //endregion
-
-                                var contactContentsItem = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem"])
-                                if (contactContentsItem != null) {
-                                    //region 企业联系人
-                                    if (ViewTreeUtils.equals(VTTV.ContactWorkContactsItem.item, contactContentsItem)) {
-                                        LogUtil.logOnlyOnce("ListViewHooker.ContactWorkContactsItem")
-                                        if (isHookTextColor) {
-                                            val headTextView = ViewUtils.getChildView1(contactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["headTextView"]) as TextView
-                                            headTextView.setTextColor(titleTextColor)
-                                        }
-                                        //  titleView
-                                        ViewUtils.getChildView1(contactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["titleView"])
-                                                ?.background = defaultImageRippleDrawable
-                                        ViewUtils.getChildView1(contactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["borderLineBottom"])
-                                                ?.background = defaultImageRippleDrawable
-                                        //endregion
-
-
-                                        val tmpView = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem1"])
-                                        tmpView?.apply {
-                                            contactContentsItem = tmpView
-                                        }
-                                    }
-                                    // 我的企业
-                                    if (ViewTreeUtils.equals(VTTV.ContactMyWorkItem.item, contactContentsItem!!)) {
-                                        LogUtil.logOnlyOnce("ListViewHooker.ContactMyWorkItem")
-                                        //  titleView
-                                        ViewUtils.getChildView1(contactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["titleView"])
-                                                ?.background = defaultImageRippleDrawable
-                                        ViewUtils.getChildView1(contactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["borderLineBottom"])
-                                                ?.background = drawableTransparent
-                                        if (isHookTextColor) {
-                                            val headTextView = ViewUtils.getChildView1(contactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["headTextView"]) as TextView
-                                            headTextView.setTextColor(titleTextColor)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // 发现 设置 item
-                    else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
-//                        LogUtil.logViewStackTraces(view)
-                        LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
-                        val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["iconImageView"]) as View
-                        if (iconImageView.visibility == View.VISIBLE) {
-                            val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["titleView"]) as TextView
+                            val titleView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView"])
+                            titleView?.background = drawableTransparent
+                            val titleView80 = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["titleView_8_0"])
+                            titleView80?.background = drawableTransparent
                             if (isHookTextColor) {
-                                titleView.setTextColor(titleTextColor)
+                                val headTextView = ViewUtils.getChildView1(view, VTTV.ContactListViewItem.treeStacks["headTextView"]) as TextView
+                                headTextView.setTextColor(summaryTextColor)
+                                titleView?.apply { XposedHelpers.callMethod(this, "setNickNameTextColor", ColorStateList.valueOf(titleTextColor)) }
+                                titleView80?.apply {
+                                    XposedHelpers.callMethod(titleView80, "setTextColor", titleTextColor)
+                                }
                             }
                         }
-//                        LogUtil.logViewStackTraces(view)
-                        //group顶部横线
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["groupBorderTop"])
-                                ?.background = drawableTransparent
-                        //内容分割线
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["contentBorder"])
-                                ?.background = drawableTransparent
 
-                        //group底部横线
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["groupBorderBottom"])
-                                ?.background = drawableTransparent
+                        // 联系人列表头部
+                        else if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ContactHeaderItem")
 
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["borderRight"])
-                                ?.background = drawableTransparent
+                            //公众号的下边界 —— ContactHeaderItem.ContactWorkItemBorderTop
+                            ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItemBorderTop"])?.apply {
+                                this.background = drawableTransparent
+                            }
+
+                            //企业联系人分组
+                            ViewUtils.getChildView1(view, VTTV.ContactHeaderItem.treeStacks["ContactWorkItem"])?.apply {
+                                if (ViewTreeUtils.equals(VTTV.ContactWorkItem.item, this)) {
+                                    LogUtil.logOnlyOnce("ListViewHooker.ContactWorkItem")
+
+                                    //region borderLineTop
+                                    ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["borderLineTop"])?.apply {
+                                        this.background = drawableTransparent
+                                    }
+                                    //endregion
+
+                                    var contactContentsItem = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem"])
+                                    if (contactContentsItem != null) {
+                                        //region 企业联系人
+                                        if (ViewTreeUtils.equals(VTTV.ContactWorkContactsItem.item, contactContentsItem)) {
+                                            LogUtil.logOnlyOnce("ListViewHooker.ContactWorkContactsItem")
+                                            if (isHookTextColor) {
+                                                val headTextView = ViewUtils.getChildView1(contactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["headTextView"]) as TextView
+                                                headTextView.setTextColor(titleTextColor)
+                                            }
+                                            //  titleView
+                                            ViewUtils.getChildView1(contactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["titleView"])
+                                                    ?.background = defaultImageRippleDrawable
+                                            ViewUtils.getChildView1(contactContentsItem, VTTV.ContactWorkContactsItem.treeStacks["borderLineBottom"])
+                                                    ?.background = defaultImageRippleDrawable
+                                            //endregion
 
 
-
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["unreadPointView"])
-                                ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["unreadCountView"])
-                                ?.apply {
-                                    this.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                                    if (this is TextView) this.setTextColor(HookConfig.get_color_tip_num)
+                                            val tmpView = ViewUtils.getChildView1(this, VTTV.ContactWorkItem.treeStacks["ContactContentsItem1"])
+                                            tmpView?.apply {
+                                                contactContentsItem = tmpView
+                                            }
+                                        }
+                                        // 我的企业
+                                        if (ViewTreeUtils.equals(VTTV.ContactMyWorkItem.item, contactContentsItem!!)) {
+                                            LogUtil.logOnlyOnce("ListViewHooker.ContactMyWorkItem")
+                                            //  titleView
+                                            ViewUtils.getChildView1(contactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["titleView"])
+                                                    ?.background = defaultImageRippleDrawable
+                                            ViewUtils.getChildView1(contactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["borderLineBottom"])
+                                                    ?.background = drawableTransparent
+                                            if (isHookTextColor) {
+                                                val headTextView = ViewUtils.getChildView1(contactContentsItem!!, VTTV.ContactMyWorkItem.treeStacks["headTextView"]) as TextView
+                                                headTextView.setTextColor(titleTextColor)
+                                            }
+                                        }
+                                    }
                                 }
-                    }
+                            }
+                        }
 
-                    // 设置 头像
-                    else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
-                        LogUtil.logOnlyOnce("ListViewHooker.SettingAvatarView")
+                        // 发现 设置 item
+                        else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
+//                        LogUtil.logViewStackTraces(view)
+                            LogUtil.logOnlyOnce("ListViewHooker.DiscoverViewItem")
+                            val iconImageView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["iconImageView"]) as View
+                            if (iconImageView.visibility == View.VISIBLE) {
+                                val titleView = ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["titleView"]) as TextView
+                                if (isHookTextColor) {
+                                    titleView.setTextColor(titleTextColor)
+                                }
+                            }
+//                        LogUtil.logViewStackTraces(view)
+                            //group顶部横线
+                            ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["groupBorderTop"])
+                                    ?.background = drawableTransparent
+                            //内容分割线
+                            ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["contentBorder"])
+                                    ?.background = drawableTransparent
+
+                            //group底部横线
+                            ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["groupBorderBottom"])
+                                    ?.background = drawableTransparent
+
+                            ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["borderRight"])
+                                    ?.background = drawableTransparent
+
+
+
+                            ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["unreadPointView"])
+                                    ?.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                            ViewUtils.getChildView1(view, VTTV.DiscoverViewItem.treeStacks["unreadCountView"])
+                                    ?.apply {
+                                        this.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
+                                        if (this is TextView) this.setTextColor(HookConfig.get_color_tip_num)
+                                    }
+                        }
+
+                        // 设置 头像
+                        else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.SettingAvatarView")
 
 //                        微信号
-                        ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["wechatTextView"])?.apply {
-                            this as TextView
-                            if (this.text.contains(": ") || this.text.contains("：")) {
+                            ViewUtils.getChildView1(view, VTTV.SettingAvatarView.treeStacks["wechatTextView"])?.apply {
+                                this as TextView
+                                if (this.text.contains(": ") || this.text.contains("：")) {
 
-                                //隐藏微信号
-                                if (HookConfig.is_hide_wechatId) {
-                                    if (wechatId.isEmpty()) wechatId = this.text
-                                    this.text = "点击显示微信号"
-                                    try {
-                                        this.setOnClickListener {
-                                            this.text = wechatId
-                                            LogUtil.log("已显示微信号")
+                                    //隐藏微信号
+                                    if (HookConfig.is_hide_wechatId) {
+                                        if (wechatId.isEmpty()) wechatId = this.text
+                                        this.text = "点击显示微信号"
+                                        try {
+                                            this.setOnClickListener {
+                                                this.text = wechatId
+                                                LogUtil.log("已显示微信号")
+                                            }
+                                        } catch (e: Exception) {
+                                            LogUtil.log("显示微信号错误")
+                                            LogUtil.log(e)
                                         }
-                                    } catch (e: Exception) {
-                                        LogUtil.log("显示微信号错误")
-                                        LogUtil.log(e)
                                     }
-                                }
 
                                     //微信号颜色
                                     if (isHookTextColor) {
@@ -944,74 +943,69 @@ object ListViewHooker : HookerProvider {
                                                 if (BackgroundImageHook._backgroundBitmap[5] != null) {
                                                     this.background = NightModeUtils.getBackgroundDrawable(this.resources, BackgroundImageHook._backgroundBitmap[5])
 
+                                                } else {
+                                                    //2s之后如果没生成背景就放弃
+                                                    BackgroundImageHook.setMainPageBitmap("设置页头像栏 (状态) ", this, AppCustomConfig.getTabBg(3), 5, 4)
+                                                }
                                             } else {
-                                                //2s之后如果没生成背景就放弃
-                                                BackgroundImageHook.setMainPageBitmap("设置页头像栏 (状态) ", this, AppCustomConfig.getTabBg(3), 5, 4)
+                                                this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
                                             }
-                                        } else {
-                                            this.background = if (NightModeUtils.isWechatNightMode()) ColorDrawable(WeChatHelper.wechatDark) else ColorDrawable(WeChatHelper.wechatWhite)
                                         }
                                     }
                                 }
-                            }
-                        } else {
-                            VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
-                                ViewUtils.getChildView1(view, this)?.background = drawableTransparent
+                            } else {
+                                VTTV.SettingAvatarView.treeStacks["headView"]?.apply {
+                                    ViewUtils.getChildView1(view, this)?.background = drawableTransparent
+                                }
                             }
                         }
-                    }
 
-                    // (7.0.7 以上) 下拉小程序框
-                    else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
-                        LogUtil.logOnlyOnce("ListViewHooker.ActionBarItem")
-                        try {
-                            ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks["miniProgramPage"])?.apply {
-                                val miniProgramPage = this as RelativeLayout
+                        // (7.0.7 以上) 下拉小程序框
+                        else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
+                            LogUtil.logOnlyOnce("ListViewHooker.ActionBarItem")
+                            try {
+                                ViewUtils.getChildView1(view, VTTV.ActionBarItem.treeStacks["miniProgramPage"])?.apply {
+                                    val miniProgramPage = this as RelativeLayout
 
-                                // old action bar
-                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks["miniProgramPage_actionBarPage"])?.apply {
-                                    val actionBarPage = this as LinearLayout
-//                            val title: TextView
-//                            title = ViewUtils.getChildView1(actionBarPage,
-//                                    VTTV.ActionBarItem.treeStacks.get("actionBarPage_title")!!) as TextView
-//
-//                            title.gravity = Gravity.CENTER;
-//                            title.text = HookConfig.value_mini_program_title
-//                            val lp = title.layoutParams as LinearLayout.LayoutParams
-//                            lp.setMargins(0, 0, 0, 0)
-                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks["actionBarPage_addIcon"])?.apply {
-                                        actionBarPage.removeView(this)
+                                    // old action bar
+                                    ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks["miniProgramPage_actionBarPage"])?.apply {
+                                        val actionBarPage = this as LinearLayout
+                                        ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks["actionBarPage_addIcon"])?.apply {
+                                            actionBarPage.removeView(this)
+                                        }
+                                        ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks["actionBarPage_searchIcon"])?.apply {
+                                            actionBarPage.removeView(this)
+                                        }
                                     }
-                                    ViewUtils.getChildView1(actionBarPage, VTTV.ActionBarItem.treeStacks["actionBarPage_searchIcon"])?.apply {
-                                        actionBarPage.removeView(this)
+
+                                    //小程序界面
+                                    ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks["miniProgramPage_appBrandDesktopView"])?.apply {
+                                        val appBrandDesktopView = this as ViewGroup
+                                        if (HookConfig.is_hook_appbrand_bg_color) {
+                                            appBrandDesktopView.setBackgroundColor(HookConfig.appbrand_bg_color)
+                                        }
+                                        // 小程序搜索框
+                                        ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks["appBrandDesktopView_searchText"])?.apply {
+                                            this.setBackgroundColor(Color.parseColor("#15000000"))
+                                        }
+//                                        //  小程序字体
+//                                        if (!miniProgramTextItems.contains(appBrandDesktopView)) {
+//                                            miniProgramTextItems.add(appBrandDesktopView)
+//                                        }
+//                                        ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks["appBrandDesktopView_miniProgramTitle"])?.apply {
+//                                            if (this is ViewGroup && !miniProgramTextItems.contains(this)) {
+//                                                LogUtil.log("############222")
+//                                                miniProgramTextItems.add(this)
+//                                            }
+//                                        }
+//                                        setMiniProgramTitleColor()
                                     }
                                 }
-//                            actionBarPage.removeView(title)
-                                ViewUtils.getChildView1(miniProgramPage, VTTV.ActionBarItem.treeStacks["miniProgramPage_appBrandDesktopView"])?.apply {
-                                    val appBrandDesktopView = this as ViewGroup
-
-                                    // 小程序搜索框
-                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks["appBrandDesktopView_searchEditText"])?.apply {
-                                        val searchEditText = this as EditText
-                                        searchEditText.setBackgroundColor(Color.parseColor("#30000000"))
-                                    }
-                                    //  小程序字体
-                                    setMiniProgramTitleColor(appBrandDesktopView)
-                                    ViewUtils.getChildView1(appBrandDesktopView, VTTV.ActionBarItem.treeStacks["appBrandDesktopView_miniProgramTitle"])?.apply {
-                                        setMiniProgramTitleColor(this as ViewGroup)
-                                    }
-                                }
-//                    logXp("---------------------miniProgramPage------------------")
-//                    LogUtil.logViewStackTracesXp(miniProgramPage)
-//                    logXp("---------------------appBrandDesktopView------------------")
-//                    LogUtil.logViewStackTracesXp(appBrandDesktopView)
-//                    logXp("---------------------getChildView------------------")
-//                    LogUtil.logViewStackTracesXp(ViewUtils.getChildView(appBrandDesktopView, 2, 0, 0) as ViewGroup)
-                            }
-                        } catch (e: ClassCastException) {
+                            } catch (e: ClassCastException) {
 //                            LogUtil.log(e)
 //                            LogUtil.logViewStackTraces(view)
-                            return
+                                return
+                            }
                         }
                     }
                 } catch (e: Exception) {
@@ -1021,17 +1015,42 @@ object ListViewHooker : HookerProvider {
         })
     }
 
-    fun setMiniProgramTitleColor(fatherView: ViewGroup) {
-        val childCount = fatherView.childCount
-        for (i in 0 until childCount) {
-            val view0 = fatherView.getChildAt(i)
-            if (view0 is ViewGroup) {
-                val textView = findLastChildView(view0, CC.TextView.name)
-                if (textView is TextView) {
-                    textView.setTextColor(titleTextColor)
-                }
-            }
-        }
-
-    }
+//    private val settingMiniProgramTitleColor = false
+//
+//    //设置小程序的字体颜色，需要重复设置
+//    fun setMiniProgramTitleColor() {
+//        if (settingMiniProgramTitleColor) {
+//            return
+//        }
+//        LogUtil.log("循环修改小程序字体颜色...")
+//        thread {
+//            while (true) {
+//                for (items in 0..miniProgramTextItems.size - 1) {
+//                    try {
+//                        val fatherView = miniProgramTextItems[items]
+//                        LogUtil.logViewStackTraces(fatherView)
+//                        for (childAt in 0 until fatherView.childCount) {
+//                            val child = fatherView.getChildAt(childAt)
+//                            if (child is ViewGroup) {
+//                                val textView = findLastChildView(child, CC.TextView.name)
+//                                if (textView is TextView) {
+//                                        LogUtil.log("setting text color: ${textView.text}")
+//                                    if (textView.currentTextColor != titleTextColor) {
+//                                        textView.setTextColor(titleTextColor)
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    } catch (e: Exception) {
+//                        LogUtil.log(e)
+//                        miniProgramTextItems.removeAt(items)
+//                    }
+//                }
+//                if (true||!HookConfig.is_hook_appbrand_text_color) {
+//                    return@thread
+//                }
+//                Thread.sleep(2000)
+//            }
+//        }
+//    }
 }

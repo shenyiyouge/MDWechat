@@ -77,7 +77,9 @@
     <string name="key_color_ripple">key_color_ripple</string>
     <string name="text_color_ripple">波纹颜色</string>
     <string name="key_main_settings">key_main_settings</string>
-    <string name="text_main_settings">主界面设置</string>
+    <string name="text_main_settings">主界面</string>
+    <string name="text_main_bg_settings">主界面与背景设置</string>
+    <string name="text_background_settings">背景设置</string>
     <string name="text_wechat_8_0_0">微信8.0</string>
     <string name="key_settings_page_transparent">key_settings_page_transparent</string>
     <string name="text_settings_page_transparent">第四页透明</string>
@@ -237,6 +239,11 @@
     <string name="summary_main_textcolor_title">包含小程序标题着色(实验性,支持的最低微信版本为7.0.5)</string>
     <string name="key_main_textcolor_content">key_main_textcolor_content</string>
     <string name="text_main_textcolor_content">内容颜色</string>
+    <string name="key_hook_appbrand_bg_color">key_hook_appbrand_bg_color</string>
+    <string name="text_hook_appbrand_bg_color">下拉小程序页面背景颜色修改</string>
+    <string name="summary_hook_appbrand_bg_color">仅当设置了主界面背景时生效</string>
+    <string name="key_appbrand_bg_color">key_appbrand_bg_color</string>
+    <string name="text_appbrand_bg_color">下拉小程序页面背景颜色</string>
     <string name="key_hook_conversation_background_alpha">key_hook_conversation_background_alpha</string>
     <string name="text_hook_conversation_background_alpha">聊天列表页背景不透明度</string>
     <string name="dialog_title_hook_conversation_background_alpha">不透明度范围：0~255</string>
@@ -288,7 +295,7 @@
     <!--    <string name="key_help_bubble">key_help_bubble</string>-->
     <string name="text_app_tips">软件使用提示</string>
     <string name="text_app_desc">本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件！</string>
-    <string name="text_app_donate">你已使用「MDWechat」%s，在使用过程中有任何问题欢迎加入QQ群讨论。\n如果你觉得「MDWechat」很好用，是否愿意支持下作者，让我更有动力完善维护这个软件呢？</string>
+    <string name="text_app_donate">你已使用「MDWechat」%s，在使用过程中有任何问题欢迎到码云讨论。\n如果你觉得「MDWechat」很好用，是否愿意支持下作者，让我更有动力完善维护这个软件呢？</string>
     <string name="text_app_know">我已知晓</string>
     <string name="key_feedback_group">key_feedback_group</string>
 

@@ -89,6 +89,8 @@ object HookConfig {
     private val key_hook_log = "key_hook_log"
     private val key_hook_log_xposed = "key_hook_log_xposed"
     private val key_hook_main_textcolor = "key_hook_main_textcolor"
+    private val key_hook_appbrand_bg_color = "key_hook_appbrand_bg_color"
+    private val key_appbrand_bg_color = "key_appbrand_bg_color"
     private val key_main_textcolor_title = "key_main_textcolor_title"
     private val key_main_textcolor_content = "key_main_textcolor_content"
     private val key_hook_mini_program = "key_hook_mini_program"
@@ -430,6 +432,14 @@ object HookConfig {
     val get_main_text_color_title: Int
         get() {
             return WeChatHelper.XMOD_PREFS.getInt(key_main_textcolor_title, Color.BLACK)
+        }
+    val is_hook_appbrand_bg_color: Boolean
+        get() {
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_appbrand_bg_color, true)
+        }
+    val appbrand_bg_color: Int
+        get() {
+            return WeChatHelper.XMOD_PREFS.getInt(key_appbrand_bg_color, Color.parseColor("#80000000"))
         }
     val get_main_text_color_content: Int
         get() {
