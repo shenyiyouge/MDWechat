@@ -51,12 +51,14 @@
     <string-array name="color_schemes">
         <item>沉浸主题(暗)</item>
         <item>沉浸主题(亮)</item>
-        <item>白色</item>
+        <item>微信绿</item>
+        <item>蓝白</item>
         <item>卡其</item>
     </string-array>
     <string-array name="color_schemes_value">
         <item>immersionDark</item>
         <item>immersionLight</item>
+        <item>classical</item>
         <item>white</item>
         <item>khaki</item>
     </string-array>

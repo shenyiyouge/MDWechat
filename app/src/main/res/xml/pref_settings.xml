@@ -172,6 +172,11 @@
                 android:key="@string/key_pre_inst_color_schemes1"
                 android:summary="重置配色方案为预设方案。(沉浸主题设置位于「背景」)"
                 android:title="@string/text_pre_inst_color_schemes" />
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="@string/key_lock_bubble_schemes"
+                android:summary="@string/summary_lock_bubble_schemes"
+                android:title="@string/text_lock_bubble_schemes" />
         </PreferenceCategory>
         <!--通用-->
         <PreferenceCategory android:title="@string/text_common_settings">

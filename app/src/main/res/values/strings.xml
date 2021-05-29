@@ -318,6 +318,9 @@
     <string name="key_pre_inst_color_schemes">key_pre_inst_color_schemes</string>
     <string name="key_pre_inst_color_schemes1">key_pre_inst_color_schemes1</string>
     <string name="text_pre_inst_color_schemes">使用预设方案</string>
+    <string name="key_lock_bubble_schemes">key_lock_bubble_schemes</string>
+    <string name="text_lock_bubble_schemes">锁定聊天气泡配色</string>
+    <string name="summary_lock_bubble_schemes">修改预设方案时不会更改聊天气泡的配色</string>
     <string name="key_color_tip">key_color_tip</string>
     <string name="text_color_tip">消息提示颜色</string>
     <string name="key_color_tip_num">key_color_tip_num</string>
@@ -386,11 +389,11 @@
     <string name="sum_reset">如果你改坏了/不生效，可以选择重置设置</string>
     <string name="text_reset">重置后不可恢复，如有自定义内容建议先做备份</string>
     <string name="test">试验</string>
-    <string name="latest_wechat_version">8.0.3</string>
-    <string name="app_name_version">version 4.1.0</string>
+    <string name="latest_wechat_version">8.0.6</string>
+    <string name="app_name_version">version 4.2.0.beta2.5</string>
     <string name="key_joshcai_info">key_joshcai_info</string>
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本（当前版本%s，最高适配%s)</string>
     <string name="josh_cai_info_outdated_suffix">\n 不适配内测版本！不要再问了！\n\n在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
-    <string name="josh_cai_info">适配微信%s (当前微信版本:%s)\n\n新增功能：\n\n- 针对一些有重大bug（主要表现为无法变更背景或者无法替换微信原生底栏、底栏点击无反应等现象，多发生于play版微信）的用户提供一个开关</string>
+    <string name="josh_cai_info">适配微信%s (当前微信版本:%s)\n\n新增功能：\n\n- 新增主界面下拉小程序页面背景颜色的开关（位于配色方案 -> 主界面）\n- 修复朋友圈等界面状态栏异常的问题</string>
     <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯咖啡。</string>
 </resources>

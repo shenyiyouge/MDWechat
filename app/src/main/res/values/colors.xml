@@ -3,7 +3,7 @@
     <color name="colorTransparent">#00000000</color>
     <color name="transparentDark">#30000000</color>
     <color name="transparentGray">#80000000</color>
-    <color name="transparentLight">#30EEEEEE</color>
+    <color name="transparentLight">#40EEEEEE</color>
 
     <color name="khaki">#D3B494</color>
     <color name="khakiDark">#aa9075</color>
@@ -40,6 +40,7 @@
     <color name="material_deep_orange_700">#ffe64a19</color>
     <color name="material_deep_purple">#ff673ab7</color>
     <color name="material_deep_purple_700">#ff512da8</color>
+    <color name="wechat_green">#FF95EC69</color>
     <color name="material_green">#ff4caf50</color>
     <color name="material_green_700">#ff388e3c</color>
     <color name="material_grey">#ff9e9e9e</color>
