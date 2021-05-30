@@ -67,28 +67,29 @@ object StatusBarHooker : HookerProvider {
                     val rootView = window.decorView as ViewGroup
                     val clazz = activity::class.java.name
                     mainThread(100) {
-//                        when (clazz) {
+                        when (clazz) {
 //                            "com.tencent.mm.plugin.profile.ui.ContactInfoUI",//联系人名片
-//                            "com.tencent.mm.plugin.sns.ui.SnsMsgUI",//朋友圈消息
-//                            "com.tencent.mm.ui.chatting.gallery.ImageGalleryUI",//图片
-//                            "com.tencent.mm.plugin.recordvideo.activity.MMRecordUI",
-//                            "com.tencent.mm.plugin.sns.ui.SnsBrowseUI",//内置浏览器(好像是)
-//                            "com.tencent.mm.plugin.sns.ui.SnsTimeLineUI",//朋友圈
+                            "com.tencent.mm.plugin.sns.ui.SnsMsgUI",//朋友圈消息
+                            "com.tencent.mm.ui.chatting.gallery.ImageGalleryUI",//图片
+                            "com.tencent.mm.plugin.recordvideo.activity.MMRecordUI",
+                            "com.tencent.mm.plugin.sns.ui.SnsBrowseUI",//内置浏览器(好像是)
+                            "com.tencent.mm.plugin.sns.ui.SnsTimeLineUI",//朋友圈
 //                            "com.tencent.mm.plugin.setting.ui.setting.SettingsUI",//设置
 //                            "com.tencent.mm.plugin.brandservice.ui.timeline.BizTimeLineUI",//订阅号
-//                            "com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity" //视频
-//                            -> {
-//                            }
-//                            else -> {
-//                                rootView.addView(statusView)
-//                            }
-                        when (clazz) {
-                            Classes.LauncherUI.name,
-                            "com.tencent.mm.ui.chatting.ChattingUI" -> {
+                            "com.tencent.mm.plugin.sns.ui.SnsOnlineVideoActivity" //视频
+                            -> {
+                            }
+                            else -> {
                                 rootView.addView(statusView)
+                                setColor(window, color)
                             }
                         }
-                        setColor(window, color)
+//                        when (clazz) {
+//                            Classes.LauncherUI.name,
+//                            "com.tencent.mm.ui.chatting.ChattingUI" -> {
+//                                rootView.addView(statusView)
+//                            }
+//                        }
                     }
                     if (activity::class.java == Classes.LauncherUI) {
                         mainThread(1000) {

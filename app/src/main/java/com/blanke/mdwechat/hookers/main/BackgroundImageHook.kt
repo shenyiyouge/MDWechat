@@ -278,7 +278,7 @@ object BackgroundImageHook {
 
                     } else {
                         LogUtil.log("匹配通过搜索打开的聊天界面失败")
-                        LogUtil.logViewStackTraces(chattingUILayout)
+//                        LogUtil.logViewStackTraces(chattingUILayout)
                     }
 //            isSettingMap = false
                 })
