@@ -165,6 +165,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
         findPreference(getString(R.string.key_start_use))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_Q_A))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_color_scheme_help))?.onPreferenceClickListener = this
+        findPreference(getString(R.string.key_hook_bg_immersion))?.onPreferenceChangeListener = this
         findPreference(getString(R.string.key_background_help))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_bubble_help))?.onPreferenceClickListener = this
         findPreference(getString(R.string.key_float_button_help))?.onPreferenceClickListener = this
@@ -259,6 +260,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             getString(R.string.key_hook_conversation_background_alpha) -> verifyAlpha(o as String)
             getString(R.string.key_pre_inst_color_schemes) -> changeColorScheme(o as String)
             getString(R.string.key_pre_inst_color_schemes1) -> changeColorScheme(o as String)
+            getString(R.string.key_hook_bg_immersion) -> showImmersionTips(o as Boolean)
 //            getString(R.string.key_mini_program_title) -> setSummary(o as String)
 //            getString(R.string.key_tab_layout_on_top) ->setTabLayoutOnTop((o as Boolean))
         }
@@ -272,6 +274,8 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //        try {
         when (s) {
             "immersionDark" -> {
+                //tip
+                showImmersionTips(true)
                 //深色模式
                 findPreference(getString(R.string.key_hook_scheme_dark))?.apply { (this as SwitchPreference).isChecked = true }
                 findPreference(getString(R.string.key_hook_night_mode))?.apply { (this as SwitchPreference).isChecked = false }
@@ -318,6 +322,7 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
                 findPreference(getString(R.string.key_tab_layout_filtered))?.apply { (this as SwitchPreference).isChecked = true }
             }
             "immersionLight" -> {
+                showImmersionTips(true)
                 //深色模式
                 findPreference(getString(R.string.key_hook_scheme_dark))?.apply { (this as SwitchPreference).isChecked = false }
                 findPreference(getString(R.string.key_hook_night_mode))?.apply { (this as SwitchPreference).isChecked = true }
@@ -506,6 +511,21 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
 //        } catch (e: java.lang.Exception) {
 //            e.printStackTrace()
 //        }
+    }
+
+    private fun showImmersionTips(o: Boolean) {
+        val dontShowImmersionTips = preferenceManager.sharedPreferences.getBoolean("dontShowImmersionTips", false)
+        if (o && !dontShowImmersionTips) {
+            AlertDialog.Builder(activity)
+                    .setTitle("提示")
+                    .setMessage(getString(R.string.text_resolution_alert_tips))
+                    .setPositiveButton("好的", null)
+                    .setNegativeButton("不再提示") { _, which ->
+                        preferenceManager.sharedPreferences.edit().putBoolean("dontShowImmersionTips", true).apply()
+                    }
+                    .setCancelable(true)
+                    .show()
+        }
     }
 
     private fun verifyAlpha(s: String) {
