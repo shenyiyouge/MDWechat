@@ -15,7 +15,7 @@
     <string name="text_color_tertiary">副色2</string>
     <string name="summary_color_tertiary">(如果着色)自定义导航其他页页图标前景色等</string>
     <string name="text_settings_info">修改之后停止微信重启生效.</string>
-    <string name="summary_donate">本软件完全开源，捐赠并不能获得高级功能。</string>
+    <string name="summary_donate">(微信 / 支付宝) 本软件完全开源，捐赠并不能获得高级功能。</string>
     <string name="key_alipay_red_packet">key_alipay_red_packet</string>
     <string name="text_alipay_red_packet">支付宝领红包</string>
     <string name="summary_alipay_red_packet">每天可领 可用于支付宝捐赠或实体店消费</string>
@@ -273,6 +273,7 @@
     <string name="msg_wechat_notfound">本机未安装微信，请检查是否已允许mdwechat检测包名</string>
     <string name="text_confirm">确定</string>
     <string name="text_cancel">取消</string>
+    <string name="text_ignore_this_version">忽略此版本</string>
     <string name="text_update">更新</string>
     <string name="key_download_wechat_config">key_download_wechat_config</string>
     <string name="text_download_wechat_config">下载共享的微信配置文件</string>

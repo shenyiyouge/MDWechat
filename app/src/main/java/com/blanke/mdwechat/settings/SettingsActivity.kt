@@ -1,6 +1,9 @@
 package com.blanke.mdwechat.settings
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
@@ -10,17 +13,28 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import com.blanke.mdwechat.Common
 import com.blanke.mdwechat.config.AppCustomConfig
-import com.blanke.mdwechat.settings.view.GetNewestVersion
+import com.blanke.mdwechat.settings.api.APIManager
+import com.blanke.mdwechat.settings.bean.NewestVersionConfig
 import com.blanke.mdwechat.util.FileUtils
 import com.blanke.mdwechat.util.LogUtil
+import com.blankj.utilcode.util.ToastUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.joshcai.mdwechat.R
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 import kotlin.concurrent.thread
 
 
@@ -29,14 +43,6 @@ import kotlin.concurrent.thread
  */
 
 class SettingsActivity : Activity() {
-//    var a: Activity? = null
-//    fun get(): Activity? {
-//        if (a == null) {
-//            a = SettingsActivity()
-//        }
-//        return a
-//    }
-
     private lateinit var fab: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +56,57 @@ class SettingsActivity : Activity() {
             _clearLogs()
             goToWechatSettingPage()
         }
-        GetNewestVersion.show(this, getVersionCode())
+        GetNewestVersion(this, getVersionCode())
     }
+
+    fun GetNewestVersion(context: Activity, versionCode: Int) {
+        APIManager().getNewestVersion(
+                object : Callback {
+                    override fun onFailure(call: Call?, e: IOException?) {
+                        ToastUtils.showLong("获取最新版本失败," + e?.message)
+                    }
+
+                    override fun onResponse(call: Call?, response: Response) {
+                        val data = Gson().fromJson<NewestVersionConfig>(response.body()?.string(), object : TypeToken<NewestVersionConfig>() {}.type)
+
+                        val ignoreVersion = getSharedPreferences("newestVersion", Context.MODE_PRIVATE).getInt("ignoredVersion", 0)
+                        if (data.versionCode.toInt() > versionCode && ignoreVersion < versionCode) {
+                            context.runOnUiThread {
+                                showNewestVersion(context, data)
+                            }
+                        }
+                    }
+                }
+        )
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private fun showNewestVersion(activity: Activity, data: NewestVersionConfig) {
+        val generateWechatLogScrollView = ScrollView(activity)
+
+        val generateWechatLogView = TextView(activity)
+        generateWechatLogView.setPadding(72, 15, 72, 0)
+        generateWechatLogScrollView.addView(generateWechatLogView)
+
+        generateWechatLogView.text = "版本: ${data.version}\n更新内容: ${data.info}"
+
+        activity.runOnUiThread {
+            AlertDialog.Builder(activity)
+                    .setTitle("发现新版本")
+                    .setView(generateWechatLogScrollView)
+                    .setCancelable(true)
+                    .setNeutralButton(R.string.text_cancel, null)
+                    .setNegativeButton(R.string.text_ignore_this_version) { _, which ->
+                        getSharedPreferences("newestVersion", Context.MODE_PRIVATE).edit().putInt("ignoredVersion", data.versionCode.toInt()).apply()
+                    }
+                    .setPositiveButton(R.string.text_update) { _, which ->
+                        ContextCompat.startActivity(activity, Intent(Intent.ACTION_VIEW, Uri.parse("https://gitee.com/JoshCai/MDWechat/releases/${data.version}")), null)
+                    }
+                    .show()
+        }
+    }
+
 
     private fun _clearLogs() {
         LogUtil.clearFileLogs(SettingsFragment.STATIC.isLogFile)
