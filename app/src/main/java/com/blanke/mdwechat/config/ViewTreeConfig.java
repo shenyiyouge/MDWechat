@@ -19,6 +19,7 @@ public class ViewTreeConfig {
     private static ViewTreeConfig viewTreeConfig = null;
 
     private Method ConversationListViewItem = null;
+    private Method ContactLayoutListenerViewItem = null;
     private Method ContactListViewItem = null;
     private Method ContactHeaderItem = null;
     private Method ContactWorkItem = null;
@@ -65,6 +66,9 @@ public class ViewTreeConfig {
     }
 
 
+    public Method getContactLayoutListenerViewItem() {
+        return ContactLayoutListenerViewItem;
+    }
     public Method getContactListViewItem() {
         return ContactListViewItem;
     }
@@ -223,6 +227,7 @@ public class ViewTreeConfig {
 
     private void init(Version versionName) {
         ConversationListViewItem = findViewTreeMethod("ConversationListViewItem", versionName);
+        ContactLayoutListenerViewItem = findViewTreeMethod("ContactLayoutListenerViewItem", versionName);
         ContactListViewItem = findViewTreeMethod("ContactListViewItem", versionName);
         ContactHeaderItem = findViewTreeMethod("ContactHeaderItem", versionName);
         ContactWorkItem = findViewTreeMethod("ContactWorkItem", versionName);

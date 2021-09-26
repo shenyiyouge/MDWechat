@@ -64,8 +64,13 @@ object Fields {
 
     val ContactFragment_mListView: Field?
         get() {
-            return findFieldsWithType(ContactFragment!!, CC.ListView.name)
-                    .firstOrNull()?.apply { isAccessible = true }
+            if (ContactFragment!!::class.java.name == ClassNotSupported::class.java.name) {
+                return findFieldsWithType(ContactFragment!!, CC.ListView.name)
+                        .firstOrNull()?.apply { isAccessible = true }
+            } else {
+                      return findFieldsWithType(ClassNotSupported().javaClass, CC.Field.name)
+                        .firstOrNull()?.apply { isAccessible = true }
+            }
         }
 
     val PreferenceFragment_mListView: Field?

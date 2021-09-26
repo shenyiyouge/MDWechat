@@ -10,8 +10,8 @@ android {
         applicationId "com.joshcai.mdwechat"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 101
-        versionName "4.2.0"
+        versionCode 103
+        versionName "4.2.3-GA1"
     }
     buildTypes {
         release {

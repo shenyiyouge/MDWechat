@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import de.robv.android.xposed.XposedBridge
+import de.robv.android.xposed.XposedHelpers
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -145,6 +146,8 @@ object LogUtil {
         val sb = StringBuffer(view.toString())
         if (view is TextView) {
             sb.append("${view.text}(" + view.hint + ")")
+        } else if (view.javaClass.name=="com.tencent.mm.ui.base.NoMeasuredTextView") {
+            sb.append("${XposedHelpers.getObjectField(view, "mText")}")
         } else if (view is ViewGroup) {
             sb.append(" childCount = ${view.childCount}")
         }

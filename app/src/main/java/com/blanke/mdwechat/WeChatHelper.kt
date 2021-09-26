@@ -20,7 +20,7 @@ object WeChatHelper {
     lateinit var XMOD_PREFS: XSharedPreferences
 
     //微信8.0.0第四页底色
-    val wechatWhite: Int = Color.parseColor("#ededed")
+    val wechatWhite: Int = Color.parseColor("#ffffff")
     val wechatDark: Int = Color.parseColor("#111111")
 
     val colorWhite: Int = Color.parseColor("#FAFAFA")

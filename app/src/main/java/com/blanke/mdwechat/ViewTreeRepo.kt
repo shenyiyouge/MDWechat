@@ -15,6 +15,9 @@ object ViewTreeRepoThisVersion {
     val ConversationListViewItem: ViewTree by lazy {
         ViewTreeConfig.get().conversationListViewItem.invoke(ViewTreeRepo) as ViewTree
     }
+    val ContactLayoutListenerViewItem: ViewTree by lazy {
+        ViewTreeConfig.get().contactLayoutListenerViewItem.invoke(ViewTreeRepo) as ViewTree
+    }
     val ContactListViewItem: ViewTree by lazy {
         ViewTreeConfig.get().contactListViewItem.invoke(ViewTreeRepo) as ViewTree
     }
@@ -286,9 +289,70 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.WeImageView)))
                                 )))))))
     }
+    val ConversationListViewItem_8_0_10: ViewTree by lazy {
+        ViewTree(
+                mapOf("chatNameView" to intArrayOf(0, 1, 0, 0, 0),
+                        "chatTimeView" to intArrayOf(0, 1, 0, 1),
+                        "recentMsgView" to intArrayOf(0, 1, 1, 0, 1),
+                        "unreadCountView" to intArrayOf(0, 0, 1),
+                        "unreadView" to intArrayOf(0, 0, 2)),
+                ViewTreeItem("com.tencent.mm.ui.conversation.ConversationFolderItemView", arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.ImageView.name),
+                                        ViewTreeItem(CC.TextView.name),
+                                        ViewTreeItem(CC.ImageView.name))),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(Classes.NoMeasuredTextView.name))),
+                                                ViewTreeItem(Classes.NoMeasuredTextView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.ImageView.name),
+                                                        ViewTreeItem(Classes.NoMeasuredTextView.name))),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView),
+                                                        ViewTreeItem(CC.WeImageView),
+                                                        ViewTreeItem(CC.WeImageView)))
+                                        )))))))
+                ))
+    }
     //endregion
 
     //region 1
+    //8.0.7版本开始的 新联系人界面
+    val ContactLayoutListenerViewItem: ViewTree by lazy {
+        ViewTree(
+                mapOf(
+                        "backgroundImage" to intArrayOf(0),
+                        "backgroundMask" to intArrayOf(0, 0),
+                        "blackBroad" to intArrayOf(0, 1, 0),
+                        "WxRecyclerView" to intArrayOf(0, 1, 0, 0, 0),
+                        "WxRecyclerView_ContactHeaderItem" to intArrayOf(0)
+                ),
+                ViewTreeItem("com.tencent.mm.ui.LayoutListenerView", arrayOf(
+                        ViewTreeItem("com.tencent.mm.ui.widget.pulldown.MMWeUIBounceView", arrayOf(//backgroundImage
+                                ViewTreeItem("androidx.core.widget.NestedScrollView", arrayOf(//backgroundMask
+                                        ViewTreeItem(CC.LinearLayout.name)
+                                )),
+                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(//blackBroad
+                                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                        ViewTreeItem("com.tencent.mm.view.recyclerview.WxRecyclerView", arrayOf(//WxRecyclerView
+                                                                ViewTreeRepoThisVersion.ContactHeaderItem.item,//ContactHeaderItem
+                                                                ViewTreeRepoThisVersion.ContactListViewItem.item//ContactListViewItem
+                                                                //后面都是ContactListViewItem
+                                                        ))
+                                                ))
+                                        ))
+                                ))
+                        ))
+                ))
+        )
+    }
+
+    //单个联系人
     val ContactListViewItem: ViewTree by lazy {
         ViewTree(
                 mapOf(
@@ -1857,6 +1921,58 @@ object ViewTreeRepo {
                                         Item_ActionMenuView_8_0_6)))),
                         ViewTreeItem("androidx.appcompat.widget.ActionBarContextView"))))
     }
+    val ActionBarInConversationItem_8_0_10: ViewTree by lazy {
+        ViewTree(
+                mapOf(
+                        "title" to intArrayOf(0, 1, 1, 0, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0, 0)
+                ),
+                ViewTreeItem("androidx.appcompat.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("androidx.appcompat.widget.Toolbar", arrayOf(
+                                ViewTreeItem("androidx.appcompat.widget.ActionMenuView"),
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView))),//goBackButton
+                                                ViewTreeItem(CC.ImageView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),//title
+                                                        ViewTreeItem(CC.TextView.name),//todo new
+                                                        ViewTreeItem(CC.WeImageView))),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.WeImageView))))),
+                                        Item_ActionMenuView_8_0_6)))),
+                        ViewTreeItem("androidx.appcompat.widget.ActionBarContextView"))))
+    }
+    val ActionBarInConversationItem_8_0_11: ViewTree by lazy {
+        ViewTree(
+                mapOf(
+                        "title" to intArrayOf(0, 1, 1, 0, 0, 0),
+                        "goBackButton" to intArrayOf(0, 1, 0, 0, 0)
+                ),
+                ViewTreeItem("androidx.appcompat.widget.ActionBarContainer", arrayOf(
+                        ViewTreeItem("androidx.appcompat.widget.Toolbar", arrayOf(
+                                ViewTreeItem("androidx.appcompat.widget.ActionMenuView"),
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.WeImageView))),//goBackButton
+                                                ViewTreeItem(CC.ImageView.name))),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                                ViewTreeItem(CC.TextView.name),//title
+                                                                ViewTreeItem(CC.TextView.name)//todo new
+                                                        )),
+                                                        ViewTreeItem(CC.WeImageView))),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem(CC.TextView.name),
+                                                        ViewTreeItem(CC.WeImageView))))),
+                                        Item_ActionMenuView_8_0_11)))),
+                        ViewTreeItem("androidx.appcompat.widget.ActionBarContextView"))))
+    }
 
     //通过搜索进入的聊天界面(头)
     val ActionBarInSearchConversationItem: ViewTree by lazy {
@@ -2060,6 +2176,21 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.ImageView.name))),
                                 ViewTreeItem(CC.Button.name),
                                 ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.ImageView.name)))))))))
+    }
+    private val Item_ActionMenuView_8_0_11: ViewTreeItem by lazy {
+        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.ImageButton.name),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.ImageView.name))),
+                                ViewTreeItem(CC.Button.name),
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.WeImageView),
+                                        ViewTreeItem(CC.WeImageView),
                                         ViewTreeItem(CC.WeImageView),
                                         ViewTreeItem(CC.ImageView.name)))))))))
     }

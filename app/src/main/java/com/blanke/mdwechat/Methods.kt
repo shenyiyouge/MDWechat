@@ -43,6 +43,11 @@ object Methods {
                 WechatGlobal.wxVersionConfig.methods.WxViewPager_selectedPage,
                 CC.Int, CC.Boolean, CC.Boolean, CC.Int)
     }
+    val WxViewPager_onLayout: Method by WechatGlobal.wxLazy("WxViewPager_onLayout") {
+        findMethodsByName(WxViewPager,
+                WechatGlobal.wxVersionConfig.methods.WxViewPager_onLayout,
+                CC.Boolean, CC.Int, CC.Int, CC.Int, CC.Int)
+    }
 
     val LauncherUIBottomTabView_getTabItemView: Method by WechatGlobal.wxLazy("LauncherUIBottomTabView_getTabItemView") {
         findMethodsByName(LauncherUIBottomTabView,
@@ -78,7 +83,8 @@ object Methods {
                 WechatGlobal.wxVersionConfig.methods.WXCustomSchemeEntryActivity_entry,
                 CC.Intent)
     }
-//    val NightModeClass_getNightModeMethod: String by WechatGlobal.wxLazy("NightModeClass_getNightModeMethod") {
+
+    //    val NightModeClass_getNightModeMethod: String by WechatGlobal.wxLazy("NightModeClass_getNightModeMethod") {
 //        WechatGlobal.wxVersionConfig.methods.NightModeClass_getNightModeMethod
 //    }
     val HomeUI_setActionBarColor: List<String> by WechatGlobal.wxLazy("HomeUI_setActionBarColor") {

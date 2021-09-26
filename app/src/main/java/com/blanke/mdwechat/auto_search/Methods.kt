@@ -1,7 +1,5 @@
 package com.blanke.mdwechat.auto_search
 
-//import com.blanke.mdwechat.auto_search.Classes.LauncherUIBottomTabViewItem
-//import com.blanke.mdwechat.auto_search.Classes.NightModeClass
 import android.graphics.Bitmap
 import com.blanke.mdwechat.CC
 import com.blanke.mdwechat.CC.voidd
@@ -32,6 +30,11 @@ object Methods {
     val WxViewPager_selectedPage: Method?
         get() {
             return findMethodsByExactParameters(WxViewPager!!, voidd, CC.Int, CC.Boolean, CC.Boolean, CC.Int)
+                    .firstOrNull()?.apply { isAccessible = true }
+        }
+    val WxViewPager_onLayout: Method?
+        get() {
+            return findMethodsByExactParameters(WxViewPager!!, voidd, CC.Boolean, CC.Int, CC.Int, CC.Int, CC.Int)
                     .firstOrNull()?.apply { isAccessible = true }
         }
 

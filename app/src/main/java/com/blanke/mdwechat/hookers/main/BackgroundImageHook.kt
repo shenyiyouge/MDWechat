@@ -238,7 +238,7 @@ object BackgroundImageHook {
                         _actionBarBitmapInConversations = background
                         ChattingRoomHook.setConversationColor(actionBar)
                     } else {
-                        LogUtil.log("匹配聊天界面失败")
+                        LogUtil.log("匹配聊天界面失败(ActionBarInConversationItem)")
                         LogUtil.logViewStackTraces(chattingUILayout)
                     }
 //                    else if (ViewTreeUtils.equals(ViewTreeRepoThisVersion.ActionBarInFriendsgroupItem.item, actionBar)) {
@@ -277,7 +277,7 @@ object BackgroundImageHook {
                         ChattingRoomHook.setConversationInSearchColor(actionBar)
 
                     } else {
-                        LogUtil.log("匹配通过搜索打开的聊天界面失败")
+                        LogUtil.log("匹配通过搜索打开的聊天界面失败(ActionBarInSearchConversationItem)")
 //                        LogUtil.logViewStackTraces(chattingUILayout)
                     }
 //            isSettingMap = false
