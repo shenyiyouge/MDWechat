@@ -76,12 +76,30 @@ object WeChatHelper {
         return getBubble(bubble, resources, isTint, tintColor)
     }
 
+    fun getUnopenedLeftRedPacketBubble(
+            resources: Resources,
+            isTint: Boolean = false,
+            tintColor: Int = HookConfig.get_hook_bubble_tint_left
+    ): Drawable? {
+        val bubble = AppCustomConfig.getUnopenedRedPacketBubbleLeftIcon() ?: return null
+        return getBubble(bubble, resources, isTint, tintColor)
+    }
+
     fun getRightRedPacketBubble(
             resources: Resources,
             isTint: Boolean = false,
             tintColor: Int = HookConfig.get_hook_bubble_tint_right
     ): Drawable? {
         val bubble = AppCustomConfig.getRedPacketBubbleRightIcon() ?: return null
+        return getBubble(bubble, resources, isTint, tintColor)
+    }
+
+    fun getUnopenedRightRedPacketBubble(
+            resources: Resources,
+            isTint: Boolean = false,
+            tintColor: Int = HookConfig.get_hook_bubble_tint_right
+    ): Drawable? {
+        val bubble = AppCustomConfig.getUnopenedRedPacketBubbleRightIcon() ?: return null
         return getBubble(bubble, resources, isTint, tintColor)
     }
 

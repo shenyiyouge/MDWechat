@@ -54,8 +54,16 @@ object AppCustomConfig {
         return getIcon(Common.CHAT_RED_PACKET_BUBBLE_LEFT_FILENAME)
     }
 
+    fun getUnopenedRedPacketBubbleLeftIcon(): Bitmap? {
+        return getIcon(Common.CHAT_UNOPENED_RED_PACKET_BUBBLE_LEFT_FILENAME)
+    }
+
     fun getRedPacketBubbleRightIcon(): Bitmap? {
         return getIcon(Common.CHAT_RED_PACKET_BUBBLE_RIGHT_FILENAME)
+    }
+
+    fun getUnopenedRedPacketBubbleRightIcon(): Bitmap? {
+        return getIcon(Common.CHAT_UNOPENED_RED_PACKET_BUBBLE_RIGHT_FILENAME)
     }
 
     fun getBubbleLeftIcon(): Bitmap? {

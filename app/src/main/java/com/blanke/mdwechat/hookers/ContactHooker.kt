@@ -93,6 +93,11 @@ object ContactHooker : HookerProvider {
                                 }
                             }
                         }
+//                        else{
+//                            LogUtil.log(WechatGlobal.wxVersion!!.toString())
+//                            LogUtil.log("获取联系人界面失败:")
+//                            LogUtil.logViewStackTraces(contactView)
+//                        }
                     }
                 }
             })

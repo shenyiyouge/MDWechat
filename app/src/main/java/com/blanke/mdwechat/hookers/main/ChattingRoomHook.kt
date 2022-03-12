@@ -68,7 +68,7 @@ object ChattingRoomHook {
             setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
         } else {
             LogUtil.log("聊天页沉浸背景底栏匹配错误")
-//            LogUtil.logViewStackTraces(chattingUILayout)
+            LogUtil.logViewStackTraces(chattingUILayout)
         }
     }
 

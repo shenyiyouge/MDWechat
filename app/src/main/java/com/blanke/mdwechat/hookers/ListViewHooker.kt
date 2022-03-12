@@ -659,9 +659,14 @@ object ListViewHooker : HookerProvider {
                                     val msgView = ViewUtils.getChildView1(view, this) as TextView
                                     XposedHelpers.callMethod(msgView, "setTextColor", chatTextColor)
                                 }
+                                var unopened = true
+                                // "已被领完"
                                 VTTV.ChatLeftRedPacketItem.treeStacks["msgView1"]?.apply {
-                                    val msgView = ViewUtils.getChildView1(view, this) as TextView
-                                    XposedHelpers.callMethod(msgView, "setTextColor", chatTextColor)
+                                    val msgView1 = ViewUtils.getChildView1(view, this) as TextView
+                                    if (msgView1.text.length > 0) {
+                                        unopened = false
+                                    }
+                                    XposedHelpers.callMethod(msgView1, "setTextColor", chatTextColor)
                                 }
                                 VTTV.ChatLeftRedPacketItem.treeStacks["titleView"]?.apply {
                                     val titleView = ViewUtils.getChildView1(view, this) as TextView
@@ -670,7 +675,11 @@ object ListViewHooker : HookerProvider {
                                 // 聊天气泡
                                 VTTV.ChatLeftRedPacketItem.treeStacks["bgView"]?.apply {
                                     val bgView = ViewUtils.getChildView1(view, this) as View
-                                    bgView.background = WeChatHelper.getLeftRedPacketBubble(bgView.resources)
+                                    if (unopened) {
+                                        bgView.background = WeChatHelper.getUnopenedLeftRedPacketBubble(bgView.resources)
+                                    } else {
+                                        bgView.background = WeChatHelper.getLeftRedPacketBubble(bgView.resources)
+                                    }
                                     if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                         bgView.setPadding(10, 0, 10, 25)
                                     }
@@ -684,7 +693,9 @@ object ListViewHooker : HookerProvider {
                                     val leftPicView = ViewUtils.getChildView1(view, this) as ImageView
                                     leftPicView.setImageDrawable(null)
                                 }
-                            } else if (ViewTreeUtils.equals(VTTV.ChatRightRedPacketItem.item, view)) {
+                            }
+                            // 右红包
+                            else if (ViewTreeUtils.equals(VTTV.ChatRightRedPacketItem.item, view)) {
                                 LogUtil.logOnlyOnce("ListViewHooker.ChatRightRedPacketItem")
                                 val chatTextColor = HookConfig.get_hook_red_packet_text_color
 
@@ -700,9 +711,14 @@ object ListViewHooker : HookerProvider {
                                     val msgView = ViewUtils.getChildView1(view, this) as TextView
                                     XposedHelpers.callMethod(msgView, "setTextColor", chatTextColor)
                                 }
+                                var unopened = true
+                                // "已被领完"
                                 VTTV.ChatRightRedPacketItem.treeStacks["msgView1"]?.apply {
-                                    val msgView = ViewUtils.getChildView1(view, this) as TextView
-                                    XposedHelpers.callMethod(msgView, "setTextColor", chatTextColor)
+                                    val msgView1 = ViewUtils.getChildView1(view, this) as TextView
+                                    if (msgView1.text.length > 0) {
+                                        unopened = false
+                                    }
+                                    XposedHelpers.callMethod(msgView1, "setTextColor", chatTextColor)
                                 }
                                 VTTV.ChatRightRedPacketItem.treeStacks["titleView"]?.apply {
                                     val titleView = ViewUtils.getChildView1(view, this) as TextView
@@ -711,7 +727,11 @@ object ListViewHooker : HookerProvider {
                                 // 聊天气泡
                                 VTTV.ChatRightRedPacketItem.treeStacks["bgView"]?.apply {
                                     val bgView = ViewUtils.getChildView1(view, this) as View
-                                    bgView.background = WeChatHelper.getRightRedPacketBubble(bgView.resources)
+                                    if (unopened) {
+                                        bgView.background = WeChatHelper.getUnopenedRightRedPacketBubble(bgView.resources)
+                                    } else {
+                                        bgView.background = WeChatHelper.getRightRedPacketBubble(bgView.resources)
+                                    }
                                     if (WechatGlobal.wxVersion!! >= Version("6.7.2")) {
                                         bgView.setPadding(10, 0, 10, 25)
                                     }
@@ -750,8 +770,10 @@ object ListViewHooker : HookerProvider {
                         unreadCountView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
                         unreadCountView.setTextColor(HookConfig.get_color_tip_num)
                         unreadView.backgroundTintList = ColorStateList.valueOf(NightModeUtils.colorTip)
-                        val contentView = ViewUtils.getChildView(view, 1) as ViewGroup
-                        contentView.background = defaultImageRippleDrawable
+                        // 下划线
+                        ViewUtils.getChildView1(view, VTTV.ConversationListViewItem.treeStacks["contentView"])?.apply {
+                            this.background = defaultImageRippleDrawable
+                        }
                         return
                     }
                     //其他项, 背景置透明
