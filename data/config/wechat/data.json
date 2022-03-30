@@ -1,5 +1,25 @@
 [
   {
+    "name": "8.0.20.config",
+    "desc": "8.0.20 国内版",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/8.0.20/8.0.20.config"
+  },
+  {
+    "name": "8.0.16.config",
+    "desc": "8.0.16 国内版",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/8.0.16/8.0.16.config"
+  },
+  {
+    "name": "8.0.15.config",
+    "desc": "8.0.15 国内版",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/8.0.15/8.0.15.config"
+  },
+  {
+    "name": "8.0.14.config",
+    "desc": "8.0.14 国内版",
+    "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/8.0.14/8.0.14.config"
+  },
+  {
     "name": "8.0.6.config",
     "desc": "8.0.6 国内版",
     "url": "https://gitee.com/JoshCai/MDWechat/raw/v4.0/data/config/wechat/8.0.6/8.0.6.config"
