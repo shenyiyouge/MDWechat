@@ -438,6 +438,29 @@ object ViewTreeRepo {
                                                         ))))
                                         )))))))))
     }
+    val ContactListViewItem_8_0_24: ViewTree by lazy {
+        ViewTree(
+                mapOf("headerView" to intArrayOf(0),
+                        "innerView" to intArrayOf(1, 0, 0, 1),
+                        "contentView" to intArrayOf(1),
+                        "titleView_8_0" to intArrayOf(1, 0, 0, 1, 0, 0),
+                        "headTextView" to intArrayOf(0, 0)),
+                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(//headerView
+                                ViewTreeItem(CC.TextView.name)//headTextView
+                        )),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(//contentView
+                                ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.WeImageView),
+                                                ViewTreeItem(CC.TableLayout.name, arrayOf(//innerView
+                                                        ViewTreeItem(CC.TableRow.name, arrayOf(
+                                                                ViewTreeItem(CC.TextView.name),//titleView_8_0
+                                                                ViewTreeItem(CC.TextView.name)
+//                                                ViewTreeItem(Classes.NoMeasuredTextView.name)
+                                                        ))))
+                                        )))))))))
+    }
 
     // 联系人上方分组列表
     val ContactHeaderItem: ViewTree by lazy {
@@ -1367,6 +1390,40 @@ object ViewTreeRepo {
                                         ViewTreeItem(CC.ImageView.name))))),
                         ViewTreeItem(CC.View.name))))
     }
+    val ChatRightMessageItem_8_0_24: ViewTree by lazy {
+        ViewTree(
+                mapOf("msgView" to intArrayOf(4, 3, 1, 3, 0),
+                        "timeView" to intArrayOf(2)),
+                ViewTreeItem("com.tencent.mm.ui.chatting.viewitems.", arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.TextView.name))),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.View.name),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.View.name))),
+                        ViewTreeItem(CC.TextView.name),//timeView
+                        ViewTreeItem(CC.CheckBox.name),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.View.name),
+                                ViewTreeItem("com.tencent.mm.ui.base.AnimImageView"),
+                                ViewTreeItem(CC.ProgressBar.name),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.TextView.name),
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                ViewTreeItem(CC.ImageView.name),
+                                                ViewTreeItem(CC.ProgressBar.name),
+                                                ViewTreeItem(CC.ImageView.name),
+                                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                                        ViewTreeItem("com.tencent.mm.ui.widget.MMNeat7extView")//msgView
+                                                )))),
+                                        ViewTreeItem(CC.ViewStub.name))),
+                                ViewTreeItem("com.tencent.mm.ui.base.MaskLayout", arrayOf(
+                                        null,
+                                        ViewTreeItem(CC.ViewStub.name),
+                                        ViewTreeItem(CC.View.name),
+                                        ViewTreeItem(CC.ImageView.name))))),
+                        ViewTreeItem(CC.View.name))))
+    }
     val ChatLeftMessageItem: ViewTree by lazy {
         ViewTree(
                 mapOf("msgView" to intArrayOf(3, 1, 1),
@@ -1420,6 +1477,39 @@ object ViewTreeRepo {
                                                 ViewTreeItem(CC.ImageView.name),
                                                 ViewTreeItem(CC.TextView.name))), null
                                 )))),
+                        ViewTreeItem(CC.View.name))))
+    }
+    val ChatLeftMessageItem_8_0_24: ViewTree by lazy {
+        ViewTree(
+                mapOf("nickNameView" to intArrayOf(4, 1, 0),
+                        "msgView" to intArrayOf(4, 1, 1, 0),
+                        "timeView" to intArrayOf(2)),
+                ViewTreeItem("com.tencent.mm.ui.chatting.viewitems.", arrayOf(
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.TextView.name))),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem(CC.View.name),
+                                ViewTreeItem(CC.TextView.name),
+                                ViewTreeItem(CC.View.name))),
+                        ViewTreeItem(CC.TextView.name),// timeView
+                        ViewTreeItem(CC.CheckBox.name),
+                        ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                ViewTreeItem("com.tencent.mm.ui.base.MaskLayout", arrayOf(
+                                        null,
+                                        ViewTreeItem(CC.ViewStub.name),
+                                        ViewTreeItem(CC.View.name),
+                                        ViewTreeItem(CC.ImageView.name))),
+                                ViewTreeItem(CC.LinearLayout.name, arrayOf(
+                                        ViewTreeItem(CC.TextView.name),// nickNameView
+                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                ViewTreeItem("com.tencent.mm.ui.widget.MMNeat7extView"), // msgView
+                                                ViewTreeItem("com.tencent.mm.ui.base.AnimImageView"),
+                                                ViewTreeItem(CC.ProgressBar.name)
+                                        )),
+                                        ViewTreeItem(CC.RelativeLayout.name),
+                                        ViewTreeItem(CC.LinearLayout.name),
+                                        ViewTreeItem(CC.LinearLayout.name),
+                                        ViewTreeItem(CC.ViewStub.name))))),
                         ViewTreeItem(CC.View.name))))
     }
     //endregion

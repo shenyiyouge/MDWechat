@@ -197,18 +197,21 @@ object Classes {
 
     val DiscoverFragment: Class<*>?
         get() {
-            return ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui")
+            val a: ReflectionUtil.Classes = ReflectionUtil.findClassesFromPackage(WechatGlobal.wxLoader, WechatGlobal.wxClasses, "${WechatGlobal.wxPackageName}.ui")
                     .filterByMethod(voidd, "onActivityCreated", CC.Bundle)
                     .filterByMethod(CC.Boolean, "supportNavigationSwipeBack")
                     .filterByMethod(CC.Boolean, "noActionBar")
-                    .filterByField(CheckBox::class.java.name)
                     .filterByField(TextView::class.java.name)
                     .filterByField(View::class.java.name)
                     .filterByField(CC.Int.name)
                     .filterByField(CC.String.name)
                     .filterByField(CC.Boolean.name)
                     .filterByField(CC.Long.name)
-                    .firstOrNull()
+            // 微信 8.0.21 之后删除了 CheckBox
+            return if (a.classes.size == 1)
+                a.firstOrNull()
+            else
+                a.filterByField(CheckBox::class.java.name).firstOrNull()
         }
 
     val SettingsFragment: Class<*>?

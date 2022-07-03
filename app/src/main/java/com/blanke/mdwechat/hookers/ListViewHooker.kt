@@ -63,7 +63,7 @@ object ListViewHooker : HookerProvider {
                         return
                     }
 
-                    if ((!com.blanke.mdwechat.Common.isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
+                    if ((!Common.isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
                         LogUtil.log("----------抓取view start----------")
                         LogUtil.log(WechatGlobal.wxVersion.toString())
                         LogUtil.log("context=" + view.context)
@@ -783,12 +783,10 @@ object ListViewHooker : HookerProvider {
                         if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
                             setContactListViewItem(view)
                         }
-
                         // 联系人列表头部
                         else if (ViewTreeUtils.equals(VTTV.ContactHeaderItem.item, view)) {
                             setContactHeaderItem(view)
                         }
-
                         // 发现 设置 item
                         else if (ViewTreeUtils.equals(VTTV.DiscoverViewItem.item, view)) {
 //                        LogUtil.logViewStackTraces(view)
@@ -825,7 +823,6 @@ object ListViewHooker : HookerProvider {
                                         if (this is TextView) this.setTextColor(HookConfig.get_color_tip_num)
                                     }
                         }
-
                         // 设置 头像
                         else if (ViewTreeUtils.equals(VTTV.SettingAvatarView.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.SettingAvatarView")
@@ -900,7 +897,6 @@ object ListViewHooker : HookerProvider {
                                 }
                             }
                         }
-
                         // (7.0.7 以上) 下拉小程序框
                         else if (HookConfig.is_hook_tab_bg && ViewTreeUtils.equals(VTTV.ActionBarItem.item, view)) {
                             LogUtil.logOnlyOnce("ListViewHooker.ActionBarItem")
@@ -956,6 +952,7 @@ object ListViewHooker : HookerProvider {
         })
     }
 
+    // 8.0.14 之后联系人列表从 LinearLayout 变为 NoDrawingCacheLinearLayout, 8.0.24 之后又变回去了 (?)
     fun setContactListViewItem(view: View) {
         LogUtil.logOnlyOnce("ListViewHooker.ContactListViewItem")
         // 标题下面的线

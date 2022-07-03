@@ -141,32 +141,20 @@ object ContactHooker : HookerProvider {
 
     private val contactItermsHook = Hooker {
         try {
-            Methods.findMethodsByName(
-                    Classes.findClass("com.tencent.mm.ui.NoDrawingCacheLinearLayout"),
-                    listOf("onMeasure")
-                    , CC.Int
-                    , CC.Int
-            )
-                    .forEach {
-                        try {
-                            XposedHelpers.findAndHookMethod(
-                                    Classes.findClass("com.tencent.mm.ui.NoDrawingCacheLinearLayout"),
-                                    it.name
-                                    , CC.Int
-                                    , CC.Int
-                                    , object : XC_MethodHook() {
-                                override fun beforeHookedMethod(param: MethodHookParam?) {
-                                    val linearLayout = param?.thisObject ?: return
-                                    if (linearLayout is ViewGroup
-                                            && ViewTreeUtils.equals(com.blanke.mdwechat.ViewTreeRepoThisVersion.ContactListViewItem.item, linearLayout)) {
-                                        ListViewHooker.setContactListViewItem(linearLayout)
-                                    }
-                                }
-                            })
-                        } catch (e: Exception) {
-                            LogUtil.log(e)
-                        }
+            XposedHelpers.findAndHookMethod(Classes.findClass("com.tencent.mm.view.recyclerview.WxRecyclerView"),
+                    "onViewAdded", CC.View, object : XC_MethodHook() {
+                //                        "onLayout", CC.Boolean,CC.Int,CC.Int,CC.Int, CC.Int, object : XC_MethodHook() {
+                override fun afterHookedMethod(param: MethodHookParam?) {
+                    val view = param?.args?.get(0) ?: return
+                    if (view !is ViewGroup) {
+                        return
                     }
+                    // 联系人列表
+                    if (ViewTreeUtils.equals(VTTV.ContactListViewItem.item, view)) {
+                        ListViewHooker.setContactListViewItem(view)
+                    }
+                }
+            })
         } catch (e: NoSuchMethodException) {
             LogUtil.log("find method error")
             LogUtil.log(e)
