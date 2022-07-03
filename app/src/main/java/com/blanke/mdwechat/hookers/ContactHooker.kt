@@ -49,55 +49,54 @@ object ContactHooker : HookerProvider {
                 }
 
                 private fun init(fragment: Any) {
-                    if (fragment is ViewGroup && fragment.childCount == 4 && fragment.getChildAt(1) is View) {
-                        val contactView = fragment.getChildAt(1) as ViewGroup
-                        if (ViewTreeUtils.equals(VTTV.ContactLayoutListenerViewItem.item, contactView)) {
-                            //背景
-                            if (!backgroundInited) {
-                                //背景遮罩
-                                VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundMask"]?.apply {
-                                    val backgroundITransparent = ViewUtils.getChildView1(contactView, this) as View
-                                    backgroundITransparent.setBackgroundColor(Color.TRANSPARENT)
-                                }
-                                //背景
-                                if (HookConfig.is_hook_tab_bg) {
-                                    VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundImage"]?.apply {
-                                        val backgroundImage = ViewUtils.getChildView1(contactView, this) as View
-//                                                //不写这一句背景会变回白色,WTF?(已解决)
-//                                                backgroundImage.setBackgroundColor(Color.TRANSPARENT)
-                                        BackgroundImageHook.setContactBitmap(backgroundImage)
-                                    }
-                                }
-                                backgroundInited = true
+                    if (fragment !is ViewGroup || fragment.childCount != 4 || fragment.getChildAt(1) !is View) {
+                        return
+                    }
+                    val contactView = fragment.getChildAt(1) as ViewGroup
+                    if (!ViewTreeUtils.equals(VTTV.ContactLayoutListenerViewItem.item, contactView)) {
+                        LogUtil.log(WechatGlobal.wxVersion!!.toString())
+                        LogUtil.log("获取联系人界面失败:")
+//                        LogUtil.logViewStackTraces(contactView)
+                        return
+                    }
 
-                                LogUtil.logOnlyOnce("ContactFragment Done")
-                                XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
-                            }
-                            //列表第一项(头)
-                            if (headInitCount < 10) {
-                                VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView"]?.apply {
-                                    val WxRecyclerView = ViewUtils.getChildView1(contactView, this) as View
-                                    WxRecyclerView.background = drawableTransparent
-
-                                    VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView_ContactHeaderItem"]?.apply {
-                                        val ContactHeaderItem = ViewUtils.getChildView1(WxRecyclerView, this) as View
-                                        ContactHeaderItem.background = drawableTransparent
-
-                                        if (ContactHeaderItem is ViewGroup) {
-                                            ListViewHooker.setContactHeaderItemTop(ContactHeaderItem)
-                                        }
-                                        ListViewHooker.setContactHeaderItem(ContactHeaderItem)
-                                        (ViewUtils.getChildView1(contactView, intArrayOf(0, 1, 0)) as View).background = drawableTransparent
-                                    }
-                                    headInitCount++
-                                }
+                    //背景
+                    if (!backgroundInited) {
+                        //背景遮罩
+                        VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundMask"]?.apply {
+                            val backgroundITransparent = ViewUtils.getChildView1(contactView, this) as View
+                            backgroundITransparent.setBackgroundColor(Color.TRANSPARENT)
+                        }
+                        //背景
+                        if (HookConfig.is_hook_tab_bg) {
+                            VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundImage"]?.apply {
+                                val backgroundImage = ViewUtils.getChildView1(contactView, this) as View
+                                BackgroundImageHook.setContactBitmap(backgroundImage)
                             }
                         }
-//                        else{
-//                            LogUtil.log(WechatGlobal.wxVersion!!.toString())
-//                            LogUtil.log("获取联系人界面失败:")
-//                            LogUtil.logViewStackTraces(contactView)
-//                        }
+                        backgroundInited = true
+
+                        LogUtil.logOnlyOnce("ContactFragment Done")
+                        XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
+                    }
+                    //列表第一项(头)
+                    if (headInitCount < 10) {
+                        VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView"]?.apply {
+                            val WxRecyclerView = ViewUtils.getChildView1(contactView, this) as View
+                            WxRecyclerView.background = drawableTransparent
+
+                            VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView_ContactHeaderItem"]?.apply {
+                                val ContactHeaderItem = ViewUtils.getChildView1(WxRecyclerView, this) as View
+                                ContactHeaderItem.background = drawableTransparent
+
+                                if (ContactHeaderItem is ViewGroup) {
+                                    ListViewHooker.setContactHeaderItemTop(ContactHeaderItem)
+                                }
+                                ListViewHooker.setContactHeaderItem(ContactHeaderItem)
+                                (ViewUtils.getChildView1(contactView, intArrayOf(0, 1, 0)) as View).background = drawableTransparent
+                            }
+                            headInitCount++
+                        }
                     }
                 }
             })
