@@ -21,10 +21,6 @@ import com.blanke.mdwechat.ViewTreeRepoThisVersion as VTTV
 
 object ContactHooker : HookerProvider {
     const val keyInit = "key_init"
-    var backgroundInited = false
-
-    //todo 联系人列表头部的应该有更好的hook点，这里先从viewpager hook，因为第一次没有初始化完所以计数10次。
-    var headInitCount = 0
 
 
     override fun provideStaticHookers(): List<Hooker>? {
@@ -37,66 +33,48 @@ object ContactHooker : HookerProvider {
 
     private val wxViewPagerHook = Hooker {
         try {
-            XposedHelpers.findAndHookMethod(Classes.WxViewPager, Methods.WxViewPager_onLayout.name, CC.Boolean, CC.Int, CC.Int, CC.Int, CC.Int, object : XC_MethodHook() {
+            XposedHelpers.findAndHookMethod(Classes.findClass("com.tencent.mm.view.recyclerview.WxRecyclerView"),
+                    "onLayout", CC.Boolean, CC.Int, CC.Int, CC.Int, CC.Int, object : XC_MethodHook() {
                 override fun afterHookedMethod(param: MethodHookParam?) {
-                    val fragment = param?.thisObject ?: return
-                    val isInit = XposedHelpers.getAdditionalInstanceField(fragment, keyInit)
-                    if (isInit != null) {
-                        LogUtil.log("ContactFragment 已经hook过")
+                    val WxRecyclerView = param?.thisObject ?: return
+                    if (WxRecyclerView !is ViewGroup) {
                         return
                     }
-                    init(fragment)
-                }
 
-                private fun init(fragment: Any) {
-                    if (fragment !is ViewGroup || fragment.childCount != 4 || fragment.getChildAt(1) !is View) {
-                        return
-                    }
-                    val contactView = fragment.getChildAt(1) as ViewGroup
+                    val contactView = ViewUtils.getParentViewSafe(WxRecyclerView, 5) as ViewGroup
                     if (!ViewTreeUtils.equals(VTTV.ContactLayoutListenerViewItem.item, contactView)) {
-                        LogUtil.log(WechatGlobal.wxVersion!!.toString())
-                        LogUtil.log("获取联系人界面失败:")
-//                        LogUtil.logViewStackTraces(contactView)
                         return
                     }
+                    LogUtil.log("获取联系人界面成功.")
 
                     //背景
-                    if (!backgroundInited) {
-                        //背景遮罩
-                        VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundMask"]?.apply {
-                            val backgroundITransparent = ViewUtils.getChildView1(contactView, this) as View
-                            backgroundITransparent.setBackgroundColor(Color.TRANSPARENT)
-                        }
-                        //背景
-                        if (HookConfig.is_hook_tab_bg) {
-                            VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundImage"]?.apply {
-                                val backgroundImage = ViewUtils.getChildView1(contactView, this) as View
-                                BackgroundImageHook.setContactBitmap(backgroundImage)
-                            }
-                        }
-                        backgroundInited = true
-
-                        LogUtil.logOnlyOnce("ContactFragment Done")
-                        XposedHelpers.setAdditionalInstanceField(fragment, keyInit, true)
+                    //背景遮罩
+                    VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundMask"]?.apply {
+                        val backgroundITransparent = ViewUtils.getChildView1(contactView, this) as View
+                        backgroundITransparent.setBackgroundColor(Color.TRANSPARENT)
                     }
-                    //列表第一项(头)
-                    if (headInitCount < 10) {
-                        VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView"]?.apply {
-                            val WxRecyclerView = ViewUtils.getChildView1(contactView, this) as View
-                            WxRecyclerView.background = drawableTransparent
-
-                            VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView_ContactHeaderItem"]?.apply {
-                                val ContactHeaderItem = ViewUtils.getChildView1(WxRecyclerView, this) as View
-                                ContactHeaderItem.background = drawableTransparent
-
-                                if (ContactHeaderItem is ViewGroup) {
-                                    ListViewHooker.setContactHeaderItemTop(ContactHeaderItem)
-                                }
-                                ListViewHooker.setContactHeaderItem(ContactHeaderItem)
-                                (ViewUtils.getChildView1(contactView, intArrayOf(0, 1, 0)) as View).background = drawableTransparent
-                            }
-                            headInitCount++
+                    //背景
+                    if (HookConfig.is_hook_tab_bg) {
+                        VTTV.ContactLayoutListenerViewItem.treeStacks["backgroundImage"]?.apply {
+                            val backgroundImage = ViewUtils.getChildView1(contactView, this) as View
+                            BackgroundImageHook.setContactBitmap(backgroundImage)
                         }
+                    }
+
+                    LogUtil.logOnlyOnce("ContactFragment Done")
+
+                    //列表第一项(头)
+                    WxRecyclerView.background = drawableTransparent
+
+                    VTTV.ContactLayoutListenerViewItem.treeStacks["WxRecyclerView_ContactHeaderItem"]?.apply {
+                        val ContactHeaderItem = ViewUtils.getChildView1(WxRecyclerView, this) as View
+                        ContactHeaderItem.background = drawableTransparent
+
+                        if (ContactHeaderItem is ViewGroup) {
+                            ListViewHooker.setContactHeaderItemTop(ContactHeaderItem)
+                        }
+                        ListViewHooker.setContactHeaderItem(ContactHeaderItem)
+                        (ViewUtils.getChildView1(contactView, intArrayOf(0, 1, 0)) as View).background = drawableTransparent
                     }
                 }
             })
@@ -105,6 +83,7 @@ object ContactHooker : HookerProvider {
         }
     }
 
+    // 8.0.14 起微信修改联系人渲染样式之后经常会在滑动时重置背景
     private val backgroundColorResetHook = Hooker {
         try {
             Methods.findMethodsByName(

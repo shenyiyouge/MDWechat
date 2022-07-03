@@ -327,7 +327,7 @@ object ViewTreeRepo {
     //endregion
 
     //region 1
-    //8.0.7版本开始的 新联系人界面
+    //8.0.7 版本开始的 新联系人界面
     val ContactLayoutListenerViewItem: ViewTree by lazy {
         ViewTree(
                 mapOf(
@@ -349,6 +349,37 @@ object ViewTreeRepo {
                                                                 ViewTreeRepoThisVersion.ContactHeaderItem.item,//ContactHeaderItem
                                                                 ViewTreeRepoThisVersion.ContactListViewItem.item//ContactListViewItem
                                                                 //后面都是ContactListViewItem
+                                                        ))
+                                                ))
+                                        ))
+                                ))
+                        ))
+                ))
+        )
+    }
+    //8.0.14 版本开始更换联系人界面的 hook 点, 不检测 ContactListViewItem
+    val ContactLayoutListenerViewItem_8_0_14: ViewTree by lazy {
+        ViewTree(
+                mapOf(
+                        "backgroundImage" to intArrayOf(0),
+                        "backgroundMask" to intArrayOf(0, 0),
+                        "blackBroad" to intArrayOf(0, 1, 0),
+                        "WxRecyclerView" to intArrayOf(0, 1, 0, 0, 0),
+                        "WxRecyclerView_ContactHeaderItem" to intArrayOf(0)
+                ),
+                ViewTreeItem("com.tencent.mm.ui.LayoutListenerView", arrayOf(
+                        ViewTreeItem("com.tencent.mm.ui.widget.pulldown.MMWeUIBounceView", arrayOf(//backgroundImage
+                                ViewTreeItem("androidx.core.widget.NestedScrollView", arrayOf(//backgroundMask
+                                        ViewTreeItem(CC.LinearLayout.name)
+                                )),
+                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                        ViewTreeItem(CC.LinearLayout.name, arrayOf(//blackBroad
+                                                ViewTreeItem(CC.FrameLayout.name, arrayOf(
+                                                        ViewTreeItem("com.tencent.mm.view.recyclerview.WxRecyclerView", arrayOf(//WxRecyclerView
+                                                                ViewTreeRepoThisVersion.ContactHeaderItem.item//ContactHeaderItem
+                                                        )),
+                                                        ViewTreeItem(CC.RelativeLayout.name, arrayOf(
+                                                                ViewTreeItem("com.tencent.mm.ui.base.AlphabetScrollBar")
                                                         ))
                                                 ))
                                         ))
