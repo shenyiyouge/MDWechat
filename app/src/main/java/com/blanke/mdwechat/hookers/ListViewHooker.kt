@@ -981,7 +981,7 @@ object ListViewHooker : HookerProvider {
                             LogUtil.log(WechatGlobal.wxVersion.toString())
                             LogUtil.log("context=" + view.context)
                             LogUtil.logViewStackTraces(view)
-                            LogUtil.logParentView(view, 100)
+//                            LogUtil.logParentView(view, 100)
                             LogUtil.log("--------------------")
                         }
                     }
