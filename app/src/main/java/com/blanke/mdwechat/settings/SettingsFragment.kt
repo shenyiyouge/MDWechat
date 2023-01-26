@@ -3,14 +3,17 @@ package com.blanke.mdwechat.settings
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ComponentName
+import android.content.Context.WINDOW_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.preference.*
 import androidx.core.content.ContextCompat
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -801,10 +804,24 @@ class SettingsFragment : PreferenceFragment(), TakeResultListener, InvokeListene
             } catch (e: java.lang.Exception) {
             }
         }
-        val dm = resources.displayMetrics
-        screenWidth = dm.widthPixels
-        screenHeight = dm.heightPixels
+
+//        屏幕分辨率检测方式 (新, 包括一些占用屏幕的刘海和虚拟按键)
+        val windowManager = activity.getSystemService(WINDOW_SERVICE) as WindowManager
+        //获取默认视图 defaultDisplay已经弃用
+        val defaultDisplay = windowManager.defaultDisplay
+        //new一个Point 实际是通过对象引用的方式获取宽高
+        val point = Point()
+        //获取实际宽高，数据储存在point中 getRealSize已经弃用
+        defaultDisplay.getRealSize(point)
+        screenWidth = point.x
+        screenHeight = point.y
         textPreference.text = "$screenWidth,$screenHeight"
+
+//        屏幕分辨率检测方式 (老)
+//        val dm = resources.displayMetrics
+//        screenWidth = dm.widthPixels
+//        screenHeight = dm.heightPixels
+//        textPreference.text = "$screenWidth,$screenHeight"
     }
 
     //region 获取背景图片
