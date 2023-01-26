@@ -19,6 +19,7 @@ class WechatHook : IXposedHookLoadPackage {
     @Throws(Throwable::class)
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {
         try {
+            log(lpparam.packageName)
             if (!(lpparam.packageName.contains("com.tencent") && lpparam.packageName.contains("mm")))
                 return
             // 暂时不 hook 小程序
@@ -72,12 +73,16 @@ class WechatHook : IXposedHookLoadPackage {
     }
 
     private fun hookMain(lpparam: XC_LoadPackage.LoadPackageParam, preloadHooker: Hooker, plugins: List<HookerProvider>) {
+        enableHookers(listOf(ContextHooker))
         WechatGlobal.init(lpparam)
         try {
             WechatGlobal.wxVersionConfig = WxVersionConfig.loadConfig(WechatGlobal.wxVersion!!.toString())
             preloadHooker.hook()
             ViewTreeConfig.set(WechatGlobal.wxVersion!!)
         } catch (e: Exception) {
+            waitInvoke(100, true,
+                    { Objects.Main.context != null },
+                    { LogUtil.toast("微信配置文件不存在或解析失败，请前往 [mdwechat -> 通用] 生成本机微信配置文件。", true) })
             log("${WechatGlobal.wxVersion} 配置文件不存在或解析失败")
             return
         }

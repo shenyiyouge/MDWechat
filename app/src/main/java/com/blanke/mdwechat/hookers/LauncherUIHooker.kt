@@ -79,6 +79,7 @@ object LauncherUIHooker : HookerProvider {
                         LogUtil.log("activity resume = $activity")
 
                         if (activity::class.java.classLoader != WechatGlobal.wxLoader) {
+                            LogUtil.toast("加载错误，请打开 MDWechat 主界面的 [play 开关] (详情请查看日志)。", true)
 //                            LogUtil.log("============")
                             LogUtil.log("微信使用的classloader = ${activity::class.java.classLoader}")
                             LogUtil.log("MDWechat使用的classloader = ${WechatGlobal.wxLoader}")

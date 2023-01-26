@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import com.blanke.mdwechat.Objects.Main.context
 import com.blanke.mdwechat.config.AppCustomConfig
 import com.blanke.mdwechat.config.HookConfig
 import de.robv.android.xposed.XposedBridge
@@ -81,6 +83,18 @@ object LogUtil {
         } catch (e: RuntimeException) {
         }
         Log.e("MDWechatModule", "MDWechat " + Log.getStackTraceString(t))
+    }
+
+    @JvmStatic
+    fun toast(s: String, longToast: Boolean = false) {
+        context?.apply {
+            try {
+                Toast.makeText(this, s, if (longToast) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                log("toast错误")
+                log(e)
+            }
+        }
     }
 
     fun bundleToString(bundle: Bundle?): String? {

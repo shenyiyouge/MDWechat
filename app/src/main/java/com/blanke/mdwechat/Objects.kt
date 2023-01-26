@@ -1,12 +1,16 @@
 package com.blanke.mdwechat
 
 import android.app.Activity
+import android.content.Context
 import android.view.MenuItem
 import android.view.View
+import com.blanke.mdwechat.util.LogUtil
 import com.flyco.tablayout.CommonTabLayout
 
 object Objects {
     object Main {
+        var context: Context? = null
+
         //当前的 activity, 用于朋友圈 actionbar 上色
         var activityNow: Class<*>? = null
 
@@ -25,6 +29,16 @@ object Objects {
 
         //小程序下拉之后的填空
         var actionBarAppbrandFix: View? = null
+    }
+
+    var setContextCount = 0
+    fun setContext(context: Context) {
+        if (context == Main.context) {
+            return
+        }
+        setContextCount++
+        LogUtil.log("context 已改变, 次数 = $setContextCount, context = $context")
+        Main.context = context
     }
 
 //    fun clear() {
