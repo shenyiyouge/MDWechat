@@ -454,14 +454,9 @@ object HookConfig {
             return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_scheme_dark, false)
         }
 
-    //8.0.7以上禁用自动切换暗色系(有bug)
     val is_hook_night_mode: Boolean
         get() {
-            if (WechatGlobal.wxVersion!! >= Version("8.0.7")) {
-                return false
-            } else {
-                return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, true)
-            }
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_night_mode, true)
         }
 
     //    val value_mini_program_title: String
