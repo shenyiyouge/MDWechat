@@ -63,13 +63,14 @@ object ListViewHooker : HookerProvider {
                         return
                     }
 
+
                     // 按照使用频率重排序
                     val hookBubbles: Boolean = ((!NightModeUtils.isNightMode()) || HookConfig.is_hook_bubble_in_night_mode) && HookConfig.is_hook_chat_settings
                     //气泡
                     // 聊天消息 item
                     if (ViewTreeUtils.equals(VTTV.ChatRightMessageItem.item, view)) {
+                        LogUtil.logOnlyOnce("ListViewHooker.ChatRightMessageItem")
                         if (hookBubbles) {
-                            LogUtil.logOnlyOnce("ListViewHooker.ChatRightMessageItem")
 
                             //chat_label
                             if (HookConfig.is_hook_chat_label_color)
@@ -95,8 +96,8 @@ object ListViewHooker : HookerProvider {
                             }
                         }
                     } else if (ViewTreeUtils.equals(VTTV.ChatLeftMessageItem.item, view)) {
+                        LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
                         if (hookBubbles) {
-                            LogUtil.logOnlyOnce("ListViewHooker.ChatLeftMessageItem")
 
                             if (HookConfig.is_hook_chat_label_color) {
                                 //chat_label
@@ -977,7 +978,7 @@ object ListViewHooker : HookerProvider {
                     else {
                         view.background = drawableTransparent
                         if ((!Common.isVXPEnv) && (HookConfig.is_hook_debug || HookConfig.is_hook_debug2)) {
-                            LogUtil.log("----------抓取view start----------")
+                            LogUtil.log("----------未识别的listview----------")
                             LogUtil.log(WechatGlobal.wxVersion.toString())
                             LogUtil.log("context=" + view.context)
                             LogUtil.logViewStackTraces(view)

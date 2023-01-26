@@ -281,7 +281,7 @@
     <string name="text_brief">简要设置</string>
     <string name="text_wechat_config_settings">微信适配文件</string>
     <string name="text_feedback_donate_settings">反馈和捐赠</string>
-    <string name="text_about_settings">更多信息</string>
+    <string name="text_about_settings">更多信息、查看支持版本</string>
     <string name="summary_about_settings">捐赠 / 查看交流群等</string>
     <string name="key_feedback_wechat">key_feedback_wechat</string>
     <string name="text_feedback_wechat">微信交流群</string>
@@ -307,7 +307,7 @@
     <string name="summary_hook_scheme_dark">开启后强制微信使用暗色系主题(需要微信7.0.10以上)</string>
     <string name="key_hook_night_mode">key_hook_night_mode</string>
     <string name="text_hook_night_mode">自动切换暗色系</string>
-    <string name="summary_hook_night_mode">当微信切换为深色模式时，自动切换 MDWechat 主题为暗色系。\n需要微信7.0.10–8.0.6；微信8.0.7以上由于更换hook点，切换亮/暗色系会闪退，故暂时禁用微信8.0.7以上的此功能。（有大佬帮解决吗~~）</string>
+    <string name="summary_hook_night_mode">当微信切换为深色模式时，自动切换 MDWechat 主题为暗色系。\n需要微信7.0.10以上</string>
     <string name="text_main_page_color">主界面内容字体颜色</string>
     <string name="other_bubble_settings">其他设置请前往「配色方案 -> 聊天气泡」</string>
 

@@ -147,6 +147,8 @@ object LogUtil {
             if (v != null && v is View) {
                 logView(v)
                 currentView = v
+            } else {
+                break
             }
         }
         log("---------logParentView end----------")
@@ -160,7 +162,7 @@ object LogUtil {
         val sb = StringBuffer(view.toString())
         if (view is TextView) {
             sb.append("${view.text}(" + view.hint + ")")
-        } else if (view.javaClass.name=="com.tencent.mm.ui.base.NoMeasuredTextView") {
+        } else if (view.javaClass.name == "com.tencent.mm.ui.base.NoMeasuredTextView") {
             sb.append("${XposedHelpers.getObjectField(view, "mText")}")
         } else if (view is ViewGroup) {
             sb.append(" childCount = ${view.childCount}")

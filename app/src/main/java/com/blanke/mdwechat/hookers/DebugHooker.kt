@@ -26,7 +26,7 @@ object DebugHooker : HookerProvider {
                 val event = param.args[0] as MotionEvent
                 if (event.action == MotionEvent.ACTION_DOWN) {
 //                    LogUtil.log("===============")
-//                    view.background = ColorDrawable(HookConfig.get_color_primary)
+//                    view.background = ColorDrawable(Color.parseColor("#33333333"))
                     LogUtil.log("点击操作")
                     LogUtil.logViewStackTraces(view)
                     LogUtil.log("-------------------")

@@ -34,26 +34,30 @@ object ChattingRoomHook {
 
     fun setConversationColor(actionBar: View) {
         LogUtil.log("开始设置聊天页沉浸背景")
-        val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("title")) as TextView
-        title.setTextColor(NightModeUtils.colorSecondary)
+        try {
+            val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("title")) as TextView
+            title.setTextColor(NightModeUtils.colorSecondary)
 //        val infoButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("infoButton")) as ImageButton
 //        infoButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
-        val goBackButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("goBackButton")) as ImageView
-        goBackButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
+            val goBackButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInConversationItem.treeStacks.getValue("goBackButton")) as ImageView
+            goBackButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
 
-        val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as ViewGroup
-        if (ViewTreeUtils.equals(VTTV.ChattingUILayoutItem.item, chattingUILayout)) {
-            val chattingScrollLayoutItem = ViewUtils.getChildView1(chattingUILayout,
-                    VTTV.ChattingUILayoutItem.treeStacks.getValue("ChattingScrollLayoutItem")) as ViewGroup
-            setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
-        } else {
-            LogUtil.log("聊天页沉浸背景底栏匹配错误")
-//            LogUtil.logViewStackTraces(chattingUILayout)
+            val chattingUILayout = ViewUtils.getParentView(actionBar, 1) as ViewGroup
+            if (ViewTreeUtils.equals(VTTV.ChattingUILayoutItem.item, chattingUILayout)) {
+                val chattingScrollLayoutItem = ViewUtils.getChildView1(chattingUILayout,
+                        VTTV.ChattingUILayoutItem.treeStacks.getValue("ChattingScrollLayoutItem")) as ViewGroup
+                setConversationFooterColor(chattingScrollLayoutItem, VTTV.ChattingScrollLayoutItem.treeStacks)
+            } else {
+                LogUtil.log("聊天页沉浸背景底栏匹配错误")
+                LogUtil.logViewStackTraces(chattingUILayout)
+            }
+        } catch (e: Exception) {
+            LogUtil.log(e)
         }
     }
 
     fun setConversationInSearchColor(actionBar: View) {
-        LogUtil.log("开始设置  - 由搜索进入的 -  聊天页沉浸背景")
+        LogUtil.log("开始设置 - 由搜索进入的 - 聊天页沉浸背景")
         val title = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("title")) as TextView
         title.setTextColor(NightModeUtils.colorSecondary)
 //        val infoButton = ViewUtils.getChildView1(actionBar, VTTV.ActionBarInSearchConversationItem.treeStacks.getValue("infoButton")) as ImageButton
@@ -148,44 +152,45 @@ object ChattingRoomHook {
                 LogUtil.log("替换聊天底栏背景")
                 //endregion
             }
+
+
+            //region 底栏
+            //语音打字切换
+            val switchButton = ViewUtils.getChildView1(chatFooterChild2,
+                    treeStacks.getValue("chatFooterChild2_switchButton")) as ImageButton
+            switchButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
+
+            // 7.0.17 + MIUI 12 不透明 fix
+            if (treeStacks.containsKey("chatFooterChild2_editText_MIUI12")) {
+                ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))
+                        ?.background = ColorDrawable(transparentBackground())
+            }
+
+            val editText = ViewUtils.getChildView1(chatFooterChild2,
+                    treeStacks.getValue("chatFooterChild2_editText")) as EditText
+            editText.background = ColorDrawable(transparentBackground())
+            editText.setTextColor(NightModeUtils.colorSecondary)
+//        editText.setTextColor(if (isBgLight) WeChatHelper.colorDark else WeChatHelper.colorWhite)
+            val talkButton = ViewUtils.getChildView1(chatFooterChild2,
+                    treeStacks.getValue("chatFooterChild2_talkButton")) as View
+            talkButton.background = ColorDrawable(transparentBackground())
+
+            //表情
+            val faceButton = ViewUtils.getChildView1(chatFooterChild2,
+                    treeStacks.getValue("chatFooterChild2_faceButton")) as ImageButton
+            faceButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
+            val addButton = ViewUtils.getChildView1(chatFooterChild2,
+                    treeStacks.getValue("chatFooterChild2_addButton")) as ImageButton
+            addButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
+            //发送
+            val sendButton = ViewUtils.getChildView1(chatFooterChild2,
+                    treeStacks.getValue("chatFooterChild2_sendButton")) as Button
+            sendButton.setBackgroundColor(transparentBackground())
+            sendButton.setTextColor(NightModeUtils.colorSecondary)
+            LogUtil.log("替换聊天底栏控件")
+//endregion
         } catch (e: Exception) {
             LogUtil.log(e)
         }
-
-        //region 底栏
-        //语音打字切换
-        val switchButton = ViewUtils.getChildView1(chatFooterChild2,
-                treeStacks.getValue("chatFooterChild2_switchButton")) as ImageButton
-        switchButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
-
-        // 7.0.17 + MIUI 12 不透明 fix
-        if (treeStacks.containsKey("chatFooterChild2_editText_MIUI12")) {
-            ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))
-                    ?.background = ColorDrawable(transparentBackground())
-        }
-
-        val editText = ViewUtils.getChildView1(chatFooterChild2,
-                treeStacks.getValue("chatFooterChild2_editText")) as EditText
-        editText.background = ColorDrawable(transparentBackground())
-        editText.setTextColor(NightModeUtils.colorSecondary)
-//        editText.setTextColor(if (isBgLight) WeChatHelper.colorDark else WeChatHelper.colorWhite)
-        val talkButton = ViewUtils.getChildView1(chatFooterChild2,
-                treeStacks.getValue("chatFooterChild2_talkButton")) as View
-        talkButton.background = ColorDrawable(transparentBackground())
-
-        //表情
-        val faceButton = ViewUtils.getChildView1(chatFooterChild2,
-                treeStacks.getValue("chatFooterChild2_faceButton")) as ImageButton
-        faceButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
-        val addButton = ViewUtils.getChildView1(chatFooterChild2,
-                treeStacks.getValue("chatFooterChild2_addButton")) as ImageButton
-        addButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
-        //发送
-        val sendButton = ViewUtils.getChildView1(chatFooterChild2,
-                treeStacks.getValue("chatFooterChild2_sendButton")) as Button
-        sendButton.setBackgroundColor(transparentBackground())
-        sendButton.setTextColor(NightModeUtils.colorSecondary)
-        LogUtil.log("替换聊天底栏控件")
-//endregion
     }
 }
