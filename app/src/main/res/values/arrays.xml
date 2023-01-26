@@ -48,6 +48,11 @@
         <item>@color/material_yellow</item>
         <item>@color/material_yellow_700</item>
     </array>
+    <!--lsposed 自动勾选-->
+    <string-array name="xposed_scope">
+        <item>com.tencent.mm</item>
+        <!--<item>com.me.example</item>-->
+    </string-array>
     <string-array name="color_schemes">
         <item>沉浸主题(暗)</item>
         <item>沉浸主题(亮)</item>
