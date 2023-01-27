@@ -99,7 +99,7 @@ object ChattingRoomHook {
                 treeStacks.getValue("chattingBgShade")) as View
         if (HookConfig.is_hook_scheme_dark || !HookConfig.is_hook_night_mode) chattingBgShade.setBackgroundColor(0)
         LogUtil.log("去除聊天背景遮罩")
-//endregion
+        //endregion
 
         val chatFooterChild2 = ViewUtils.getChildView1(ChattingScrollLayoutItem,
                 treeStacks.getValue("chatFooterChild2")) as View
@@ -140,7 +140,7 @@ object ChattingRoomHook {
                     view.background = NightModeUtils.getBackgroundDrawable(view.resources, BackgroundImageHook.cutBitmap("ChattingImageBGView",
                             getChatBg(), actionBarBottom, params.height))
                     LogUtil.log("替换自定义聊天背景")
-//endregion
+                    //endregion
                 }
                 // region底栏输入框
                 if (footerLocation[1] > 0) {
@@ -161,16 +161,23 @@ object ChattingRoomHook {
             switchButton.setColorFilter(NightModeUtils.colorSecondary, PorterDuff.Mode.SRC_ATOP)
 
             // 7.0.17 + MIUI 12 不透明 fix
+            var miuiEditTextFixed = false
             if (treeStacks.containsKey("chatFooterChild2_editText_MIUI12")) {
-                ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))
-                        ?.background = ColorDrawable(transparentBackground())
+                ViewUtils.getChildView1(chatFooterChild2, treeStacks.getValue("chatFooterChild2_editText_MIUI12"))?.apply {
+                    this.background = ColorDrawable(transparentBackground())
+                    miuiEditTextFixed = true
+                }
             }
 
             val editText = ViewUtils.getChildView1(chatFooterChild2,
                     treeStacks.getValue("chatFooterChild2_editText")) as EditText
-            editText.background = ColorDrawable(transparentBackground())
             editText.setTextColor(NightModeUtils.colorSecondary)
 //        editText.setTextColor(if (isBgLight) WeChatHelper.colorDark else WeChatHelper.colorWhite)
+            if (miuiEditTextFixed) {
+                editText.background = ColorDrawable(Color.parseColor("#00000000"))
+            } else {
+                editText.background = ColorDrawable(transparentBackground())
+            }
             val talkButton = ViewUtils.getChildView1(chatFooterChild2,
                     treeStacks.getValue("chatFooterChild2_talkButton")) as View
             talkButton.background = ColorDrawable(transparentBackground())
@@ -188,7 +195,7 @@ object ChattingRoomHook {
             sendButton.setBackgroundColor(transparentBackground())
             sendButton.setTextColor(NightModeUtils.colorSecondary)
             LogUtil.log("替换聊天底栏控件")
-//endregion
+            //endregion
         } catch (e: Exception) {
             LogUtil.log(e)
         }
