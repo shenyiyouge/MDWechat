@@ -84,11 +84,12 @@
     <string name="key_settings_page_transparent">key_settings_page_transparent</string>
     <string name="text_settings_page_transparent">第四页透明</string>
     <string name="summary_settings_page_transparent">微信8.0不添加微信状态时请关闭此开关</string>
-    <string name="key_hook__actionbar_color">key_hook__actionbar_color</string>
-    <string name="text_hook__actionbar_color">顶栏字体颜色修改</string>
-    <string name="summary_hook__actionbar_color">将使用副色1。Visual xposed环境下不会生效。</string>
+    <string name="key_hook_actionbar_color">key_hook_actionbar_color</string>
+    <string name="text_hook_actionbar_color">顶栏字体颜色修改</string>
+    <string name="summary_hook_actionbar_color">将使用副色1。Visual xposed环境下不会生效。</string>
     <string name="key_hook_hide_actionbar">key_hook_hide_actionbar</string>
     <string name="text_hook_hide_actionbar">隐藏Action Bar(顶栏)</string>
+    <string name="summary_hook_hide_actionbar">如果打开微信之后看到未隐藏顶栏, 可以先尝试滑动一下界面</string>
     <string name="key_main_text_offset">key_main_text_offset</string>
     <string name="text_main_text_offset">主界面正文高度补正</string>
     <string name="summary_main_text_offset">默认值为0。</string>
@@ -99,7 +100,7 @@
     <string name="text_hook_float_button_color_up">悬浮按钮图标着色</string>
     <string name="key_hook_float_button_color_is_secondary">key_hook_float_button_color_is_secondary</string>
     <string name="text_hook_float_button_color_is_secondary">是否使用副色1作为文字颜色</string>
-    <string name="summary_hook_float_button__color_is_secondary">关闭则使用副色2.</string>
+    <string name="summary_hook_float_button_color_is_secondary">关闭则使用副色2.</string>
     <string name="key_hook_float_button_angle">key_hook_float_button_angle</string>
     <string name="text_hook_float_button_angle">悬浮按钮旋转角度</string>
     <string name="summary_hook_float_button_angle">调整点击悬浮按钮之后主按钮的旋转角度.</string>
@@ -397,6 +398,6 @@
     <string name="key_joshcai_info">key_joshcai_info</string>
     <string name="josh_cai_info_outdated">检测到不兼容的微信版本（当前版本%s，最高适配%s)</string>
     <string name="josh_cai_info_outdated_suffix">\n~~佛系更新~~\n 不适配内测版本！不要再问了！\n\n在不兼容的微信版本中使用本软件可能会出现一些bug，严重时可能导致封号等后果。\n\n本软件请在微信的用户条款下使用，遵守相关法律和微信规定，使用本软件造成的一切后果，与软件和开发者无关，如对上述有异议或疑问，请立即卸载此软件。</string>
-    <string name="josh_cai_info">适配微信 %s (当前微信版本:%s)\n 如果微信版本与适配版本不同，可能有些地方并没有适配。（并没有测试所有的微信版本，摆烂中）\n\n 新增功能: 已领取红包的气泡修改</string>
+    <string name="josh_cai_info">\n！！！！！！！！！！！！！！！！！！！！！\n！！微信8.0.27之后的聊天气泡修改已失效！！\n！！！！！！！！！！！！！！！！！！！！！\n\n适配微信 %s (当前微信版本:%s)\n 如果微信版本与适配版本不同，可能有些地方并没有适配。（并没有测试所有的微信版本，摆烂中）\n\n 新增功能: 恢复微信8.0.7以上的夜间模式功能\n沉浸模式的分辨率设置自动适应全面屏的刘海</string>
     <string name="josh_cai_info2">\t\t\t\tHello 我是 JoshCai。由于原作者 Blankeer@github 未更新，所以我将其在github上开源的代码进行维护和二次开发，使其能够适配较新的微信。\n\t\t\t\t保留app内向原作者捐赠的途径，如果大家喜欢本软件也可以请他喝杯咖啡。</string>
 </resources>

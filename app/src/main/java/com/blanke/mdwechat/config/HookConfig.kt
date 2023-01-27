@@ -31,7 +31,7 @@ object HookConfig {
     private val key_color_tip_in_guide = "key_color_tip_in_guide"
     private val key_color_tip_num_in_guide = "key_color_tip_num_in_guide"
     private val key_hook_conversation_background_alpha = "key_hook_conversation_background_alpha"
-    private val key_hook__actionbar_color = "key_hook__actionbar_color"
+    private val key_hook_actionbar_color = "key_hook_actionbar_color"
     private val key_hook_actionbar = "key_hook_actionbar"
     private val key_hook_avatar = "key_hook_avatar"
     private val key_hide_wechatId = "key_hide_wechatId"
@@ -198,7 +198,7 @@ object HookConfig {
         }
     val is_hook_actionbar_color: Boolean
         get() {
-            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook__actionbar_color, false)
+            return WeChatHelper.XMOD_PREFS.getBoolean(key_hook_actionbar_color, false)
         }
     val is_hook_actionbar: Boolean
         get() {

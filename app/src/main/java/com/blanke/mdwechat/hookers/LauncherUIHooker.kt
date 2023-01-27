@@ -127,7 +127,30 @@ object LauncherUIHooker : HookerProvider {
                             BackgroundImageHook.contactPageParent = linearViewGroup
                             val contentViewGroup = linearViewGroup.parent as ViewGroup
                             Objects.Main.LauncherUI_mContentLayout = contentViewGroup
-                            Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
+
+//                            Objects.Main.HomeUI_mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
+                            val mActionBar = Fields.HomeUI_mActionBar.get(homeUI)
+
+
+                            // mActionBar 内部嵌套了一个 ActionBar 类, 微信 8.0.32 把这个类的父类中获取 actionBar 高度的方法去掉了, 所以要去子类中找
+                            val mActionBarInField = mActionBar::class.java.declaredFields.filter {
+                                it.type.name == "androidx.appcompat.app.ActionBar"
+                            }.first()
+
+                            LogUtil.log("mActionBar = ${mActionBar}")
+                            LogUtil.log("mActionBarInFieldName = ${mActionBarInField.name}")
+                            val mActionBarIn = XposedHelpers.getObjectField(mActionBar, mActionBarInField.name)
+                            LogUtil.log("mActionBarIn = ${mActionBarIn}")
+
+
+                            val ActionBarContainerField = mActionBarIn::class.java.declaredFields.filter {
+                                it.type.name == "androidx.appcompat.widget.ActionBarContainer"
+                            }.first()
+                            LogUtil.log("ActionBarContainerField = ${ActionBarContainerField}")
+
+                            Objects.Main.HomeUI_mActionBar = XposedHelpers.getObjectField(mActionBarIn, ActionBarContainerField.name)
+                            LogUtil.log("HomeUI_mActionBar = ${Objects.Main.HomeUI_mActionBar}")
+
                             Objects.Main.LauncherUI_mViewPager = viewPager
 
                             // region 微信底栏 & action bar

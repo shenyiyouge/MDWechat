@@ -489,7 +489,7 @@
                 android:defaultValue="true"
                 android:dependency="@string/key_hook_float_button"
                 android:key="@string/key_hook_float_button_color_is_secondary"
-                android:summary="@string/summary_hook_float_button__color_is_secondary"
+                android:summary="@string/summary_hook_float_button_color_is_secondary"
                 android:title="@string/text_hook_float_button_color_is_secondary" />
             <SwitchPreference
                 android:defaultValue="true"
@@ -517,12 +517,13 @@
         <PreferenceCategory android:title="@string/navigate">
             <SwitchPreference
                 android:defaultValue="false"
-                android:key="@string/key_hook__actionbar_color"
-                android:summary="@string/summary_hook__actionbar_color"
-                android:title="@string/text_hook__actionbar_color" />
+                android:key="@string/key_hook_actionbar_color"
+                android:summary="@string/summary_hook_actionbar_color"
+                android:title="@string/text_hook_actionbar_color" />
             <SwitchPreference
                 android:defaultValue="false"
                 android:key="@string/key_hook_hide_actionbar"
+                android:summary="@string/summary_hook_hide_actionbar"
                 android:title="@string/text_hook_hide_actionbar" />
             <SwitchPreference
                 android:defaultValue="false"
@@ -535,7 +536,9 @@
                 android:key="@string/key_hook_tab"
                 android:summary="@string/summary_hook_tab"
                 android:title="@string/text_hook_tab" />
-            <PreferenceScreen android:title="@string/text_select_tab_icon">
+            <PreferenceScreen
+                android:dependency="@string/key_hook_tab"
+                android:title="@string/text_select_tab_icon">
                 <Preference
                     android:key="@string/key_select_tab_icon_0"
                     android:title="@string/text_select_tab_icon_0" />

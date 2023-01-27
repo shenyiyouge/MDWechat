@@ -33,20 +33,33 @@ object HomeActionBarHook {
             viewpager.requestLayout()
         }
         val mActionBar = Objects.Main.HomeUI_mActionBar!!
+        var actionHeight = 0
+        var quitFix = false
         waitInvoke(10, true, {
-            XposedHelpers.callMethod(mActionBar, "getHeight") as Int > 0
+            try {
+                actionHeight = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
+            } catch (e: Exception) {
+                quitFix = true
+                LogUtil.log("隐藏 actionBar 失败, 发生错误")
+                LogUtil.log("mActionBar = ${mActionBar}")
+                LogUtil.log(e)
+            }
+            quitFix || (actionHeight > 0)
         }, {
-            val actionHeight = XposedHelpers.callMethod(mActionBar, "getHeight") as Int
-            LogUtil.log("actionHeight=$actionHeight")
+            LogUtil.log("actionBarHeight = $actionHeight")
             cb(actionHeight)
+            if(quitFix){
+                return@waitInvoke
+            }
             if (HookConfig.is_hook_hide_actionbar) {
                 LogUtil.log("隐藏 actionBar $mActionBar")
-                XposedHelpers.callMethod(mActionBar, "hide")
-
-                val actionView = XposedHelpers.callMethod(mActionBar, "getCustomView") as View
-//                val actionView = on(mActionBar).call("getCustomView").get<View>()
-                ViewUtils.getParentView(actionView, 1)?.visibility = View.GONE
-                LogUtil.log("隐藏 actionBar 成功")
+                if (mActionBar is View) {
+                    mActionBar.visibility = View.GONE
+                    mActionBar.layoutParams.height = 0
+                    LogUtil.log("隐藏 actionBar 成功")
+                } else {
+                    LogUtil.log("隐藏 actionBar 失败, actionBar 不是 view")
+                }
             }
         })
     }
