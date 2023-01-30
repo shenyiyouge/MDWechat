@@ -82,7 +82,10 @@ class WechatHook : IXposedHookLoadPackage {
         } catch (e: Exception) {
             waitInvoke(100, true,
                     { Objects.Main.context != null },
-                    { LogUtil.toast("微信配置文件不存在或解析失败，请前往 [mdwechat -> 通用] 生成本机微信配置文件。", true) })
+                    {
+//                        LogUtil.toast("无法读取配置文件，请开启微信的存储权限后，打开 mdwechat 生成本机微信配置文件。", true)
+                        LogUtil.toast("无法读取配置文件，请开启微信的存储权限后，打开 mdwechat 生成本机微信配置文件。", true)
+                    })
             log("${WechatGlobal.wxVersion} 配置文件不存在或解析失败")
             return
         }
